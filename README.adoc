@@ -1,0 +1,13 @@
+= General Developer Knowledge
+
+Product-agnostic reference documentation organized by the Diátaxis model (tutorials, how-to, reference, explanation). Consumed by the Dev-Centr docs site and other projects.
+
+== Build
+
+[source,bash]
+----
+cd docs
+pnpm dlx antora ../antora-playbook.yml
+----
+
+For local dev with sibling repos, use `antora-playbook-local.yml` (sibling paths only, no remote URLs).

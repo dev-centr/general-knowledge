@@ -1,0 +1,28 @@
+= Literate Programming (LP)
+:navtitle: Literate Programming
+
+Literate programming is the practice of structured documentation where the primary narrative is human-oriented, and the source code is embedded within it (tangled).
+
+== The Philosophy
+Traditional programming treats comments as secondary to the code. Literate programming **inverts this relationship**: the code is an artifact of the explanation.
+
+In the Dev-Centr ecosystem, we endorse **Synchronous Literate Programming (SLP)**. This moves beyond traditional batch-processing (Tangle/Weave) into a **Unified AST** model where the document and the code are synchronized in real-time.
+
+== Why LP is the Correct Way to Program
+* **Intent-First**: It forces the developer to explain *why* something is being done before *how* it is implemented.
+* **Evolutionary Modeling**: LP allows for documenting the transformation of a simple idea into a complex module, providing a "narrative arc" for the codebase.
+* **AI Synergy**: LLMs and coding agents perform significantly better when provided with the rich contextual narrative surrounding the code, rather than just raw source and sparse comments.
+
+== Recommended Systems
+
+=== Native (CentrMark)
+For projects within the Dev-Centr core, we recommend **CentrMark** (`.cmk`). It uses a flexible directive system (`::: tangle`) and is designed for structural synchronization.
+
+=== CommonMark (Markdown)
+If you prefer standard Markdown, use:
+* **Quarto**: For complex, multi-repo or data-heavy projects.
+* **Entangled**: For bi-directional syncing between Markdown and regular source files.
+
+== Next Steps
+* xref:reference:languages/c.adoc[Example: C Language with LP]
+* xref:dev-center:ROOT:project-vision.adoc[Dev-Centr Project Vision]

@@ -1,0 +1,5 @@
+name: general-knowledge
+version: ~
+title: General Developer Knowledge
+nav:
+- modules/ROOT/nav.adoc

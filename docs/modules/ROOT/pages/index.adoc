@@ -1,0 +1,43 @@
+= General Developer Knowledge
+
+Timeless, product-agnostic reference material for developers. Organized by the Diátaxis framework (tutorials, how-to, reference, explanation).
+
+== How to Use This Documentation
+
+Choose the path that matches your current goal:
+
+[cols="1,1", frame=none, grid=none]
+|===
+| [.text-center]
+=== 🎓 Tutorials
+**Intent: Learning**
+Step-by-step guides to build basic competence.
+
+xref:tutorials/onboarding.adoc[🚀 Start Onboarding]
+
+| [.text-center]
+=== 🛠️ How-to Guides
+**Intent: Execution**
+Task-oriented guides for real-world problems.
+
+xref:how-to/index.adoc[📂 Browse How-tos]
+
+| [.text-center]
+=== 📚 Reference
+**Intent: Retrieval**
+Technical specifications, checklists, and facts.
+
+xref:reference/index.adoc[📋 View Reference]
+
+| [.text-center]
+=== 🧠 Explanation
+**Intent: Comprehension**
+Discursive content that explains the "Why."
+
+xref:explanation/index.adoc[💡 Explore Concepts]
+|===
+
+[TIP]
+====
+**Quick Start:** If you are new, start with the xref:tutorials/onboarding.adoc[Onboarding Tutorial], then browse xref:reference/recommended-tools.adoc[Recommended Tools].
+====

@@ -1,0 +1,27 @@
+= C (C99/C11/C17) Reference
+:navtitle: C
+
+The **C programming language** provides a low-level, high-performance toolkit for systems programming. It is widely used in the Dev-Centr ecosystem for firmware, drivers, and performance-critical core libraries.
+
+[IMPORTANT]
+====
+In Dev-Centr, we **strongly endorse Literate Programming (LP)** for all C development. The historically opaque and verbose nature of C makes it the perfect candidate for an inverted documentation-first approach.
+
+For details, see xref:explanation/literate-programming.adoc[Literate Programming (LP) Strategy].
+====
+
+== Core Principles for C in Dev-Centr
+
+0. **Literate First**: Build your C modules as CentrMark (`.cmk`) or Markdown/Tangle documents. Explain the architecture *before* the implementation.
+0. **Explicit Constraints**: Use `const`, `restrict`, and `static` wherever applicable to help the compiler and AI agents understand pointer aliasing and visibility.
+0. **Memory Safety Patterns**: Use established Dev-Centr patterns for safe memory allocation and bounds checking, even in standard C.
+
+== Recommended Literate Systems for C
+
+* **Native (CentrMark)**: Use `::: tangle [file="main.c"]` blocks for a unified AST-based development experience.
+* **CWEB / noweb**: Use these for traditional batch-processed LP if you require extreme portability.
+* **Entangled**: Use Markdown-based LP with real-time syncing if you prefer a standard source-file-first IDE workflow but want synchronous documentation.
+
+== See Also
+* xref:tutorials/onboarding.adoc[Developer Onboarding]
+* xref:reference/recommended-tools.adoc[Recommended Tools]
