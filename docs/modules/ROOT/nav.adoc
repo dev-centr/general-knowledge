@@ -25,6 +25,7 @@
 ** Languages
 *** xref:reference/languages/c.adoc[C Language]
 * xref:reference/git-management.adoc[Git Management]
+* xref:reference/git-performance.adoc[Git Performance]
 * xref:reference/github-actions-templates-vs-marketplace.adoc[Actions Templates vs Marketplace]
 * xref:reference/git-installation.adoc[Git Installation]
 * xref:reference/nodejs-env.adoc[Node.js Environment]
@@ -37,6 +38,7 @@
 .🧠 Explanation
 * xref:explanation/index.adoc[Overview]
 ** Architecture
+*** xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
 *** xref:explanation/architecture/principles.adoc[Core Principles]
 *** xref:explanation/architecture/google-docs-apps-script.adoc[Apps Script Optimization]
 ** Infrastructure
