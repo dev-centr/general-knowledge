@@ -1,0 +1,65 @@
+= Toolchain Control Plane
+:navtitle: Toolchain Control Plane
+:description: Product metaphor for the official toolchain lifecycle surface (TCP / TCoP)—install, pin, health, repair, upgrade.
+
+A **Toolchain Control Plane (TCP)**—also **TCoP** when disambiguating from Transmission Control Protocol—is the **product** an ecosystem ships when it follows the xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern].
+
+It is not the name of the pattern itself. Think of it as the concrete management surface around the official toolkit: the entrypoint (or thin official shim) that owns lifecycle integrity.
+
+== In the Toolchain Management stack
+
+[cols="1,2"]
+|===
+| Layer | Role
+
+| **Pattern**
+| How you think — xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
+
+| **Protocol**
+| How you act — repeatable behaviors in the pattern page and xref:devcentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[spec]
+
+| **Control plane (this page)**
+| What you ship — TCP / TCoP
+
+| **Framework**
+| How you practice — xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
+|===
+
+== What a control plane owns
+
+Bootstrap::
+Install via OS package managers where possible (`winget`, Homebrew, apt/dnf, Scoop), with PATH refresh and a post-install health gate.
+
+Pin and resolve::
+Per-project pins with a single rule: project pin > user default > system.
+
+Health::
+Machine-readable component status (`ok`, `warn`, `broken`, `missing`) with evidence—not only a wall of checkmarks.
+
+Repair::
+Each failure maps to ordered, idempotent actions (refresh PATH, reinstall platform tools, clear caches, rollback channel).
+
+Upgrade and rollback::
+Upgrades are transactions; a failed mid-state can return to last known-good.
+
+Surface parity::
+CLI, GUI, and IDE/agent APIs expose the same verbs and the same health model.
+
+== GUI recommendation
+
+Any ecosystem with complex internals (platform SDKs, emulators, channel upgrades, caches) should offer a **management GUI** that shares the control-plane contract with the CLI. The GUI is not a prettier `--version`; it is the same install / pin / health / repair / upgrade story with a guided next action.
+
+== Checklist
+
+* [ ] OS-native bootstrap with verified PATH / health gate
+* [ ] Per-project pin owned by the official entrypoint
+* [ ] Structured health report (machine-readable)
+* [ ] Repair plan and apply (idempotent)
+* [ ] Upgrade with rollback to last known-good
+* [ ] CLI and GUI (and ideally IDE) parity
+
+== Related
+
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
+* xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
+* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]

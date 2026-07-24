@@ -1,0 +1,63 @@
+= Toolchain Framework (TCF)
+:navtitle: Toolchain Framework (TCF)
+:description: A framework that helps ecosystem maintainers generate and validate Toolchain Control Plane implementations under the Toolchain Management Pattern.
+
+The **Toolchain Framework (TCF)** is Dev-Centr’s planned *framework* for producing xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane] implementations.
+
+It is **not** the pattern. The pattern is xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]. TCF helps maintainers **generate, wire, and validate** systems that comply with that pattern’s protocol and ship a control plane.
+
+== Why “Toolchain Framework” (not TMF)
+
+Lead with **Toolchain Framework (TCF)**. Maintainers think “I’m responsible for a toolchain”—not “I’m building a management app.” **Toolchain Management Framework (TMF)** can bounce the right audience. Keep **Toolchain Management** as the umbrella in prose; keep **TCF** as the kit name.
+
+TCF is for **software ecosystems** broadly (languages, engines, cloud CLIs, ML stacks, internal paved roads)—not only programming languages.
+
+== Inversion of control
+
+In the classic software sense, a framework often owns **control flow** and calls your code (Hollywood principle). TCF may work that way:
+
+* A host runs a fixed lifecycle (`bootstrap` → `pin` → `health` → `repair` → `upgrade`).
+* Ecosystem maintainers supply **adapters** that map their existing toolkit pieces into that interface.
+
+That is inversion of control: existing tools become plugins under a unified management host.
+
+Ecosystems can still comply with the pattern by growing their own entrypoint and never adopting TCF. Then control flow stays inside their CLI; TCF is optional scaffolding, not a requirement for compliance.
+
+== Relationship
+
+[cols="1,2"]
+|===
+| Layer | Role
+
+| **Toolchain Management Pattern**
+| How you think — xref:explanation/infrastructure/toolchain-management.adoc[canonical explanation]
+
+| **Toolchain Management Protocol**
+| How you act — behaviors in the pattern page and DevCentr ecosystem-management spec
+
+| **TCP / TCoP**
+| What you ship — control plane product metaphor
+
+| **TCF**
+| How you practice — schemas, adapters, generators, conformance tests
+|===
+
+== Intended contents (direction)
+
+* Canonical contracts (pin, health report, repair plan/apply, upgrade/rollback) as schemas.
+* Ecosystem **adapter** stubs (Flutter, Node, Rust, Android SDK, .NET, cloud CLIs, …).
+* Generators for CLI verbs and optional GUI shells that share the same contract.
+* Conformance tests: “does this entrypoint behave like a Toolchain Control Plane?”
+* Guidance for mapping OS package managers (`winget`, Homebrew, apt) into bootstrap flows.
+
+Default repo: `https://github.com/dev-centr/toolchain-framework.git`
+
+CI builds TypeScript validators and validates schemas + example adapters on every push/PR to `main`.
+
+== Related
+
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
+* xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane (TCP / TCoP)]
+* xref:devcentr:specifications:components/toolchain-management.adoc[Toolchain Management (TCM)]
+* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]
+* xref:devcentr:ROOT:project-vision.adoc[DevCentr Project Vision]

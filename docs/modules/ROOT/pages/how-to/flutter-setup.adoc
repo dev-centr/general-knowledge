@@ -1,0 +1,35 @@
+= Set up Flutter tooling
+:navtitle: Flutter Setup
+:description: Bootstrap Flutter on a development machine and use community version managers as a bridge until an official Toolchain Control Plane exists.
+
+This how-to gets you running with Flutter. For why version management should live in the official entrypoint—not only in FVM/Puro—see xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern].
+
+== Install the SDK
+
+. Prefer an OS package manager when available (`winget`, Homebrew, or the official install docs for your OS).
+. Put `flutter` on your `PATH`, then open a **new** terminal so PATH refresh is visible.
+. Run `flutter doctor` and fix reported platform requirements (Android SDK, Xcode, licenses) as needed.
+
+Official install docs: link:https://docs.flutter.dev/get-started/install[Flutter install].
+
+== Version pinning (bridge)
+
+Flutter does not yet ship a first-party Toolchain Control Plane in the main `flutter` workflow. Until it does, pick **one** community bridge and use it consistently on your team:
+
+* link:https://fvm.app/[FVM]
+* link:https://puro.dev/[Puro]
+* link:https://mise.jdx.dev/[mise] (polyglot)
+
+DevCentr’s Flutter ecosystem page lists these bridges and shows a Toolchain Management advisory for maintainers.
+
+[IMPORTANT]
+====
+Do not treat discovering FVM/Puro as “the real first step” forever. The long-term requirement is official pinning in the Flutter entrypoint (Toolchain Management Pattern). Community tools are a stopgap.
+====
+
+== Related
+
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
+* xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
+* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (DevCentr)]
+* xref:reference/recommended-tools.adoc[Recommended Tools]

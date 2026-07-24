@@ -1,0 +1,16 @@
+= 2026-07-24 – Toolchain Management vocabulary
+
+== Summary
+
+Locked the Toolchain Management vocabulary after naming debate: Pattern (title) → Protocol (behaviors) → Control Plane TCP/TCoP (product) → Toolchain Framework TCF (kit). Scope is any complex software ecosystem, not only languages. Rejected TMF as the lead framework name.
+
+== Pages
+
+* `explanation/infrastructure/toolchain-management.adoc` — canonical pedagogy.
+* `explanation/infrastructure/toolchain-control-plane.adoc` — stub/product metaphor.
+* `explanation/infrastructure/toolchain-framework.adoc` — TCF, IoC, not TMF; links to `dev-centr/toolchain-framework`.
+* `how-to/flutter-setup.adoc` — xrefs updated.
+
+== Navigation
+
+* Explanation → Infrastructure: Toolchain Management Pattern (lead), Control Plane, TCF.

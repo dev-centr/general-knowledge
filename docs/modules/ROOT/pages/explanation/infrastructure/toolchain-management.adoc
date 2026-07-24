@@ -1,0 +1,123 @@
+= Toolchain Management Pattern
+:navtitle: Toolchain Management Pattern
+:description: How software ecosystems should own install, version pinning, health, repair, and upgrade in the official entrypoint—pattern, protocol, control plane, and framework.
+
+**Toolchain Management** is the problem space: keeping a multi-part official toolkit installable, pinable, healthy, repairable, and upgradable without forcing newcomers into tribal side tools.
+
+This page is the **Toolchain Management Pattern**—how maintainers should *think*. Over the course of the explanation you move from thinking to producing: **pattern → protocol → control plane → framework**.
+
+Pattern is how you think; protocol is how you act; control plane is what you ship; framework is how you practice it without reinventing it.
+
+== Scope
+
+The pattern applies to **any software ecosystem** whose official toolkit has several moving parts that can drift or break—not only programming languages.
+
+Examples::
+Language/SDK stacks (Flutter, Node, .NET, JDK, Android SDK); game engines; cloud/CLI platforms (kubectl + auth + region tooling); ML stacks (drivers + runtimes + frameworks); internal “paved road” CLIs.
+
+Weaker fit::
+Single binaries with no multi-version story; pure SaaS account surfaces; libraries whose versioning already lives entirely in a language package manager.
+
+== Naming
+
+[cols="1,2"]
+|===
+| Term | Meaning
+
+| **Toolchain Management**
+| Umbrella / problem space.
+
+| **Toolchain Management Pattern**
+| Human-facing entry (this article’s title): how maintainers should think about lifecycle ownership.
+
+| **Toolchain Management Protocol**
+| Standard, repeatable *behaviors* (military sense of protocol) described in the body and in specs. Not a network/wire protocol.
+
+| **Toolchain Control Plane (TCP / TCoP)**
+| Metaphor for the **product** you ship: the official entrypoint (or thin official shim) that owns install, pin, health, repair, and upgrade. **TCoP** disambiguates from Transmission Control Protocol when needed. See xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane].
+
+| **Toolchain Framework (TCF)**
+| Planned kit that helps maintainers generate and validate a compliant control plane. Lead name is **TCF**, not “Toolchain Management Framework” (TMF)—TMF sounds like “only if I’m building a management app.” See xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)].
+|===
+
+== Pattern: how you think
+
+Developers usually want to *build with the toolkit*, not shop for tooling. Ecosystems often ship a compiler, SDK CLI, or platform CLI as the advertised entrypoint, then leave version pinning, upgrade recovery, and environment repair to community tools. That creates an onboarding trap:
+
+. Newcomer downloads the official toolkit and starts working.
+. A version conflict, bad upgrade, or PATH/doctor failure appears.
+. The “correct” fix is a third-party version manager the newcomer was never told to install first.
+. Tutorials that *start* with that version manager feel disorienting, because it is not the advertised entrypoint.
+
+Version management becomes an afterthought for users; communities invent version managers as an afterthought to the main executable. That is backwards.
+
+[IMPORTANT]
+====
+Expecting newcomers to discover FVM, Puro, nvm-class tools, evaluate them, and restructure their workflow is an unreasonable tax. Expert coping strategies are not good first-run design.
+====
+
+**Principle:** lifecycle ownership belongs in the ecosystem’s **main entrypoint** so newcomers never have to shop for a version manager before they can safely build.
+
+* When one toolkit version is enough, pinning stays invisible.
+* When projects diverge, the same entrypoint resolves the project pin.
+* Community brands may remain as compatible provisioners; they must not be the *only* correct path.
+
+“Merge FVM into Flutter” is an implementation detail. The requirement is **first-party ownership** of pinning and related lifecycle behavior in the official workflow.
+
+== Protocol: how you act
+
+The **Toolchain Management Protocol** is the set of standard, repeatable behaviors that avoid the onboarding trap. Full behavior list for implementers: xref:devcentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[Ecosystem Management — Protocol].
+
+At a glance, a compliant ecosystem entrypoint (alone or via TCF) should support:
+
+. **Bootstrap** — OS-native install where possible, PATH refresh, post-install health gate.
+. **Pin and resolve** — project pin > user default > system.
+. **Health** — machine-readable component status with evidence.
+. **Repair** — ordered, idempotent fix actions from failures.
+. **Upgrade and rollback** — transactional upgrades; revert to last known-good.
+. **Surface parity** — same verbs and model in CLI, GUI, and ideally IDE/agents.
+
+These are *behaviors and expectations*, not (yet) a fixed wire format. Specs harden them as schemas appear.
+
+== Control plane: what you ship
+
+Readers should transition from “how we behave” to “what we produce.” The product metaphor is a **Toolchain Control Plane (TCP / TCoP)**: the concrete management surface around the compiler/runtime/CLI—not a prettier `--version`.
+
+A control plane owns the protocol behaviors above, ideally with a GUI for multi-component toolkits (platform SDKs, emulators, caches, channels). Details and checklist: xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane].
+
+DevCentr records whether an ecosystem has an official plane via `unifiedControlPlane` on language/ecosystem definitions and shows an advisory when it does not.
+
+== Framework: how you practice it
+
+The **Toolchain Framework (TCF)** is the planned tool near the end of the journey: schemas, adapters, generators, and conformance tests so maintainers can habituate to the pattern without inventing a plane from scratch.
+
+TCF may use **inversion of control**: a host owns lifecycle control flow and calls ecosystem adapters. Maintainers fit existing toolkit pieces into a unified interface. Ecosystems can also comply by growing their own entrypoint without adopting TCF—the pattern and protocol still apply.
+
+Do not lead with “Toolchain Management Framework”; that name filters out people who correctly believe they are shipping a toolchain, not a management app. See xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)].
+
+== Case study: Flutter
+
+Flutter’s advertised path is `flutter`. Multi-project reality needs pinning (FVM, Puro, and similar). Newcomers learn the official path first, then hit version or upgrade pain, then discover community tools. Tutorials that lead with FVM feel wrong for the same reason.
+
+The right end state is a first-party control plane in the Flutter workflow—not “skill issue, use FVM.” Community tools remain a **bridge**. DevCentr’s Flutter module offers those bridges while leading with a Toolchain Management advisory.
+
+== Relation to DevCentr
+
+DevCentr’s **Ecosystem Management** vision treats shells, toolchains, and infrastructure as first-class. Toolchain Management is how we talk about lifecycle integrity; ecosystem modules surface gaps and bridges until an official control plane exists.
+
+* xref:devcentr:ROOT:project-vision.adoc[DevCentr Project Vision]
+* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (spec)]
+* xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
+* xref:devcentr:specifications:components/toolchain-management.adoc[DevCentr TCM component]
+* xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
+* link:https://github.com/dev-centr/toolchain-framework[dev-centr/toolchain-framework]
+* xref:reference/recommended-tools.adoc[Recommended Tools]
+
+== Capabilities checklist (for maintainers)
+
+* [ ] OS-native bootstrap with verified PATH / health gate
+* [ ] Per-project pin owned by the official entrypoint
+* [ ] Structured health report (machine-readable)
+* [ ] Repair plan and apply (idempotent)
+* [ ] Upgrade with rollback to last known-good
+* [ ] CLI and GUI (and ideally IDE) parity

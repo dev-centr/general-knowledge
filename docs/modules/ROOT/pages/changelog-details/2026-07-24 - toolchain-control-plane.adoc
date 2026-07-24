@@ -1,0 +1,18 @@
+= 2026-07-24 – Toolchain Control Plane
+
+== Summary
+
+Named the **Toolchain Control Plane** pattern: ecosystems should own install, version pinning, health, repair, and upgrade in the official entrypoint. Community version managers are a bridge, not the end state. Flutter is the primary case study.
+
+**Naming:** TCP (canonical acronym), TCoP (alternate when disambiguating from Transmission Control Protocol), TCF (Toolchain Framework — toolkit to generate/validate compliant planes).
+
+== Pages
+
+* `explanation/infrastructure/toolchain-control-plane.adoc` — philosophy and maintainer checklist.
+* `explanation/infrastructure/toolchain-framework.adoc` — TCF role vs TCP/TCoP.
+* `how-to/flutter-setup.adoc` — install Flutter and use FVM/Puro/mise as a stopgap.
+
+== Navigation
+
+* Explanation → Infrastructure: Toolchain Control Plane; Toolchain Framework (TCF)
+* How-to: Flutter Setup
