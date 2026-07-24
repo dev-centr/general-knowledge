@@ -1,0 +1,81 @@
+= Install and set up Nushell
+:navtitle: Nushell Setup
+:description: Install Nushell on Windows, macOS, and Linux and use it as the default Dev-Centr shell.
+
+Install link:https://www.nushell.sh/[Nushell] on every development machine. Prefer the same shell across OSes so scripts, docs, and agent instructions stay consistent.
+
+For *why* we recommend it, see xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell].
+
+== Install
+
+=== Windows
+
+Prefer `winget`:
+
+[source,powershell]
+----
+winget install Nushell.Nushell
+----
+
+Or download an installer from link:https://www.nushell.sh/book/installation.html[the official installation guide].
+
+=== macOS
+
+[source,bash]
+----
+brew install nushell
+----
+
+=== Linux
+
+Use your distro package when it is current, or follow the official guide (cargo, AppImage, or package repo):
+
+[source,bash]
+----
+# Example — verify the package name for your distro first
+# sudo apt install nushell
+# sudo dnf install nushell
+----
+
+Always confirm with:
+
+[source,bash]
+----
+nu --version
+----
+
+== Make Nushell easy to open
+
+. Add a **Windows Terminal** (or other terminal) profile that launches `nu` as the shell.
+. Optionally set that profile as the default for interactive work.
+. Keep a classical shell profile only for OS-required tasks (for example, elevating with legacy PowerShell scripts). Day-to-day Dev-Centr work should run in `nu`.
+
+== First checks
+
+In a Nushell session:
+
+[source,nushell]
+----
+$env.NU_VERSION
+ls | where type == dir
+----
+
+You should see structured table output from `ls`, not only a raw text dump.
+
+== Profiles and config
+
+Nushell stores configuration under its config directory (platform-specific; see `nu` docs for `$nu.config-path`). Prefer checking config into your environment-as-code layout once DevCentr manages shells as first-class citizens.
+
+== Troubleshooting
+
+Not found after install::
+Close and reopen the terminal, or refresh `PATH`, then run `nu --version` again.
+
+Tool says it requires Nushell::
+Install Nushell (this page). Tools using link:https://github.com/openshellorg/nu-require[nu-require] will, once `nu` is on `PATH`, relaunch themselves inside Nushell even if you started them from bash/zsh/pwsh. If install is still missing, they may offer a one-shot install on supported platforms.
+
+== See also
+
+* xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
+* xref:reference/shells/nushell.adoc[Nushell reference]
+* xref:reference/recommended-tools.adoc[Recommended Tools]

@@ -1,0 +1,15 @@
+= 2026-07-24 – WSL distro comparison and setup
+
+== Summary
+
+Educational coverage of which Linux distribution to use as the **WSL default**, plus a task-oriented setup how-to. Clarifies that Ubuntu on WSL is real Ubuntu **LTS** (1:1 with that release line, not with every newest Ubuntu interim), and documents the official **WSL Settings** GUI for global `.wslconfig` options.
+
+== Pages
+
+* `explanation/infrastructure/wsl-distro-comparison.adoc` — long-form comparison and workflows.
+* `how-to/wsl-setup.adoc` — enable WSL, install distros, set default, open Settings, common commands.
+
+== Navigation
+
+* How-to: WSL Setup
+* Explanation → Infrastructure: WSL Distro Comparison

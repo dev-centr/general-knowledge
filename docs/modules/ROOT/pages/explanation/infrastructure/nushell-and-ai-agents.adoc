@@ -1,0 +1,115 @@
+= Nushell and AI agents
+:navtitle: Nushell and AI agents
+:description: How Nushell helps agent/CLI automation, how that differs from NVIDIA OpenShell, and what is still missing for DevX.
+
+Agents live in terminals. They pipe commands, parse output, and chain tools. That means the **shell and CLI data model** matter as much as the model weights—and as much as sandbox policy.
+
+This page is opinionated on purpose.
+
+== Two different problems (do not mash them together)
+
+[cols="1,2,2", options="header"]
+|===
+| | NVIDIA OpenShell | Nushell (and friends)
+
+| Core fear
+| Agent escapes or exfiltrates; credentials leak; model calls go to the wrong place
+| Agent (or human) drowns in unstructured stdout; tools don't compose; every pipe needs a custom parser
+
+| Fix lives in
+| Runtime under the agent (sandbox, YAML policy, privacy router)
+| Shell / CLI layer (typed tables in the pipeline; shell owns final layout)
+
+| Typical win
+| “This agent *cannot* read `~/.ssh` or hit arbitrary HTTPS”
+| “`mytool \| where status == failed` just works—no regex archaeology”
+|===
+
+xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell overview] covers their stack. Short version: **they are not competitors.** You can want both. Confusing the names (`openshellorg` vs NVIDIA OpenShell) is easy; the jobs are not the same.
+
+== Why agents struggle with classical shells
+
+Default UNIX (and a lot of Windows) habits:
+
+. Tool prints pretty text for humans
+. Next tool (or the agent) scrapes that text
+. Someone changes a column width and everything breaks
+
+Agents are *especially* bad at this. They burn tokens on brittle parsing. They invent `sed` pipelines. They hallucinate flags. Unstructured stdout is tax on every step.
+
+PowerShell fixed part of this with .NET objects. Verbose, Windows-gravity, and still awkward when you drop to external CLIs that only speak text. Nushell's bet is cleaner for cross-platform DevX: **tables and records in the pipe**, render at the end.
+
+That architecture is already a big deal for agent CLI use—even before anyone invents a special “agent shell.”
+
+== Where Nushell is already fit for agents
+
+*Structured intermediate data.* An agent can ask for JSON/table-shaped results and keep chaining without reinventing parsers every turn.
+
+*Native open of JSON/YAML/CSV/SQLite.* Less “ConvertFrom-Json ceremony.”
+
+*Fast, small binary.* Startup cost matters when an agent shells out dozens of times.
+
+*Plugins + `from json`.* Existing apps do not need a full rewrite in Nu script. Emit structure (or speak the plugin protocol) and Nu does the rest.
+
+*Same shell on Win/macOS/Linux.* Agents and docs can share one story. We are tired of “and here's the PowerShell variant with different verbs.”
+
+For Dev-Centr / OpenShellOrg tooling, `nu-require` exists so a Nu-tailored CLI can hop into `nu` when the user (or agent host) started in pwsh/bash. That matters for agents too: the *host* shell is often not Nu even when Nu is installed.
+
+== Where NVIDIA OpenShell still wins (and Nu does not replace it)
+
+Nushell does **not**:
+
+* Confine an agent to a filesystem allow-list at the kernel
+* Hot-reload egress policy while the agent runs
+* Strip API keys from inference requests and force local routing
+* Give security teams a YAML artifact they can review instead of vibes
+
+If your threat model is “autonomous coding agent on a machine with secrets,” **policy sandboxing is the product**. Nushell helps the agent *work cleaner inside the box*; it is not the box.
+
+Honest take: people who only install Nu and call it “agent safety” are solving the wrong layer. People who only install OpenShell and keep scraping ANSI tables are also leaving easy wins on the table.
+
+== The DevX gap (from the Nu vs pwsh rabbit hole)
+
+You should not have to rewrite every app in Nu script. Good.
+
+The practical integration tiers today:
+
+. Emit JSON/JSONL/CSV on stdout → `from json` / friends
+. Wrap ugly text → `detect columns`
+. Full plugin protocol (MsgPack/JSON IPC) → native Nu values in and out
+
+What still feels missing for “DevX approved” adoption: **language-native emit APIs** so a C (or Go, D, …) programmer builds records in memory and calls `nu_emit_row(...)`—not hand-`fprintf` JSON, and not “go learn MsgPack framing” on day one.
+
+That is why OpenShellOrg started:
+
+* link:https://github.com/openshellorg/nu-require[nu-require] — require / relaunch under Nu
+* link:https://github.com/openshellorg/nu-emit[nu-emit] — small C-first library to emit structured rows without stringly JSON
+* link:https://github.com/openshellorg/shell-architecture[shell-architecture] — the longer thesis
+
+Rust already has a real plugin SDK. Everyone else needs the boring, polite path: **structs in, frames out.**
+
+== Trajectory we want (awareness + better shell apps)
+
+. Treat structured pipelines as the default story for new CLIs (Nu-friendly emit, not pretty-only text).
+. Ship SDKs / helpers so “works with Nushell” is a library import, not a blog post.
+. Keep SOS (flag syntax) and Nu advocacy as complementary OpenShellOrg tracks—not a second shell language.
+. Talk to upstream Nushell about DevX: stable emit conventions, discoverability, maybe blessing community SDKs as they mature. (Posted: link:https://github.com/nushell/nushell/discussions/18698[nushell#18698].)
+. Use Nu *inside* agent sandboxes (NVIDIA OpenShell or otherwise) so agents get tables *and* confinement.
+
+== Bottom line
+
+| Need | Reach for |
+|---|---|
+| Agent can't loot the machine | NVIDIA OpenShell (or peer sandbox runtimes) |
+| Agent (and humans) can compose tools without parsing hell | Nushell |
+| CLI authors get a real API instead of folklore | `nu-emit` / plugin SDKs / docs |
+| Team machines standardize on one shell | Dev-Centr recommends Nu |
+
+We are not picking a fight with NVIDIA's naming. We are picking a fight with unstructured stdout as the only pipe currency—and with the idea that sandboxing alone makes agent CLI workflows pleasant.
+
+== Related
+
+* xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell overview]
+* xref:explanation/infrastructure/nushell.adoc[Why we recommend Nushell]
+* xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell (short)]
+* xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]

@@ -1,0 +1,76 @@
+= Why We Recommend Nushell
+:navtitle: Nushell
+:description: Why Dev-Centr recommends Nushell as the default cross-platform shell for structured pipelines and display decoupling.
+
+Dev-Centr recommends link:https://www.nushell.sh/[Nushell] (`nu`) as the **default interactive and scripting shell** on Windows, macOS, and Linux.
+
+This is not a taste preference. It is an architectural endorsement: Nushell separates **data transport** from **visual presentation**—the split classical UNIX shells never made.
+
+== The bottleneck: one byte stream, two jobs
+
+Standard shells bind two different jobs to the same byte stream (`stdout` / `stdin`):
+
+Data transport::
+Streaming unstructured bytes from process A to process B (pipes, redirects, scripts, agents).
+
+Visual presentation::
+Dumping those same bytes onto a terminal grid that wraps by column width and ANSI control codes.
+
+That dual role forces a permanent compromise:
+
+* Plain CLI tools keep piping, but lose semantic layout (tables, records, reflow).
+* TUI frameworks (Urwid, ncurses, many modern kits) take over the screen for layout control and **abandon** clean stdout composability.
+
+If you care about SSH-forced terminals *and* agent/automation piping, that compromise is the bottleneck. Rich TUIs do not fix it; they work around it by leaving the pipe model.
+
+== What structured shells change
+
+Next-generation shells fix the split at the **shell** layer:
+
+. Commands pass **typed tables, records, and lists** down the pipeline—not only raw text.
+. The shell owns the **final render**. Layout happens when data hits the user's screen (width-aware tables, reflow). If you pipe to another command instead, no text layout occurs; structures stay structures.
+
+PowerShell pioneered object streams on Windows. Nushell is the strongest **cross-platform, Unix-friendly** implementation of the same idea, with a syntax suited to everyday interactive use.
+
+[IMPORTANT]
+====
+Dev-Centr still documents PowerShell where the OS or legacy tooling requires it. We do **not** recommend PowerShell as the long-term default shell for Dev-Centr workflows. Prefer Nushell everywhere it can replace the role.
+====
+
+== Why Nushell (not “write a new shell”)
+
+Reinventing a structured shell from scratch is the wrong starting point. Nushell already embodies the model we want to advocate:
+
+* Structured, typed pipelines end-to-end.
+* Display decoupled from transport at the pipeline boundary.
+* Actively maintained ecosystem and plugins.
+* Runs on Windows, macOS, and Linux—the same recommendation everywhere.
+
+Open Shell Organization (link:https://github.com/openshellorg[openshellorg]) complements this by standardizing CLI **flag syntax** (SOS) and by building companion libraries (for example, requiring Nushell from tailored CLIs). Dev-Centr **recommends and configures**; OpenShellOrg **standardizes and tools**. Neither should fork the structured-pipeline idea away from Nushell without a concrete upstream gap.
+
+== What this means for Dev-Centr tools
+
+* Prefer Nushell examples in docs and install recipes when shell choice is free.
+* DevCentr environment orchestration should treat Nushell as a first-class system shell target.
+* CLIs that depend on Nushell-structured behavior should detect the host shell (see OpenShellOrg `nu-require`): if `nu` is on `PATH` but the current shell is not Nushell, **relaunch the tool inside Nushell**; if Nushell is missing, fail clearly with a link to https://www.nushell.sh/ and an optional one-shot install offer.
+
+== Related reading
+
+* xref:how-to/nushell-setup.adoc[How to: Install and set up Nushell]
+* xref:reference/shells/nushell.adoc[Reference: Nushell facts]
+* xref:reference/recommended-tools.adoc[Recommended Tools]
+* xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
+* xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+* xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell (name collision + overview)]
+* link:https://github.com/openshellorg/shell-architecture[OpenShellOrg: shell architecture notes]
+* link:https://github.com/openshellorg/nu-require[OpenShellOrg: nu-require]
+* link:https://github.com/openshellorg/nu-emit[OpenShellOrg: nu-emit]
+
+== Terminal protocols (orthogonal layer)
+
+A second fix lives in **terminal emulators**: protocols that carry structured or reflowable blocks instead of only ANSI grids (work in Ghostty, Kitty, WezTerm, and peers). That helps classical CLI tools look better without a structured shell.
+
+Those protocols do not replace structured pipelines. Prefer both:
+
+* Nushell for command-to-command data.
+* Modern terminal protocols for richer presentation when you must stay on byte-oriented tools.

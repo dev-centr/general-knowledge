@@ -1,0 +1,14 @@
+= 2026-07-22 — Nushell recommendation
+
+Dev-Centr general knowledge now endorses link:https://www.nushell.sh/[Nushell] as the default shell on all OSes.
+
+== Why
+
+Classical shells use one byte stream for both data transport and terminal display. Nushell (like PowerShell's object model, but cross-platform and preferred here) keeps structured data in the pipeline and renders only at the screen boundary.
+
+== What landed
+
+* Explanation, how-to, reference pages
+* Recommended Tools lists Nushell first under Platform & Shell
+* Cross-links from DevCentr capabilities / vision (sibling repos)
+* Points at OpenShellOrg companion repos for standards and `nu-require`

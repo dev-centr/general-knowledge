@@ -1,0 +1,62 @@
+= NVIDIA OpenShell (overview)
+:navtitle: NVIDIA OpenShell
+:description: What NVIDIA OpenShell is, what problem it solves, and how it differs from OpenShellOrg and Nushell.
+
+[IMPORTANT]
+====
+**Name collision:** NVIDIA's **OpenShell** is *not* our link:https://github.com/openshellorg[Open Shell Organization] (`openshellorg`). Different orgs, different jobs. NVIDIA OpenShell is an **agent sandbox runtime**. We care about **shell/CLI architecture** and recommending Nushell.
+====
+
+== In one sentence
+
+link:https://github.com/NVIDIA/OpenShell[NVIDIA OpenShell] is a **safe place to run autonomous AI agents**—containers/sandboxes with YAML policies that limit files, network, processes, and where model calls go.
+
+Homepage / docs: https://docs.nvidia.com/openshell/latest/  
+Repo: https://github.com/NVIDIA/OpenShell (Apache-2.0)
+
+== What problem it is solving
+
+Agents that can run shells, edit files, and call APIs are useful and dangerous. Prompt-level “please don't touch `.env`” is not a security boundary. NVIDIA's pitch is: **move permissions out of the prompt and into the runtime.**
+
+So OpenShell sits *under* the agent:
+
+* Isolate the agent in a sandbox
+* Enforce who can read/write what
+* Control egress (network)
+* Route inference through a **privacy router** (strip caller credentials, send sensitive work local when policy says so)
+* Keep an audit trail
+
+You can often drop an existing coding agent (Claude Code, Codex, etc.) into a sandbox **without rewriting the agent**.
+
+== Main pieces (plain language)
+
+[cols="1,2", options="header"]
+|===
+| Piece | Job
+
+| Gateway
+| Control plane: create/connect sandboxes, auth boundary, credentials live here—not as files the agent can casually loot
+
+| Sandbox + supervisor
+| The box the agent actually runs in; enforces isolation
+
+| Policy engine
+| YAML rules for filesystem, process, network (some locked at create; network/inference often hot-reloadable)
+
+| Privacy router
+| Intercepts model API shapes, strips rogue keys, routes by policy (local vs cloud)
+|===
+
+== What it is *not*
+
+* Not a replacement interactive shell like bash/zsh/nu
+* Not a structured data pipeline for CLI tools
+* Not “OpenShellOrg with an NVIDIA logo”
+
+If you only need “don't let the agent exfiltrate my machine,” NVIDIA OpenShell (or something in that class) is the right *category* of tool. If you need “CLIs pass tables instead of text soup,” that is Nushell / structured shells.
+
+== See also
+
+* xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents (vs NVIDIA OpenShell)]
+* xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
+* xref:explanation/infrastructure/nushell.adoc[Why we recommend Nushell]

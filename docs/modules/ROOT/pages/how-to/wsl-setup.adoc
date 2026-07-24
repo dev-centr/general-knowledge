@@ -1,0 +1,116 @@
+= Set up and manage WSL
+:navtitle: WSL Setup
+:description: Enable WSL, install distros, set a default, open WSL Settings, and choose Ubuntu LTS vs rolling specialists.
+
+Task guide for getting Windows Subsystem for Linux working and choosing a default distro. For the full comparison and “why,” see xref:explanation/infrastructure/wsl-distro-comparison.adoc[Choosing a WSL Linux Distro].
+
+== Prerequisites
+
+* Recent Windows 10 or Windows 11
+* Ability to elevate (Administrator) for first-time enablement
+* Virtualization enabled in firmware (required for WSL2)
+
+== Install or repair WSL
+
+From an elevated PowerShell:
+
+[source,powershell]
+----
+wsl --install
+----
+
+That enables required features and typically installs the default Store Ubuntu. To install a specific distro:
+
+[source,powershell]
+----
+wsl --list --online
+wsl --install -d Ubuntu-24.04
+----
+
+Confirm:
+
+[source,powershell]
+----
+wsl -l -v
+----
+
+You want **VERSION 2** for normal development. Convert if needed:
+
+[source,powershell]
+----
+wsl --set-version <DistroName> 2
+wsl --set-default-version 2
+----
+
+== Pick and set the default
+
+Merit-based default for most developers: **Ubuntu LTS** (for example `Ubuntu-24.04`). Keep rolling or RHEL-clone distros as named specialists.
+
+[source,powershell]
+----
+wsl --set-default Ubuntu-24.04
+----
+
+Names must match `wsl -l -v` exactly (spaces and capitalization included).
+
+== Open official WSL Settings (global VM config)
+
+Windows ships a **WSL Settings** app (Start menu). It edits the global `.wslconfig` options (memory, CPUs, networking features, and related toggles). Prefer it over hand-editing `%UserProfile%\.wslconfig`.
+
+Docs: link:https://learn.microsoft.com/windows/wsl/wsl-config[Microsoft: WSL configuration].
+
+After changing memory/CPU limits you usually need:
+
+[source,powershell]
+----
+wsl --shutdown
+----
+
+Then start a distro again.
+
+== Everyday commands
+
+[cols="1,2"]
+|===
+| Goal | Command
+
+| Open default distro
+| `wsl`
+
+| Open a named distro
+| `wsl -d openSUSE-Tumbleweed`
+
+| List installed
+| `wsl -l -v`
+
+| Set default
+| `wsl --set-default <Name>`
+
+| Stop all WSL VMs
+| `wsl --shutdown`
+
+| Export / backup
+| `wsl --export <Name> backup.tar`
+
+| Remove a distro
+| `wsl --unregister <Name>` (destructive)
+|===
+
+== Multi-distro layout (recommended)
+
+. Default: Ubuntu LTS — daily shell and docs match.
+. Optional: openSUSE Tumbleweed or Arch — fresh packages.
+. Optional: AlmaLinux — RHEL-shaped work.
+. Never default: `docker-desktop` / `podman-machine-*`.
+
+== Where to keep code
+
+Prefer the **Linux filesystem** inside the distro (for example `~/code` or a bind to your layout) for Linux-native tools. Windows drives appear under `/mnt/c`, `/mnt/z`, and so on; cross-OS file I/O is slower and can confuse file watchers.
+
+Dev-Centr’s usual Windows code root (`Z:\code`) is visible from WSL as `/mnt/z/code` when that drive is mounted—usable, but not always ideal for heavy `node_modules` / build trees.
+
+== Related
+
+* xref:explanation/infrastructure/wsl-distro-comparison.adoc[Choosing a WSL Linux Distro]
+* link:https://learn.microsoft.com/windows/wsl/[WSL documentation]
+* xref:how-to/nushell-setup.adoc[Nushell setup] (recommended shell inside the distro)

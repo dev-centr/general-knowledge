@@ -1,0 +1,213 @@
+= Choosing a WSL Linux Distro
+:navtitle: WSL Distro Comparison
+:description: Full comparison of Ubuntu LTS, openSUSE Tumbleweed, Arch, and AlmaLinux as WSL defaults—workflows, use cases, and how LTS differs from “frozen.”
+
+Windows Subsystem for Linux (WSL) lets you run a real Linux userspace on Windows. The first lasting decision is **which distribution becomes your default**—the one bare `wsl`, many terminals, and tools open when you do not name a distro.
+
+This page is about **merits and workflows**, not whatever happens to be installed on one machine. For install steps, see xref:how-to/wsl-setup.adoc[How to: Set up and manage WSL].
+
+== What “default distro” actually means
+
+The **default** is the Linux environment you get unless you pass `-d DistroName`. It should optimize for:
+
+. **Interoperability** — docs, CI samples, Dockerfiles, and forum answers that assume a particular distro.
+. **Predictability** — your everyday shell should rarely surprise-break under you.
+. **First-class WSL experience** — Microsoft docs, Store packaging, and known footguns.
+. **Enough packages** — you can install a modern toolchain without fighting the userspace.
+
+Package *freshness* and packaging purity matter more for a **named powerhouse** distro (`wsl -d Tumbleweed`) than for the default.
+
+[NOTE]
+====
+**Managed sidecars are never the default.** Distros named like `docker-desktop` or `podman-machine-default` exist so container engines can run Linux helpers. Do not set them as default; do not treat them as a daily shell.
+====
+
+== Clarifying Ubuntu: “LTS” is not “frozen forever”
+
+A common misunderstanding:
+
+> I thought Ubuntu on WSL was a 1:1 match to upstream Ubuntu.
+
+**It is**—for the **Ubuntu release channel you installed**, usually an **LTS** (Long Term Support) release such as 22.04 or 24.04.
+
+What LTS means in practice:
+
+* **Same packages as Ubuntu LTS on bare metal.** Store/Microsoft packaging of Ubuntu for WSL is real Ubuntu for that version, not a Microsoft fork of the userspace.
+* **Not the same as “whatever is newest in the Ubuntu world.”** Ubuntu also ships interim releases (for example 25.04). LTS holds major library and toolchain versions for years and applies **security backports** and selected stable updates—not a rolling march of every new upstream tag.
+* **Not frozen solid.** You get security fixes, point releases, and some package updates. You do **not** get a continuous “always latest Node / GCC / glibc” experience the way openSUSE Tumbleweed or Arch do.
+
+So:
+
+[cols="1,2"]
+|===
+| Phrase | Accurate reading
+
+| “1:1 with Ubuntu”
+| True for **Ubuntu 24.04 LTS ↔ Ubuntu 24.04 LTS** (same release line).
+
+| “Always matches latest Ubuntu”
+| False for LTS. Latest may be an interim release or a newer LTS you have not upgraded to.
+
+| “Frozen / dead packages”
+| Misleading. LTS is **stable baseline + backports**, not an abandoned snapshot.
+|===
+
+If a tutorial says “on Ubuntu,” it almost always means **current LTS assumptions**. That is why Ubuntu LTS wins as a *default* even when a rolling distro is more fun as a *workshop*.
+
+== Distro families at a glance
+
+[cols="1,1,2,2", options="header"]
+|===
+| Distro | Cadence | Best as | Weak as
+
+| **Ubuntu LTS**
+| Fixed baseline every ~2 years; 5 years of support (longer with Ubuntu Pro)
+| System default; matching docs/CI; low-surprise daily shell
+| Bleeding-edge libraries without PPAs, snaps, or version managers
+
+| **openSUSE Tumbleweed**
+| Rolling (continuous)
+| Powerhouse toolchain; current packages; quality packaging (`zypper`, OBS)
+| Default when you want maximum boring stability and max forum overlap
+
+| **Arch Linux**
+| Rolling + AUR
+| Experiments; always-latest enthusiast box
+| Default “just works” shell; low WSL-specific tribal knowledge
+
+| **AlmaLinux 9** (RHEL clone)
+| Slow, enterprise-shaped
+| Matching RHEL/Rocky/Alma production and corporate CI
+| Modern personal JS/Python stacks without modules/sidecars
+|===
+
+Other Store options (Debian, Fedora, Kali, Pengwin, etc.) fit the same pattern: pick **stable generalist**, **rolling workshop**, or **prod-parity specialty**—do not install five half-set-up defaults.
+
+== Workflows and use cases
+
+=== A. Everyday Windows developer (editors on Windows, builds in Linux)
+
+Typical pattern: VS Code / Cursor / Visual Studio on Windows; terminal and builds in WSL; repos either under `\\wsl$\...` or on a Windows drive mounted at `/mnt/...` (prefer Linux filesystem for Linux-native I/O).
+
+* **Default:** Ubuntu LTS — tutorials, `apt`, Node/Python guides, and GitHub Actions `ubuntu-latest` mental model all line up.
+* **Add later:** Tumbleweed or Arch when you need newer compilers or libraries than LTS offers.
+* **Avoid:** Making Alma or Arch the only distro unless that is your actual target.
+
+=== B. “Make my laptop match CI”
+
+* If CI is `ubuntu-22.04` / `ubuntu-24.04` → **Ubuntu LTS** of the same generation.
+* If CI is RHEL/UBI/Alma → **AlmaLinux** (or Rocky) as a **named** distro for that project.
+* Rolling distros are a poor CI mirror; use them to *develop*, then verify on the CI image.
+
+=== C. Systems / packaging / “I want current upstream”
+
+* **Tumbleweed** — strong default *among rolling options*: curated rolling, excellent dependency handling.
+* **Arch** — maximum newness and AUR; you accept breakage and self-support.
+* Keep Ubuntu around for “does this still work on what most people run?”
+
+=== D. Enterprise / regulated / RHEL-shaped servers
+
+* **AlmaLinux 9** (or Rocky) for parity with production.
+* Do not force your entire personal toolchain through `dnf` modules alone—use language version managers (`uv`, `pnpm`, `asdf`, containers) when the base OS is intentionally old.
+
+=== E. Containers are the real target
+
+If the shippable unit is a container, the host distro matters less. Still pick a **pleasant default shell** (usually Ubuntu LTS), and do serious builds in the same base image you deploy (`docker build`, Podman, Dev Containers).
+
+=== F. GPU, ROCm, vendor repos
+
+Vendor documentation often targets specific distros (Ubuntu LTS pages are common; some AMD/NVIDIA stacks document SUSE or RHEL too). Prefer the distro the vendor’s current guide actually tests—then isolate with containers when the host and the GPU stack disagree.
+
+== Comparison criteria (deeper)
+
+=== Documentation gravity
+
+Ubuntu wins by volume: WSL getting-started flows, Stack Overflow, blog posts, and many upstream “Linux instructions” are Ubuntu-shaped (`apt`, `/etc/os-release` ID `ubuntu`).
+
+Tumbleweed and Arch have excellent *Linux* docs; fewer *WSL-specific* answers when something breaks at the Windows boundary.
+
+=== Stability vs freshness
+
+[cols="1,2,2"]
+|===
+| Need | Prefer | Why
+
+| Default shell that survives months of neglect
+| Ubuntu LTS (or Alma for RHEL shops)
+| Deliberate version holds
+
+| New GCC/Clang/libraries without waiting
+| Tumbleweed or Arch
+| Rolling
+
+| Match a RHEL production fleet
+| Alma/Rocky
+| Same userspace shape
+|===
+
+=== Package managers
+
+* **apt** (Ubuntu/Debian) — ubiquitous examples.
+* **zypper** (openSUSE) — powerful, clear dependency solver; underrated.
+* **pacman** (+ AUR) (Arch) — fast; AUR is power and risk.
+* **dnf** (Alma) — enterprise modules; older defaults by design.
+
+Language toolchains (**pnpm**, **uv**, **rustup**, **nvm**) reduce how much the distro package set matters—but glibc age, system libraries, and Docker-from-WSL still follow the distro.
+
+=== WSL integration quality
+
+All official Store distros run on the same WSL2 VM architecture. Differences are mostly userspace and packaging. systemd support, WSLg GUI apps, and `.wslconfig` limits are **WSL-level**, shared—configured globally (see Windows **WSL Settings**), not per “which ISO branding you picked.”
+
+=== Multi-distro strategy (recommended)
+
+Most developers are happier with **one default + zero or more specialists**:
+
+[source,text]
+----
+default: Ubuntu-24.04     # daily shell, docs match
+named:   openSUSE-Tumbleweed  # fresh packages when needed
+named:   AlmaLinux-9          # RHEL parity for work projects
+----
+
+Set the default explicitly:
+
+[source,powershell]
+----
+wsl --set-default Ubuntu-24.04
+----
+
+(Use the exact name from `wsl -l -v`.)
+
+== Recommendation summary
+
+[IMPORTANT]
+====
+**Ideal system default (merits):** Ubuntu LTS.
+
+**Ideal rolling workshop:** openSUSE Tumbleweed (Arch if you enjoy maintaining it).
+
+**Ideal prod-parity specialty:** AlmaLinux (or Rocky) matching your servers.
+
+**Never default:** `docker-desktop`, `podman-machine-*`, or any engine-managed distro.
+====
+
+Local investment (hours spent configuring Tumbleweed, Arch, etc.) can justify keeping a non-Ubuntu default **on one machine**. That is convenience, not a change to the merit-based ideal above.
+
+== Windows management UI: what exists (and what does not)
+
+Windows is no longer “CLI only” for WSL configuration:
+
+* **WSL Settings** (Start menu: “WSL Settings” / `wslsettings`) — official GUI for **global** WSL2 VM options that live in `.wslconfig` (memory, processors, networking features, and related toggles). Microsoft recommends it over hand-editing `.wslconfig`. See link:https://learn.microsoft.com/windows/wsl/wsl-config[WSL configuration docs].
+* **Microsoft Store** — install additional distros.
+* **Windows Terminal** — per-distro profiles.
+* **`wsl.exe` CLI** — still the source of truth for **list / default / export / import / unregister** (`wsl -l -v`, `wsl --set-default`, `wsl --install -d`, …).
+
+What Windows still does **not** give you is a strong **educational distro chooser** (when to use Ubuntu vs Tumbleweed vs Alma) or a full “fleet manager” with opinions. DevCentr’s **WSL** page fills that gap and links into official WSL Settings for VM-level knobs.
+
+== Related reading
+
+* xref:how-to/wsl-setup.adoc[How to: Set up and manage WSL]
+* xref:explanation/infrastructure/windows-testing-on-linux.adoc[Windows testing on Linux]
+* xref:reference/windows-eol-exceptions.adoc[Windows EOL exceptions]
+* link:https://learn.microsoft.com/windows/wsl/[Microsoft WSL documentation]
+* link:https://learn.microsoft.com/windows/wsl/wsl-config[`.wslconfig` and WSL Settings]

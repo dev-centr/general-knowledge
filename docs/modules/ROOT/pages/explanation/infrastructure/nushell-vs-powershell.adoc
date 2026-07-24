@@ -1,0 +1,38 @@
+= Nushell vs PowerShell (short)
+:navtitle: Nushell vs PowerShell
+:description: Direct comparison for Dev-Centr: same structured-pipe idea, different philosophies.
+
+Both ditch “pipe only text blobs.” That is the important part. The rest is taste, ecosystem, and gravity.
+
+[cols="1,2,2", options="header"]
+|===
+| | PowerShell | Nushell
+
+| Pipe currency
+| Live .NET objects (methods, reflection)
+| Tables / records / primitives (data, not OOP instances)
+
+| Runtime
+| .NET CLR
+| Rust native binary
+
+| Feel
+| Enterprise verbs, Windows-first history
+| Concise, cross-platform, functional pipelines
+
+| Opening data
+| Often ConvertFrom-\* / Import-\*
+| `open file.json` (and yaml/csv/sqlite) → table
+
+| External CLIs
+| Easy to fall back to string arrays
+| Builtins return tables; text tools get `from json` / `detect columns`
+|===
+
+**Pick PowerShell** when you are deep in AD/Azure/Windows modules or stuck on legacy scripts.
+
+**Pick Nushell** for day-to-day Dev-Centr work on any OS, structured files/APIs, and agent-friendly pipelines.
+
+You do **not** rewrite every app in Nu script. Emit JSON/structure, use a plugin, or (soon) call something like link:https://github.com/openshellorg/nu-emit[nu-emit]. See xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents] for the adoption/DevX angle.
+
+We still document PowerShell where the OS forces it. We do not treat it as the long-term default.

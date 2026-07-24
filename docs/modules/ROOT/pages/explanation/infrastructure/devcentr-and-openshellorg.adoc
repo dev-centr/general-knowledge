@@ -1,0 +1,51 @@
+= Dev-Centr and Open Shell Organization
+:navtitle: Dev-Centr and OpenShellOrg
+:description: How Dev-Centr product goals relate to Open Shell Organization standards and tooling.
+
+Dev-Centr and link:https://github.com/openshellorg[Open Shell Organization (OpenShellOrg)] share overlapping interests in better shells and CLIs. They should stay **aligned**, not **merged**.
+
+[IMPORTANT]
+====
+**Not NVIDIA OpenShell.** NVIDIA's link:https://github.com/NVIDIA/OpenShell[OpenShell] is an agent *sandbox runtime*. Ours is CLI/shell standards + Nu companion libs. See xref:explanation/infrastructure/nvidia-openshell.adoc[overview] and xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nu vs that stack for agents].
+====
+
+== Different jobs
+
+[cols="1,2,2", options="header"]
+|===
+| | Dev-Centr | OpenShellOrg
+
+| Audience
+| Developers setting up and orchestrating environments (DevCentr product + docs)
+| Shell/CLI ecosystem: authors, certifiers, standards consumers
+
+| Primary question
+| What should *this machine and team* run, and how does DevCentr configure it?
+| What should *the industry* treat as correct CLI/shell behavior?
+
+| Nushell
+| **Recommend and configure** as the default shell on all OSes
+| **Advocate and tool** (companions like `nu-require`; architecture notes; optional upstream contributions)—do not reinvent Nushell
+
+| SOS (flag syntax)
+| Consume / prefer certified tools when useful
+| Own the **Standardized Operations Syntax** and certification mark
+|===
+
+== Why the goals feel the same
+
+Both care about:
+
+* Escaping “stdout is both a pipe and a canvas”
+* Consistent, discoverable CLI behavior
+* Cross-platform developer experience without Microsoft-locked shell defaults
+
+That overlap is real. It is why OpenShellOrg work is **relevant** to Dev-Centr. Relevance is not a reason to collapse the orgs: product orchestration and industry standards need different governance, issue trackers, and contribution norms.
+
+== Practical rule
+
+* Put **user guidance and DevCentr behavior** in Dev-Centr / general-knowledge.
+* Put **cross-vendor standards, certification, and reusable CLI libraries** in OpenShellOrg.
+* Cross-link aggressively; duplicate little.
+
+See also: xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell], xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents], link:https://github.com/openshellorg/shell-architecture[shell-architecture], link:https://github.com/openshellorg/nu-require[nu-require], link:https://github.com/openshellorg/nu-emit[nu-emit].
