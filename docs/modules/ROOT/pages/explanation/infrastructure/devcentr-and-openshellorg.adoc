@@ -48,4 +48,4 @@ That overlap is real. It is why OpenShellOrg work is **relevant** to Dev-Centr. 
 * Put **cross-vendor standards, certification, and reusable CLI libraries** in OpenShellOrg.
 * Cross-link aggressively; duplicate little.
 
-See also: xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell], xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents], link:https://github.com/openshellorg/shell-architecture[shell-architecture], link:https://github.com/openshellorg/nu-require[nu-require], link:https://github.com/openshellorg/nu-emit[nu-emit].
+See also: xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell], xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents], link:https://github.com/openshellorg/shell-architecture[shell-architecture], link:https://github.com/openshellorg/nu-require[nu-require], link:https://github.com/openshellorg/nu-emit[nu-emit], link:https://github.com/openshellorg/prohelp[prohelp], link:https://github.com/openshellorg/about[about].
