@@ -134,4 +134,4 @@ Canonical brand harbor: `.github` / `.github-private` `profile/` (mirrored on `d
 
 * xref:reference/recommended-tools.adoc[Recommended Tools] — catalog entry (lanes, not a single winner)
 * Marketing site: CSS-driven inline SVG on `devcentr.org` (`LogoMark` / `HeroOrbit`), with `logo-motion.svg` as the file form
-* Chronicle: link:https://devcentr.org/blog/2026-07-24-brand-motion[Brand mark and motion format tradeoffs] on `devcentr.org/blog`
+* Chronicle / News: link:https://devcentr.org/news/2026-07-24-brand-motion[Brand mark and motion format tradeoffs] on `devcentr.org/news` (legacy `/blog` alias)
