@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-07-24 — Brand motion (SVG + Rive)
+
+* Expanded xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]: full tradeoff matrix (openness, player weight, interactivity, **agentic editability**); Rive as an option not a hard default; note on animation-as-code / text IR direction; **Popkorn** marked potential future with link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7].
+* Softened xref:reference/recommended-tools.adoc[Recommended Tools] Design & Brand Motion wording (no single-format advocacy).
+* See xref:changelog-details/2026-07-24 - brand-motion-svg-rive.adoc[Detailed changelog].
+
 == 2026-07-24 — Toolchain Management vocabulary
 
 * Canonical explanation is now xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (pattern → protocol → control plane → TCF).

@@ -2,6 +2,10 @@
 
 Product-agnostic reference documentation organized by the Diátaxis model (tutorials, how-to, reference, explanation). Consumed by the Dev-Centr docs site and other projects.
 
+== Changelog
+
+See link:docs/modules/ROOT/pages/changelog.adoc[changelog.adoc] (rendered as Changelog in the Antora nav).
+
 == Build
 
 [source,bash]

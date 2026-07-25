@@ -1,0 +1,40 @@
+= Nushell
+:navtitle: Nushell
+:description: Facts and pointers for Nushell as the Dev-Centr recommended shell.
+
+== Summary
+
+|===
+| Item | Value
+
+| Homepage
+| https://www.nushell.sh/
+
+| Binary
+| `nu`
+
+| Role in Dev-Centr
+| **Recommended default shell** on Windows, macOS, and Linux
+
+| Book / install
+| https://www.nushell.sh/book/installation.html
+
+| Source
+| https://github.com/nushell/nushell
+|===
+
+== Detection hints (for tools)
+
+Tools that require Nushell can treat any of these as strong signals (combine for robustness):
+
+* Environment: `NU_VERSION` set in a Nushell process tree
+* Parent / current process name: `nu` / `nushell`
+* Invoking shell identity available to child processes (prefer documented Nushell env conventions over guessing)
+
+If the tool is not under Nushell but `nu` is on `PATH`, relaunch inside Nushell (see OpenShellOrg link:https://github.com/openshellorg/nu-require[nu-require]). If Nushell is missing, tell the user the tool requires it, link to https://www.nushell.sh/, and optionally offer install.
+
+== Related Dev-Centr docs
+
+* xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
+* xref:how-to/nushell-setup.adoc[Install and set up Nushell]
+* xref:reference/recommended-tools.adoc[Recommended Tools]

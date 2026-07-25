@@ -1,0 +1,136 @@
+= Brand and UI Motion Formats
+:navtitle: Brand Motion
+:description: Tradeoffs among animated SVG, Lottie, and Rive for Dev-Centr — openness, runtime weight, agentic workflows — and why no single format wins.
+
+Dev-Centr does **not** hard-advocate a single motion format. Brand and UI motion sit on several axes at once (openness, player weight, interactivity, designer pipeline, **agentic editability**). Pick by job.
+
+== The short answer
+
+* **Animated SVG (+ CSS)** — **Default** for portable brand marks (org profiles, docs, marketing loops). Zero player. Text in git. Fine for geometric motion; not a “hack” when the motion *is* geometry.
+* **Lottie** — Better when motion is *complex baked timeline* work (many layers, AE-authored paths) and you want a widely supported export. JSON is text (more agent-accessible than `.riv`) but verbose and awkward to hand-edit. Needs a player (~60–100 KB gzipped typical).
+* **Rive (`.riv`)** — Strong for *interactive* / theme-driven UI motion (state machines, inputs). Runtimes MIT; **editor proprietary**; **file is binary** (poor `git diff`, poor agent authoring). Needs a heavier web player (~200 KB+ gzipped typical; lite builds help).
+
+Do **not** call Rive an open de facto standard. SVG keeps that role for marks you harbor and embed without a runtime.
+
+== Decision axes (the real tradeoffs)
+
+[cols="1,2,2,2", options="header"]
+|===
+| Axis | Animated SVG / CSS | Lottie | Rive
+
+| Portable brand / README / avatar
+| Best
+| Awkward (needs player)
+| Awkward (needs player + binary)
+
+| Complex multi-layer timeline
+| Painful past a point
+| Strong (AE pipeline)
+| Strong (editor timeline)
+
+| Interactive / themed UI states
+| Manual (CSS/JS)
+| Weak (mostly playback)
+| Strong (state machines + inputs)
+
+| Open “standard” posture
+| SVG is the open baseline
+| Format open-ish; AE authoring closed
+| Runtimes/format MIT; editor closed
+
+| Agentic / text workflows
+| Best (edit SVG/CSS directly)
+| Middling (JSON text, but huge/fragile)
+| Weak (binary blob)
+
+| Web player cost
+| ~0
+| ~60–100 KB gz
+| ~200 KB+ gz (lite if no Rive Text)
+|===
+
+**Guidance**
+
+* One looping logo → animated SVG. Do not pull Lottie or Rive “just because.”
+* Complex illustration motion from a design tool → Lottie is often the honest fit.
+* App chrome that must react to theme/hover/loading → Rive can be worth the player *if* you amortize it; keep SVG as the agent-editable twin.
+* Lazy-load any player on routes that actually need it.
+
+== Open-source posture (be precise)
+
+[cols="1,2,2", options="header"]
+|===
+| Layer | Rive | Implication
+
+| File format
+| Documented; pipeline pieces under MIT (per Rive)
+| Playback without paying Rive; authoring still tied to their editor unless you build an exporter
+
+| Runtimes
+| MIT
+| Ship/fork players freely
+
+| Editor
+| Proprietary
+| Not an open authoring standard
+
+| Lottie (comparison)
+| JSON ecosystem largely open; AE proprietary
+| Same “open playback / closed pro authoring” shape
+|===
+
+**Endorsement wording:** Rive is an *option for interactive UI motion*, not “the Dev-Centr standard for animation.”
+
+== Runtime weight
+
+Players dominate cost, not the logo file.
+
+* Animated SVG — browser-native
+* Lottie — moderate player; assets can be large JSON (dotLottie helps)
+* Rive — larger WASM player; `.riv` assets often smaller than equivalent Lottie JSON — that does **not** erase player weight on a page with one graphic
+
+== Agentic workflows
+
+Agents (and humans in git) want artifacts they can **read, diff, patch, and regenerate**.
+
+* **SVG/CSS** — source of truth for brand harbor and agent edits
+* **Lottie JSON** — text, so agents *can* touch it; in practice it is a poor hand-edit format
+* **`.riv`** — treat as a **compiled/export** product; do not expect agents to author it in-place
+
+Practical rule: keep an SVG twin; regenerate interactive exports when intent changes.
+
+== Are you thinking in the right direction?
+
+Yes. The missing piece people want is roughly:
+
+**text (or code) IR → complex + optionally interactive motion → small/open runtime**
+
+That is *animation as code* / *declarative motion DSL*, not “replace SVG with another binary.”
+
+Today there is **no dominant winner** in that slot:
+
+* **SVG + CSS / Web Animations API / JS** — already text; ceiling is complexity and shared timeline orchestration, not illegitimacy
+* **Lottie JSON** — closest mainstream *portable text-ish* bake format; still AE-shaped and player-heavy
+* **Rive** — best mainstream *interactive* product; binary + closed editor fight agentic authoring
+* **Emerging experiments** (early; **not** Dev-Centr defaults) — e.g. CSS-shaped portable scenes such as link:https://github.com/ayarse/popkorn[Popkorn], Mermaid-like motion DSLs such as link:https://markdy.com/[Markdy] — interesting because they optimize for readable text and LLM edit loops. Watch; do not standardize on them yet
+
+=== Potential future: Popkorn
+
+link:https://github.com/ayarse/popkorn[Popkorn] is a **candidate** for the text-first interactive lane (CSS-shaped scenes, agent-editable source, aiming past “binary Rive vs verbose Lottie”). It is **not** adopted yet.
+
+Dev-Centr outreach / co-op interest on rich interactivity (and possible SolidJS positioning): link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7]. Track that issue; if the format and runtime mature into something portable and boring, revisit Recommended Tools and brand harbor practice.
+
+So: you are not wrong to want a scriptable text replacement for “complex motion beyond CSS.” The industry has not converged. Until something is boringly portable, Dev-Centr’s stance is the **split** above — not a forced pick of Rive or Lottie.
+
+== What we keep in git
+
+Canonical brand harbor: `.github` / `.github-private` `profile/` (mirrored on `devcentr.org/public/brand/`):
+
+* Static SVG/PNG set (`logo.svg`, `logo-on-dark.svg`, 1024 and 256 rasters)
+* `logo-motion.svg` — self-contained motion (preferred portable motion file)
+* `logo.riv` — optional interactive twin when authored (see brand folder README checklist)
+
+== Related
+
+* xref:reference/recommended-tools.adoc[Recommended Tools] — catalog entry (lanes, not a single winner)
+* Marketing site: CSS-driven inline SVG on `devcentr.org` (`LogoMark` / `HeroOrbit`), with `logo-motion.svg` as the file form

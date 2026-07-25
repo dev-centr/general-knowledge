@@ -69,4 +69,5 @@
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]
+*** xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]
 

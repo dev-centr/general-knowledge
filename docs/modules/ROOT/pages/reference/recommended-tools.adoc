@@ -1,0 +1,57 @@
+= Recommended Development Tools
+:navtitle: Recommended Tools
+:description: Recommended platform, shell, package, and workflow tools for Dev-Centr developers.
+
+We recommend these tools for a consistent, cross-platform developer workflow.
+
+== Platform & Shell
+
+* link:https://www.nushell.sh/[**Nushell**] — **Required recommendation.** Default interactive and scripting shell on Windows, macOS, and Linux. Structured pipelines; display owned by the shell at the end of the pipe. See xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell] and xref:how-to/nushell-setup.adoc[setup].
+* link:https://aka.ms/terminal[Windows Terminal] — Modern terminal host on Windows; add a profile that launches `nu`.
+* link:https://www.warp.dev/[Warp] — Optional modern terminal with strong UX (where you choose it).
+* link:https://learn.microsoft.com/en-us/windows/advanced-settings/sudo/[`sudo` for Windows] — Elevate when the OS requires it.
+* PowerShell 7 — Use only when an OS feature, installer, or legacy script demands it. **Not** the Dev-Centr default shell.
+
+== Package Management
+
+* link:https://www.marticliment.com/unigetui/[UniGetUI] — GUI over `winget` and other managers (Windows).
+* link:https://pnpm.io/[pnpm] — Preferred Node package manager in this ecosystem.
+* link:https://docs.astral.sh/uv/[uv] — Preferred Python environment and package tool.
+
+== Editors & Agents
+
+* link:https://cursor.com/[Cursor] — Primary AI-assisted IDE in this workspace.
+* link:https://code.visualstudio.com/[VS Code] — Acceptable when Cursor is unavailable.
+
+== Fonts (monospace)
+
+Strong recommendation for terminals, editors, and DevCentr code panels:
+
+* link:https://github.com/microsoft/cascadia-code[**Cascadia Mono**] — **Default.** No ligatures; best for tables/grids (including Nushell `table` output). Prefer Mono over Cascadia *Code*.
+* link:https://www.jetbrains.com/lp/mono/[**JetBrains Mono**] — Supported alternate in DevCentr Appearance settings.
+
+DevCentr lets you pick between those two (Appearance in the top bar). Install the font on the OS so editors and Windows Terminal can use it too.
+
+== Version Control
+
+* link:https://git-scm.com/[Git] — Required.
+* link:https://cli.github.com/[GitHub CLI (`gh`)] — GitHub operations from the terminal (prefer running under Nushell).
+
+== Documentation
+
+* AsciiDoc + Antora for Dev-Centr published docs (see org publishing guides).
+
+== Design & Brand Motion
+
+No single format wins. Choose by job (see xref:explanation/brand-motion.adoc[Brand and UI Motion Formats] for the full matrix):
+
+* link:https://www.w3.org/Graphics/SVG/[**Animated SVG**] — **Default** for portable brand motion (org profiles, docs, marketing without a JS player). Prefer a self-contained file that honors `prefers-reduced-motion`. Best agentic/git fit.
+* link:https://airbnb.design/lottie/[**Lottie**] — Use when motion is complex *baked* timeline work (often After Effects). JSON is text but cumbersome to edit; needs a player. Acceptable in AE pipelines (including CentrMark’s Lottie support); **not** the automatic default for simple marks.
+* link:https://rive.app/[**Rive**] — Option for *interactive* / theme-driven UI motion (state machines, inputs) when a runtime is justified. Runtimes MIT; **editor proprietary**; **`.riv` is binary** (weak agentic authoring). Prefer lite packages when possible; lazy-load. **Do not** treat as an open de facto standard.
+
+Watch-only (not endorsed defaults): text-first motion DSLs / CSS-shaped scene formats aimed at LLM workflows — see the explanation page. **Popkorn** is noted there as a *potential future* solution; outreach: link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7].
+
+[TIP]
+====
+New machine? Install Nushell first (xref:how-to/nushell-setup.adoc[how-to]), then your terminal host, then package managers.
+====

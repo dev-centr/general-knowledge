@@ -1,0 +1,54 @@
+= Git Performance Optimization
+:description: Enabling the built-in filesystem monitor for faster Git operations.
+
+Enabling the built-in filesystem monitor (`core.fsmonitor`) significantly improves Git performance on Windows and macOS, especially in large repositories or those with many files. It offloads the work of tracking file changes to a background daemon, drastically reducing the time required for `git status` and other common operations.
+
+== Configuration
+
+The modern, preferred configuration is to enable it globally:
+
+[source,bash]
+----
+git config --global core.fsmonitor true
+----
+
+[NOTE]
+====
+In older versions of Git, the key was `core.useBuiltinFSMonitor`. This is now considered legacy and should be avoided to prevent deprecation hints in your terminal.
+====
+
+== Technical Considerations & Warnings
+
+While enabling `core.fsmonitor` globally is generally safe for modern hardware, there are specific technical and security-related drawbacks to consider:
+
+=== Resource Overhead
+The monitor works by spawning a background daemon for **each** repository you interact with. 
+
+* **Process Proliferation:** If you navigate through dozens of small repositories during a session, you will end up with dozens of `git-fsmonitor--daemon` processes running in the background. While idle resource usage is low, it adds up in environments with limited RAM or many active projects.
+* **Submodule Blindness:** The daemon does not currently distinguish between a "super-repo" and its submodules. If you modify a file inside a submodule, the daemon for the main repository will still report a change event. While Git filters this out to prevent errors, it causes unnecessary processing cycles.
+
+=== Filesystem Limitations
+* **Network/Shared Drives:** The monitor relies on OS-level file change notifications (FSEvents on macOS, ReadDirectoryChangesW on Windows). These often fail or behave inconsistently over SMB, NFS, or mapped network drives. Global activation may cause Git commands to hang or throw warnings when you enter a repository stored on a NAS.
+* **Socket Path Errors (macOS):** On macOS, Git creates a Unix Domain Socket for communication. If your home directory or `.git` directory is on a non-native filesystem (like a VM-shared folder), the daemon may fail to start, leading to "failed to create socket" errors during every `git status`.
+
+=== Security Considerations
+* **Buried Bare Repositories:** Research has shown that a maliciously crafted repository can use `core.fsmonitor` settings to execute arbitrary code. While global settings are generally safer (controlled by you), having a global "on" switch means you are more likely to inadvertently trigger the daemon logic in untrusted directories.
+* **Orphaned Processes:** On Windows, it is common for the daemon processes to become "orphaned" (staying alive after the terminal or IDE is closed). Over time, these can clutter your Task Manager.
+
+== Summary Table
+
+|===
+| Aspect | Drawback
+
+| **System**
+| Multiple background processes (one per repo).
+
+| **Storage**
+| High failure rate on Network/Cloud-synced drives.
+
+| **Maintenance**
+| Potential for orphaned background processes on Windows.
+
+| **UX**
+| Deprecation warnings if using the older configuration key.
+|===

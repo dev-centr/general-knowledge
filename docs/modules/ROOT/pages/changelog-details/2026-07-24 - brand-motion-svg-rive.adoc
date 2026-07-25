@@ -1,0 +1,23 @@
+= 2026-07-24 — Brand motion formats
+
+== Summary
+
+Documented Dev-Centr’s motion stance as a **tradeoff matrix**, not a single-format endorsement: animated SVG for portable/agentic marks; Lottie for complex baked timelines; Rive as an *option* for interactive UI motion (MIT runtimes, proprietary editor, binary `.riv`).
+
+== Why
+
+Teams asked whether to standardize on animated SVG, Lottie, or Rive. Axes conflict (player weight, openness, interactivity, git/agent editability). Hard-advocating Rive fails the agentic and “open standard” tests even though it is strong for state machines.
+
+== Changes
+
+* Explanation: xref:explanation/brand-motion.adoc[Brand and UI Motion Formats] (axes table, OSS posture, runtime weight, agentic rule, animation-as-code direction + watch-list; Popkorn potential future → link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7])
+* xref:reference/recommended-tools.adoc[Recommended Tools] — Design & Brand Motion (lanes, softened Rive wording)
+* Nav title updated under Explanation → Documentation
+* Brand folders: `logo-motion.svg` + authoring checklist for optional `logo.riv`
+
+== Non-goals
+
+* Does not remove CentrMark’s Lottie support
+* Does not claim Rive’s editor is open source
+* Does not standardize on early text-motion DSLs (Popkorn, Markdy, etc.) — watch only
+* Does not require a JS player for simple looping brand marks
