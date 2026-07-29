@@ -64,6 +64,37 @@ Expecting newcomers to discover FVM, Puro, nvm-class tools, evaluate them, and r
 
 “Merge FVM into Flutter” is an implementation detail. The requirement is **first-party ownership** of pinning and related lifecycle behavior in the official workflow.
 
+=== Wrong vs right architecture
+
+.Afterthought version management (today’s common failure)
+[source,mermaid]
+----
+flowchart LR
+  User[Developer] --> CLI[Official CLI / runtime]
+  CLI --> Crash[Wrong ABI / PATH / channel]
+  Crash --> Google[Search / tutorial]
+  Google --> Tribal[Discover nvm / FVM / Puro]
+  Tribal --> Retry[Manual switch / rebuild]
+  Retry --> CLI
+----
+
+.Official Toolchain Control Plane (target architecture)
+[source,mermaid]
+----
+flowchart TB
+  User[Developer / IDE / CI] --> EP[Official entrypoint = TCoP]
+  Pin[Project pin / engines] --> EP
+  EP --> Resolve[Resolve version]
+  Resolve --> Have{Cached?}
+  Have -->|no| Install[Install / fetch]
+  Have -->|yes| Run
+  Install --> Run[Re-exec under pin\nfor this process tree]
+  Run --> RT[Runtime / SDK]
+  EP --> Health[Health · repair · upgrade · rollback]
+  RT --> App[Project]
+  Note1[Global default may stay on latest] -.-> EP
+----
+
 == Protocol: how you act
 
 The **Toolchain Management Protocol** is the set of standard, repeatable behaviors that avoid the onboarding trap. Full behavior list for implementers: xref:devcentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[Ecosystem Management — Protocol].
@@ -78,6 +109,15 @@ At a glance, a compliant ecosystem entrypoint (alone or via TCF) should support:
 . **Surface parity** — same verbs and model in CLI, GUI, and ideally IDE/agents.
 
 These are *behaviors and expectations*, not (yet) a fixed wire format. Specs harden them as schemas appear.
+
+.From thinking to shipping
+[source,mermaid]
+----
+flowchart LR
+  P[Pattern\nhow you think] --> Pr[Protocol\nhow you act]
+  Pr --> CP[Control Plane\nwhat you ship]
+  CP --> TCF[TCF\nhow you practice it]
+----
 
 == Control plane: what you ship
 
@@ -116,6 +156,27 @@ DevCentr’s **Ecosystem Management** vision treats shells, toolchains, and infr
 == Relation to OpenShellOrg
 
 The *pain* of wrong-version / wrong-host execution is always a **shell entrypoint** failure. OpenShellOrg owns that slice — auto-install (if needed) and re-exec at invocation — while DevCentr keeps this page as the lifecycle / control-plane canon.
+
+.Sibling altitudes (do not merge the canons)
+[source,mermaid]
+----
+flowchart TB
+  subgraph DC[DevCentr]
+    TM[Toolchain Management Pattern]
+    Proto[Protocol behaviors]
+    Plane[Toolchain Control Plane]
+    Frame[TCF]
+    TM --> Proto --> Plane --> Frame
+  end
+  subgraph OSO[OpenShellOrg]
+    Disp[Entrypoint Dispatch]
+    Nu[nu-require / env-refresh]
+    Disp --> Nu
+  end
+  Invoke[Invocation moment] --> Disp
+  Plane -->|owns lifecycle| Invoke
+  Disp -->|auto-install + re-exec| Plane
+----
 
 * xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
 * link:https://openshellorg.github.io/open-shell-org/shell-architecture/entrypoint-dispatch.html[Entrypoint Dispatch] (shell-architecture)
