@@ -9,6 +9,7 @@ Task-oriented guides. Pick a guide when you already know what you want to do.
 * xref:how-to/nushell-setup.adoc[Install and set up Nushell] — Default shell for Dev-Centr on every OS.
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.
 * xref:how-to/flutter-setup.adoc[Set up Flutter tooling] — SDK bootstrap; community version bridges until an official Toolchain Control Plane exists (see Toolchain Management Pattern).
+* xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS] — Grey-cloud for GitHub LE; poll Pages API; companion `scripts/check-gh-pages-https.nu`.
 
 == Index
 

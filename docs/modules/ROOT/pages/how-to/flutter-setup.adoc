@@ -7,7 +7,7 @@ This how-to gets you running with Flutter. For why version management should liv
 == Install the SDK
 
 . Prefer an OS package manager when available (`winget`, Homebrew, or the official install docs for your OS).
-. Put `flutter` on your `PATH`, then open a **new** terminal so PATH refresh is visible.
+. Put `flutter` on your `PATH`, then refresh the session env (or open a **new** terminal). Inside IDEs, a new terminal often still inherits a stale host — see xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh].
 . Run `flutter doctor` and fix reported platform requirements (Android SDK, Xcode, licenses) as needed.
 
 Official install docs: link:https://docs.flutter.dev/get-started/install[Flutter install].

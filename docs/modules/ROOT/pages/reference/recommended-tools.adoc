@@ -22,6 +22,7 @@ We recommend these tools for a consistent, cross-platform developer workflow.
 
 * link:https://cursor.com/[Cursor] — Primary AI-assisted IDE in this workspace.
 * link:https://code.visualstudio.com/[VS Code] — Acceptable when Cursor is unavailable.
+* **Standalone agent shells** — Do not treat the IDE as the only control plane. For shopping, hardware fit, and local / network-local / remote-env / three-tier topologies, see xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] and DevCentr’s `agent_shell_registry.sdl`. Setup surface: **AI Workflow Arrangement** (icons + diagrams in AI Config — not a wizard). Keep DevCentr’s env-aware repo terminal as the always-on human ops shell; agent-manager PTYs are not a substitute.
 
 == Fonts (monospace)
 

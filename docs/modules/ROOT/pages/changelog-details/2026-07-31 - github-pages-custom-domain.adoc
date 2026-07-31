@@ -1,0 +1,10 @@
+= 2026-07-31 — GitHub Pages custom domain + Cloudflare HTTPS
+
+Added xref:how-to/github-pages-custom-domain.adoc[Set up GitHub Pages custom domain with Cloudflare HTTPS]:
+
+* Orange-cloud vs DNS-only and why GitHub Let's Encrypt fails when Cloudflare proxies
+* No "request certificate" button — poll Pages API (`https_certificate.state`)
+* Worked example: `docs.opensh.org` / `openshellorg/docs`
+* Companion Nushell checker: `scripts/check-gh-pages-https.nu`
+
+Navigation: How-to Guides (nav entry already present); Featured on how-to index.

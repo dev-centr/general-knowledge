@@ -62,6 +62,7 @@ Open Shell Organization (link:https://github.com/openshellorg[openshellorg]) com
 * xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 * xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 * xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell (name collision + overview)]
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh] (stale PATH; Nu-first `env-refresh` / shell-host plan)
 * link:https://github.com/openshellorg/shell-architecture[OpenShellOrg: shell architecture notes]
 * link:https://github.com/openshellorg/nu-require[OpenShellOrg: nu-require]
 * link:https://github.com/openshellorg/nu-emit[OpenShellOrg: nu-emit]

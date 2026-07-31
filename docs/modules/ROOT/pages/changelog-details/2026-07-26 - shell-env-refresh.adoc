@@ -1,0 +1,14 @@
+= 2026-07-26 — Shell environment refresh
+
+Documented why PATH and other env vars go stale in shells and IDE hosts, why Chocolatey `refreshenv` is unreliable, and how Dev-Centr / OpenShellOrg will fix it.
+
+== Why
+
+Installers update stored Machine/User environment; long-lived hosts keep a snapshot. VS Code historically closed or dismissed PATH-reload requests; Chocolatey `refreshenv` only patches one session when it works at all. Dev-Centr already has a thin inject stub; OpenShellOrg needs a durable CLI and shell-host product plan.
+
+== What landed
+
+* Explanation: xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
+* Navigation under Explanation → Infrastructure
+* Cross-links: Dev-Centr/OpenShellOrg alignment, Nushell explanation + setup, toolchain management/control plane, Flutter setup
+* OpenShellOrg sibling: `shell-host-and-env-refresh` plan in shell-architecture

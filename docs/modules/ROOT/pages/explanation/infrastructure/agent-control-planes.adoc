@@ -1,0 +1,288 @@
+= Agent control planes and compute topologies
+:navtitle: Agent control planes
+:description: How standalone agent shells differ from IDE agents and inference hosts; arrangement diagrams for local, network-local, remote-env, and three-tier setups; DevCentr’s always-on env-aware shell.
+
+Coding agents split across **layers**. Mixing them up is how teams accidentally build a second Cursor inside a DOS—or burn a 16 GB laptop hosting a 70B model under an Electron fleet UI.
+
+[cols="1,2,2", options="header"]
+|===
+| Layer | Job | Examples
+
+| **Inference host**
+| Run weights; expose an API
+| LM Studio / llmster, Ollama, vLLM, vendor cloud APIs
+
+| **Environment / ops host**
+| Where the working tree, shell, and tool processes actually run
+| User laptop; dedicated Linux box (Theo / T3-style remote env); WSL; cloud workspace
+
+| **Agent runtime**
+| Plan, call tools, edit files, talk MCP
+| Claude Code, Codex CLI/app-server, OpenCode, Hermes, Aider, Goose, Crush, Cline
+
+| **Execution shell / control plane**
+| Sessions, traces, diffs, approve gates, multi-agent tiling — *outside* the main IDE
+| LM Studio Bionic, T3 Code, Hermes Desktop, AiderDesk, opcode, Palot, Agent Deck, Athena, …
+
+| **Human shell (DevCentr)**
+| Always-visible, env-aware terminal next to the repo — *not* the agent manager’s PTY
+| DevCentr repository browser terminal + OpenShellOrg env-refresh / shell-host
+|===
+
+DevCentr sits **above** these layers: environments, toolchains, MCP/skills/providers, rules/preamble, detect → shop → set up → **hand off**. It should not reimplement the Agent-Control Plane Layout. It **should** keep a first-class human shell with refresh intelligence that agent-manager terminals lack.
+
+Living catalog: product SDL `app/src/modules/services/agent_shell_registry.sdl`. Product surfaces: **AI stack topology canvas** + **guided add**, as the `ai-stack` pack of DevCentr’s **Role Topology Composer**. That composer targets only the **hierarchical/layered** slice of the stack (memory bins for UI / env / inference / …); orthogonal ideas (MCP, skills, features) connect later and must not be forced into the spine. Arrangement ids are **layout recipes** that seed those layers.
+
+xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents] covers the *shell language* problem. xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh] covers stale PATH. xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell] covers *sandbox under* the agent. This page covers *where UI, tools, and weights run*.
+
+== DevCentr shell vs agent-manager terminals
+
+IDE and agent-manager terminals are calibrated for the *agent loop*, not for human ops with a trustworthy environment.
+
+**Cursor (and peers) today:** a shell session can stay alive for a workspace, but switching conversation views often forces you to reopen a shell for that view. That is awkward when you want one durable ops surface. Agent-manager PTYs also typically lack:
+
+* Env health / drift chrome
+* A visible **Refresh** that injects the correct shell-specific recipe
+* Preference for OpenShellOrg `env-refresh` / `shell-host` when present
+* Repo-scoped history blocks designed for humans
+
+**DevCentr rule:** the repository browser terminal is **always accessible and visible** for the selected repo, independent of whichever agent manager or IDE conversation is active. Humans (and agents pointed at it) interact with PATH, installs, and diagnostics there. Agent managers keep their own traces/approvals; they do not replace DevCentr’s shell intelligence.
+
+[source,mermaid]
+----
+flowchart LR
+  subgraph DevCentr["DevCentr (DOS)"]
+    Repo[Repository browser]
+    Term[Env-aware terminal]
+    Arr[AI Workflow Arrangement]
+    Repo --> Term
+    Arr -->|hand off / launch| Ext
+  end
+  subgraph Ext["External (not reimplemented)"]
+    AM[Agent manager / IDE agent]
+    Inf[Inference API]
+  end
+  AM -->|tools on env host| EnvHost[Environment host]
+  AM -->|tokens| Inf
+  Term -->|same env awareness| EnvHost
+----
+
+== Why “LLM Bionic” belongs here
+
+**LM Studio Bionic** (often misremembered as “LLM Bionic”) makes **compute location** a first-class control-plane choice:
+
+* **Local** — model on the same machine as the agent UI
+* **LM Link (network-local)** — model on owned hardware (home GPU, DGX Spark); client sees `localhost`-shaped access over an encrypted mesh
+* **LM Studio Secure Cloud** — large open models when local VRAM is not enough
+
+That is the pattern DevCentr should *orchestrate around*, not clone.
+
+== Arrangement models (icons + diagrams)
+
+These are the **named arrangements** in `agent_shell_registry.sdl` (`arrangement { }`) and in the AI Workflow Arrangement UI. Each has a short id, icon key, and a diagram users can recognize at a glance.
+
+=== A — All-local (`all-local`)
+
+UI, tools, working tree, and (optional) local inference on one machine. Cloud SOTA is still “all-local” for *ops*: only tokens leave.
+
+[source,mermaid]
+----
+flowchart TB
+  Laptop["Laptop / workstation"]
+  Laptop --> UI[Agent UI or IDE]
+  Laptop --> Tools[Runtime + shell + repo]
+  Laptop --> Weights["Optional: local Ollama / LM Studio"]
+  UI --> Tools
+  Tools -.->|or cloud API| Cloud[Vendor frontier API]
+  Tools -.-> Weights
+----
+
+*Fit:* everyday work; simplest mental model.  
+*Shell:* DevCentr terminal on this machine.
+
+=== B — Inference remote, session local (`inference-remote-session-local`)
+
+**Default network-local.** Agent session, repo, and tools run where the user’s environment awareness lives (laptop / daily driver). Weights run on owned GPU (DGX Spark, home box) via LM Link, SSH tunnel, or bound OpenAI-compatible API.
+
+[source,mermaid]
+----
+flowchart LR
+  subgraph User["User machine (session + env)"]
+    UI[Agent UI]
+    RT[Runtime + tools]
+    Repo[Working tree]
+    DC[DevCentr env-aware shell]
+    UI --> RT
+    RT --> Repo
+    DC --> Repo
+  end
+  subgraph Spark["Owned inference (e.g. DGX Spark)"]
+    Inf[llmster / Ollama / vLLM]
+  end
+  RT -->|OpenAI-compatible API\nLM Link / tunnel| Inf
+----
+
+*Fit:* environment matches what the user sees and refreshes; Spark only burns FLOPS.  
+*Prefer when:* “I want my PATH and repo here; I just need bigger weights.”
+
+=== C — Remote environment host (`remote-env`)
+
+**Theo / T3-style nuance:** a dedicated machine runs the *operations* environment (clone, builds, filesystem-heavy agent tools) because the daily driver is a poor ops host — classic example: macOS filesystem performance vs a Linux env box. The user UI may still be on the laptop; tool execution and the working tree live on the env host.
+
+[source,mermaid]
+----
+flowchart LR
+  subgraph Thin["Laptop (UI / presence)"]
+    UI[Agent manager UI]
+    DCUI[DevCentr UI optional]
+  end
+  subgraph Env["Environment machine (ops)"]
+    RT[Runtime + tools]
+    Repo[Working tree]
+    Shell[Shell / env-refresh]
+    RT --> Repo
+    Shell --> Repo
+  end
+  UI -->|session / PTY / app-server| RT
+  DCUI -.->|remote terminal or SSH| Shell
+  RT -->|tokens| Cloud[Cloud or local API]
+----
+
+*Fit:* avoid slow FS on the client OS; keep a stable Linux (or WSL-remote) ops environment while traveling or using a thin UI machine.  
+*DevCentr:* prefer attaching an env-aware shell *on the env host* (SSH / remote tab), not pretending the laptop PATH is the agent’s PATH.
+
+=== D — Three-tier travel (`three-tier`)
+
+Combines **C** and **B**: conference / vacation laptop → environment machine (ops + session) → DGX Spark (inference).
+
+[source,mermaid]
+----
+flowchart LR
+  subgraph L["Laptop (conference / travel)"]
+    UI[Agent UI / browser]
+  end
+  subgraph E["Environment machine"]
+    RT[Agent runtime + tools]
+    Repo[Working tree]
+    Shell[Env-aware shell]
+  end
+  subgraph S["DGX Spark / GPU"]
+    Inf[Inference host]
+  end
+  UI -->|control plane / remote session| RT
+  RT --> Repo
+  Shell --> Repo
+  RT -->|LM Link / API| Inf
+----
+
+*Fit:* thin, unreliable client network; serious ops host at home/office; owned inference separate from ops so the env box is not also fighting for VRAM.  
+*Product:* AI Workflow Arrangement must offer this as a first-class card, and prefer agent managers that can target a remote env (T3 Code remote access, Hermes remote gateway, headless web UIs, SSH/tmux fleets, etc.).
+
+=== E — Agent gateway remote (`agent-gateway-remote`)
+
+UI on the laptop; long-lived agent daemon/gateway on a server (Hermes `serve`, etc.). Distinct from remote-*env*: the gateway owns agent memory/skills lifecycle; the working tree may still be local or remote depending on config.
+
+=== F — Whole workspace remote (`workspace-remote`)
+
+Editor/agent and repo live on the remote machine (NVIDIA Sync, full SSH desktop, cloud workspace). Laptop is display/input only.
+
+== Performance: what actually dominates
+
+Ordered by usual impact:
+
+. **Model placement and size**
+. **Where tool execution and the working tree run** (local vs remote-env — this is the Theo insight)
+. **How many heavy GUIs you stack**
+. **Shell framework overhead** (TUI ≪ Tauri ≪ Electron ≪ full IDE)
+. **Integration style** (app-server vs PTY scrape)
+
+=== Shell / host arrangement (UI tax)
+
+[cols="1,1,2,2", options="header"]
+|===
+| Arrangement | Typical UI tax | Best when | Weak when
+
+| **Bare CLI / TUI runtime**
+| Lowest
+| Max sessions per GB; SSH to env host
+| You need diffs/approvals without terminal literacy
+
+| **TUI fleet (e.g. Agent Deck)**
+| Very low
+| Many parallel agents
+| Rich artifact/preview chrome
+
+| **Tauri single-agent shell**
+| Low–moderate
+| Dedicated agent window; IDE separate
+| Huge multi-agent canvases
+
+| **Electron execution shell**
+| Moderate
+| Polished control plane; multi-provider
+| 8–16 GB + Electron IDE already
+
+| **Electron fleet / workspace**
+| High
+| Many PTYs + shared chrome
+| Constrained RAM + local weights
+
+| **IDE-hosted agent**
+| Highest host cost; best edit integration
+| One window for edit+agent
+| Background fleets; durable human ops shell
+|===
+
+== Choosing an arrangement (summary)
+
+[cols="1,2,2", options="header"]
+|===
+| Goal | Prefer | Avoid
+
+| Environment matches what I see
+| **B** inference-remote-session-local
+| Running tools on Spark while editing mental model of laptop PATH
+
+| macOS / thin laptop FS is too slow for agent ops
+| **C** remote-env (Linux env box)
+| Forcing heavy tool loops on the slow FS
+
+| Travel UI + home ops + owned GPU
+| **D** three-tier
+| Collapsing Spark and env host if VRAM and builds fight
+
+| Simplest
+| **A** all-local (+ cloud API)
+| Premature three-tier
+
+| Durable human shell with refresh
+| Always DevCentr terminal on the **env host**
+| Relying on Cursor per-conversation PTYs for ops
+|===
+
+== Recommended postures (SDL)
+
+See `posture { }` and `arrangement { }` in `agent_shell_registry.sdl`. Highlights:
+
+* **min-ram-laptop** — thin UI + cloud; arrangement **A** or **B** with cloud API
+* **local-privacy** — Bionic + local weights; arrangement **A**
+* **network-local-spark** — arrangement **B**
+* **remote-env-ops** — arrangement **C** (T3-style env machine)
+* **three-tier-travel** — arrangement **D**
+* **sota-online** — quality-first; still pick env host deliberately
+
+== How this list stays honest
+
+Training data and chat assistants **will miss players** (Bionic is the proof). Treat the SDL file as the source of truth:
+
+. New name → add `shell` / `runtime` / `inference` / `interconnect` / `arrangement` as needed; bump `meta.lastReviewed`
+. New topology pattern (not just another GUI) → update this page’s diagrams and the AI Workflow Arrangement cards
+. MCP/skills stay in `ai_client_profiles.json5`
+
+== Related
+
+* Product: AI Config; **AI Workflow Arrangement**; repository browser terminal
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
+* xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+* xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]
+* xref:reference/recommended-tools.adoc[Recommended Tools]

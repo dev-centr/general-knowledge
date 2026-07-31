@@ -37,4 +37,5 @@ If the tool is not under Nushell but `nu` is on `PATH`, relaunch inside Nushell 
 
 * xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
 * xref:how-to/nushell-setup.adoc[Install and set up Nushell]
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
 * xref:reference/recommended-tools.adoc[Recommended Tools]

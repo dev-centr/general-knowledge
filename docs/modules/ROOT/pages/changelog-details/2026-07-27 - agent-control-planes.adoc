@@ -1,0 +1,10 @@
+= 2026-07-27 — Agent control planes catalog
+
+Expanded xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes and compute topologies]:
+
+* Layers include environment/ops host and DevCentr human shell
+* Mermaid diagrams for arrangements A–F (all-local; inference remote / session local; remote-env Theo/T3-style; three-tier travel; agent gateway; workspace remote)
+* Cursor-class shell UX gaps vs always-on DevCentr terminal
+* Points at DevCentr AI Workflow Arrangement + `agent_shell_registry.sdl`
+
+Navigation: Explanation → Infrastructure.

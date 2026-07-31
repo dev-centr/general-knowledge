@@ -18,6 +18,9 @@ In the Dev-Centr ecosystem, we endorse **Synchronous Literate Programming (SLP)*
 === Native (CentrMark)
 For projects within the Dev-Centr core, we recommend **CentrMark** (`.cmk`). It uses a flexible directive system (`::: tangle`) and is designed for structural synchronization.
 
+=== Runnable script documents (Scriptbook)
+SLP tangles **source**. For docs you **play on the machine** (install steps, DNS checks, setup recipes), use link:https://github.com/dev-centr/scriptbook[Scriptbook]: CentrMark `::: playbook` / `::: step` with run output in sidecars (never rewritten into the `.cmk`). Shell backends first; other runners later.
+
 === CommonMark (Markdown)
 If you prefer standard Markdown, use:
 * **Quarto**: For complex, multi-repo or data-heavy projects.
@@ -26,3 +29,4 @@ If you prefer standard Markdown, use:
 == Next Steps
 * xref:reference:languages/c.adoc[Example: C Language with LP]
 * xref:dev-center:ROOT:project-vision.adoc[Dev-Centr Project Vision]
+* link:https://github.com/dev-centr/scriptbook[Scriptbook] — playable `.cmk` script documents

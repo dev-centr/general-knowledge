@@ -1,0 +1,113 @@
+= Shell Environment Refresh
+:navtitle: Shell Environment Refresh
+:description: Why PATH and other env vars go stale in terminals and IDEs, why Chocolatey refreshenv fails, and how DevCentr and OpenShellOrg plan to fix it.
+
+After you install a tool or change system/user environment variables, interactive shells and IDE terminals often keep the **old** environment. Users are told to "open a new terminal" or restart the editor. That advice is incomplete, and the usual Windows workaround (`refreshenv`) is unreliable.
+
+This page explains the failure modes, cites the VS Code history, and states what Dev-Centr and OpenShellOrg will do instead.
+
+== The core problem
+
+A process gets its environment block **once**, when it starts (or when a parent deliberately rebuilds it). Installers and system settings change the **stored** Machine/User environment. Running shells and host apps do not automatically re-read that store.
+
+Windows::
+System and user variables live in the registry. Broadcasts such as `WM_SETTINGCHANGE` notify interested apps; many hosts ignore them for already-running processes. New child processes inherit whatever the **parent** still has in memory—not a fresh read from the registry—unless the parent reloads first.
+
+Unix-like::
+Login shells and profile scripts set `PATH` and friends. A long-lived terminal or IDE still holds the values from when *it* was launched. `exec $SHELL -l` can help the shell process; it does not fix a stale parent IDE.
+
+Two layers matter:
+
+. **Shell session** — the interactive shell (or per-command worker) that runs your tools.
+. **Host process** — VS Code, Cursor, DevCentr, or any terminal emulator that spawned that shell.
+
+Refreshing only the shell is not enough when new tabs inherit from a stale host.
+
+== Why "open a new terminal" fails in VS Code / Cursor
+
+Inside VS Code (and forks), new integrated terminals typically inherit the environment of the **editor process**, which was snapshotted at startup. Restarting a terminal pane or even "Reload Window" often does **not** re-read Machine/User PATH. Closing every editor instance and launching a fresh process does.
+
+This has been reported for years. Representative history:
+
+* link:https://github.com/microsoft/vscode/issues/47816[microsoft/vscode#47816] — new terminals do not pick up updated env until a full restart of all instances.
+* link:https://github.com/microsoft/vscode/issues/226510[microsoft/vscode#226510] — maintainers confirmed inheritance from the parent VS Code process; full process restart required.
+* Earlier PATH reload requests (for example link:https://github.com/microsoft/vscode/issues/159986[#159986], link:https://github.com/microsoft/vscode/issues/168020[#168020]) were closed as not planned / not worth the plumbing, with guidance to recreate terminals.
+
+Dev-Centr / OpenShellOrg author Ryan (AMDphreak) filed a concrete product fix:
+
+* Issue: link:https://github.com/microsoft/vscode/issues/299940[microsoft/vscode#299940] — integrated terminal never reflects updated PATH/env.
+* PR: link:https://github.com/microsoft/vscode/pull/299941[microsoft/vscode#299941] — **Refresh Environment** button that injects a shell-appropriate command into every terminal so users see and can learn the command.
+
+Microsoft's prior dismissals ("just recreate your terminals", "too much plumbing") are why we do **not** wait on VS Code. We solve this in OpenShellOrg products and consume that solution from DevCentr.
+
+== Why Chocolatey `refreshenv` feels broken
+
+Chocolatey ships `RefreshEnv.cmd` and a PowerShell helper often invoked as `refreshenv`. Many developers find it does nothing useful in practice. Common reasons:
+
+* **Scope** — It only affects the **current** shell session (when it works at all). It does not update the IDE/host process that will spawn the next terminal.
+* **Availability** — The PowerShell function often exists only when Chocolatey's profile hooks are loaded. PowerShell 7, Nushell, and non-Chocolatey shells may have no `refreshenv` at all.
+* **Coverage** — Implementations historically focus on PATH-like refresh and are inconsistent across Windows PowerShell vs PowerShell 7.
+* **Wrong mental model** — Users expect "make my tools work now everywhere"; the tool can at best patch one session.
+
+You are not alone if `refreshenv` never worked for you. Relying on it is not an acceptable Dev-Centr or OpenShellOrg recommendation.
+
+== Desired UX
+
+Host apps (OpenShellOrg **shell-host**, and DevCentr's repo terminal) should treat stale env as a first-class state—not a tribal tip.
+
+. **Monitor** — Watch Machine/User (and best-effort Unix sources) for changes to PATH and other system vars.
+. **Signal** — When drift is detected, a health indicator moves from green to orange **outside** the classical shell canvas.
+. **Notice** — Show a short notice (for example "PATH changed — refresh this session?") outside the shell area so it is not lost in scrollback.
+. **Visible command** — A Refresh action shows the exact shell-specific command that will run, so users can learn it or appreciate not typing it.
+. **Auto-run preference** — Default can be preview + confirm; power users enable inject-and-submit so they never click Enter after every install.
+. **History preserved** — Refresh must not wipe session command history.
+
+== Shell-aware refresh recipes
+
+Hosts inject (and optionally submit) a command matched to the active shell. Illustrative targets:
+
+[cols="1,2", options="header"]
+|===
+| Shell | Approach (illustrative)
+
+| Nushell
+| Reload PATH (and documented env keys) from the OS store into `$env` — preferred interactive target for Dev-Centr / OpenShellOrg
+
+| PowerShell 7 / Windows PowerShell
+| Rebuild `$env:Path` from Machine + User (and refresh other vars when the durable CLI supports it)
+
+| cmd.exe
+| Equivalent PATH rebuild via `set` / helper script
+
+| bash / zsh
+| Re-source login/profile PATH, or `exec $SHELL -l` when a full login re-entry is appropriate
+
+| fish
+| fish-appropriate PATH reload from system sources
+|===
+
+Long-term, hosts should prefer the OpenShellOrg **`env-refresh`** CLI / Nu module (planned `openshellorg/env-refresh`) when it is on `PATH`, instead of hard-coding fragile one-liners. Short aliases should work where users type; Nushell remains first-class.
+
+== Ownership: DevCentr vs OpenShellOrg
+
+[cols="1,2", options="header"]
+|===
+| Actor | Responsibility
+
+| **OpenShellOrg**
+| Durable `env-refresh` CLI + Nu module; **shell-host** terminal app with monitor/notice/health/auto-run chrome; shell-aware recipes; Nushell ecosystem advocacy so PATH pain is a non-issue for Nu users
+
+| **DevCentr**
+| Repo-browser terminal UX now (inject / refresh actions); env-health chrome in that pane; prefer OpenShellOrg shell-host when installed; keep a minimal built-in inject path until then
+|===
+
+See xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg] and the OpenShellOrg plan in link:https://github.com/openshellorg/shell-architecture[shell-architecture] (`shell-host-and-env-refresh`).
+
+== Related reading
+
+* xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
+* xref:how-to/nushell-setup.adoc[How to: Install and set up Nushell]
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (bootstrap includes PATH refresh)
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] (always-on DevCentr shell vs agent-manager PTYs; remote env host)
+* DevCentr spec: xref:devcentr:specifications:components/repository-browser-terminal.adoc[Repository Browser Terminal]
+* link:https://github.com/openshellorg/shell-architecture[OpenShellOrg: shell-architecture]

@@ -1,0 +1,145 @@
+= Set up GitHub Pages custom domain with Cloudflare HTTPS
+:navtitle: GitHub Pages Custom Domain
+:description: Configure a custom domain on GitHub Pages when DNS is at Cloudflare, including the orange-cloud vs Let's Encrypt trap and how cert issuance actually works.
+
+Task guide for attaching a custom hostname to a GitHub Pages site when the zone is on Cloudflare. Covers DNS shape, why HTTPS can "work" while GitHub still complains, and how to wait for GitHub's certificate without a "request cert" button.
+
+Companion checker (Nushell)::
+`scripts/check-gh-pages-https.nu` in this repository — detect proxy vs GitHub IPs, poll Pages API cert state, optionally enable Enforce HTTPS.
+
+A future link:https://github.com/dev-centr/scriptbook[Scriptbook] playbook will wrap the same algorithm as a playable `.cmk` document.
+
+== What "working HTTPS" means here
+
+There are **two** TLS stacks that people mix up:
+
+[cols="1,2,2", options="header"]
+|===
+| Provider | When you get HTTPS | GitHub Pages UI
+
+| **Cloudflare** (orange-cloud / proxied)
+| Immediately — Cloudflare terminates TLS with its own cert
+| Often: domain not configured for HTTPS / Enforce HTTPS disabled — GitHub never got a Let's Encrypt cert
+
+| **GitHub Pages** (DNS-only / grey-cloud)
+| After GitHub issues a Let's Encrypt cert for your hostname
+| Cert shows approved; you can turn on **Enforce HTTPS**
+|===
+
+If the site already loads over `https://` while GitHub shows a warning, you are almost certainly on Cloudflare's cert, not GitHub's.
+
+== DNS shapes
+
+=== Subdomain (recommended)
+
+Example: `docs.example.org` for repo `owner/docs`.
+
+* Record type: **CNAME**
+* Name: `docs` (or whatever label)
+* Target: `owner.github.io` (org/user Pages) — for a project site this is still the org/user `*.github.io` host; Pages maps the custom domain via the repo's Pages settings / `CNAME` file
+* **Proxy status: DNS only (grey cloud)** while GitHub is issuing or enforcing its certificate
+
+=== Apex
+
+Example: `example.org`.
+
+* **A** / **AAAA** records pointing at GitHub Pages IPs (see current GitHub docs), **or** Cloudflare CNAME flattening to `owner.github.io`
+* Same proxy rule: grey-cloud for GitHub LE issuance
+
+Also keep the domain **verified** in the repo's Pages settings (TXT challenge at `_github-pages-challenge-<owner>.<domain>` when GitHub asks for it).
+
+== The orange-cloud trap
+
+. Cloudflare proxy is on → public DNS resolves to Cloudflare anycast IPs (`104.21…`, `172.67…`, `2606:4700:…`), not GitHub (`185.199…` / `2606:50c0:…`).
+. Browsers get a valid HTTPS page from Cloudflare; origin may still be GitHub Pages over HTTP/HTTPS behind the proxy.
+. GitHub's certificate pipeline looks up your custom hostname, does **not** see GitHub Pages addresses, and **will not** issue / approve a LE cert for that name.
+. Pages settings show HTTPS unavailable or Enforce HTTPS greyed out / off, even though the site "works on https."
+
+Fix for GitHub-owned HTTPS::
+Set the record to **DNS only**, wait for cert approval, enable **Enforce HTTPS**. Re-enabling the orange cloud afterward is optional and will usually make GitHub's Enforce HTTPS story sad again — HTTPS then depends on Cloudflare again.
+
+== Certificate issuance (no button)
+
+GitHub does **not** expose a "Request certificate" action. Issuance is automatic once:
+
+* Custom domain is set on the Pages site (`cname` in the Pages API / UI)
+* DNS for that hostname resolves to GitHub Pages (not Cloudflare proxy)
+* Domain ownership is verified when required
+
+Then wait. Often minutes; sometimes longer (up to ~24h in bad cache cases). The UI can lag behind the API.
+
+=== Poll truth via API
+
+[source,shell]
+----
+gh api repos/OWNER/REPO/pages --jq '{cname,https_enforced,https_certificate,html_url}'
+----
+
+Useful fields:
+
+* `https_certificate.state` — look for `approved`
+* `https_certificate.description` — human text (e.g. "The certificate has been approved.")
+* `https_enforced` — whether HTTP→HTTPS redirect is on at GitHub
+* `html_url` — may flip from `http://…` to `https://…` once enforced
+
+When `state` is `approved`, enable **Enforce HTTPS** in the UI, or:
+
+[source,shell]
+----
+# JSON boolean — do not send the string "true"
+echo '{"https_enforced":true}' | gh api -X PUT repos/OWNER/REPO/pages --input -
+----
+
+=== Companion script
+
+From this repo (Nushell + `gh` required):
+
+[source,nushell]
+----
+nu scripts/check-gh-pages-https.nu --repo owner/docs --host docs.example.org
+# optional: enable Enforce HTTPS once the cert is approved
+nu scripts/check-gh-pages-https.nu --repo owner/docs --host docs.example.org --enable-https
+----
+
+The script detects Cloudflare proxy vs GitHub Pages IPs, polls until approved or timeout, and prints the next human action (usually: grey-cloud the record). It does **not** call the Cloudflare API in v1.
+
+== Worked example: docs.opensh.org
+
+[cols="1,2", options="header"]
+|===
+| Piece | Value
+
+| Repo
+| `openshellorg/docs`
+
+| Custom domain
+| `docs.opensh.org`
+
+| Expected CNAME target
+| `openshellorg.github.io`
+|===
+
+Observed failure mode::
+With Cloudflare proxy on, HTTPS worked (Cloudflare/GTS cert) while Pages reported HTTPS not configured and `https_enforced: false`.
+
+Recovery::
+. Set `docs` to DNS only.
+. Confirm resolution is CNAME → `openshellorg.github.io` → `185.199…` / `2606:50c0:…`.
+. Poll Pages until `https_certificate.state` is `approved`.
+. Enable Enforce HTTPS.
+. Hard-refresh the Pages settings page if the UI still looks stuck.
+
+Apex `opensh.org` on the `openshellorg/opensh.org` site can be healthy on GitHub IPs while a subdomain still fails if only the subdomain was orange-clouded — check **each** hostname.
+
+== After GitHub HTTPS works
+
+* Prefer leaving DNS **grey-cloud** if you want GitHub Enforce HTTPS to stay meaningful.
+* If you turn the orange cloud back on for CDN/WAF features, treat Cloudflare as the TLS edge again; expect GitHub's HTTPS warning to return. Use Cloudflare "Always Use HTTPS" / HSTS there.
+* Automating grey-cloud via Cloudflare API is a reasonable follow-on; not required for the algorithm above.
+
+== See also
+
+* link:https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site[GitHub: Configuring a custom domain]
+* link:https://developers.cloudflare.com/dns/proxy-status/[Cloudflare: Proxy status (orange vs grey)]
+* xref:how-to/index.adoc[How-to guides overview]
+* link:https://github.com/dev-centr/scriptbook[Scriptbook] — playable `.cmk` script documents (sidecar run output)

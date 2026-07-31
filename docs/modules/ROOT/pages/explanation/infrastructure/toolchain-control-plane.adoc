@@ -28,7 +28,7 @@ It is not the name of the pattern itself. Think of it as the concrete management
 == What a control plane owns
 
 Bootstrap::
-Install via OS package managers where possible (`winget`, Homebrew, apt/dnf, Scoop), with PATH refresh and a post-install health gate.
+Install via OS package managers where possible (`winget`, Homebrew, apt/dnf, Scoop), with PATH refresh (xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]) and a post-install health gate.
 
 Pin and resolve::
 Per-project pins with a single rule: project pin > user default > system.

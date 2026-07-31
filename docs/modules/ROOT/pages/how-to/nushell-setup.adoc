@@ -69,7 +69,7 @@ Nushell stores configuration under its config directory (platform-specific; see 
 == Troubleshooting
 
 Not found after install::
-Close and reopen the terminal, or refresh `PATH`, then run `nu --version` again.
+Refresh the session environment (or close and reopen the terminal), then run `nu --version` again. Inside VS Code/Cursor, a new terminal may still be stale — see xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]. Do not rely on Chocolatey `refreshenv`.
 
 Tool says it requires Nushell::
 Install Nushell (this page). Tools using link:https://github.com/openshellorg/nu-require[nu-require] will, once `nu` is on `PATH`, relaunch themselves inside Nushell even if you started them from bash/zsh/pwsh. If install is still missing, they may offer a one-shot install on supported platforms.
@@ -77,5 +77,6 @@ Install Nushell (this page). Tools using link:https://github.com/openshellorg/nu
 == See also
 
 * xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
 * xref:reference/shells/nushell.adoc[Nushell reference]
 * xref:reference/recommended-tools.adoc[Recommended Tools]
