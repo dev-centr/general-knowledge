@@ -1,0 +1,67 @@
+= Infrastructure as Code (IaC)
+:description: Why IaC, OpenTofu vs Pulumi defaults, personal vs organization patterns, and orphaned IaC registration.
+
+Infrastructure as Code means you store your server, network, and cloud setup in files (code) instead of clicking in a web console. Those files can be versioned, reviewed, and repeated so your infra is consistent and auditable.
+
+== Tool defaults
+
+DevCentr recommends **OpenTofu** as a broadly compatible default when users add IaC from the app (open source, Terraform-compatible HCL).
+
+For organizations following Dev-Centr **Business Bootstrap** guidance, prefer a central **Pulumi** (TypeScript) xref:business-bootstrap:explanation/org-infra-repo-pattern.adoc[org `infra` repo] for shared DNS and platform resources. You can still use Terraform, OpenTofu, or other tools; the app supports multiple IaC styles via discovery.
+
+== Personal use: repo-level IaC
+
+For **personal repos** (your own account, not an organization), IaC is usually **repo-level**: put the infra code **inside the same repo** as the project.
+
+* An `infra/` folder (or similar) holds OpenTofu/Pulumi files.
+* You own both the app and the infra; there is no separate “central infra repo” to coordinate with.
+* This is the **default suggestion** when you add IaC from DevCentr while browsing a personal repository.
+
+If you have **many personal projects** and want one place for shared infra, you can maintain a personal infra repo; DevCentr can offer that as an optional pattern.
+
+== Organization use
+
+=== Org-level: one infrastructure repo
+
+Many organizations use a **single repo** (e.g. `infra` or `infrastructure`) for the whole org.
+
+* Shared infra (DNS, networks, IAM, environments) lives there.
+* Application repos usually contain **no** IaC, or only thin wrappers.
+* Pros: one place to review and secure infra, less duplicated state, easier standards.
+* Include an Antora `docs/` component beside the stacks for apply/preview and org-specific runbooks.
+
+See xref:business-bootstrap:explanation/org-infra-repo-pattern.adoc[Org infra repo pattern] for the Pulumi + docs layout used in our orgs.
+
+=== Per-project IaC in an org
+
+Teams can keep IaC **inside their app repo**. The org may want visibility without moving all code into a central repo — see delegation patterns below.
+
+=== Hybrid
+
+Central repo for shared building blocks; thin IaC in app repos for app-specific resources.
+
+== Orphaned IaC and registration (org only)
+
+If an org already has a central infrastructure repo and a project repo also contains IaC, that project IaC may be **orphaned** (outside the org model). DevCentr can detect this and assist registration.
+
+=== Pattern 1: Registration via metadata
+
+Teams keep IaC in their repo; the central repo holds a registration file per service (URL, environments, modules, outputs, ownership).
+
+=== Pattern 2: Thin wrapper modules
+
+Teams expose a small public module; the central repo imports only that interface.
+
+=== Pattern 3: Remote state linking only
+
+Central repo reads remote state outputs only.
+
+=== Pattern 4: Policy as code
+
+Central repo stores policies; CI validates team repos.
+
+== Related
+
+* xref:business-bootstrap:index.adoc[Business Bootstrap] — email DNS, DMARC, vendor matrix
+* xref:DevCentr:specifications:components/iac-discovery.adoc[IaC Discovery]
+* xref:DevCentr:specifications:components/installation-workflow.adoc[Installation workflow]

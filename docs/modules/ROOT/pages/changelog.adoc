@@ -1,38 +1,42 @@
-= Changelog
+﻿= Changelog
 
 Timeline of notable documentation changes in this repository.
 
-== 2026-07-24 — Brand motion (SVG + Rive)
+== 2026-07-31 — IaC explanation restored + Business Bootstrap links
+
+* Restored xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)] (was missing after knowledge-base extraction; nav already pointed here).
+* Documented OpenTofu as app default and Pulumi org `infra` repos via Business Bootstrap cross-links.
+== 2026-07-24 ΓÇö Brand motion (SVG + Rive)
 
 * Expanded xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]: full tradeoff matrix (openness, player weight, interactivity, **agentic editability**); Rive as an option not a hard default; note on animation-as-code / text IR direction; **Popkorn** marked potential future with link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7].
 * Softened xref:reference/recommended-tools.adoc[Recommended Tools] Design & Brand Motion wording (no single-format advocacy).
 * See xref:changelog-details/2026-07-24 - brand-motion-svg-rive.adoc[Detailed changelog].
 
-== 2026-07-24 — Toolchain Management vocabulary
+== 2026-07-24 ΓÇö Toolchain Management vocabulary
 
-* Canonical explanation is now xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (pattern → protocol → control plane → TCF).
+* Canonical explanation is now xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (pattern ΓåÆ protocol ΓåÆ control plane ΓåÆ TCF).
 * xref:explanation/infrastructure/toolchain-framework.adoc[TCF] clarified (IoC adapters; not TMF; broad software ecosystems); points at `dev-centr/toolchain-framework` CI kit.
 * Flutter how-to and nav updated to point at the Pattern page.
 * See xref:changelog-details/2026-07-24 - toolchain-management-vocabulary.adoc[Detailed changelog].
 
-== 2026-07-24 — Toolchain Control Plane
+== 2026-07-24 ΓÇö Toolchain Control Plane
 
 * Added Toolchain Control Plane / Flutter setup material (superseded in part by the vocabulary lock-in above).
 * Naming at the time: **TCP**, **TCoP**, **TCF**.
 * See xref:changelog-details/2026-07-24 - toolchain-control-plane.adoc[Detailed changelog].
 
-== 2026-07-24 — WSL distro comparison and setup
+== 2026-07-24 ΓÇö WSL distro comparison and setup
 
 * Added xref:explanation/infrastructure/wsl-distro-comparison.adoc[Choosing a WSL Linux Distro]: Ubuntu LTS vs Tumbleweed vs Arch vs AlmaLinux, workflows, LTS-vs-rolling clarification, and what Windows **WSL Settings** covers vs the CLI.
 * Added xref:how-to/wsl-setup.adoc[Set up and manage WSL] how-to (install, default distro, Settings app, everyday commands).
-* Navigation: Explanation → Infrastructure; How-to Guides.
+* Navigation: Explanation ΓåÆ Infrastructure; How-to Guides.
 * See xref:changelog-details/2026-07-24 - wsl-distro-comparison.adoc[Detailed changelog].
 
-== 2026-07-22 — Nushell recommendation
+== 2026-07-22 ΓÇö Nushell recommendation
 
 * Added xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell] (structured pipelines vs byte-stream stdout).
 * Added xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell], xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents], and xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell overview] (name collision + sandbox vs structured-pipe layers).
 * Added xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg] (aligned goals, separate orgs).
 * Added xref:how-to/nushell-setup.adoc[Nushell setup] how-to and xref:how-to/index.adoc[how-to index].
 * Added xref:reference/shells/nushell.adoc[Nushell reference] and restored xref:reference/recommended-tools.adoc[Recommended Tools] with Nushell as the default shell.
-* Navigation updated under How-to, Reference → Shells, and Explanation → Infrastructure.
+* Navigation updated under How-to, Reference ΓåÆ Shells, and Explanation ΓåÆ Infrastructure.
