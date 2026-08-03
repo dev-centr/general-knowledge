@@ -1,0 +1,24 @@
+= TUI Applications
+:navtitle: TUI
+:description: Essentials for terminal UI apps—combining CLI identity with in-app About/help panes and careful update UX.
+
+TUIs are **CLIs with an interactive surface**. Inherit xref:explanation/architecture/types/cli.adoc[CLI] essentials, then add discoverable in-app help. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== Extra on top of CLI
+
+* In-app **About / Help** pane (keybind documented on the first screen)
+* Show version + build id there, not only via `--version`
+* Export diagnostics from a menu key (still redacted)
+* Graceful resize and no-color/fallback for limited terminals
+
+== Updates
+
+Same as CLI: package manager first. If you self-update, **exit the TUI cleanly** before replacing the binary; tell the user to restart.
+
+== Checklist
+
+* [ ] `--version` and in-app About agree
+* [ ] Help keybind visible without reading the README
+* [ ] Diagnostics export from the UI
+* [ ] Package or installer story documented
+* [ ] Update does not corrupt a running session

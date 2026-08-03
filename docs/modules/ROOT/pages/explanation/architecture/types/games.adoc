@@ -1,0 +1,42 @@
+= Games
+:navtitle: Games
+:description: Essentials for games—launcher/store updates, build identity, crash dumps, and content pipelines alongside the client binary.
+
+Games often outsource distribution to **stores and launchers**, but identity and diagnostics remain your job. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== How essentials map
+
+[cols="1,2"]
+|===
+| Essential | Game form
+
+| About
+| Title screen / settings: version, platform build id, content version
+
+| Debug dump
+| Support zip: logs, specs, save metadata (not necessarily full saves), crash dumps
+
+| Updates
+| Store/launcher patches; still stamp and display versions so players can report accurately
+
+| Packaging
+| Store packages + optional standalone; platform certification (console) when relevant
+
+| Pipeline
+| Client + **content/asset** pipelines; symbol servers for crashification
+|===
+
+== Extra game duties
+
+* Separate **client version** from **content/schema version**
+* Crash reporters with player consent
+* Performance/telemetry opt-in clearly explained
+* Modding: document which dumps/logs help triage mod conflicts
+
+== Checklist
+
+* [ ] Version visible in UI
+* [ ] Crash dump + log export path
+* [ ] Content vs client versions labeled
+* [ ] Store/channel update verified after each ship
+* [ ] Support doc for players and platform holders

@@ -1,0 +1,38 @@
+= Package Installers for Desktop Apps
+:navtitle: App Installer Packaging
+:description: Practical packaging choices for Windows, macOS, and Linux desktop apps—signing, upgrade, and package-manager readiness.
+
+Goal:: Produce installers users and IT can trust, upgrade, and uninstall.
+Why:: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging].
+
+== Windows
+
+. Choose **MSI**, **MSIX**, or a bundle your updater/winget can consume
+. Decide **per-user vs per-machine** scope early (affects paths and UAC)
+. Add Start Menu shortcut, ARP uninstall entry, and optional PATH
+. **Authenticode-sign** release builds
+. Smoke-test upgrade: install N → install N+1 → data preserved → uninstall clean
+. Emit checksums next to the artifact on the Git release
+
+Tools vary by stack (WiX, Advanced Installer, cargo-packager, electron-builder, Velopack, Flutter distributors, etc.). Prefer one pipeline that CI runs on tags.
+
+== macOS
+
+. App bundle in `/Applications` (or user Applications)
+. Notarize and staple
+. Sparkle or Store for updates when not using Homebrew cask alone
+
+== Linux
+
+. Prefer distro packages or Flatpak/AppImage with a clear story
+. Avoid “only a raw binary in /tmp” for GUI 1.0
+
+== Wire to release automation
+
+Tags should build installers, sign, upload, and optionally open winget/Homebrew PRs — xref:how-to/automated-releases.adoc[Automated releases].
+
+== Related
+
+* xref:how-to/windows-auto-updates.adoc[Windows auto-updates]
+* xref:how-to/winget-registration.adoc[Winget registration]
+* xref:reference/package-registries.adoc[Package registries]

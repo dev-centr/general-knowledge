@@ -1,0 +1,53 @@
+= Libraries and SDKs
+:navtitle: Libraries
+:description: Product essentials adapted for libraries and SDKs—versioning, registries, compatibility, and diagnostics hooks without a GUI About dialog.
+
+Libraries do not ship an About dialog, but they still need **identity, distribution, pipeline, and a support story**. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== How essentials map
+
+[cols="1,2"]
+|===
+| Essential | Library form
+
+| About / version
+| Package metadata + `VERSION` / crate version / `package.json`; changelog; optional `Library.version` API
+
+| Build info
+| CI publishes provenance (commit) on GitHub Releases / registry OIDC attestations when available
+
+| Debug dump
+| Optional `diagnostics` module for host apps; clear error types with stable codes
+
+| Auto-update
+| Consumers update via package manager—**you** publish promptly; document migration guides
+
+| Installer
+| Registry package is the installer; native addons may need platform wheels/cdylibs matrix
+
+| Pipeline
+| Required: test matrix, publish on tag, yank policy documented
+|===
+
+== Extra library duties
+
+* **SemVer honesty** — breaking changes bump major; document deprecations
+* **MSRV / language edition** policy stated in README
+* **Feature flags** documented; default features kept lean
+* **Examples and minimal repro** templates for bug reports
+* **Interop** — FFI/ABI stability called out when you ship native code
+
+== Anti-patterns
+
+* Publishing only from a maintainer laptop
+* Silent breaking changes in a minor bump
+* No changelog
+* Native artifacts for one OS while claiming “cross-platform”
+
+== Checklist
+
+* [ ] Registry publish automated from tags
+* [ ] Changelog + migration notes for breaks
+* [ ] Support matrix (OS/arch/language versions) published
+* [ ] Stable error codes or structured errors where it matters
+* [ ] Yank/deprecate policy written down

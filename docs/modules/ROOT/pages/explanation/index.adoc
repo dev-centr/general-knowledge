@@ -1,0 +1,18 @@
+= Explanation
+:navtitle: Explanation
+:description: Concept-oriented pages—the why behind architecture, infrastructure, and documentation practices.
+
+Explanation pages teach **why**. Start with architecture if you are building a product; infrastructure if you are shaping the environment.
+
+== Architecture
+
+* xref:explanation/architecture/index.adoc[Architecture overview]
+* xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials] — shared framework for shippable software
+
+== Infrastructure
+
+Toolchain management, shells, WSL, IaC, and related topics live under Explanation → Infrastructure in the nav.
+
+== Documentation
+
+Literate programming, brand motion, and writing guidance live under Explanation → Documentation in the nav.

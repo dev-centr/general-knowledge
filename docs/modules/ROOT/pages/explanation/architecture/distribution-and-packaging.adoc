@@ -1,0 +1,81 @@
+= Distribution, Packaging, and Installers
+:navtitle: Distribution and Packaging
+:description: How software reaches users—installers, package managers, language registries, and uninstall—tied to update and release pipelines.
+
+**Distribution** is how bits arrive on a machine and how they leave again (uninstall/upgrade). It is inseparable from xref:explanation/architecture/automatic-updates.adoc[updates] and the xref:explanation/architecture/build-pipeline.adoc[build pipeline].
+
+Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+How-to: xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps].
+
+== Choose the channel by artifact type
+
+[cols="1,2"]
+|===
+| Artifact | Typical channels
+
+| Library / SDK
+| Language registry (npm, PyPI, crates.io, Maven, NuGet, DUB, …) — see xref:reference/package-registries.adoc[Package registries]
+
+| CLI
+| Registry + OS package managers + optional standalone archives; `cargo binstall`-class tools when fitting
+
+| GUI / TUI desktop
+| Platform installers + winget/Homebrew/Flathub; optional Store
+
+| Game
+| Steam/Epic/itch + optional standalone; launcher owns much of packaging
+
+| Service
+| Container image, OS service package, cloud marketplace, or IaC module
+|===
+
+== Desktop installer requirements
+
+A serious Windows/macOS/Linux desktop install should provide:
+
+* Predictable install location
+* Start menu / Applications entry (GUI)
+* File associations / URL protocol handlers when claimed
+* Add/Remove Programs (Windows) or equivalent uninstall
+* Upgrade that preserves user data
+* Code signing (Windows Authenticode; Apple notarization)
+
+On Windows, prefer **MSI**, **MSIX**, or a well-behaved bundle that winget can ingest. Per-user installs reduce UAC friction for many tools; machine-wide fits enterprise.
+
+== Packaging vs “portable zip”
+
+Portable zips are fine for power users and CI smoke tests. They are **not** a substitute for:
+
+* PATH registration
+* Uninstall cleanliness
+* Auto-update integration
+* Enterprise deployment
+
+If you ship portable builds, label them clearly and still offer an installer.
+
+== Artifact matrix to publish
+
+For each release tag, aim for:
+
+* Primary installer(s) per OS/arch
+* Optional portable archive
+* Checksums (`SHA256SUMS`) and signatures
+* SBOM when you can (CycloneDX/SPDX)
+* Release notes linking changelog details
+
+== Checklist
+
+* [ ] Channel chosen per OS you claim to support
+* [ ] Signed installers (where the platform expects it)
+* [ ] Clean uninstall / upgrade path
+* [ ] Package-manager registration plan (winget, brew, …)
+* [ ] Portable builds optional and labeled
+* [ ] Checksums published with the release
+
+== Related
+
+* xref:reference/package-registries.adoc[Package registries]
+* xref:how-to/winget-registration.adoc[Winget registration]
+* xref:how-to/app-installer-packaging.adoc[How-to: installers]
+* xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:devcentr:publishing:index.adoc[Publishing hub]

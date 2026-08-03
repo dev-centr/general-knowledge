@@ -11,6 +11,17 @@ Task-oriented guides. Pick a guide when you already know what you want to do.
 * xref:how-to/flutter-setup.adoc[Set up Flutter tooling] — SDK bootstrap; community version bridges until an official Toolchain Control Plane exists (see Toolchain Management Pattern).
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS] — Grey-cloud for GitHub LE; poll Pages API; companion `scripts/check-gh-pages-https.nu`.
 
+== Shipping software
+
+Tied to xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]:
+
+* xref:how-to/about-screen-and-debug-dump.adoc[About screen and debug dump]
+* xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows]
+* xref:how-to/app-installer-packaging.adoc[App installer packaging]
+* xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/winget-registration.adoc[Winget registration]
+
 == Index
 
 Browse the How-to section in the left navigation for the full list (Flutter, Tailwind, Git workflows, releases, and more).

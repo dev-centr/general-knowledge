@@ -18,6 +18,9 @@
 * xref:how-to/git-release-workflow.adoc[Git Release Workflow]
 * xref:how-to/automated-releases.adoc[Automated Releases]
 * xref:how-to/winget-registration.adoc[Winget Registration]
+* xref:how-to/about-screen-and-debug-dump.adoc[About Screen and Debug Dump]
+* xref:how-to/windows-auto-updates.adoc[Windows Auto-Updates]
+* xref:how-to/app-installer-packaging.adoc[App Installer Packaging]
 * xref:how-to/wsl-setup.adoc[WSL Setup]
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup]
 
@@ -36,6 +39,7 @@
 * xref:reference/nodejs-env.adoc[Node.js Environment]
 * xref:reference/asciidoc-tools.adoc[AsciiDoc Tooling]
 * xref:reference/package-registries.adoc[Package Registries]
+* xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
 * xref:reference/gitignore-template-sources.adoc[Gitignore Template Sources]
 * xref:reference/vcs-provider-profiles.adoc[VCS Provider Profiles]
 * xref:reference/windows-eol-exceptions.adoc[Windows EOL Exceptions]
@@ -43,9 +47,23 @@
 .🧠 Explanation
 * xref:explanation/index.adoc[Overview]
 ** Architecture
+*** xref:explanation/architecture/index.adoc[Architecture overview]
+*** xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+*** xref:explanation/architecture/about-and-build-info.adoc[About and Build Info]
+*** xref:explanation/architecture/automatic-updates.adoc[Automatic Updates]
+*** xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and Packaging]
+*** xref:explanation/architecture/build-pipeline.adoc[Build Pipeline]
+*** xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and Support]
+*** xref:explanation/architecture/principles.adoc[Core Principles]
+**** By type
+***** xref:explanation/architecture/types/libraries.adoc[Libraries]
+***** xref:explanation/architecture/types/gui-apps.adoc[GUI Apps]
+***** xref:explanation/architecture/types/cli.adoc[CLI]
+***** xref:explanation/architecture/types/tui.adoc[TUI]
+***** xref:explanation/architecture/types/games.adoc[Games]
+***** xref:explanation/architecture/types/services.adoc[Services]
 *** xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
 *** xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms] (Dev-Centr docs playbook)
-*** xref:explanation/architecture/principles.adoc[Core Principles]
 *** xref:explanation/architecture/google-docs-apps-script.adoc[Apps Script Optimization]
 ** Infrastructure
 *** xref:explanation/infrastructure/nushell.adoc[Nushell (recommended shell)]

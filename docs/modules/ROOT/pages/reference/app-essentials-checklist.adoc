@@ -1,0 +1,62 @@
+= App Essentials Checklist
+:navtitle: App Essentials Checklist
+:description: Printable checklist of software product essentials—identity, updates, packaging, pipeline, diagnostics—by artifact type.
+
+Use with xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]. Mark items that apply to your artifact type.
+
+== Shared
+
+* [ ] Marketing version defined
+* [ ] Build id stamped at compile/CI time
+* [ ] Channel stamped (`stable` / `beta` / …)
+* [ ] Changelog + README entry points
+* [ ] CI builds release artifacts on tags
+* [ ] Checksums (and signatures when required) published
+* [ ] Secrets redacted from logs/dumps by default
+* [ ] Support doc: what users should attach
+
+== GUI
+
+* [ ] About dialog with version + build id
+* [ ] Debug dump button
+* [ ] Open logs folder
+* [ ] Windows installer signed + uninstallable
+* [ ] Auto-update or Store/winget updates
+* [ ] Update status visible in About
+
+== CLI / TUI
+
+* [ ] `--version` includes build id
+* [ ] `doctor` or `debug-dump`
+* [ ] Package manager or documented install
+* [ ] Self-update disableable if present
+* [ ] TUI: in-app About/help keybind
+
+== Library
+
+* [ ] Registry publish on tag
+* [ ] SemVer policy + changelog
+* [ ] Support matrix documented
+* [ ] Migration notes on breaks
+
+== Game
+
+* [ ] Client + content versions visible
+* [ ] Crash/log export
+* [ ] Store/channel update verified
+
+== Service
+
+* [ ] `/health` or `/version` includes build id
+* [ ] Auth-gated diagnostics
+* [ ] Rollback-tested deploy
+* [ ] Runbook linked
+
+== Related how-tos
+
+* xref:how-to/about-screen-and-debug-dump.adoc[]
+* xref:how-to/windows-auto-updates.adoc[]
+* xref:how-to/app-installer-packaging.adoc[]
+* xref:how-to/git-release-workflow.adoc[]
+* xref:how-to/automated-releases.adoc[]
+* xref:how-to/winget-registration.adoc[]

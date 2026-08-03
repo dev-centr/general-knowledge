@@ -1,0 +1,41 @@
+= GUI Applications
+:navtitle: GUI Apps
+:description: Essentials for desktop and mobile GUI apps—About dialog, debug dump, Windows updates/installers, and supportability.
+
+GUI apps are where **About**, **debug dump**, **installer**, and **auto-update** show up as visible product features. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== Must-ship surfaces
+
+* **About** (menu: Help → About, or app menu on macOS) with version, build id, channel — xref:explanation/architecture/about-and-build-info.adoc[About and build info]
+* **Debug dump** button on that dialog — xref:how-to/about-screen-and-debug-dump.adoc[How-to]
+* **Settings** with paths to logs/config or a “Open logs folder” action
+* **Update** affordance — check now / restart to update — xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* **Installer** with uninstall — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]
+
+== Windows emphasis
+
+If Windows is a supported OS:
+
+* Plan MSI/MSIX or a winget-friendly installer from the start
+* Code-sign release installers
+* Implement auto-update or Store/winget updates before calling 1.0 done
+* See xref:how-to/windows-auto-updates.adoc[Windows auto-updates] and xref:how-to/winget-registration.adoc[Winget]
+
+== UX notes
+
+* Do not hide version solely in logs
+* First-run may mention crash reporting opt-in; do not bury it forever
+* High-DPI, accessibility, and keyboard paths are product quality—not separate from “essentials,” but tracked in your UI standards
+
+== Mobile
+
+Stores own distribution and updates; you still need in-app version display, log export for support, and crash reporting (opt-in where required by policy).
+
+== Checklist
+
+* [ ] About shows version + build id + channel
+* [ ] Dump button produces redacted zip
+* [ ] Update path live on Windows
+* [ ] Signed installer + uninstall
+* [ ] Open logs / config from UI
+* [ ] Changelog linked from About or Help

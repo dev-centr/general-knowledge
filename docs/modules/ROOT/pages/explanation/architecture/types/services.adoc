@@ -1,0 +1,43 @@
+= Services and Daemons
+:navtitle: Services
+:description: Essentials for long-running services—health endpoints, version identity, rolling updates, structured logs, and operator diagnostics.
+
+Services replace About dialogs with **operator surfaces**. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== How essentials map
+
+[cols="1,2"]
+|===
+| Essential | Service form
+
+| About / version
+| `/health` or `/version` JSON includes version + build id + commit; also log on startup
+
+| Debug dump
+| `kubectl`/`systemctl` diagnostics bundle; admin-only endpoint; never public without auth
+
+| Updates
+| Rolling deploy, blue/green, or container tag promotion—not a desktop updater
+
+| Packaging
+| Container image, OS package, cloud offering, or IaC module
+
+| Pipeline
+| Build → scan → push image → deploy; migration jobs versioned with the service
+|===
+
+== Extra service duties
+
+* Liveness vs readiness probes
+* Structured logs + trace ids
+* Config via environment / mounted files; secrets from a secret manager
+* Backwards-compatible APIs or explicit versioned routes
+* Runbooks linked from the repo README
+
+== Checklist
+
+* [ ] Version in health/version endpoint and startup logs
+* [ ] Auth-gated diagnostics
+* [ ] Deploy rollback tested
+* [ ] SBOM / image signing when required
+* [ ] Runbook for “service unhealthy”

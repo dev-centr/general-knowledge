@@ -1,0 +1,84 @@
+= Automatic Updates
+:navtitle: Automatic Updates
+:description: Why shippable apps need a deliberate update path—especially on Windows—covering channels, package managers, in-app updaters, and safety.
+
+Stale installs are the default failure mode of desktop software. **Automatic updates** (or reliable package-manager updates) are essential for security fixes, compatibility, and supportability—above all on Windows, where users often never revisit your download page.
+
+Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+Windows how-to: xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows].
+
+== Goals
+
+* Users reach a patched build without hunting zip files
+* Updates are **channel-aware** (stable vs beta)
+* Failed updates do not brick the install (rollback or last-known-good)
+* Enterprise environments can disable or pin when needed
+
+== Strategy ladder (prefer left when enough)
+
+. **Platform package manager** — winget, MS Store, Homebrew, apt/dnf, Flatpak, Chocolatey, Scoop
+. **Installer that upgrades in place** — MSI major/minor upgrade, MSIX, Sparkle-fed DMG, etc.
+. **In-app updater** — checks a feed, downloads, verifies signature, swaps binaries, restarts
+. **Manual download page** — last resort; document it; never the only path for a 1.0 GUI app
+
+Many products combine (1) + (3): winget for discovery/install, in-app for faster channels.
+
+== Windows-specific reality
+
+Windows users expect one of:
+
+* **Microsoft Store / MSIX** — store handles updates
+* **winget-upgradable installer** — ARP entry + winget manifest with installer URL and version
+* **In-app updater** — common for apps outside the Store (electron-updater, Velopack, custom WinSparkle-class, Squirrel legacy, etc.)
+
+Avoid “download Setup.exe from the website every time” as the primary story. Prefer:
+
+* Code-signed installers
+* Silent/upgrade-friendly packaging
+* A clear **Apps & features** uninstall entry
+* Update checks that respect metered networks and “do not disturb” work hours when reasonable
+
+See also: xref:how-to/winget-registration.adoc[Winget registration], xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging].
+
+== Update feed design
+
+Minimum feed fields:
+
+* Version (comparable)
+* Channel
+* Artifact URL(s) per OS/arch
+* Signature / hash
+* Minimum OS version
+* Release notes URL or inline summary
+* Mandatory flag (for broken releases)
+
+Pin the feed URL in the binary; allow enterprise override via policy/config.
+
+== Safety
+
+* Verify signatures / hashes before apply
+* Stage then swap; keep previous build for rollback when feasible
+* Do not run the updater as a confused admin forever—prefer per-user installs when elevation is not required
+* Never phone home with PII just to check versions; a build id + OS/arch is enough
+
+== When auto-update is wrong
+
+* Locked-down fleets that require IT-approved MSI via GPO/Intune — offer a **disabled** updater and an IT package
+* Libraries — consumers update via their package manager (npm, crates.io, DUB, …)
+* One-shot scripts — document version; do not self-mutate the user’s PATH tools unexpectedly
+
+== Checklist
+
+* [ ] Primary update path chosen (store / winget / in-app / pkg)
+* [ ] Channels defined and stamped into builds
+* [ ] Signatures verified before apply
+* [ ] Rollback or non-brick failure mode
+* [ ] Enterprise opt-out / pin documented
+* [ ] About shows update status or last check
+
+== Related
+
+* xref:explanation/architecture/about-and-build-info.adoc[About and build info]
+* xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
+* xref:how-to/windows-auto-updates.adoc[How-to: Windows auto-updates]
+* xref:how-to/automated-releases.adoc[How-to: Automated releases]

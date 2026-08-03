@@ -1,0 +1,10 @@
+= 2026-08-03 — Software Product Essentials
+
+Added the **Software Product Essentials** architecture framework to general-knowledge: shared shipping concerns (About/build info, debug dumps, automatic updates with Windows emphasis, distribution/installers, build pipeline, diagnostics) plus type-specific articles (libraries, GUI, CLI, TUI, games, services).
+
+* Hub: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+* How-tos: About/debug dump, Windows auto-updates, installer packaging; restored release/winget/package-registry pages referenced by DevCentr Publishing
+* Reference: xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* Agent rules (fork + upstream) point local agents at these pages when building apps
+
+Navigation: Explanation → Architecture; How-to → Shipping software; Reference checklist.

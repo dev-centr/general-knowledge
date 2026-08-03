@@ -1,0 +1,41 @@
+= Add an About Screen and Debug Dump
+:navtitle: About and Debug Dump
+:description: Task guide for adding version/build identity and a privacy-aware debug dump to an application.
+
+Goal:: Ship a discoverable About surface and a one-action redacted diagnostics dump.
+Why:: xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps].
+
+== Steps (any stack)
+
+. **Generate build metadata in CI** — commit SHA, version, channel, timestamp, target triple. Emit a source file or embedded resource; do not shell out to `git` in production builds.
+. **Expose a version API** in-process (e.g. `BuildInfo.version`, `BuildInfo.commit`).
+. **Wire the UI or CLI**:
++
+--
+* GUI: Help → About (version, build, channel, OS, license, **Save debug dump**)
+* CLI: `app --version` and `app debug-dump [--out path]`
+* TUI: About pane + same dump command
+--
+. **Implement the dump** as a zip or folder:
++
+--
+* build info
+* non-secret settings
+* last logs
+* optional hardware/OS summary
+--
+. **Redact** tokens, passwords, cookies, and secret-store contents by default.
+. **Document** in README/Help: where About lives and what to attach to issues.
+
+== Acceptance checks
+
+* [ ] About / `--version` shows marketing version and build id
+* [ ] Dump works on a clean install (no repo/.git required)
+* [ ] Opening the dump does not reveal secrets in a spot check
+* [ ] A teammate can match the build id to a CI run
+
+== Related
+
+* xref:explanation/architecture/types/gui-apps.adoc[GUI apps]
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+* xref:reference/app-essentials-checklist.adoc[Checklist]

@@ -1,0 +1,35 @@
+= CLI Tools
+:navtitle: CLI
+:description: Essentials for command-line tools—version flags, doctor/dump commands, package distribution, and self-update policies.
+
+CLIs express product essentials through **flags, subcommands, and package managers** rather than dialogs. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== Must-ship surfaces
+
+* `app --version` / `app version` — marketing version **and** build id
+* `app --help` with examples; man page or `--help` deep enough to survive offline use
+* `app doctor` (or `app debug-dump`) for support — xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+* Non-zero exit codes with stable meanings where scripting depends on them
+* Distribution via registry and/or OS packages — xref:reference/package-registries.adoc[Package registries]
+
+== Updates
+
+Prefer package-manager updates (`winget upgrade`, `brew upgrade`, `apt`). Optional **self-update** subcommand is fine when:
+
+* You ship a standalone binary widely
+* You verify signatures
+* You do not surprise corporate environments (respect `APP_NO_SELF_UPDATE=1` or similar)
+
+== UX expectations
+
+* stdout for data; stderr for diagnostics (so pipes stay clean)
+* Color on TTYs only; `--no-color` / `NO_COLOR`
+* Machine-readable output (`--json`) for agent and script use when the tool is part of automation
+
+== Checklist
+
+* [ ] `--version` includes build id
+* [ ] `doctor` / debug-dump exists
+* [ ] Install via at least one package manager you document
+* [ ] CI releases attach binaries + checksums
+* [ ] Self-update is signed and disableable (if present)

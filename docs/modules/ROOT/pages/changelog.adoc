@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-03 — Software Product Essentials
+
+* Added xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]: shared shipping framework (About/build info, updates, packaging, pipeline, diagnostics) and type-specific guides (libs, GUI, CLI, TUI, games, services).
+* How-tos for About/debug dump, Windows auto-updates, installer packaging; restored git-release, automated-releases, winget, and package-registries pages.
+* Reference checklist: xref:reference/app-essentials-checklist.adoc[App essentials checklist].
+* See xref:changelog-details/2026-08-03 - software-product-essentials.adoc[Detailed changelog].
+
 == 2026-07-31 — IaC explanation restored + Business Bootstrap links
 
 * Restored xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)] (was missing after knowledge-base extraction; nav already pointed here).

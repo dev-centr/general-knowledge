@@ -1,0 +1,66 @@
+= Package Registries
+:navtitle: Package Registries
+:description: Where to publish software—language registries, OS package managers, container registries, and GitHub Releases—and how to choose.
+
+Choosing **where** to publish is part of xref:explanation/architecture/distribution-and-packaging.adoc[distribution]. Most products use more than one channel.
+
+== Language / ecosystem registries
+
+[cols="1,2"]
+|===
+| Ecosystem | Common registry
+
+| JavaScript/TypeScript
+| npm (prefer `pnpm` for installs in our shops)
+
+| Python
+| PyPI
+
+| Rust
+| crates.io
+
+| .NET
+| NuGet
+
+| Java/Kotlin
+| Maven Central
+
+| Go
+| Module proxy / pkg.go.dev (modules from VCS)
+
+| D
+| DUB registry
+
+| Flutter/Dart
+| pub.dev
+|===
+
+Use registries for **libraries** and often for **CLI** tools that install as packages.
+
+== OS and desktop package managers
+
+* **Windows:** winget (see xref:how-to/winget-registration.adoc[Winget registration]), optional Chocolatey/Scoop, Microsoft Store
+* **macOS:** Homebrew formulae/casks, Mac App Store
+* **Linux:** distro packages, Flathub, AppImage, Snap (policy-dependent)
+
+== Containers and services
+
+* GHCR, Docker Hub, or cloud ECR/GCR/ACR for service images
+* Prefer digest-pinned deploys in production
+
+== GitHub / GitLab Releases
+
+Always useful as the **canonical artifact shelf** (installers, checksums, SBOMs) even when a registry is primary. Updaters and winget manifests often point at Release assets.
+
+== Selection tips
+
+* Libraries → ecosystem registry first
+* GUI apps → OS package manager + Release assets; Store optional
+* Internal tools → private registry or org Package feed + Releases
+* Avoid relying on a single CDN URL with no version history
+
+== Related
+
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+* xref:devcentr:publishing:index.adoc[Publishing hub]

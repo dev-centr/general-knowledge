@@ -1,0 +1,46 @@
+= Git Release Workflow
+:navtitle: Git Release Workflow
+:description: When and how to treat work as a release—tags, changelogs, channels, and promotion from main to stable.
+
+Goal:: Define a repeatable “this commit is a release” practice.
+Why:: xref:explanation/architecture/build-pipeline.adoc[Build pipeline]; framework xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+
+== When something is a release
+
+A release is not “main is green.” It is an explicit decision:
+
+. Version number chosen (SemVer/CalVer per project policy)
+. Changelog updated (timeline + detail page when you use that style)
+. Tag created (`v1.2.3`)
+. CI publishes artifacts for that tag
+. Optional: package managers / update feed updated
+
+== Suggested flow
+
+. Finish work on a branch → review → merge to main
+. On main: bump version files if not automated
+. Write changelog entry (what users care about, not every commit)
+. Tag annotated release: `git tag -a v1.2.3 -m "v1.2.3"`
+. Push tag → CI builds, tests, signs, uploads
+. Verify About/`--version` on the artifact matches the tag
+. Announce / promote channel (beta → stable) when ready
+
+== Channels
+
+* **nightly/dev** — optional daily tags or trunk artifacts
+* **beta** — pre-release tags (`v1.2.3-beta.1`)
+* **stable** — plain version tags
+
+Stamp the channel into build info so About and updaters agree.
+
+== Do not
+
+* Ship laptop-only binaries as the official build
+* Move tags after people may have downloaded them
+* Skip checksums on public desktop artifacts
+
+== Related
+
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/app-installer-packaging.adoc[Installer packaging]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]

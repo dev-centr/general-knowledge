@@ -1,0 +1,69 @@
+= Build Pipeline and Release Engineering
+:navtitle: Build Pipeline
+:description: CI as the source of truth for shippable artifacts—version stamps, tests, signing, release tags, and promotion across channels.
+
+A **build pipeline** turns commits into trustworthy artifacts. Laptop builds are for development; **CI builds** are what users install.
+
+Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+How-tos: xref:how-to/automated-releases.adoc[Automated releases], xref:how-to/git-release-workflow.adoc[Git release workflow].
+
+== Pipeline stages
+
+. **Verify** — lint, unit/integration tests, license/secret scans as appropriate
+. **Build** — produce binaries/packages for each target; stamp xref:explanation/architecture/about-and-build-info.adoc[build info]
+. **Prove** — smoke-install or `app --version` / doctor on the artifact
+. **Sign** — code sign / notarize / cosign as required
+. **Publish** — attach to a Git release; push registries; update winget/Homebrew taps
+. **Announce** — changelog entry; optional update feed publish
+
+.Release engineering flow
+[source,mermaid]
+----
+flowchart LR
+  PR[PR checks] --> Main[Main green]
+  Main --> Tag[Version tag]
+  Tag --> Build[Matrix build]
+  Build --> Sign[Sign]
+  Sign --> Rel[GitHub/GitLab release]
+  Rel --> Feeds[Update feed + package managers]
+----
+
+== Versioning
+
+* Prefer **SemVer** for libraries and most apps; **CalVer** when train-based shipping fits
+* Tags trigger releases (`v1.2.3`); avoid shipping untagged “latest only”
+* Channels map to branches or tag prefixes—document the rule once
+
+== Matrix builds
+
+Build on the OS you support, or cross-compile only when you also **test** on the target. Windows artifacts should be produced (or at least smoke-tested) on Windows runners when native dependencies demand it.
+
+== Secrets and signing keys
+
+* Store signing certs in CI secret stores / hardware-backed providers
+* Never commit `.pfx` / private keys
+* Rotate and document who can cut a release
+
+== Promotion
+
+Not every green main commit is a user release:
+
+* `dev` / nightly → automated, lighter gates
+* `beta` → tagged, wider dogfood
+* `stable` → explicit promotion, fuller checklist
+
+== Checklist
+
+* [ ] CI builds all claimed platforms
+* [ ] Build info stamped into artifacts
+* [ ] Tests gate release jobs
+* [ ] Signing wired for production artifacts
+* [ ] Tagged releases with notes + checksums
+* [ ] Package registries / winget updated as part of the same train (or clearly scheduled)
+
+== Related
+
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
+* xref:reference/github-actions-templates-vs-marketplace.adoc[Actions templates vs marketplace] (when present)
+* xref:how-to/automated-releases.adoc[How-to: Automated releases]

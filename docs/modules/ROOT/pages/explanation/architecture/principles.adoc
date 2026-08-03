@@ -1,0 +1,43 @@
+= Core Architecture Principles
+:navtitle: Core Principles
+:description: Cross-cutting principles for building maintainable, shippable software in the Dev-Centr general-knowledge set.
+
+These principles sit under xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]. They are intentional constraints, not slogans.
+
+== Ship the operations surface with the feature surface
+
+If users run it, they must be able to **identify**, **update**, **configure**, and **report** it. Feature work that ignores those four creates permanent support debt.
+
+== One version truth
+
+Marketing version, build id, updater eligibility, and crash headers must agree. Generate metadata once in CI; consume it everywhere.
+
+== Platform-native before clever
+
+Prefer OS package managers, installers, and conventions over bespoke mechanisms—until native channels cannot meet channel speed, UX, or policy needs.
+
+== Redact by default
+
+Logs, dumps, and telemetry exclude secrets and unnecessary PII unless the user explicitly expands the dump.
+
+== Docs match Diátaxis intent
+
+* Tutorials teach newcomers
+* How-tos accomplish tasks
+* Reference holds checklists and facts
+* Explanation teaches why (this section)
+
+Owned projects keep a changelog (timeline + `changelog-details`) and link it from the README—see creator rules in agent-rules.
+
+== Prefer explicit ownership of lifecycle
+
+Toolkits and apps should own install/pin/health/repair/upgrade rather than outsourcing the whole story to tribal side tools. See xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern].
+
+== Type-specific honesty
+
+Do not force a GUI About dialog onto a library. Do not skip an installer because a CLI “works as a zip.” Use the xref:explanation/architecture/software-product-essentials.adoc#applicability-matrix[applicability matrix].
+
+== Related
+
+* xref:explanation/architecture/index.adoc[Architecture index]
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] (when present)

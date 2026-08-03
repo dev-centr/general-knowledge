@@ -1,0 +1,18 @@
+= Reference
+:navtitle: Reference
+:description: Facts, checklists, and lookup material for day-to-day development.
+
+Reference pages are for **retrieval**—checklists, layouts, tool lists, and registries.
+
+== Shipping software
+
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:reference/package-registries.adoc[Package registries]
+
+== Workspace and Git
+
+See the Reference section in the left navigation for workspace organization, Git management, gitignore sources, and related pages.
+
+== Tools
+
+* xref:reference/recommended-tools.adoc[Recommended tools]

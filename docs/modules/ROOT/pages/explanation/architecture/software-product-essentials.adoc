@@ -1,0 +1,215 @@
+= Software Product Essentials
+:navtitle: Software Product Essentials
+:description: Architectural framework for shippable software—shared essentials (About/build info, updates, packaging, pipelines, diagnostics) and how they map to libraries, GUI, CLI, TUI, games, and services.
+
+**Software Product Essentials** is the checklist every shippable artifact should satisfy before you call it “done.” Features are not enough. Users and maintainers need identity, provenance, update path, install story, and a way to dump state when something breaks.
+
+This page is the **framework**. Deep dives live in sibling articles; type-specific pages say what to drop, adapt, or emphasize.
+
+== Why this exists
+
+Teams routinely ship apps that:
+
+* Have no About surface, so support cannot tell *which build* a user runs
+* Cannot self-update on Windows, so users stick on stale binaries for months
+* Are “zip and pray” with no installer, PATH, shortcuts, or uninstall
+* Have no CI artifact story—releases are laptop builds
+* Cannot produce a privacy-aware debug dump when the user files a bug
+
+Those gaps are architectural, not polish. Treat them as first-class product surfaces.
+
+[IMPORTANT]
+====
+When an agent (or human) scaffolds or extends an owned app, **consult this guide and its deep dives** and implement the applicable essentials—do not leave About, updates, packaging, and diagnostics as “later.”
+====
+
+== Shared essentials (all shippable software)
+
+Every artifact that leaves your machine should cover these concerns *in a form that fits its type*. Libraries express them differently than GUI apps; the concern still exists.
+
+[cols="1,2,2"]
+|===
+| Essential | What “good” looks like | Deep dive
+
+| **Identity and provenance**
+| Name, version, channel, commit/build id, OS/arch, and license visible to humans and machines
+| xref:explanation/architecture/about-and-build-info.adoc[About and build info]
+
+| **About / status surface**
+| Discoverable place (dialog, `--version`, `/health`, README badge) that answers “what am I running?”
+| Same
+
+| **Debug / support dump**
+| One action or command that exports redacted env + config + recent logs for bug reports
+| Same + xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+
+| **Update path**
+| Users can move to a newer build without hunting a zip on a random page—especially on Windows
+| xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+
+| **Distribution**
+| Install, upgrade, and uninstall via the platform’s expected channel (MSI/winget, pkg, AppImage, crates.io, …)
+| xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
+
+| **Build pipeline**
+| Reproducible CI builds, signed artifacts where required, attached to a tagged release
+| xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
+
+| **Config and data layout**
+| Documented paths for config, cache, logs, and secrets; no secrets in the dump by default
+| xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+
+| **Crash and error story**
+| Failures leave a breadcrumb (log, crashpad, exit code + stderr); user can recover or report
+| Same
+
+| **Docs and changelog**
+| README entry points; changelog with timeline + details; Diátaxis when docs grow
+| xref:explanation/architecture/principles.adoc[Core principles]
+|===
+
+Quick agent checklist (printable)::
+xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+
+[[applicability-matrix]]
+== Applicability matrix
+
+Legend: **R** = required for a mature product · **A** = adapt (different UX) · **O** = optional / rare · **—** = N/A
+
+[cols="2,1,1,1,1,1,1"]
+|===
+| Concern | Lib | GUI | CLI | TUI | Game | Service
+
+| About / version surface
+| A
+| R
+| R
+| R
+| R
+| A
+
+| Build id in UI or `--version`
+| A
+| R
+| R
+| R
+| R
+| R
+
+| Debug dump button / command
+| O
+| R
+| A
+| A
+| R
+| A
+
+| Auto-update
+| —
+| R
+| A
+| A
+| R
+| A
+
+| Installer / package
+| A
+| R
+| R
+| R
+| R
+| R
+
+| CI release pipeline
+| R
+| R
+| R
+| R
+| R
+| R
+
+| Crash reporting
+| O
+| A
+| O
+| O
+| R
+| A
+
+| Telemetry (opt-in)
+| O
+| A
+| O
+| O
+| A
+| A
+|===
+
+Type notes::
+* xref:explanation/architecture/types/libraries.adoc[Libraries] — versioning and registry publish *are* the About/update story
+* xref:explanation/architecture/types/gui-apps.adoc[GUI apps] — full About dialog, dump button, Windows update + installer
+* xref:explanation/architecture/types/cli.adoc[CLI] — `--version` / `--help`; updates via package manager or self-update
+* xref:explanation/architecture/types/tui.adoc[TUI] — same as CLI plus an in-app About/help pane
+* xref:explanation/architecture/types/games.adoc[Games] — launcher/store updates; crash dumps; content pipelines
+* xref:explanation/architecture/types/services.adoc[Services] — health endpoints, rolling deploy, structured logs
+
+== Recommended product shape
+
+.Shared pipeline feeding typed distribution surfaces
+[source,mermaid]
+----
+flowchart TB
+  Dev[Develop] --> CI[CI build + test]
+  CI --> Art[Versioned artifacts + SBOM]
+  Art --> Rel[Tagged release]
+  Rel --> Pkg[Package managers / installers]
+  Rel --> Upd[Update feed / channel]
+  Rel --> Reg[Language registries]
+  Pkg --> User[Installed product]
+  Upd --> User
+  User --> About[About / version / dump]
+  About --> Support[Bug report]
+----
+
+Principles that keep this sane:
+
+. **One version truth** — build stamps the binary; About and `--version` and the updater all read the same metadata.
+. **Channel awareness** — `stable` / `beta` / `nightly` (or equivalent) is part of identity, not a footnote.
+. **Redact by default** — dumps never include tokens, passwords, or full secret stores unless the user explicitly opts in.
+. **Platform-native first** — prefer winget/MSI, Homebrew, apt/dnf, Flatpak/AppImage over custom update UIs when they suffice; add in-app update when store latency or UX demands it.
+. **Windows is not optional** — if you ship a desktop app to Windows users, plan MSI/MSIX or equivalent + an update story on day one.
+
+== Minimum bar by maturity
+
+[cols="1,2"]
+|===
+| Stage | Must have
+
+| **Prototype**
+| Semver or calver string; README; runnable from source
+
+| **Internal dogfood**
+| Build id; CI artifact; log file path; manual update instructions
+
+| **Public beta**
+| About surface; debug dump; signed installer or registry package; release tags; changelog
+
+| **1.0**
+| Auto-update or package-manager updates; uninstall; crash breadcrumbs; support path documented
+|===
+
+== How-to entry points
+
+* xref:how-to/about-screen-and-debug-dump.adoc[Add an About screen and debug dump]
+* xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows]
+* xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps]
+* xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:how-to/automated-releases.adoc[Automated releases in CI]
+* xref:how-to/winget-registration.adoc[Winget registration]
+
+== Related
+
+* xref:explanation/architecture/principles.adoc[Core principles]
+* xref:reference/package-registries.adoc[Package registries]
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:devcentr:publishing:index.adoc[DevCentr Publishing hub]

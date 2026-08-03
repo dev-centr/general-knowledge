@@ -1,0 +1,44 @@
+= Winget Registration
+:navtitle: Winget Registration
+:description: Register Windows apps with winget—manifests, installer URLs, version bumps, and CI-assisted updates.
+
+Goal:: Users can `winget install` / `winget upgrade` your app.
+Why:: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]; xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
+
+== Prerequisites
+
+* Public, versioned, **HTTPS** installer URL that does not require a browser login
+* Stable `PackageIdentifier` (`Publisher.App`)
+* Installer that upgrades cleanly and registers uninstall metadata
+* Preferably code-signed
+
+== Manual path
+
+. Fork `microsoft/winget-pkgs`
+. Add manifests under `manifests/<letter>/<Publisher>/<App>/<version>/`
+. Validate with `winget validate` / upstream tools
+. Open a PR; respond to package moderator feedback
+
+== CI-assisted path
+
+On each stable tag:
+
+. Build and upload the installer to GitHub Releases (or your CDN)
+. Generate updated manifests with the new version + installer SHA256
+. Open a PR to `winget-pkgs` via bot or release script
+
+Keep the publisher identity consistent across versions.
+
+== Verify
+
+```powershell
+winget show Publisher.App
+winget install Publisher.App
+winget upgrade Publisher.App
+```
+
+== Related
+
+* xref:how-to/windows-auto-updates.adoc[Windows auto-updates]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:reference/package-registries.adoc[Package registries]

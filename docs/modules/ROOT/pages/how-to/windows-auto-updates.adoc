@@ -1,0 +1,53 @@
+= Automatic Updates on Windows
+:navtitle: Windows Auto-Updates
+:description: How to give Windows apps a reliable update path via Store, winget, or a signed in-app updater.
+
+Goal:: Windows users receive newer builds without manually hunting installers.
+Why:: xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
+
+== Pick a primary path
+
+[cols="1,2"]
+|===
+| Path | When to use
+
+| Microsoft Store / MSIX
+| You can meet Store policies; want OS-managed updates
+
+| winget-upgradable installer
+| Classic desktop app; you already ship MSI/EXE; want discovery in winget
+
+| In-app updater
+| Need fast channels, multiple tracks, or non-Store distribution with guided UX
+|===
+
+Combining winget (install/discover) with in-app updates (speed) is common.
+
+== In-app updater checklist
+
+. Publish a versioned **update feed** (JSON/YAML/XML) from CI when you cut a release
+. Code-**sign** installers and verify before apply
+. Download to a staging directory; apply on restart
+. Keep last-known-good when feasible
+. Honor a disable switch for enterprise (`UpdatePolicy=Disabled` or env var)
+. Show status on the About dialog
+
+== winget path
+
+. Ship a stable, versioned installer URL per release
+. Submit or PR manifests to `microsoft/winget-pkgs` (or your private source)
+. Verify `winget upgrade Your.Package` works after publish
++
+See xref:how-to/winget-registration.adoc[Winget registration].
+
+== Pitfalls
+
+* Updating while files are locked — schedule swap on restart
+* Per-machine install updated by a per-user process — align install scope
+* Unsigned downloads — SmartScreen and enterprise policy will block you
+
+== Related
+
+* xref:how-to/app-installer-packaging.adoc[Installer packaging]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:explanation/architecture/types/gui-apps.adoc[GUI apps]

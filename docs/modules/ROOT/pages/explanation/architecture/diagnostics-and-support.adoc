@@ -1,0 +1,57 @@
+= Diagnostics, Logging, and Support
+:navtitle: Diagnostics and Support
+:description: Logging, config layout, crash breadcrumbs, and privacy-aware diagnostics so users and maintainers can solve problems.
+
+Shipping without a diagnostics story guarantees unanswerable bug reports. Pair this with xref:explanation/architecture/about-and-build-info.adoc[About and build info].
+
+== Logging
+
+* Write logs to a documented per-user path (e.g. `%LOCALAPPDATA%\Vendor\App\logs` on Windows)
+* Rotate by size/age
+* Include build id on startup
+* Default level informative; debug behind a flag or About toggle
+
+Avoid logging secrets. Redact tokens even at debug when possible.
+
+== Config and data directories
+
+Document four locations:
+
+* **Config** — user settings
+* **Data** — documents / databases the user owns
+* **Cache** — safe to delete
+* **Logs** — diagnostics
+
+Cross-platform apps should list the path for each OS in README or in-app Help.
+
+== Crashes
+
+* Catch panics/top-level exceptions; write a crash file with build id
+* Games and native GUI apps often integrate a crashpad/breakpad-class reporter (opt-in upload)
+* CLI tools: non-zero exit + clear stderr message is the baseline
+
+== Health and doctor commands
+
+CLIs and toolchains benefit from `doctor` / `health` that checks PATH, dependencies, and permissions—same spirit as a xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane] health gate.
+
+GUI apps can surface the same checks under About → Diagnostics.
+
+== Privacy
+
+* Opt-in telemetry only; document what is collected
+* Debug dumps stay local until the user attaches them
+* Crash upload requires consent
+
+== Checklist
+
+* [ ] Log path documented and visible from About/Help
+* [ ] Startup log line includes build id
+* [ ] Crash breadcrumb or equivalent
+* [ ] Doctor/diagnostics command or UI
+* [ ] Redaction policy for dumps and logs
+* [ ] Support doc: what to attach to an issue
+
+== Related
+
+* xref:how-to/about-screen-and-debug-dump.adoc[How-to: About and debug dump]
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]

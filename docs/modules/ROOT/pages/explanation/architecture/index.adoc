@@ -1,0 +1,32 @@
+= Software Architecture
+:navtitle: Architecture
+:description: Shared product architecture guidance—essentials every shippable artifact should cover, plus type-specific notes for libraries, GUI, CLI, TUI, games, and services.
+
+This section is the **general guide for building and shipping software**: what every product needs before “feature complete,” and how those needs change by artifact type.
+
+Start here::
+xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials] — the framework and shared checklist.
+
+Deep dives (shared)::
+* xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution, packaging, and installers]
+* xref:explanation/architecture/build-pipeline.adoc[Build pipeline and release engineering]
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
+* xref:explanation/architecture/principles.adoc[Core principles]
+
+By software type::
+* xref:explanation/architecture/types/libraries.adoc[Libraries and SDKs]
+* xref:explanation/architecture/types/gui-apps.adoc[GUI applications]
+* xref:explanation/architecture/types/cli.adoc[CLI tools]
+* xref:explanation/architecture/types/tui.adoc[TUI applications]
+* xref:explanation/architecture/types/games.adoc[Games]
+* xref:explanation/architecture/types/services.adoc[Services and daemons]
+
+Related (other components)::
+* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense browser UIs (Dev-Centr docs playbook)
+* xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms]
+
+Operational siblings::
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] — lifecycle ownership for toolkits
+* xref:devcentr:publishing:index.adoc[Software Publishing] — in-app publishing hub that points back here

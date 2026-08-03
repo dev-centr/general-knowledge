@@ -1,0 +1,98 @@
+= About, Build Info, and Debug Dumps
+:navtitle: About and Build Info
+:description: Why every product needs a discoverable About/version surface, stamped build metadata, and a privacy-aware debug dump for support.
+
+Users and support cannot fix what they cannot identify. An **About** surface (dialog, pane, `--version`, or `/version`) plus a **debug dump** are core product features—not nice-to-haves.
+
+See the framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
+Task guide: xref:how-to/about-screen-and-debug-dump.adoc[Add an About screen and debug dump].
+
+== What belongs in About
+
+Show at least:
+
+* Product name and marketing version (e.g. `1.4.2`)
+* **Build identity** — commit SHA (short), build number, CI run id, or equivalent
+* Channel (`stable`, `beta`, `nightly`, `dev`)
+* Target OS and architecture
+* License summary + link to full text
+* Optional: update status (“Up to date” / “Update available”) with a link into the updater
+
+For libraries, “About” is usually `package.version`, registry metadata, and generated API docs—not a dialog. Still stamp builds in CI artifacts and release notes.
+
+== Build info: stamp at compile time
+
+Bake metadata into the binary or a sidecar next to it:
+
+* Git describe / commit / dirty flag
+* Build timestamp (UTC)
+* Compiler and SDK versions
+* Feature flags / configuration hash when relevant
+
+One source of truth feeds About, `--version`, crash headers, and update eligibility checks.
+
+[TIP]
+====
+Prefer generating a small `build-info` module or JSON resource in CI over parsing `git` at runtime. Runtime `git` fails for end-user installs.
+====
+
+== Debug dump button (or command)
+
+A single user-facing action should produce a **redacted** archive or folder:
+
+* App version + build id + channel
+* OS version, locale, display scaling (GUI)
+* Config paths and non-secret settings
+* Last _N_ log lines or rotated log files
+* Feature flags / experiments (names, not private payloads)
+* Optional: recent crash reports already on disk
+
+Never include by default::
+API keys, tokens, passwords, private keys, full secret-store contents, auth cookies, or raw user documents.
+
+Offer an advanced checkbox (“Include machine name / username”) only when needed, default off.
+
+=== Surfaces by type
+
+[cols="1,2"]
+|===
+| Type | Typical dump trigger
+
+| GUI
+| Button on About: **Copy debug info** / **Save debug dump…**
+
+| CLI / TUI
+| `app doctor --dump` or `app debug-dump > dump.zip`
+
+| Game
+| Launcher or pause menu → Support → Save diagnostics
+
+| Service
+| `appctl diagnostics` or admin API gated behind auth
+
+| Library
+| Document how host apps should call your `Diagnostics.collect()` helper if you provide one
+|===
+
+== Support workflow
+
+. User hits a bug → opens About → saves dump
+. Bug report includes dump + short repro
+. Maintainer matches build id to CI artifacts and changelog
+
+Without build id, you are guessing across weeks of commits.
+
+== Checklist
+
+* [ ] About / `--version` / health shows marketing version **and** build id
+* [ ] Channel is visible
+* [ ] Metadata stamped at build time (not runtime git)
+* [ ] One-click or one-command redacted dump
+* [ ] Dump excludes secrets by default
+* [ ] Docs tell users where About lives and what to attach to issues
+
+== Related
+
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and support]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:how-to/about-screen-and-debug-dump.adoc[How-to: About and debug dump]
