@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-04 — Winget registration how-to expanded
+
+* Expanded xref:how-to/winget-registration.adoc[Winget registration]: PAT/`WINGET_TOKEN`, first submission vs CI updates, portable zips, `winget-releaser` example.
+* See xref:changelog-details/2026-08-04 - winget-registration-howto.adoc[Detailed changelog].
+
 == 2026-08-03 — Software Product Essentials
 
 * Added xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]: shared shipping framework (About/build info, updates, packaging, pipeline, diagnostics) and type-specific guides (libs, GUI, CLI, TUI, games, services).

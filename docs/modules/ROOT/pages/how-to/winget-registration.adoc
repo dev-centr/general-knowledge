@@ -1,33 +1,115 @@
 = Winget Registration
 :navtitle: Winget Registration
-:description: Register Windows apps with winget—manifests, installer URLs, version bumps, and CI-assisted updates.
+:description: Register Windows apps with winget—first submission, PAT setup, portable zips, and CI updates via winget-releaser.
 
 Goal:: Users can `winget install` / `winget upgrade` your app.
 Why:: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]; xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
 
 == Prerequisites
 
-* Public, versioned, **HTTPS** installer URL that does not require a browser login
-* Stable `PackageIdentifier` (`Publisher.App`)
-* Installer that upgrades cleanly and registers uninstall metadata
-* Preferably code-signed
+* Public, versioned, **HTTPS** installer or portable archive URL (GitHub Releases work well; no login wall)
+* Stable `PackageIdentifier` in the form `Publisher.App` (usually `GitHubUser.AppName`)
+* Artifact that winget can install: MSI/EXE installer, MSIX, or a **zip** with a nested portable `.exe`
+* Preferably Authenticode-signed (unsigned packages still get accepted, but expect extra review)
 
-== Manual path
+Portable zips are valid for winget (`InstallerType: zip` + nested portable). Prefer a real installer when you can—see xref:how-to/app-installer-packaging.adoc[installer packaging].
+
+== One-time publisher setup
+
+. Create a **classic** GitHub Personal Access Token with the `public_repo` scope.
++
+Fine-grained tokens do **not** work with the common publish bots.
+. Optionally store it locally for `wingetcreate`:
++
+```powershell
+winget install Microsoft.WingetCreate
+wingetcreate token
+```
+. In the app repo: **Settings → Secrets and variables → Actions → New repository secret**
++
+Name: `WINGET_TOKEN` +
+Value: the classic PAT
+. Fork `microsoft/winget-pkgs` once under the same GitHub account that owns the PAT (bots reuse that fork).
+
+== First submission (manual)
+
+`winget-releaser` / `komac update` only **update** packages that already exist in `microsoft/winget-pkgs`. Bootstrap the first version yourself:
+
+=== Option A — WingetCreate (Windows)
+
+```powershell
+wingetcreate new https://github.com/OWNER/REPO/releases/download/TAG/YourApp.1.2.3.zip
+```
+
+Follow the prompts: package identifier, publisher, locale strings, nested installer path for zips (often just `YourApp.exe` at the zip root). Submit the generated PR when asked.
+
+=== Option B — Hand-authored PR
 
 . Fork `microsoft/winget-pkgs`
 . Add manifests under `manifests/<letter>/<Publisher>/<App>/<version>/`
-. Validate with `winget validate` / upstream tools
+. Validate (`winget validate` / upstream tools)
 . Open a PR; respond to package moderator feedback
 
-== CI-assisted path
+After the first PR merges, `winget show Publisher.App` should resolve.
 
-On each stable tag:
+== CI-assisted updates
 
-. Build and upload the installer to GitHub Releases (or your CDN)
-. Generate updated manifests with the new version + installer SHA256
-. Open a PR to `winget-pkgs` via bot or release script
+On each stable GitHub Release:
 
-Keep the publisher identity consistent across versions.
+. Attach the same style of installer/zip you used in the first submission
+. Run a workflow that opens a version-bump PR to `winget-pkgs`
+
+Example using https://github.com/vedantmgoyal9/winget-releaser[vedantmgoyal9/winget-releaser]:
+
+```yaml
+name: Publish to WinGet
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: Existing release tag to publish
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for WINGET_TOKEN
+        id: gate
+        env:
+          WINGET_TOKEN: ${{ secrets.WINGET_TOKEN }}
+        run: |
+          if [ -n "$WINGET_TOKEN" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::WINGET_TOKEN not set — skipping winget submission"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Submit to winget-pkgs
+        if: steps.gate.outputs.ok == 'true'
+        uses: vedantmgoyal9/winget-releaser@v2
+        with:
+          identifier: Publisher.App
+          # Default regex is exe/msi/msix — override for portable zips:
+          installers-regex: '\.zip$'
+          release-tag: ${{ inputs.release-tag || github.event.release.tag_name }}
+          token: ${{ secrets.WINGET_TOKEN }}
+```
+
+Keep the **same** `PackageIdentifier` across versions. Match `installers-regex` to the release asset you want winget to ship (avoid picking debug symbols or source archives).
+
+[NOTE]
+====
+`wingetcreate` / WinGet CLI need a Windows environment. GitHub Actions that only call `winget-releaser` can stay on `ubuntu-latest`; that action drives Linux-side tooling (`komac`) against your PAT.
+====
+
+== Discoverability tips
+
+* Put the install command in the GitHub repo **About** description, or set the homepage URL to the README install heading (`…/blob/BRANCH/README.md#install`).
+* Document `winget install Publisher.App` near the top of the README.
 
 == Verify
 
@@ -41,4 +123,5 @@ winget upgrade Publisher.App
 
 * xref:how-to/windows-auto-updates.adoc[Windows auto-updates]
 * xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/app-installer-packaging.adoc[Installer packaging]
 * xref:reference/package-registries.adoc[Package registries]

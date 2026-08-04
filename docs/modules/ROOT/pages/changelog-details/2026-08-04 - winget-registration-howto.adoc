@@ -1,0 +1,3 @@
+= 2026-08-04 — Winget registration how-to expanded
+
+* Expanded xref:how-to/winget-registration.adoc[Winget registration] with classic PAT / `WINGET_TOKEN` setup, first-submission via `wingetcreate` vs hand PR, portable zip notes, and a `winget-releaser` CI example.
