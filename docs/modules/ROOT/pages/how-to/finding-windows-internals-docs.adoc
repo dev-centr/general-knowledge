@@ -95,6 +95,19 @@ Goal: “Does Windows support different RGB/BGR per monitor?”
 
 That pattern — **literal identifiers → Learn/GitHub → reconcile conflicting scopes** — is the durable skill. Feature-English search is optional garnish.
 
+== Worked micro-example (color management)
+
+Goal: “Why did installing an ICC profile not change my desktop colors?”
+
+. Wrong query: “Windows color management not working”
+. Better artifacts: `VCGT`, `WcsSetCalibrationManagementState`, `SetDeviceGammaRamp`, `MHC2`, `colorcpl`, ACM / Advanced Color
+. Hits you should land on:
++
+* https://learn.microsoft.com/en-us/windows/win32/wcs/display-calibration-mhc[Hardware display calibration pipeline] (VCGT loader is opt-in; MHC2 has no direct API)
+* https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setdevicegammaramp[`SetDeviceGammaRamp`] caveats (HDR / third-party conflicts)
+* https://devblogs.microsoft.com/directx/auto-color-management/[ACM blog] (most apps were never OS color-managed)
+. Synthesis: calibration LUT loading ≠ app CMS; competing loaders; ACM changes ICC semantics. Full write-up: xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline].
+
 == Companion habits
 
 * Keep a short personal glossary of *your* words → *their* identifiers (example: “BGR panel” → `FE_FONTSMOOTHINGORIENTATIONBGR` / `DWRITE_PIXEL_GEOMETRY_BGR` / `PixelStructure=2`).
@@ -104,4 +117,5 @@ That pattern — **literal identifiers → Learn/GitHub → reconcile conflictin
 == See also
 
 * xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]
+* xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup] — library docs retrieval for agents (complements, does not replace, MicrosoftDocs search for Win32)

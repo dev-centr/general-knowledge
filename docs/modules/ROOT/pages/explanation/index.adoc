@@ -7,6 +7,7 @@ Explanation pages teach **why**. Start with architecture if you are building a p
 == Windows
 
 * xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings] — global GDI vs per-display Avalon/DirectWrite; Better ClearType Tuner behavior
+* xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline] — ICM/WCS, VCGT/MHC2, ACM, and why calibration vendors ship their own loaders
 
 == Architecture
 

@@ -1,0 +1,4 @@
+= 2026-08-05 — Windows color management pipeline
+
+* New explanation: xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline].
+* Nav: Explanation → Windows.

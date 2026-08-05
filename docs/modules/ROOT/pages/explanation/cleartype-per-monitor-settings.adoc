@@ -91,4 +91,5 @@ So:
 == Related reading
 
 * xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation] — how to navigate Learn / MSDN-shaped trees when wording does not match your search.
+* xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline] — a parallel “settings UI vs stacked pipelines” problem for colorimetry (ICM/WCS, VCGT/MHC2, ACM).
 * https://learn.microsoft.com/en-us/windows/win32/directwrite/introducing-directwrite[Introducing DirectWrite] — ClearType modes and relationship to the Windows 7-era tuner.

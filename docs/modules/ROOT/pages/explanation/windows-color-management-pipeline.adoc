@@ -1,0 +1,138 @@
+= Windows color management pipeline
+:navtitle: Windows color management pipeline
+:description: Why Windows color settings are hard to reason about—ICM, WCS, VCGT gamma ramps, MHC2, ACM/Advanced Color—and how calibration vendors work with or around the stack.
+
+Windows does not have one color management system. It has several overlapping eras that still ship together: Image Color Management (ICM), Windows Color System (WCS), a GPU *gamma ramp* calibration path, a newer hardware matrix+1DLUT path (MHC2), and Advanced Color / Auto Color Management (ACM). The Control Panel GUI (`colorcpl.exe`), the Display Color Calibration wizard (`dccw.exe`), and modern Settings toggles each touch different slices of that stack. That is why reliable end-to-end documentation has always been scarce, and why companies such as X-Rite ship products that partly *use* Windows APIs and partly *replace* Windows behavior.
+
+Related search map: xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation]. Sibling topic (subpixel text, not colorimetry): xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings].
+
+== Two jobs people conflate
+
+[cols="1,2,2"]
+|===
+| Job | What it changes | Who consumes it
+
+| *Calibration* (often VCGT / MHC2)
+| 1D curves (and, on the modern path, a matrix + 1DLUT) loaded into the GPU/display pipeline so the panel’s response matches a target
+| The hardware path — applies to almost everything that reaches the screen, color-managed or not
+
+| *Characterization* (display ICC / WCS device model)
+| A description of “what this display looks like *after* calibration”
+| Only apps that ask ICM/WCS (or their own CMS) to convert into the display profile
+|===
+
+Microsoft’s own Advanced Color / ACM materials state the historical default bluntly: ICM/WCS were *helpers for apps that opted in*; most apps assumed sRGB and were never color-managed by the OS.
+
+* https://devblogs.microsoft.com/directx/auto-color-management/[Advancing the State of Color Management in Windows — DirectX Developer Blog] (2022)
+* https://learn.microsoft.com/en-us/windows/win32/direct3darticles/high-dynamic-range[Use DirectX with Advanced Color…]
+
+Calibration vendors succeed by owning *measurement + profile authoring + a loader that keeps calibration in the GPU*, not by “unlocking a secret Microsoft CMS.” Color-managed apps (Photoshop, Lightroom, browsers with CMS on, print pipelines) still do a second conversion using the ICC description. Non-managed apps get only whatever the GPU/OS display transform does.
+
+== Timeline of stacks that still coexist
+
+=== ICM 2.0 (Windows 2000 era)
+
+Image Color Management: APIs and ICC profile plumbing for apps that call into it. Portal:
+
+* https://learn.microsoft.com/en-us/windows/win32/wcs/windows-color-system[Windows Color System] (documents ICM 2.0 then WCS 1.0 as a superset)
+
+=== WCS 1.0 (Windows Vista+)
+
+Windows Color System adds XML-based device model / color appearance / gamut map profiles alongside ICC, plus richer profile-management APIs (`Wcs*` functions). Still primarily an *application* CMS surface, not automatic desktop-wide management for every window.
+
+* Profile management overview: https://learn.microsoft.com/en-us/windows/win32/wcs/profile-management-functions[Profile Management Functions]
+* Device profiles concepts: https://learn.microsoft.com/en-us/windows/win32/wcs/using-device-profiles-with-wcs[Using Device Profiles with WCS]
+
+=== Gamma ramp / VCGT loader (Windows 7 inbox loader; older GDI path forever)
+
+Display profiles commonly embed a private **VCGT** (Video Card Gamma Table) tag. A *loader* reads that tag and programs the GPU 1D LUT, historically via mechanisms around https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setdevicegammaramp[`SetDeviceGammaRamp`].
+
+Microsoft documents important caveats on that API: undefined behavior in HDR modes; undefined interaction with built-in and third-party calibration solutions; recommendation to provision ICC profiles and let the OS apply them instead of calling the ramp API directly.
+
+The inbox loader since Windows 7 reads VCGT (or MS00) tags but must be *explicitly enabled* (`WcsSetCalibrationManagementState` / the Color Management UI checkbox “Use Windows display calibration”). That single fact explains years of “I installed a profile and nothing changed” threads.
+
+* https://learn.microsoft.com/en-us/windows/win32/wcs/display-calibration-mhc[Windows hardware display color calibration pipeline] (also covers the older gamma-ramp loader behavior)
+
+=== MHC2 hardware calibration pipeline (Windows 10 2004+)
+
+A GPU-accelerated path: linear gamma color matrix + 1DLUT, better precision, wide-gamut and HDR-oriented signaling support. **There is no direct runtime API** to program it. Vendors write an ICC profile containing a Microsoft private **MHC2** tag, install/associate the profile, and let the OS loader apply it. MHC reading is always on once the profile is default on a capable system (unlike VCGT, which needed the calibration-management switch).
+
+Modern association helpers are the `ColorProfile*` APIs (for example `ColorProfileSetDisplayDefaultAssociation`).
+
+* Same MHC doc: https://learn.microsoft.com/en-us/windows/win32/wcs/display-calibration-mhc
+
+=== Advanced Color + Auto Color Management (HDR path earlier; ACM on SDR in Windows 11 22H2+)
+
+Advanced Color is Microsoft’s umbrella for higher fidelity composition (wider gamut, HDR, higher precision). ACM brings system-level mapping so unmanaged apps are treated as sRGB and mapped consistently onto capable, provisioned displays. That *changes* how legacy ICC-centric apps behave (often clamped to sRGB unless they use compatibility helpers / Advanced Color APIs).
+
+* https://learn.microsoft.com/en-us/windows/win32/wcs/advanced-color-icc-profiles[ICC profile behavior with Advanced Color]
+* DirectX blog (linked above)
+
+== What the GUIs actually do
+
+[cols="1,2"]
+|===
+| Surface | Typical role
+
+| `colorcpl.exe` (Color Management)
+| Associate ICC/WCS profiles with devices; per-user vs system scope (“Use my settings for this device”); Advanced tab toggles Windows display calibration loading. Does **not** measure a panel.
+
+| `dccw.exe` (Display Color Calibration)
+| Eye-matched gamma/contrast/RGB balance wizard. Produces a crude calibration-oriented profile; not a substitute for instrumented characterization of primaries.
+
+| Settings → Display → color / “Automatically manage colors for apps” (ACM)
+| Turns on system-level Advanced Color behavior for qualifying displays. Interacts with—and can surprise—workflows that assumed classic ICC-only semantics.
+
+| GPU control panels (NVIDIA/AMD/Intel)
+| Independent CSC / “display color” / desktop-level adjustments that can fight OS and vendor loaders.
+|===
+
+X-Rite’s own Win7-era support notes spell out the fragile dance: enable “Use Windows display calibration,” associate the vendor profile, keep a real GPU driver, and still run `XRGamma.exe` / tray loaders—while warning about VideoLUT conflicts.
+
+* https://www.xrite.com/service-support/troubleshoot_conflicts_with_graphic_cardvideoluts__win_7[X-Rite — Troubleshoot conflicts with Graphic Card/VideoLUTs]
+
+== Systemic flaws (the durable ones)
+
+These are structural, not one-off bugs:
+
+. *Opt-in CMS for decades.* Most pixels never touched ICM/WCS. Users set a display profile in Color Management and expected the whole desktop to “become accurate.” Only calibration LUTs (if loaded) and the few CMS-aware apps moved.
+. *Calibration vs profile split is invisible in the UI.* Installing an ICC can mean (a) register characterization, (b) load VCGT/MHC2, (c) both, or (d) neither effective—depending on checkboxes, HDR mode, and competing loaders.
+. *Multiple loaders, one LUT.* Windows inbox loader, X-Rite `XRGamma`, DisplayCAL Profile Loader, OEM rebrands, and `SetDeviceGammaRamp` callers all contend for the same scarce GPU resource. Last writer wins; sleep/hotplug/driver reset clears state; banding appears when values are truncated. Microsoft now documents undefined interaction for direct ramp APIs.
+. *Precision and HDR escape hatches.* Classic 256-entry WORD ramps and driver quantization are weak on modern panels; HDR makes the old ramp path undefined; MHC2 exists partly because VCGT was not enough—yet MHC2 is ICC-tag-mediated with no direct API.
+. *Stacked “fixes” break prior mental models.* ACM/Advanced Color deliberately changes ICC app defaults (sRGB clamp unless helpers). Correct for unmanaged UI; surprising for photo apps that thought “default display profile” meant native gamut access.
+. *Documentation topology matches the stack: fragmented.* Color lives under WCS, DirectX Advanced Color articles, DXGI output descriptors, GDI gamma APIs, and OEM whitepapers—not one “Windows color pipeline” book. Same class of findability problem as xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation].
+. *Multi-monitor and adapter identity.* Profile association keys off adapter/source IDs; gamma DC creation per monitor has a long history of broken samples. Hotplug reorders identities; loaders mis-apply curves.
+
+None of that means Windows “has no color management.” It means the *product representation* (one Color Management control panel) never matched the *execution graph* (optional app CMS + contested GPU LUT + newer compositor transforms).
+
+== How X-Rite-class products actually work
+
+Vendors do not need a complete map of every Microsoft internal to ship:
+
+. *Instrument path* — Talk to a colorimeter/spectrophotometer (often HID or a vendor USB stack). Measure patches shown full-screen.
+. *Math* — Build calibration curves and an ICC display profile (matrix+TRC, shaper+matrix, LUT-based, etc.) describing the display *after* the intended calibration.
+. *Provision* — Install the profile into the Windows profile store and associate it with the target display (WCS / `ColorProfile*` / Color Management UI equivalents).
+. *Keep calibration alive* — Run a startup *loader* that re-applies VCGT (or, on modern targets, MHC2-capable profiles) after logon, sleep, and GPU resets—because the OS alone historically would not, or would do it at lower fidelity.
+. *Optional bypasses* — DDC/CI to set monitor OSD gains; GPU vendor APIs; for some workflows, 3D LUTs inside the display, an LUT box, or a renderer (Resolve, madVR) so accuracy does not depend on Windows CMS at all.
+
+That is “working with the system” *and* “circumventing” it: use Windows as a profile registry and association database; replace or reinforce the unreliable parts (LUT load persistence, bit depth, HDR gaps) with vendor code. Open-source DisplayCAL/ArgyllCMS follows the same architecture with a different loader reputation (higher-bit loading / rounding to reduce banding)—and the community advice is consistently *one loader only*.
+
+OEM “calibration” software from monitor brands is often the same pattern re-skinned (sometimes even the same X-Rite engine).
+
+== Practical map for engineers
+
+* Reading color on screen in a CMS-aware app ≠ proof the OS desktop is managed.
+* A default display ICC without a loaded calibration can still be “correct” for apps if the panel was hardware-calibrated to match that profile—or wildly wrong if the VCGT never loaded.
+* On Advanced Color / ACM displays, re-read Microsoft’s ICC compatibility rules before trusting old “set profile → native gamut” assumptions.
+* Prefer MHC2 provisioning for modern calibration products targeting Windows 10 2004+; treat `SetDeviceGammaRamp` as legacy and hostile to HDR.
+* When debugging “colors wrong,” list competing loaders and GPU CPC settings before blaming the ICC file.
+
+== Primary references
+
+* https://learn.microsoft.com/en-us/windows/win32/wcs/windows-color-system[Windows Color System]
+* https://learn.microsoft.com/en-us/windows/win32/wcs/display-calibration-mhc[Windows hardware display color calibration pipeline (VCGT + MHC2)]
+* https://learn.microsoft.com/en-us/windows/win32/wcs/advanced-color-icc-profiles[ICC profile behavior with Advanced Color]
+* https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setdevicegammaramp[`SetDeviceGammaRamp`]
+* https://devblogs.microsoft.com/directx/auto-color-management/[DirectX blog — Auto Color Management]
+* https://www.xrite.com/service-support/troubleshoot_conflicts_with_graphic_cardvideoluts__win_7[X-Rite VideoLUT conflict guidance]
+* Community loader semantics (non-normative but operationally accurate): https://hub.displaycal.net/forums/topic/what-exactly-is-the-advantage-of-displaycal-profile-loader/[DisplayCAL — Profile Loader advantage]

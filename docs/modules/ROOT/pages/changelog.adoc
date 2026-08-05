@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-05 — Windows color management pipeline
+
+* Added xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]: ICM/WCS, VCGT vs MHC2, ACM/Advanced Color, GUI surfaces, systemic flaws, and how calibration vendors (X-Rite-class) work with/around the stack.
+* See xref:changelog-details/2026-08-05 - windows-color-management-pipeline.adoc[Detailed changelog].
+
 == 2026-08-05 — ClearType per-monitor + Windows docs map
 
 * Added xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]: GDI vs Avalon/DirectWrite scopes, Better ClearType Tuner global writes, citations.
