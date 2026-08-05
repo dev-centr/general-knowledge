@@ -1,5 +1,5 @@
-= 2026-08-05 — ClearType per-monitor + Windows docs map
+= 2026-08-05 — ClearType + Windows docs map
 
-* New explanation: xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings].
-* New how-to: xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation].
+* Explanation: xref:explanation/cleartype.adoc[ClearType] (reframed top-down from an earlier per-monitor-first draft; mixed RGB/BGR is a section, not the topic).
+* How-to: xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation].
 * Nav: Explanation → Windows; How-to list entry.

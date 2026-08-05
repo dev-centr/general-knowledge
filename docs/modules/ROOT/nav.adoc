@@ -48,7 +48,7 @@
 .🧠 Explanation
 * xref:explanation/index.adoc[Overview]
 ** Windows
-*** xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]
+*** xref:explanation/cleartype.adoc[ClearType]
 *** xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]
 ** Architecture
 *** xref:explanation/architecture/index.adoc[Architecture overview]

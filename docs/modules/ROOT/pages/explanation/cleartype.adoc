@@ -1,0 +1,116 @@
+= ClearType
+:navtitle: ClearType
+:description: How Windows ClearType subpixel font smoothing works—RGB/BGR geometry, GDI vs DirectWrite/WPF setting planes, the inbox tuner, and where multi-monitor layouts break down.
+
+ClearType is Microsoft’s subpixel font-smoothing technology for LCD (and LCD-like) displays. Instead of painting antialiased edges only in gray, it shades the individual red, green, and blue *stripes* inside each pixel so stems and curves align to a finer horizontal grid than the pixel pitch alone allows.
+
+That only helps when the renderer’s assumed stripe order matches the panel. Most computer LCDs are **RGB** (red–green–blue left to right). Some TVs and a minority of monitors are **BGR**. Wrong orientation shows up as colored fringing on vertical edges. **Grayscale** antialiasing ignores subpixel geometry entirely.
+
+This page explains ClearType top-down: what it is, which Windows knobs exist, which APIs honor them, and—later—why multi-monitor desks with mixed layouts are still awkward.
+
+HCI framing (honesty of the tuner UI vs renderer scopes): link:https://hci-nerdz.github.io/docs/hci-nerdz/cleartype.html[HCI Nerdz — ClearType] · link:https://hci-nerdz.github.io/blog/cleartype-as-subpixel-rendering/[essay].
+
+== What ClearType assumes
+
+* The display has addressable horizontal subpixels (classic vertical RGB/BGR stripes).
+* Text is rasterized with knowledge of that geometry (`DWRITE_PIXEL_GEOMETRY`, WPF `PixelStructure`, GDI font-smoothing orientation).
+* Contrast / gamma of the filtered edges can be tuned so stems look neither too heavy nor too thin.
+
+Microsoft’s DirectWrite introduction covers ClearType modes, GDI-compatible widths, and later guidance toward grayscale in some Windows 8+ scenarios:
+
+* https://learn.microsoft.com/en-us/windows/win32/directwrite/introducing-directwrite[Introducing DirectWrite]
+* Pixel geometry enum: https://learn.microsoft.com/en-us/windows/win32/api/dwrite/ne-dwrite-dwrite_pixel_geometry[`DWRITE_PIXEL_GEOMETRY`]
+
+ClearType is **not** the same problem as xref:explanation/windows-color-management-pipeline.adoc[Windows color management] (ICC/WCS/ACM). One is subpixel coverage for glyphs; the other is colorimetry across devices.
+
+== User-facing controls
+
+[cols="1,2"]
+|===
+| Surface | Role
+
+| ClearType Text Tuner (`cttune.exe`)
+| Wizard: enable ClearType, pick monitors, choose RGB vs BGR, tune contrast-like samples. Writes several registry planes (see below). Some later wizard pages have been effectively dead on modern Windows (documented by bp2008 for Win10 1903).
+
+| Better ClearType Tuner
+| Third-party UI over the knobs that still matter: antialiasing on/off, grayscale vs RGB vs BGR, contrast. Intentionally global across displays.
+
+| Performance Options → “Smooth edges of screen fonts”
+| Coarse enable of font smoothing (`FontSmoothing` via SPI).
+|===
+
+Independent page-by-page maps of what `cttune.exe` writes:
+
+* https://github.com/bp2008/BetterClearTypeTuner/wiki/ClearType-Investigations[bp2008 — ClearType Investigations]
+* https://blog.yuo.be/2025/05/20/what-does-each-step-in-the-cleartype-tuner-do/[Reupen — What does each step in the ClearType Text Tuner do?] (2025)
+
+== Two setting planes
+
+Windows stores ClearType-related state in more than one place. Apps do not all read the same place.
+
+[cols="1,2,2"]
+|===
+| Plane | Typical consumers | Scope
+
+| Desktop / SPI (`FontSmoothing*`)
+| Classic GDI text
+| **Session-global** — one orientation for the user
+
+| Avalon.Graphics `\DISPLAYn`
+| WPF ClearType registry settings; DirectWrite paths that load monitor defaults
+| **Named per display** in the registry; runtime use still depends on the app
+|===
+
+=== Global GDI orientation
+
+`SPI_SETFONTSMOOTHINGORIENTATION` / `SPI_GETFONTSMOOTHINGORIENTATION` expose RGB vs BGR as a single system parameter (`FE_FONTSMOOTHINGORIENTATIONRGB` / `…BGR`) with **no** monitor handle.
+
+* https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfoa[`SystemParametersInfo`]
+* Common registry mirror: `HKCU\Control Panel\Desktop` → `FontSmoothingOrientation` (`1` ≈ RGB, `0` ≈ BGR in tuner practice)
+
+`FontSmoothingType` selects ClearType vs standard grayscale smoothing; `FontSmoothingGamma` / contrast knobs ride alongside.
+
+=== Per-display Avalon / WPF keys
+
+WPF documents `PixelStructure` (`0` flat/grayscale, `1` RGB, `2` BGR), gamma, ClearType level, and contrast under:
+
+`HKLM` / `HKCU\SOFTWARE\Microsoft\Avalon.Graphics\<display>`
+
+* https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/cleartype-registry-settings[ClearType Registry Settings — WPF]
+
+If those values are absent, WPF falls back to system font-smoothing parameters (the global plane).
+
+=== DirectWrite: monitor awareness is opt-in
+
+DirectWrite can create rendering params for a specific `HMONITOR`:
+
+* https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createmonitorrenderingparams[`CreateMonitorRenderingParams`]
+* https://learn.microsoft.com/en-us/windows/win32/directwrite/how-to-add-support-for-multiple-monitors[How to Add Support for Multiple Monitors]
+
+`CreateRenderingParams` always targets the **primary** monitor. Apps must handle `WM_WINDOWPOSCHANGED`, call `CreateMonitorRenderingParams`, and apply `SetTextRenderingParams`. So “Windows supports per-monitor ClearType” is true at the API layer and only sometimes true in applications.
+
+== Inbox tuner vs Better ClearType Tuner
+
+`cttune.exe` can write **different** Avalon `PixelStructure` values per `DISPLAYn` while still updating the **single** Desktop `FontSmoothingOrientation`.
+
+https://github.com/bp2008/BetterClearTypeTuner[Better ClearType Tuner] sets every display’s Avalon keys the same and drives orientation through SPI. That matches the author’s finding that monitor-specific overrides were unreliable in practice ([README](https://github.com/bp2008/BetterClearTypeTuner/blob/master/README.md), [wiki](https://github.com/bp2008/BetterClearTypeTuner/wiki/ClearType-Investigations), [issue #11](https://github.com/bp2008/BetterClearTypeTuner/issues/11)). Implementation: `SetLegacyKeys()` loops all screens; see `MainForm.cs`.
+
+Prefer Better ClearType Tuner for an honest global RGB/BGR/grayscale + contrast control (and to skip non-functional wizard pages). Prefer `cttune.exe` when you specifically want divergent Avalon keys and accept that GDI stays one orientation.
+
+== When monitors disagree (mixed RGB/BGR)
+
+Necessary special case, not the definition of ClearType.
+
+If one panel is RGB and another is BGR:
+
+* GDI text cannot have two orientations at once—SPI is global.
+* Avalon/DirectWrite *can* diverge per display **if** each app honors monitor params.
+* Better ClearType Tuner will force one choice onto every panel (and onto GDI).
+* “Only use `cttune.exe`” does **not** fully solve mixed desks; it only improves the Avalon half.
+
+Third-party renderers (for example MacType) exist partly because inbox geometry options and app opt-in are limited—especially for unusual subpixel layouts.
+
+== Related reading
+
+* xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation]
+* xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]
