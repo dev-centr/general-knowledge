@@ -8,7 +8,7 @@ That only helps when the renderer’s assumed stripe order matches the panel. Mo
 
 This page explains ClearType top-down: what it is, which Windows knobs exist, which APIs honor them, and—later—why multi-monitor desks with mixed layouts are still awkward.
 
-HCI framing (honesty of the tuner UI vs renderer scopes): link:https://hci-nerdz.github.io/docs/hci-nerdz/cleartype.html[HCI Nerdz — ClearType] · link:https://hci-nerdz.github.io/blog/cleartype-as-subpixel-rendering/[essay].
+HCI framing (honesty of the tuner UI vs renderer scopes): link:https://hci-nerdz.github.io/docs/hci-nerdz/cleartype.html[HCI Nerdz — ClearType] · link:https://hci-nerdz.github.io/blog/cleartype-tuner-in-windows/[essay].
 
 == What ClearType assumes
 
