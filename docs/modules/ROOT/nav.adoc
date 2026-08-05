@@ -18,6 +18,7 @@
 * xref:how-to/git-release-workflow.adoc[Git Release Workflow]
 * xref:how-to/automated-releases.adoc[Automated Releases]
 * xref:how-to/winget-registration.adoc[Winget Registration]
+* xref:how-to/finding-windows-internals-docs.adoc[Finding Windows Internals Docs]
 * xref:how-to/about-screen-and-debug-dump.adoc[About Screen and Debug Dump]
 * xref:how-to/windows-auto-updates.adoc[Windows Auto-Updates]
 * xref:how-to/app-installer-packaging.adoc[App Installer Packaging]
@@ -46,6 +47,8 @@
 
 .🧠 Explanation
 * xref:explanation/index.adoc[Overview]
+** Windows
+*** xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]
 ** Architecture
 *** xref:explanation/architecture/index.adoc[Architecture overview]
 *** xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]

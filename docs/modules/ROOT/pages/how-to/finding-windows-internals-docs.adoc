@@ -1,0 +1,107 @@
+= Finding Windows internals documentation
+:navtitle: Finding Windows internals docs
+:description: How Microsoft’s Windows docs are structured (Learn, Win32 API, conceptual trees, GitHub mirrors) and how to find sources when search wording does not match.
+
+Microsoft’s Windows documentation is accurate more often than it is *findable*. The same fact may live under a technology portal (“DirectWrite”), a header reference (`dwrite.h`), a conceptual how-to, a .NET/WPF article that mirrors Win32 registry layout, or an old MSDN URL that now redirects. This page is a map of those layers and a search playbook when your wording and theirs disagree.
+
+== Mental model: four overlapping catalogs
+
+[cols="1,2,2"]
+|===
+| Catalog | What it is | Start here
+
+| **Microsoft Learn (current site)**
+| HTML docs for Win32, WinRT/UWP, .NET, drivers, Azure, etc. Replaced `docs.microsoft.com` and the old MSDN Library browser experience for most active content.
+| https://learn.microsoft.com/
+
+| **Win32 API reference**
+| Function/interface/enum pages generated around headers and `tech.root` metadata. Best when you already know the API name.
+| https://learn.microsoft.com/en-us/windows/win32/api/
+
+| **Conceptual / “using” trees**
+| Prose under a technology (DirectWrite, GDI, Windows Shell). How-tos, overviews, migration notes. Same product; different TOC entry.
+| Example: https://learn.microsoft.com/en-us/windows/win32/directwrite/
+
+| **GitHub source of truth (MicrosoftDocs)**
+| Markdown mirrors used to build Learn pages. Ideal for `git grep`, blame, PR history, and offline search when the website search fails.
+| https://github.com/MicrosoftDocs/win32 (desktop Win32); many sibling repos
+|===
+
+Legacy bookmarks to `msdn.microsoft.com/...` usually redirect into Learn. If a redirect dies, search the **page title** or `ms.assetid` / old path fragment in the matching MicrosoftDocs repo.
+
+== How a Learn page is “filed”
+
+Useful front-matter ideas (visible in GitHub `.md` sources even when the HTML hides them):
+
+* `tech.root` — technology bucket (for example `DirectWrite`, `winmsg`). Drives TOC placement more than your intuition about “internals.”
+* `ms.topic` — `reference` vs `how-to` vs `concept-article`. Same subject often has **both** a reference page and a how-to.
+* `ms.service` / `ms.subservice` — product taxonomy for Learn search facets.
+* Header name — Win32 reference is often easiest **by header** (`dwrite.h`, `winuser.h`) via the API TOC, not by English paraphrase.
+
+Practical rule: if web search finds an API name, open the reference page, then use “See also” / the left TOC to climb into the conceptual tree. If search finds an English phrase (“multiple monitors ClearType”), expect a how-to under a technology portal, not under “Windows internals.”
+
+== Where “Windows internals” actually lives
+
+There is no single official book-shaped TOC labeled *Windows Internals* on Learn. Knowledge is split:
+
+[cols="1,2"]
+|===
+| Need | Prefer
+
+| Public API behavior (what apps may call)
+| Win32 / WinRT / .NET API reference + conceptual how-tos on Learn; MicrosoftDocs GitHub for raw markdown
+
+| Kernel / driver behavior
+| https://learn.microsoft.com/en-us/windows-hardware/drivers/[Windows drivers documentation]; https://github.com/MicrosoftDocs/windows-driver-docs[windows-driver-docs]
+
+| Undocumented or reverse-engineered detail
+| Treat as **non-normative**: blog posts, conference talks, books (*Windows Internals*), Sysinternals tooling. Cross-check against public APIs before shipping product behavior on it.
+
+| Historical UI / registry that apps still read
+| Often still documented under the **app framework that consumed it** (example: WPF ClearType registry settings) even when the Shell UI moved on
+|===
+
+Example of framework-hosted “OS” detail: https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/cleartype-registry-settings[ClearType Registry Settings (WPF)] documents `Avalon.Graphics\<display>` keys that the Shell ClearType tuner also writes. Searching only under “Windows Shell” misses it.
+
+== Search playbook when wording differs
+
+. **Start from an artifact you trust** — a header, an EXE (`cttune.exe`), a registry path, an HRESULT, a COM IID — then search that literal string on Learn and on GitHub `MicrosoftDocs/*`.
+. **Try the API name, not the feature nickname** — “per-monitor ClearType” fails; `CreateMonitorRenderingParams` or `SPI_SETFONTSMOOTHINGORIENTATION` succeeds.
+. **Search MicrosoftDocs with GitHub** — org search: `org:MicrosoftDocs CreateMonitorRenderingParams`. Clone `MicrosoftDocs/win32` and `rg` locally when you will do this often.
+. **Follow redirects and `old-location`** — many API pages still carry `old-location: directwrite\...htm` crumbs from MSDN. Those paths are breadcrumbs into the conceptual folder layout on GitHub (`desktop-src/DirectWrite/...`).
+. **Check both Win32 and .NET/WPF/WinUI trees** — registry and “user-facing” explanations often sit with the UI stack that last documented them.
+. **Use chronology** — behavior changes by Windows release. Prefer pages with recent `ms.date`, then validate with a second source (sample, blog that cites registry diffs, or your own measurement).
+. **When Learn search is noisy** — Bing/Google with `site:learn.microsoft.com/en-us/windows/win32` or `site:github.com/MicrosoftDocs/win32`.
+
+== High-value entry hubs
+
+* https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list[Windows API index] — feature-oriented list of desktop API families
+* https://learn.microsoft.com/en-us/windows/win32/api/[Programming reference for the Win32 API] — technology + header browsing
+* https://learn.microsoft.com/en-us/windows/win32/apiindex/api-index-portal[API Index portal] — Win32 vs WinRT vs .NET split
+* https://github.com/MicrosoftDocs/win32[MicrosoftDocs/win32] — markdown for desktop Win32 conceptual + much reference content under `desktop-src/`
+
+== Worked micro-example (ClearType)
+
+Goal: “Does Windows support different RGB/BGR per monitor?”
+
+. Wrong query: “ClearType per monitor settings Windows 11”
+. Better artifacts: `PixelStructure`, `Avalon.Graphics`, `CreateMonitorRenderingParams`, `SPI_SETFONTSMOOTHINGORIENTATION`
+. Hits you should land on:
++
+* WPF registry article (per-display `PixelStructure`)
+* DirectWrite multi-monitor how-to (`CreateMonitorRenderingParams` vs primary-only `CreateRenderingParams`)
+* `SystemParametersInfo` reference (global font smoothing orientation — no `HMONITOR`)
+. Synthesis: registry/API support ≠ every app honors it; GDI orientation remains global. Full write-up: xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings].
+
+That pattern — **literal identifiers → Learn/GitHub → reconcile conflicting scopes** — is the durable skill. Feature-English search is optional garnish.
+
+== Companion habits
+
+* Keep a short personal glossary of *your* words → *their* identifiers (example: “BGR panel” → `FE_FONTSMOOTHINGORIENTATIONBGR` / `DWRITE_PIXEL_GEOMETRY_BGR` / `PixelStructure=2`).
+* Prefer citing **Learn URLs or MicrosoftDocs paths** in engineering docs; blogs (including excellent ones) age and move.
+* For Feedback Hub / Insider-only behavior, snapshot claims on the clear web when you need a citable source — Hub share links are poor archival citizens.
+
+== See also
+
+* xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]
+* xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup] — library docs retrieval for agents (complements, does not replace, MicrosoftDocs search for Win32)

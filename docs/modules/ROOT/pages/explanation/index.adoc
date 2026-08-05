@@ -4,6 +4,10 @@
 
 Explanation pages teach **why**. Start with architecture if you are building a product; infrastructure if you are shaping the environment.
 
+== Windows
+
+* xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings] — global GDI vs per-display Avalon/DirectWrite; Better ClearType Tuner behavior
+
 == Architecture
 
 * xref:explanation/architecture/index.adoc[Architecture overview]

@@ -10,6 +10,7 @@ Task-oriented guides. Pick a guide when you already know what you want to do.
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.
 * xref:how-to/flutter-setup.adoc[Set up Flutter tooling] — SDK bootstrap; community version bridges until an official Toolchain Control Plane exists (see Toolchain Management Pattern).
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS] — Grey-cloud for GitHub LE; poll Pages API; companion `scripts/check-gh-pages-https.nu`.
+* xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation] — Learn / MSDN-shaped trees, MicrosoftDocs GitHub, search when wording differs.
 
 == Shipping software
 

@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-05 — ClearType per-monitor + Windows docs map
+
+* Added xref:explanation/cleartype-per-monitor-settings.adoc[ClearType per-monitor settings]: GDI vs Avalon/DirectWrite scopes, Better ClearType Tuner global writes, citations.
+* Added xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation]: Learn/MicrosoftDocs structure and search playbook.
+* See xref:changelog-details/2026-08-05 - cleartype-and-windows-docs.adoc[Detailed changelog].
+
 == 2026-08-04 — Winget registration how-to expanded
 
 * Expanded xref:how-to/winget-registration.adoc[Winget registration]: PAT/`WINGET_TOKEN`, first submission vs CI updates, portable zips, `winget-releaser` example.
