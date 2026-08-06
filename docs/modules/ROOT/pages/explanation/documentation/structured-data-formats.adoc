@@ -15,18 +15,21 @@ JSON is the default interchange shape. Human-edited config, programmable constra
 | Format | Prefer when
 
 | **SDLang (`.sdl`)**
-| DevCentr owns the parser (catalogs, `.devcentr.sdl`, recognizer profiles). Comments, native types, low punctuation noise. See xref:DevCentr:specifications:sdl.adoc[SDL Preference].
+| DevCentr owns the parser (catalogs, `.devcentr.sdl`, recognizer profiles, CentrMark properties). Comments, native types, low punctuation noise. See xref:DevCentr:specifications:sdl.adoc[SDL Preference].
 
 | **KDL (`.kdl`)**
-| Modern node-based successor to SDLang: strict grammar, `/-` node comments, `(type)` annotations—and the consumer already speaks KDL. Not the DevCentr-owned default while sdlang-d remains the stack.
+| Greenfield or cross-language node documents: strict grammar, `/-` comments, `(type)` annotations. Use when the consumer is not DevCentr’s `sdlang-d` stack (DUB: `kdl` / https://github.com/dlang-supplemental/kdl-d[kdl-d]).
 
 | **JSON5 (`.json5`)**
 | Stuck in the JSON family but humans edit the file (comments, trailing commas). Use plain JSON when the tool forbids dialects.
+
+| **Extended SDL / XDL**
+| **Avoid.** Unfinished dialect in `newsdlang`; specs stubbed; KDL-compat plans dropped. Not a Dev-Centr path.
 |===
 
-=== SDLang and KDL
+=== SDLang, KDL, and Extended SDL
 
-Both are node-based documents. KDL was shaped as a clearer successor to SDLang (unambiguous grammar, explicit type annotations, safer node commenting). DevCentr still **favors SDLang** for files it parses today; evaluate KDL when starting greenfield config outside that parser surface.
+Both SDLang and KDL are node-based documents. KDL is the clearer modern successor (unambiguous grammar, explicit type annotations, safer node commenting). **Policy:** keep SDLang where DevCentr already parses `.sdl`; prefer KDL for new documents outside that surface. Do **not** adopt Extended SDL/XDL as a compromise—it does not finish SDLang’s gaps and does not inherit KDL’s ecosystem. Full decision table: xref:DevCentr:specifications:sdl.adoc#decision-sdlang-vs-kdl-vs-extended-sdl[SDL Preference — Decision].
 
 == Three extremes beyond JSON text
 
@@ -58,6 +61,7 @@ flowchart TB
   json5[JSON5]
   sdlang[SDLang]
   kdl[KDL]
+  xdl[XDL_avoid]
   toon[TOON]
   cbor[CBOR]
   msgpack[MessagePack]
@@ -68,6 +72,7 @@ flowchart TB
   json -->|evolves| json5
   json -->|evolves| sdlang
   sdlang -->|supersedes| kdl
+  sdlang -.->|avoid| xdl
   json -->|specializes| toon
   json -->|specializes| cbor
   json -->|specializes| msgpack

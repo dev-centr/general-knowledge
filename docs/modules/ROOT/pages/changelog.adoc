@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-06 — SDLang / KDL / XDL dual-track decision
+
+* xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]: keep SDLang in-stack, prefer KDL greenfield, **reject Extended SDL/XDL**.
+* Mirrors DevCentr `sdl.adoc` decision table and Content Create catalog (`xdl` reference-only).
+* See xref:changelog-details/2026-08-06 - sdlang-kdl-xdl-decision.adoc[Detailed changelog].
+
 == 2026-08-06 — npm package managers (Bun + Orogene)
 
 * Added xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]: pnpm preferred, Bun as practical OSS alternative, Orogene as once-and-future closed-aspirational inspiration.

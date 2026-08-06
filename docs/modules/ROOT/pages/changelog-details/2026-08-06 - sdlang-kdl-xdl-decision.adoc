@@ -1,0 +1,15 @@
+= SDLang / KDL / XDL dual-track decision
+
+Locked the human-config advisory path after comparing classic SDLang, KDL, and Extended SDL (XDL / `newsdlang`).
+
+== Decision
+
+* **SDLang** — keep for DevCentr-owned `.sdl` catalogs and settings (`sdlang-d`).
+* **KDL** — prefer for greenfield / cross-language documents (D: `kdl-d`).
+* **XDL** — do not adopt (specs stubbed, impl immature, KDL-compat dropped).
+
+== Touched
+
+* This page’s parent: structured-data-formats.adoc
+* DevCentr: `sdl.adoc`, `content-types.sdl`
+* agent-rules: `RULES.md`, `general/creator.md`
