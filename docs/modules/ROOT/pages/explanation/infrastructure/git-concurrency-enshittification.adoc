@@ -1,0 +1,99 @@
+= Git concurrency enshittification
+:navtitle: Git concurrency enshittification
+:description: Why worktrees and virtual branches only partially fix concurrent Git work, the Phase A four-tier bridge, and how connectome-fs editions collapse the stack.
+:toc:
+
+Git conflates physical storage, revision graph, and filesystem presentation.
+That coupling is what makes concurrent feature work, side-by-side
+implementation comparison, and agentic workflows feel broken—even when
+individual tools (worktrees, GitButler, jj) each paper over one symptom.
+
+This page is the Dev-Centr practitioner framing. Canonical filesystem
+design lives in link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs editions]
+and link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse].
+
+== What each partial fix optimizes
+
+=== Single working tree + context switch
+
+Classical Git: one `HEAD`, one index, one dirty tree. Switching branches
+rebuilds the working copy; long-running LSPs and build caches thrash;
+you cannot honestly hold two feature states open at once.
+
+=== Worktrees
+
+Native `git worktree` gives multiple checkouts sharing one object store.
+Wins: concurrent branches without cloning the repo again.
+
+Costs:
+
+* Paths change (`…/repo` vs `…/repo-feature`). Apps, LSPs, sockets, and
+  path-keyed caches break or duplicate.
+* `node_modules`, `/target`, and similar artifacts multiply unless you
+  invest in shared stores and discipline.
+* Ref locking and history sync across trees remain operational friction.
+
+=== GitButler-style virtual branches
+
+GitButler does *not* use native worktrees as its primary model. It keeps
+one working directory, assigns hunks to virtual branch lanes, and
+synthesizes a workspace merge commit. Commits materialize per lane
+without flipping the whole tree.
+
+Wins: concurrent unfinished work in one path.
+
+Costs: native `git checkout` / `switch` / `rebase` outside the tool
+desynchronizes its internal mapping. The hybrid “many uncommitted
+branches applied at once” state is not what classical Git expects.
+
+Neither worktrees nor virtual branches fully solve *stable absolute
+paths + cheap isolation + agent-safe sandboxes* together.
+
+== Phase A — four-tier userspace bridge
+
+Until the filesystem owns editions, aim for this stack:
+
+. *Process-scoped path presentation* — mount namespaces, FUSE, or
+  equivalent so each process tree sees its revision at a stable logical
+  root (e.g. `/workspace`).
+. *Working copy as revision graph* — operation-log engines in the
+  spirit of Jujutsu: anonymous revisions instead of a fragile index;
+  conflicts as first-class state where the tool supports it.
+. *Copy-on-write + CAS dependency stores* — reflink/snapshot workspaces;
+  pnpm-style global stores so concurrent trees do not duplicate the world.
+. *Headless agent sandboxes* — agents never edit the human interactive
+  tree; they attach ephemeral namespaces to distinct heads and export
+  structured diffs. Success reparents; failure drops.
+
+That is the honest near-term architecture for agentic DevX. See also
+xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+and xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+for adjacent runtime and shell concerns.
+
+== Phase B — filesystem editions
+
+link:https://github.com/AMDphreak/connectome-fs[connectome-fs] treats
+hierarchy as a navigation slice and the connectome graph as truth.
+*Editions* (folder/file forks with process edition context) move
+multi-state trees into the VFS: same path string, different bindings,
+CoW extents, O(1) agent micro-forks.
+
+VCS then shrinks toward graph orchestration and semantic merge. What
+stays above the FS: AST-aware merge, and isolation for daemons/sockets
+that bypass the tree. Details:
+link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+
+Stub for “what remains of Git/jj after editions”:
+xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions].
+
+Near-term practitioner checklist (worktrees / jj / GitButler tradeoffs):
+xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+
+== Related
+
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* link:https://hci-nerdz.github.io/docs/hci-nerdz/connectome-editions-ux.html[HCI Nerdz: Connectome editions UX]
+* link:https://docs.opensh.org/shell-architecture/graph-navigation.html[OpenShellOrg: Graph navigation]

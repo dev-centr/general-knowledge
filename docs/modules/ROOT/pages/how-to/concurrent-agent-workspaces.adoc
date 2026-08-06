@@ -1,0 +1,60 @@
+= Concurrent agent workspaces
+:navtitle: Concurrent agent workspaces
+:description: Stub how-to — near-term tradeoffs among worktrees, jj-like workflows, and GitButler until FS editions exist.
+:toc:
+
+[NOTE]
+====
+*Stub.* Full step-by-step playbooks will land here. For the why, read
+xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification].
+====
+
+== Goal
+
+Run human work and one or more agents on related changes without
+corrupting a single shared index, without surprising path breaks, and
+without multiplying dependency trees needlessly.
+
+== Near-term options (choose deliberately)
+
+[cols="1,2,2", options="header"]
+|===
+| Approach | Prefer when | Watch out for
+
+| Native worktrees
+| You need real separate checkouts and standard Git CLI everywhere
+| Absolute path drift; duplicated `node_modules` / build dirs; ref lock contention
+
+| jj / op-log style tools
+| You want working-copy-as-revision and less index pain
+| Team Git interoperability and tooling familiarity
+
+| GitButler virtual branches
+| You want one path and hunk lanes for unfinished work
+| Native Git commands outside the tool desync workspace state
+
+| Process namespaces + CoW clones (DIY Phase A)
+| You control the agent runner and can pin a stable `/workspace`
+| Operational complexity; still not FS-native editions
+|===
+
+== Hard rules for agents
+
+. Do not let agents write into the human interactive working tree by default.
+. Prefer ephemeral sandboxes that export patches / revisions rather than
+  mutating `HEAD` in place.
+. Share content-addressable dependency stores (e.g. pnpm) across sandboxes
+  when possible.
+
+== Phase B pointer
+
+Filesystem editions (connectome-fs) make “new workspace” an O(1) edition
+fork with stable paths. Until then, this how-to stays in userspace
+tradeoffs.
+
+== Related
+
+* xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]

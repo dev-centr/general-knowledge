@@ -1,0 +1,40 @@
+= VCS over filesystem editions
+:navtitle: VCS over FS editions
+:description: Stub — what remains of Git and jj-like tools once connectome-fs editions own working trees.
+:toc:
+
+[NOTE]
+====
+*Stub.* Expand after the connectome-fs editions implementation matures.
+Canonical design:
+link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+====
+
+== Abstract
+
+When the filesystem provides editions (process-scoped fork bindings over
+CoW storage), version-control products stop owning:
+
+* Working-tree checkouts and path juggling
+* Duplicate blob stores for the live tree
+* Destructive “switch branch” as the primary concurrency mechanism
+
+They keep:
+
+* Remote sync and collaboration policy
+* Semantic / AST-aware merge
+* Signed history, code review, and release metadata
+* Graph orchestration over edition ids (tags, named lines of work)
+
+== Practitioner takeaway (interim)
+
+Until Phase B ships, use the Phase A bridge described in
+xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+and the near-term how-to
+xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+
+== Related
+
+* xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]

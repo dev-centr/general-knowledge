@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-04 — Git concurrency and FS editions
+
+* Added xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification] (worktrees vs virtual branches vs Phase A four-tier bridge → connectome-fs editions).
+* Stubs: xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions], xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+* Cross-links to connectome-fs, HCI Nerdz, and OpenShellOrg.
+* See xref:changelog-details/2026-08-04 - git-concurrency-enshittification.adoc[Detailed changelog].
+
 == 2026-08-05 — Windows color management pipeline
 
 * Added xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]: ICM/WCS, VCGT vs MHC2, ACM/Advanced Color, GUI surfaces, systemic flaws, and how calibration vendors (X-Rite-class) work with/around the stack.

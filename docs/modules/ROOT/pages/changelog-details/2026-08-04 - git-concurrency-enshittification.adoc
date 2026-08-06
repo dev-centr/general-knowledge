@@ -1,0 +1,9 @@
+= 2026-08-04 — Git concurrency enshittification
+
+Documented why Git worktrees and GitButler-style virtual branches only
+partially fix concurrent and agentic workflows, and how a Phase A
+userspace stack (stable paths, op-log WC, CoW/CAS, headless sandboxes)
+bridges to Phase B filesystem editions in connectome-fs.
+
+Stubs point at remaining Git/jj responsibilities after editions and a
+near-term how-to for choosing workspace strategies.
