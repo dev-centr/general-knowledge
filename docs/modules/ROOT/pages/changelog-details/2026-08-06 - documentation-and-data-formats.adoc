@@ -1,0 +1,14 @@
+= Changelog details — Documentation and data format articles
+
+== Summary
+
+Added explanation pages that match DevCentr’s Content Create classifications and lineage graphs.
+
+== Pages
+
+* `explanation/documentation/documentation-markup-comparison.adoc` — Markdown / AsciiDoc / MDX / CentrMark
+* `explanation/documentation/structured-data-formats.adoc` — prose vs data; SDLang/KDL; JSON-alternative paradigms
+
+== Nav
+
+* Explanation → Documentation entries for both pages

@@ -1,0 +1,73 @@
+= Documentation markup when writing
+:navtitle: Documentation markup
+:description: Pick among Markdown, AsciiDoc, MDX, and CentrMark by job—interop, Antora publishing, React pipelines, or directive-rich prose.
+
+Do not treat documentation markup as interchangeable skins over the same document. Each format encodes a different tradeoff among portability, publishing tooling, and structured extensions. Dev-Centr’s Create… flow lists these under **Documentation**; this page is the advisory path outside the app.
+
+== First cut
+
+[cols="1,2"]
+|===
+| Pick | When
+
+| **Markdown (`.md`)**
+| Maximum forge interop (README defaults, CommonMark/GFM consumers). You accept weak tabs/TOC/admonition story.
+
+| **AsciiDoc (`.adoc`)**
+| Antora component pages, xrefs, and the org’s current docs pipeline. Heavier syntax; strongest multi-repo site story today.
+
+| **CentrMark (`.cmk`)**
+| New Dev-Centr technical prose when a CentrMark toolchain is available. Directive AST (void / block / inline) without MDX/JS injection.
+
+| **MDX (`.mdx`)**
+| Only React/MDX docs pipelines that intentionally embed JSX. Not general project prose.
+|===
+
+== Capability sketch
+
+[cols="1,1,1,1",options="header"]
+|===
+| Capability | Markdown | AsciiDoc | CentrMark
+
+| Tabs / multi-pane
+| HTML or custom components
+| Possible; noisy macros
+| `::: tabs` + `::: tab`
+
+| Void elements (TOC)
+| Not standardized
+| Tool-specific
+| `:: toc`
+
+| Admonitions
+| Often custom HTML
+| Attribute-heavy macros
+| `::: warning … :::`
+
+| Extensibility without JS
+| MDX pulls JSX into text
+| Macro systems vary
+| Directives map to a stable AST
+|===
+
+== Evolution (lineage)
+
+Markdown remains the portable baseline. **MDX** specializes it for React. **CentrMark** evolves the Markdown feel toward a directive AST without embedding JS. **AsciiDoc** stays the Antora authoring format; CentrMark can evolve *from* AsciiDoc as publishing backends catch up—keep Antora output during migration.
+
+[source,mermaid]
+----
+flowchart LR
+  markdown[Markdown]
+  mdx[MDX]
+  asciidoc[AsciiDoc]
+  centrmark[CentrMark]
+  markdown -->|specializes| mdx
+  markdown -->|evolves| centrmark
+  asciidoc -->|evolves| centrmark
+----
+
+== Related
+
+* Product Create… dialog: xref:DevCentr:specifications:components/content-create.adoc[Content Create]
+* CentrMark overview: link:https://github.com/dev-centr/centrmark[dev-centr/centrmark]
+* Structured *data* formats (not prose): xref:documentation/structured-data-formats.adoc[Structured data formats]

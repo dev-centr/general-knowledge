@@ -1,0 +1,86 @@
+= Structured data formats beyond JSON
+:navtitle: Structured data formats
+:description: Separate prose from data, then pick SDLang, KDL, JSON5, programmable config, LLM encodings, or zero-copy binary by job.
+
+JSON is the default interchange shape. Human-edited config, programmable constraints, LLM token budgets, and zero-copy wire formats pull in different successors. This page mirrors the **Configuration** classification and lineage graph in DevCentr’s Create… catalog.
+
+== Do not confuse prose with data
+
+**CentrMark / Markdown / AsciiDoc** model document trees (paragraphs, headings, directives). **SDLang / KDL / JSON** model data trees (nodes, arguments, properties). Comparing KDL to CentrMark as peers is a category error—pick documentation markup or structured data first.
+
+== Human-edited config
+
+[cols="1,2"]
+|===
+| Format | Prefer when
+
+| **SDLang (`.sdl`)**
+| DevCentr owns the parser (catalogs, `.devcentr.sdl`, recognizer profiles). Comments, native types, low punctuation noise. See xref:DevCentr:specifications:sdl.adoc[SDL Preference].
+
+| **KDL (`.kdl`)**
+| Modern node-based successor to SDLang: strict grammar, `/-` node comments, `(type)` annotations—and the consumer already speaks KDL. Not the DevCentr-owned default while sdlang-d remains the stack.
+
+| **JSON5 (`.json5`)**
+| Stuck in the JSON family but humans edit the file (comments, trailing commas). Use plain JSON when the tool forbids dialects.
+|===
+
+=== SDLang and KDL
+
+Both are node-based documents. KDL was shaped as a clearer successor to SDLang (unambiguous grammar, explicit type annotations, safer node commenting). DevCentr still **favors SDLang** for files it parses today; evaluate KDL when starting greenfield config outside that parser surface.
+
+== Three extremes beyond JSON text
+
+When “better than JSON” is taken to the limit, solutions split by goal:
+
+[cols="1,1,2"]
+|===
+| Goal | Examples | Mechanism
+
+| **Validation and programmability**
+| Pkl, CUE, Nickel, KCL
+| Schema, constraints, or generation live in the config language; often emit JSON/YAML for consumers.
+
+| **Human or LLM ergonomics**
+| KDL, TOON
+| Node trees or tabular/token-dense encodings instead of brace-heavy maps.
+
+| **Network and CPU performance**
+| Cap’n Proto, FlatBuffers, CBOR, MessagePack
+| Binary layouts; zero-copy or compact encodings. Humans do not hand-edit these as primary authoring.
+|===
+
+== Evolution (lineage)
+
+[source,mermaid]
+----
+flowchart TB
+  json[JSON]
+  json5[JSON5]
+  sdlang[SDLang]
+  kdl[KDL]
+  toon[TOON]
+  cbor[CBOR]
+  msgpack[MessagePack]
+  pkl[Pkl]
+  cue[CUE]
+  capnp[Capn_Proto]
+  flatbuffers[FlatBuffers]
+  json -->|evolves| json5
+  json -->|evolves| sdlang
+  sdlang -->|supersedes| kdl
+  json -->|specializes| toon
+  json -->|specializes| cbor
+  json -->|specializes| msgpack
+  json -->|specializes| pkl
+  json -->|specializes| cue
+  json -->|specializes| capnp
+  json -->|specializes| flatbuffers
+----
+
+Use the lineage view in Create… when the job tree (human config vs programmable vs binary) is not enough to separate near neighbors.
+
+== Related
+
+* Create… catalog and dialog: xref:DevCentr:specifications:components/content-create.adoc[Content Create]
+* Prose markup: xref:documentation/documentation-markup-comparison.adoc[Documentation markup]
+* SDL policy: xref:DevCentr:specifications:sdl.adoc[SDL Preference]

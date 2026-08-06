@@ -97,4 +97,6 @@
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]
 *** xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]
+*** xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
+*** xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]
 

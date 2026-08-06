@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-06 — Documentation markup and structured data formats
+
+* Added xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup] (Markdown / AsciiDoc / MDX / CentrMark).
+* Added xref:explanation/documentation/structured-data-formats.adoc[Structured data formats] (SDLang/KDL + JSON-alternative paradigms).
+* Mirrors DevCentr Content Create classifications and lineage.
+* See xref:changelog-details/2026-08-06 - documentation-and-data-formats.adoc[Detailed changelog].
+
 == 2026-08-04 — Git concurrency and FS editions
 
 * Added xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification] (worktrees vs virtual branches vs Phase A four-tier bridge → connectome-fs editions).
