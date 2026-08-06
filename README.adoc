@@ -1,12 +1,39 @@
+ifndef::env-github[:icons: font]
+:toc: preamble
+:toclevels: 2
+:sectanchors:
+
+ifndef::env-github[]
+image:https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge[Contributors,link=https://github.com/dev-centr/general-knowledge/graphs/contributors]
+image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge[Forks,link=https://github.com/dev-centr/general-knowledge/network/members]
+image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/general-knowledge/stargazers]
+image:https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge[Issues,link=https://github.com/dev-centr/general-knowledge/issues]
+endif::[]
+
+ifdef::env-github[]
+image:https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge[Contributors]
+image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge[Forks]
+image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars]
+image:https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge[Issues]
+endif::[]
+
 = General Developer Knowledge
+
+General developer knowledge: Diátaxis-organized reference, how-tos, and explanations.
+
+link:https://docs.devcentr.org[Explore the docs] ·
+link:https://github.com/dev-centr/general-knowledge/issues[Report Bug] ·
+link:https://github.com/dev-centr/general-knowledge/issues[Request Feature]
+
+== About The Project
 
 Product-agnostic reference documentation organized by the Diátaxis model (tutorials, how-to, reference, explanation). Consumed by the Dev-Centr docs site and other projects.
 
-== Changelog
+== Installation
 
-See link:docs/modules/ROOT/pages/changelog.adoc[changelog.adoc] (rendered as Changelog in the Antora nav).
+No install step — content is consumed via the Antora docs hub.
 
-== Build
+== Usage
 
 [source,bash]
 ----
@@ -15,3 +42,14 @@ pnpm dlx antora ../antora-playbook.yml
 ----
 
 For local dev with sibling repos, use `antora-playbook-local.yml` (sibling paths only, no remote URLs).
+
+== Changelog
+
+See link:docs/modules/ROOT/pages/changelog.adoc[changelog.adoc] (rendered as Changelog in the Antora nav).
+
+== Contact
+
+DevCentr.org — support@devcentr.org
+
+* Project: https://github.com/dev-centr/general-knowledge
+* Site: https://docs.devcentr.org
