@@ -14,7 +14,7 @@ Do not treat documentation markup as interchangeable skins over the same documen
 | Maximum forge interop (README defaults, CommonMark/GFM consumers). You accept weak tabs/TOC/admonition story.
 
 | **AsciiDoc (`.adoc`)**
-| Antora component pages, xrefs, and the org’s current docs pipeline. Heavier syntax; strongest multi-repo site story today.
+| Antora component pages, xrefs, and the org’s current docs pipeline. Heavier syntax; strongest multi-repo site story today. De facto language definition: link:https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc Language Documentation] (Asciidoctor)—Eclipse’s formal AsciiDoc Language Spec is still drafting.
 
 | **CentrMark (`.cmk`)**
 | New Dev-Centr technical prose when a CentrMark toolchain is available. Directive AST (void / block / inline) without MDX/JS injection.
