@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-06 — npm package managers (Bun + Orogene)
+
+* Added xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]: pnpm preferred, Bun as practical OSS alternative, Orogene as once-and-future closed-aspirational inspiration.
+* Restored xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics] (was missing from nav); points at the comparison page.
+* Recommended tools + package registries updated.
+
 == 2026-08-06 — Documentation markup and structured data formats
 
 * Added xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup] (Markdown / AsciiDoc / MDX / CentrMark).

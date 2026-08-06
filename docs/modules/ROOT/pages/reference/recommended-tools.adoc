@@ -16,8 +16,9 @@ We recommend these tools for a consistent, cross-platform developer workflow.
 
 * link:https://www.marticliment.com/unigetui/[UniGetUI] — GUI over `winget` and other managers (Windows).
 * link:https://pnpm.io/[pnpm] — Preferred Node package manager in this ecosystem.
+* link:https://bun.sh/[Bun] — Practical OSS Node-shaped runtime + package manager when you want speed in one tool; see xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers].
+* **Orogene** — Catalogued as *closed-aspirational* (once and future king of `node_modules/` installs if it re-open-sources); not a shop default while closed. Same comparison page.
 * link:https://docs.astral.sh/uv/[uv] — Preferred Python environment and package tool.
-
 == Editors & Agents
 
 * link:https://cursor.com/[Cursor] — Primary AI-assisted IDE in this workspace.

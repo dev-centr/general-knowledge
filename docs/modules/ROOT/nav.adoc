@@ -88,6 +88,7 @@
 *** xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 *** xref:explanation/infrastructure/git-submodules.adoc[Submodules & Monorepos]
 *** xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics]
+*** xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]
 *** xref:explanation/infrastructure/self-hosting.adoc[Self-Hosting]
 *** xref:explanation/infrastructure/windows-testing-on-linux.adoc[Windows Testing on Linux]
 *** xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL Distro Comparison]

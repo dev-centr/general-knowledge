@@ -11,7 +11,7 @@ Choosing **where** to publish is part of xref:explanation/architecture/distribut
 | Ecosystem | Common registry
 
 | JavaScript/TypeScript
-| npm (prefer `pnpm` for installs in our shops)
+| npm registry (prefer `pnpm` for installs in our shops; Bun is a fine OSS speed path; see xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers])
 
 | Python
 | PyPI

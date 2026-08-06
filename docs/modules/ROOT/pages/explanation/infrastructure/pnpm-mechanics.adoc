@@ -1,0 +1,21 @@
+= pnpm Mechanics
+:navtitle: pnpm Mechanics
+:description: Why pnpm’s content-addressable store and strict node_modules matter—and how it sits among npm alternatives.
+
+**pnpm** is the preferred Node package manager in Dev-Centr shops. It stores packages in a content-addressable store and links them into project `node_modules/` with a stricter layout than classic npm hoisting, which cuts disk waste and makes phantom dependencies harder to rely on by accident.
+
+== Why we prefer it
+
+* **Disk:** One copy of a given package version on disk, reused across projects.
+* **Correctness:** Stricter resolution than flattened `node_modules` trees that accidentally “see” undeclared packages.
+* **Monorepos:** First-class workspace workflows for multi-package repos.
+
+== Among alternatives
+
+For Bun, Yarn, npm, and the aspirational role of **Orogene** (closed-source today; once-and-future open inspiration), see xref:npm-package-managers.adoc[npm package managers and alternatives]. That page is the comparison; this page stays focused on pnpm’s mechanics and shop default.
+
+== Related
+
+* xref:reference/recommended-tools.adoc[Recommended Tools]
+* xref:reference/package-registries.adoc[Package Registries]
+* DevCentr Node ecosystem SDL (`languages/node.sdl`)

@@ -1,0 +1,46 @@
+= npm package managers and alternatives
+:navtitle: npm package managers
+:description: pnpm as shop default, Bun as practical OSS speed path, Orogene as once-and-future inspiration if it re-open-sources.
+
+The npm registry is the package **marketplace**. What you run for **installs** is a separate choice. DevCentr’s Node ecosystem SDL lists the managers we care about; this page is the advisory copy.
+
+== Short answer
+
+[cols="1,2"]
+|===
+| Tool | Role in Dev-Centr
+
+| **pnpm**
+| **Preferred** day-to-day manager for Node/JS shops we control: shared content-addressable store, strict dependency layout, solid monorepos.
+
+| **Bun**
+| **Practical OSS alternative** when you want a fast install *and* optional runtime in one tool. Strong enough that “waiting for a resurrected Orogene” is usually moot for greenfield work. Zig-based core with parts of the stack moving toward Rust—treat as a living OSS peer, not a toy.
+
+| **Yarn**
+| Keep for Yarn-native existing repos; do not pick it by default for new Dev-Centr work.
+
+| **npm**
+| Bundled with Node. Acceptable for casual one-offs; prefer pnpm or Bun for project workflows.
+
+| **Orogene**
+| **Once and future king** of fast, fuss-free `node_modules/`—as *aspiration and design inspiration*, not a current open default. Early releases (≤0.3.34) were Apache-2.0; the project later moved to closed-source paid licenses. If maintainers **re-open-source**, re-open the preferred-candidate conversation. Until then, use Bun/pnpm and treat Orogene’s public history as a prompt for someone else to attempt similar ergonomics in the open.
+|===
+
+== Why call Orogene a once and future king?
+
+Orogene aimed at being the fastest and most ergonomic manager in the `node_modules/` space—install correctness without constant “is my tree up to date?” anxiety. That product vision still matters even when the **current** distribution model is proprietary.
+
+Dev-Centr does **not** push paid closed-source package managers as shop defaults. Cataloguing Orogene with status `closed-aspirational` keeps the memory and the invitation: a high-quality OSS successor (or a re-opened Orogene) would be welcome. Bun already occupies much of the “fast OSS install/runtime” niche well enough that this may stay academic—document it anyway so agents and humans do not forget the bar.
+
+== Bun vs waiting on Orogene
+
+* Need open source **today** → **pnpm** (preferred) or **Bun** (speed / all-in-one).
+* Studying install architecture / wanting a north-star UX → read Orogene’s public materials; do not block projects on a re-license that may never come.
+* Existing lockfile ecosystem (`pnpm-lock.yaml`, `yarn.lock`, `package-lock.json`) → stay consistent with the repo unless you are deliberately migrating.
+
+== Related
+
+* DevCentr Node SDL: `app/src/modules/languages/node.sdl`
+* Ecosystem management: xref:DevCentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]
+* pnpm store mechanics (detail): xref:pnpm-mechanics.adoc[pnpm Mechanics]
+* Recommended tools: xref:reference/recommended-tools.adoc[Recommended Tools]
