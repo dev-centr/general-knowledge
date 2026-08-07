@@ -3,19 +3,11 @@ ifndef::env-github[:icons: font]
 :toclevels: 2
 :sectanchors:
 
-ifndef::env-github[]
+[[readme-top]]
 image:https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge[Contributors,link=https://github.com/dev-centr/general-knowledge/graphs/contributors]
 image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge[Forks,link=https://github.com/dev-centr/general-knowledge/network/members]
 image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/general-knowledge/stargazers]
 image:https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge[Issues,link=https://github.com/dev-centr/general-knowledge/issues]
-endif::[]
-
-ifdef::env-github[]
-image:https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge[Contributors]
-image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge[Forks]
-image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars]
-image:https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge[Issues]
-endif::[]
 
 = General Developer Knowledge
 
@@ -29,9 +21,13 @@ link:https://github.com/dev-centr/general-knowledge/issues[Request Feature]
 
 Product-agnostic reference documentation organized by the Diátaxis model (tutorials, how-to, reference, explanation). Consumed by the Dev-Centr docs site and other projects.
 
+link:#readme-top[back to top]
+
 == Installation
 
 No install step — content is consumed via the Antora docs hub.
+
+link:#readme-top[back to top]
 
 == Usage
 
@@ -43,6 +39,8 @@ pnpm dlx antora ../antora-playbook.yml
 
 For local dev with sibling repos, use `antora-playbook-local.yml` (sibling paths only, no remote URLs).
 
+link:#readme-top[back to top]
+
 == Changelog
 
 See link:docs/modules/ROOT/pages/changelog.adoc[changelog.adoc] (rendered as Changelog in the Antora nav).
@@ -53,3 +51,5 @@ DevCentr.org — support@devcentr.org
 
 * Project: https://github.com/dev-centr/general-knowledge
 * Site: https://docs.devcentr.org
+
+link:#readme-top[back to top]
