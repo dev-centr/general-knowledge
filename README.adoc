@@ -3,7 +3,28 @@ ifndef::env-github[:icons: font]
 :toclevels: 2
 :sectanchors:
 
-[[readme-top]]
+ifdef::env-github[]
+++++
+<a id="readme-top"></a>
+<div align="center">
+<a href="https://github.com/dev-centr/general-knowledge/graphs/contributors"><img src="https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Contributors"></a>
+<a href="https://github.com/dev-centr/general-knowledge/network/members"><img src="https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Forks"></a>
+<a href="https://github.com/dev-centr/general-knowledge/stargazers"><img src="https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Stars"></a>
+<a href="https://github.com/dev-centr/general-knowledge/issues"><img src="https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Issues"></a>
+<br />
+<h3 align="center">General Developer Knowledge</h3>
+<p align="center">
+General developer knowledge: Diátaxis-organized reference, how-tos, and explanations.<br />
+<a href="https://docs.devcentr.org"><strong>Explore the docs »</strong></a><br /><br />
+<a href="https://github.com/dev-centr/general-knowledge/issues">Report Bug</a>
+&middot;
+<a href="https://github.com/dev-centr/general-knowledge/issues">Request Feature</a>
+</p>
+</div>
+++++
+endif::[]
+
+ifndef::env-github[]
 image:https://img.shields.io/github/contributors/dev-centr/general-knowledge.svg?style=for-the-badge[Contributors,link=https://github.com/dev-centr/general-knowledge/graphs/contributors]
 image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=for-the-badge[Forks,link=https://github.com/dev-centr/general-knowledge/network/members]
 image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/general-knowledge/stargazers]
@@ -16,6 +37,7 @@ General developer knowledge: Diátaxis-organized reference, how-tos, and explana
 link:https://docs.devcentr.org[Explore the docs] ·
 link:https://github.com/dev-centr/general-knowledge/issues[Report Bug] ·
 link:https://github.com/dev-centr/general-knowledge/issues[Request Feature]
+endif::[]
 
 == About The Project
 
