@@ -1,0 +1,167 @@
+= Automatic Updates on macOS and Linux
+:navtitle: Unix/macOS Auto-Updates
+:description: How to update desktop apps on macOS and Linux safely—package managers, Sparkle-class flows, AppImage replace, process shutdown, and scheduled upgrades.
+
+Goal:: Users on macOS and Linux reach newer builds without manual zip hunts, without corrupting a running install.
+Why:: xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
+Windows sibling:: xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+
+== Pick a primary path
+
+[cols="1,1,2"]
+|===
+| OS | Path | When to use
+
+| macOS
+| Mac App Store
+| You can meet store policies; want OS-managed updates
+
+| macOS
+| Sparkle (or similar) + notarized app
+| Direct distribution outside the Store with guided UX
+
+| macOS
+| Homebrew cask
+| Developer/power-user audience already on brew
+
+| Linux
+| Distro packages (apt, dnf, …) / Flathub / Snap
+| Default for “feels native”; updates ride OS tools
+
+| Linux
+| AppImage + in-app or companion updater
+| Portable single-file apps; you control the channel
+
+| Either
+| Manual download page
+| Last resort; never the only 1.0 path for a GUI app
+|===
+
+Combining channels is fine (Homebrew *and* Sparkle builds) if **About** shows which channel the binary belongs to and you do not cross-upgrade formats blindly.
+
+== Why “overwrite the running binary” fails
+
+On Unix, a running executable is mapped by the loader.
+
+* **Linux:** writing to the executable path of a running process typically fails with **`ETXTBSY`** (text file busy), or you replace the directory entry while the old inode keeps running—easy to confuse users and updaters.
+* **macOS:** replacing a running `.app` bundle while frameworks are mapped is fragile; Sparkle-class tools **terminate the app**, replace the bundle, then **relaunch**.
+
+**Rule:** stage the new bits beside or under a versioned directory, then **quit → replace → start**, or let the **package manager** stop services/apps as part of the transaction.
+
+== Safe apply patterns
+
+=== 1. Package manager does the work (preferred on Linux)
+
+. Publish to your PPA/COPR/Flathub/etc. from CI.
+. Tell the user (or a helper) to run the native upgrade, e.g. `flatpak update com.example.App` or `sudo apt install --only-upgrade your-app`.
+. If the app must not be running: show “Install update and restart” which:
+ .. Saves state
+ .. Exits with a dedicated code or touches a flag file
+ .. Launches a **tiny updater stub** or `systemd` oneshot / shell script that waits for the PID to exit, runs the package upgrade, then relaunches
+
+Do **not** `kill -9` as the first resort—send polite quit (SIGTERM / app quit protocol), wait, then escalate only if hung.
+
+=== 2. Scheduled package updates (fleet / always-on machines)
+
+For daemons or kiosk hosts:
+
+* Use a **systemd timer** or cron that runs a constrained upgrade command for *your* package units only (avoid blind `apt full-upgrade` from an app).
+* Gate on battery/metered network when relevant.
+* Log results to the app's log directory; surface last success/failure in About.
+* Prefer `Unattended-Upgrades` origin pinning or Flatpak remote timers over custom root scripts when possible.
+
+Example shape (illustrative—adapt to your package name and security model):
+
+[source,systemd]
+----
+# /etc/systemd/system/your-app-update.timer
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+# your-app-update.service runs a script that:
+# 1) checks a feed or `apt-get -s upgrade`
+# 2) if update exists and policy allows: notify user session OR
+# 3) for headless: stop your-app.service, upgrade, start
+----
+
+Desktop user sessions should **prompt** before stopping GUI apps mid-work unless the update is mandatory for security.
+
+=== 3. Sparkle-class (macOS direct)
+
+. CI produces a notarized `.app` (zip/dmg) + appcast/feed entry with EdDSA/signature.
+. App checks feed on an interval + “Check for Updates…”
+. On approve: download → verify → **quit** → replace `.app` → relaunch → show What's new.
+
+Honor “Automatically download updates” vs “Notify only,” and a managed-disable defaults key for enterprises.
+
+=== 4. AppImage / portable Linux binary
+
+. Download to `App.AppImage.new` (or versioned name) on the same filesystem.
+. `chmod +x` and verify signature/hash.
+. **Atomic rename** over the old path only after the running process has exited—or rename old to `.old`, rename new into place, then relaunch and delete `.old` on next start.
+. Relaunch via a stub:
+
+[source,sh]
+----
+# updater-stub.sh (sketch)
+APP="$1"
+NEW="$2"
+PID="$3"
+while kill -0 "$PID" 2>/dev/null; do sleep 0.2; done
+mv -f "$NEW" "$APP"
+exec "$APP"
+----
+
+The main app starts this stub, then exits cleanly.
+
+=== 5. Homebrew / apt user education
+
+If you do not ship an in-app updater, About should say:
+
+* “Installed via Homebrew — run `brew upgrade your-cask`”
+* Or “Installed via apt — updates arrive with system updates / `sudo apt upgrade`”
+
+Ship a **Check for updates** that at least opens docs or runs `brew outdated` / equivalent when detectable.
+
+== Killing processes responsibly
+
+[cols="1,2"]
+|===
+| Step | Practice
+
+| 1. Ask
+| GUI: modal “Update ready — Restart now / Later”
+
+| 2. Save
+| Flush documents/settings; refuse update if unsaved and user cancels
+
+| 3. Quit
+| App quit API / SIGTERM to your process group
+
+| 4. Wait
+| Poll PID until exit; timeout → offer Force quit
+
+| 5. Replace
+| Package transaction, bundle replace, or atomic AppImage rename
+
+| 6. Relaunch
+| Same argv/env channel; pass a `--updated` flag to show What's new
+|===
+
+Background helpers (tray, agents): include them in the quit graph so file locks clear.
+
+== Security checklist
+
+* [ ] Feed and artifacts over TLS
+* [ ] Signatures/hashes verified before replace (Sparkle EdDSA, GPG for apt, Flatpak remote trust, minisign/cosign for AppImage—pick one story and stick to it)
+* [ ] No silent elevation loops; prefer per-user installs when possible
+* [ ] Enterprise disable / pin documented
+* [ ] Channel stamped in the binary so beta never “upgrades” to wrong track
+
+== Related
+
+* xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary template]
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
+* xref:how-to/app-installer-packaging.adoc[Installer packaging]
+* xref:how-to/automated-releases.adoc[Automated releases]

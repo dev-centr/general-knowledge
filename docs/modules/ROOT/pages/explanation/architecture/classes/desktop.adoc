@@ -1,0 +1,175 @@
+= Desktop Apps — Auxiliary Feature Template
+:navtitle: Desktop Apps
+:description: Template of auxiliary features common to desktop applications—Help, About, updates (Windows/macOS/Linux), tray, diagnostics, and maintainability surfaces.
+
+Use this page as a **copyable checklist** when scaffolding or redressing a desktop app (native, Electron/Tauri, hybrid GUI+CLI).
+Parent class index: xref:explanation/architecture/classes/index.adoc[Delivery classes].
+Vocabulary: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features].
+
+== Must-understand constraints
+
+* **Windows** — plan installer + update path on day one (MSI/MSIX/winget and/or in-app). See xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+* **macOS** — App Store *or* notarized Sparkle-class / Homebrew cask; quit cleanly before replacing the `.app` bundle.
+* **Linux** — prefer distro/Flatpak/AppImage channels; **do not overwrite a running ELF** (see xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates]).
+* Prefer **platform-native updates** first; add in-app UX when channel speed or multi-track needs demand it.
+
+== Auxiliary feature matrix
+
+Legend: **A** = 1.0 band · **B** = support/retention · **C** = fleets/scale · **—** = usually N/A
+
+[cols="2,1,3"]
+|===
+| Feature | Band | Done means
+
+| **Help menu / Help page**
+| A
+| Discoverable Help: local HTML/CHM/adoc viewer *or* deep-link to versioned docs; includes shortcuts and “Report issue”
+
+| **About dialog**
+| A
+| Version + build id + channel + license; update status; link to dump — xref:explanation/architecture/about-and-build-info.adoc[About]
+
+| **Check for updates**
+| A
+| Manual check + optional background check; respects disable policy — xref:explanation/architecture/automatic-updates.adoc[Updates]
+
+| **Apply update safely**
+| A
+| Verify signature/hash; stage; restart/swap without bricking; rollback or last-known-good when feasible
+
+| **Debug dump / export logs**
+| A
+| One click → redacted archive; never secrets by default
+
+| **Open logs / config folder**
+| A
+| Reveals paths for support; documented per OS
+
+| **Preferences / Settings**
+| A
+| Persisted settings; reset-to-defaults; paths for power users
+
+| **Crash breadcrumb**
+| A
+| Local crash file with build id; optional opt-in upload
+
+| **Installer + uninstall**
+| A
+| Signed package; ARP/Applications entry; clean uninstall — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]
+
+| **What's new**
+| B
+| Post-update notes or changelog link from About/Help
+
+| **First-run / onboarding**
+| B
+| Short path to value; privacy choices up front
+
+| **Single-instance**
+| B
+| Second launch focuses existing window (or documented multi-instance)
+
+| **Protocol / file handlers**
+| B
+| Registered only if claimed; unregistered on uninstall
+
+| **Tray / menu bar presence**
+| B
+| If backgrounded: quit, About, Open, Update status; no silent forever-run without UI
+
+| **Autostart**
+| B
+| Opt-in; visible toggle; respects OS login-item norms
+
+| **Offline / connectivity UI**
+| B
+| Clear state when network/API required features fail
+
+| **Report issue**
+| B
+| Prefills version/build; points at issue tracker or email template
+
+| **Keyboard shortcuts reference**
+| B
+| Help → Shortcuts or searchable command palette help
+
+| **Telemetry (opt-in)**
+| C
+| Documented; off by default unless policy requires otherwise
+
+| **Enterprise update pin/disable**
+| C
+| Policy/env/managed config documented for IT
+
+| **Proxy / custom CA notes**
+| C
+| Documented for corp networks; doctor check when possible
+
+| **Localization**
+| C
+| UI strings externalized; locale follow OS or picker
+
+| **Accessibility pass**
+| B
+| Keyboard navigation; contrast; screen-reader labels on primary flows
+
+| **Repair / reset**
+| C
+| Reinstall-friendly; “clear cache” without wiping user documents
+|===
+
+== Help page (desktop specifics)
+
+A desktop **Help** surface should answer:
+
+* What is this app and what is the current version?
+* Where are docs (offline copy preferred for air-gapped users)?
+* How do I update? How do I turn updates off?
+* Where are logs and how do I export a dump?
+* How do I report a bug?
+
+Prefer versioned docs URLs (`/docs/1.4/…`) so old clients do not land on mismatched instructions.
+
+== Update behaviors by OS (summary)
+
+[cols="1,2"]
+|===
+| OS | Preferred apply pattern
+
+| Windows
+| Store/MSIX, winget upgrade, or in-app staged installer → restart. Files often locked: schedule replace on restart.
+
+| macOS
+| App Store; or Sparkle-class quit → replace `.app` → relaunch; Homebrew cask `upgrade` for brew users.
+
+| Linux
+| Package manager / Flatpak update (may stop unit or ask to close app); AppImage: download beside, atomic rename, relaunch. Avoid `ETXTBSY` by never writing over the running binary—see Unix how-to.
+|===
+
+Details: xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates], xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+
+== Suggested menu map
+
+[source,text]
+----
+App / File
+  Preferences…
+  Quit
+Edit …
+View …
+Help
+  Documentation
+  Keyboard Shortcuts
+  Check for Updates…
+  Report Issue…
+  About <App>
+----
+
+macOS: About and Preferences under the application menu; Help contents under Help.
+
+== Related
+
+* xref:explanation/architecture/types/gui-apps.adoc[GUI apps (artifact type)]
+* xref:how-to/about-screen-and-debug-dump.adoc[How-to: About and debug dump]
+* xref:how-to/app-installer-packaging.adoc[How-to: Installer packaging]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]

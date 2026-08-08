@@ -1,0 +1,51 @@
+= Delivery Classes
+:navtitle: Delivery Classes
+:description: Desktop, web, and mobile delivery-class templates—auxiliary feature sets for how users run and update the product.
+
+**Delivery class** answers: *where does the end user run this, and how do updates and Help arrive?*
+It complements **artifact type** (library, GUI, CLI, …).
+
+Parent:: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+Shared vocabulary:: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog]
+
+== Classes
+
+[cols="1,2,2"]
+|===
+| Class | Typical shells | Template
+
+| **Desktop**
+| Native GUI, Electron/Tauri, tray apps, packaged CLI+GUI hybrids on Win/macOS/Linux
+| xref:explanation/architecture/classes/desktop.adoc[Desktop apps]
+
+| **Web**
+| Browser SPA/MPA, SSR apps, PWAs, admin consoles, SaaS frontends
+| xref:explanation/architecture/classes/web.adoc[Web apps]
+
+| **Mobile**
+| iOS / Android (native, Flutter, RN, …); tablets when store-distributed
+| xref:explanation/architecture/classes/mobile.adoc[Mobile apps]
+|===
+
+== How to use the templates
+
+. Identify every **shell** you ship (e.g. Windows GUI + optional web dashboard).
+. For each shell, open the matching class page and copy its **auxiliary feature matrix** into the project plan or issue tracker.
+. Mark each row Done / Deferred (with reason) / N/A.
+. Wire Band A items before calling 1.0.
+. Reuse shared deep dives (About, updates, packaging, diagnostics) rather than reinventing per repo.
+
+== Multi-shell products
+
+Example: a desktop client + marketing site + account portal.
+
+* Desktop template → installed client
+* Web template → portal and marketing (lighter Band A for marketing; full for the logged-in app)
+* Shared **one version truth** across API and clients when protocols break
+
+== Related artifact types
+
+* xref:explanation/architecture/types/gui-apps.adoc[GUI apps] — About/dump/installer emphasis (desktop + mobile GUI)
+* xref:explanation/architecture/types/cli.adoc[CLI] / xref:explanation/architecture/types/tui.adoc[TUI] — often ship *beside* a desktop class
+* xref:explanation/architecture/types/services.adoc[Services] — backend for web/mobile; health/version still apply
+* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — browser performance/architecture (portal)

@@ -1,0 +1,10 @@
+= 2026-08-08 — Auxiliary features and delivery classes
+
+Expanded **Software Product Essentials** with a nested ruleset for common **auxiliary** product surfaces and **delivery-class** templates.
+
+* Catalog: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features] (Band A/B/C concerns shared across shells)
+* Templates: xref:explanation/architecture/classes/desktop.adoc[Desktop], xref:explanation/architecture/classes/web.adoc[Web], xref:explanation/architecture/classes/mobile.adoc[Mobile]
+* Updates: apply-safety (quit/replace), macOS/Linux package-manager and AppImage flows — xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates]; automatic-updates deep dive expanded
+* Checklist: xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
+
+Navigation: Explanation → Architecture → Auxiliary Features / Delivery classes; How-to → Unix/macOS Auto-Updates.

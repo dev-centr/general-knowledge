@@ -7,6 +7,7 @@ Reference pages are for **retrieval**—checklists, layouts, tool lists, and reg
 == Shipping software
 
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
 * xref:reference/package-registries.adoc[Package registries]
 
 == Workspace and Git

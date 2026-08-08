@@ -50,4 +50,6 @@ See xref:how-to/winget-registration.adoc[Winget registration].
 
 * xref:how-to/app-installer-packaging.adoc[Installer packaging]
 * xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/unix-auto-updates.adoc[macOS / Linux auto-updates]
 * xref:explanation/architecture/types/gui-apps.adoc[GUI apps]
+* xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary template]

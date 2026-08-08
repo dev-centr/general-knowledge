@@ -1,10 +1,10 @@
 = Software Product Essentials
 :navtitle: Software Product Essentials
-:description: Architectural framework for shippable software—shared essentials (About/build info, updates, packaging, pipelines, diagnostics) and how they map to libraries, GUI, CLI, TUI, games, and services.
+:description: Architectural framework for shippable software—shared essentials (About/build info, updates, packaging, pipelines, diagnostics), auxiliary feature templates for desktop/web/mobile, and mappings by artifact type.
 
-**Software Product Essentials** is the checklist every shippable artifact should satisfy before you call it “done.” Features are not enough. Users and maintainers need identity, provenance, update path, install story, and a way to dump state when something breaks.
+**Software Product Essentials** is the checklist every shippable artifact should satisfy before you call it “done.” Domain features are not enough. Users and maintainers need identity, provenance, update path, install story, Help/support, and a way to dump state when something breaks.
 
-This page is the **framework**. Deep dives live in sibling articles; type-specific pages say what to drop, adapt, or emphasize.
+This page is the **framework**. Deep dives live in sibling articles; **delivery-class** templates list auxiliary features for desktop, web, and mobile; **artifact-type** pages say what to drop, adapt, or emphasize.
 
 == Why this exists
 
@@ -68,8 +68,23 @@ Every artifact that leaves your machine should cover these concerns *in a form t
 | xref:explanation/architecture/principles.adoc[Core principles]
 |===
 
-Quick agent checklist (printable)::
-xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+Quick agent checklists (printable)::
+xref:reference/app-essentials-checklist.adoc[App essentials checklist] ·
+xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
+
+[[auxiliary-and-classes]]
+== Auxiliary features and delivery classes
+
+Beyond the shared essentials table, every **end-user shell** should plan a deliberate set of xref:explanation/architecture/auxiliary-features.adoc[auxiliary features] (Help, What's new, Preferences, connectivity, privacy, support path, …).
+
+Delivery class templates (copy into the project plan):
+
+* xref:explanation/architecture/classes/index.adoc[Delivery classes overview]
+* xref:explanation/architecture/classes/desktop.adoc[Desktop] — Help/About, tray, autostart, OS-specific update apply (including quit/replace on Unix)
+* xref:explanation/architecture/classes/web.adoc[Web] — build identity, deploy-as-update, PWA reload, status/privacy
+* xref:explanation/architecture/classes/mobile.adoc[Mobile] — store updates, permissions, crash export, policy-required account deletion
+
+Artifact type (library vs GUI vs CLI…) and delivery class (desktop vs web vs mobile) are **orthogonal**—a product may ship more than one shell.
 
 [[applicability-matrix]]
 == Applicability matrix
@@ -202,6 +217,7 @@ Principles that keep this sane:
 
 * xref:how-to/about-screen-and-debug-dump.adoc[Add an About screen and debug dump]
 * xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows]
+* xref:how-to/unix-auto-updates.adoc[Automatic updates on macOS and Linux]
 * xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/automated-releases.adoc[Automated releases in CI]
@@ -210,6 +226,9 @@ Principles that keep this sane:
 == Related
 
 * xref:explanation/architecture/principles.adoc[Core principles]
+* xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog]
+* xref:explanation/architecture/classes/index.adoc[Delivery classes]
 * xref:reference/package-registries.adoc[Package registries]
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
 * xref:devcentr:publishing:index.adoc[DevCentr Publishing hub]

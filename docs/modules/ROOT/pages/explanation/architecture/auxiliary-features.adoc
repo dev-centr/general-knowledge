@@ -1,0 +1,130 @@
+= Auxiliary Features Catalog
+:navtitle: Auxiliary Features
+:description: Cross-cutting catalog of non-domain product surfaces—Help, About, updates, diagnostics, connectivity, and maintainability features that every app class should plan deliberately.
+
+**Auxiliary features** are the product surfaces that are not your core domain job, but that keep the app **identifiable**, **current**, **supportable**, and **trustworthy**. Shipping without them creates permanent support debt.
+
+Framework:: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+By delivery class::
+xref:explanation/architecture/classes/index.adoc[Desktop / web / mobile templates]
+
+This page is the **shared vocabulary**. Class pages turn it into a concrete template (what to ship, where it lives, what “done” means).
+
+== Two axes
+
+[cols="1,2"]
+|===
+| Axis | Question
+
+| **Artifact type**
+| What kind of binary/package is it? (library, GUI, CLI, TUI, game, service) — see type pages under Architecture
+
+| **Delivery class**
+| Where do end users run and update it? (**Desktop**, **web**, **mobile**)
+|===
+
+A Flutter or Qt codebase can be desktop *and* mobile; apply **both** class templates for the surfaces you actually ship.
+A SPA may be “web” while a companion Electron shell is “desktop”—plan auxiliaries per shell.
+
+== Catalog (shared concerns)
+
+Each row is a concern you either implement, adapt, or consciously decline with a reason.
+
+[cols="1,2,1"]
+|===
+| Concern | What “good” looks like | Typical owners
+
+| **Identity**
+| Version, build id, channel visible to humans and machines
+| About, `--version`, `/health`, store listing
+
+| **Help**
+| Discoverable help: offline or online docs, shortcuts, context help, FAQ
+| Help menu, `?` routes, in-app browser, man pages
+
+| **What's new**
+| Changelog or release notes reachable from the product after an update
+| About, first-launch-after-update, Help
+
+| **Preferences**
+| User-controllable settings with documented defaults and reset
+| Settings window/page; config files for power users
+
+| **Update path**
+| Users reach a newer build without hunting random zips
+| Store, package manager, in-app updater, CDN + service worker
+
+| **Diagnostics**
+| Logs, doctor/health, redacted debug dump, crash breadcrumbs
+| About → Diagnostics, `doctor`, support export
+
+| **Support path**
+| Clear “how to report a bug” with what to attach
+| Help → Report issue, status page, email/template
+
+| **Connectivity**
+| Honest online/offline state; graceful degradation; retry
+| Status bar, banners, sync indicators
+
+| **Privacy & consent**
+| Telemetry, crash upload, notifications, cookies—opt-in where required
+| First-run, Settings → Privacy
+
+| **Auth & account** (if any)
+| Sign-in, sign-out, session expiry, account deletion where mandated
+| Account menu, OAuth flows, store account linkage
+
+| **Licensing** (if any)
+| Activation, seat limits, grace, offline license check—without bricking support dumps
+| License dialog, enterprise policy
+
+| **Accessibility**
+| Keyboard paths, contrast, screen-reader labels, scalable UI
+| Settings + platform a11y hooks
+
+| **Localization**
+| Locale-aware UI; documented how to add languages
+| Language picker or OS locale
+
+| **Enterprise / fleet**
+| Disable updates, pin version, proxy, managed config
+| Policy keys, MDM, env/config overlays
+
+| **Lifecycle hygiene**
+| Install, upgrade, uninstall/repair; data migration; orphan cleanup
+| Installer, store, package scripts
+|===
+
+== Priority bands
+
+Use these bands when scoping a release. Do not treat Band A as “polish.”
+
+[cols="1,2"]
+|===
+| Band | Include
+
+| **A — Ship blockers for 1.0**
+| Identity, update path, Help entry point, diagnostics dump or equivalent, crash breadcrumb, uninstall/cleanup, privacy defaults
+
+| **B — Support and retention**
+| What's new, Preferences depth, connectivity honesty, support/report flow, accessibility baseline
+
+| **C — Scale and fleets**
+| Enterprise pin/disable, telemetry (opt-in), licensing, localization coverage, advanced doctor checks
+|===
+
+Class templates mark each auxiliary as **A / B / C** for that class.
+
+== Relationship to core features
+
+* **Core features** deliver the user's job (edit a document, mount a drive, sync mail).
+* **Auxiliary features** keep the product *alive in the wild*: current, diagnosable, and connected to docs/support.
+* Agents scaffolding owned apps should implement Band A auxiliaries alongside the vertical slice—not after “feature complete.”
+
+== Related
+
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and support]
+* xref:explanation/architecture/about-and-build-info.adoc[About and build info]

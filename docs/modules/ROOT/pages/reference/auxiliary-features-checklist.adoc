@@ -1,0 +1,113 @@
+= Auxiliary Features Checklist
+:navtitle: Auxiliary Features Checklist
+:description: Printable Band A/B/C checklist of auxiliary features for desktop, web, and mobile delivery classes.
+
+Use with xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog] and the class templates under xref:explanation/architecture/classes/index.adoc[Delivery classes].
+Essentials (identity, pipeline, packaging): xref:reference/app-essentials-checklist.adoc[App essentials checklist].
+
+Mark N/A only with a written reason (e.g. “marketing site — no accounts”).
+
+== Desktop
+
+=== Band A
+
+* [ ] Help menu / Help page (docs + report issue)
+* [ ] About: version + build id + channel
+* [ ] Check for updates (+ policy disable)
+* [ ] Safe apply (stage / quit / replace / relaunch)
+* [ ] Debug dump (redacted)
+* [ ] Open logs / config folders
+* [ ] Preferences with reset
+* [ ] Crash breadcrumb
+* [ ] Signed installer + uninstall
+
+=== Band B
+
+* [ ] What's new after update
+* [ ] First-run / onboarding
+* [ ] Single-instance (or documented multi)
+* [ ] Protocol/file handlers cleaned on uninstall
+* [ ] Tray/menu bar quit + status (if used)
+* [ ] Autostart opt-in (if used)
+* [ ] Offline/connectivity UI
+* [ ] Keyboard shortcuts reference
+* [ ] Accessibility baseline
+
+=== Band C
+
+* [ ] Opt-in telemetry
+* [ ] Enterprise pin/disable updates
+* [ ] Proxy / custom CA doctor notes
+* [ ] Localization
+* [ ] Repair / clear-cache
+
+Deep dive:: xref:explanation/architecture/classes/desktop.adoc[Desktop template]
+
+== Web
+
+=== Band A
+
+* [ ] Build/version visible + API `/version` (or equivalent)
+* [ ] Help/docs entry
+* [ ] Error boundary + copy diagnostics
+* [ ] Auth session expiry UX (if any)
+* [ ] Privacy/cookie consent as required
+* [ ] Status/incident link (multi-user SaaS)
+* [ ] Connectivity honesty
+* [ ] Deploy/rollback pipeline
+* [ ] CSP/security headers baseline
+* [ ] PWA reload prompt (if service worker)
+
+=== Band B
+
+* [ ] What's new
+* [ ] Account settings (+ deletion if required)
+* [ ] Support contact with build id
+* [ ] Feature-flag dump
+* [ ] Client debug dump (redacted)
+* [ ] Accessibility baseline
+* [ ] Performance budgets on critical routes
+
+=== Band C
+
+* [ ] Localization / RTL if claimed
+* [ ] Admin/audit extras as product requires
+
+Deep dive:: xref:explanation/architecture/classes/web.adoc[Web template]
+
+== Mobile
+
+=== Band A
+
+* [ ] In-app version + build
+* [ ] Store update path (+ optional Open store CTA)
+* [ ] Help / FAQ + privacy/licenses in-app
+* [ ] Crash reporting with consent
+* [ ] Diagnostics/log export
+* [ ] Permission rationales + deny paths
+* [ ] Push consent + settings toggle (if used)
+* [ ] Offline/sync indicators (if sync matters)
+* [ ] Account deletion flow (if accounts)
+
+=== Band B
+
+* [ ] What's new on update
+* [ ] Deep/universal links verified
+* [ ] Backup/restore documentation
+* [ ] Tasteful in-app review prompts
+* [ ] Force-upgrade gate for breaking API
+* [ ] Accessibility (dynamic type, screen readers)
+
+=== Band C
+
+* [ ] Localization + store assets
+* [ ] MDM/managed config
+* [ ] Beta channel identity
+* [ ] Biometric lock if holding sensitive data
+
+Deep dive:: xref:explanation/architecture/classes/mobile.adoc[Mobile template]
+
+== Update how-tos
+
+* xref:how-to/windows-auto-updates.adoc[Windows]
+* xref:how-to/unix-auto-updates.adoc[macOS / Linux]

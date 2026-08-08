@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-08 — Auxiliary features and delivery classes
+
+* Added xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog] and delivery-class templates for xref:explanation/architecture/classes/desktop.adoc[desktop], xref:explanation/architecture/classes/web.adoc[web], and xref:explanation/architecture/classes/mobile.adoc[mobile] (Help, About, updates, diagnostics, connectivity, privacy, …).
+* Expanded xref:explanation/architecture/automatic-updates.adoc[Automatic updates] with apply-safety (quit/replace, `ETXTBSY`, scheduled pkg upgrades); new how-to xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates].
+* Printable xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]; hub and GUI type pages redressed to point at class templates.
+* See xref:changelog-details/2026-08-08 - auxiliary-features-delivery-classes.adoc[Detailed changelog].
+
 == 2026-08-06 — SDLang / KDL / XDL dual-track decision
 
 * xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]: keep SDLang in-stack, prefer KDL greenfield, **reject Extended SDL/XDL**.

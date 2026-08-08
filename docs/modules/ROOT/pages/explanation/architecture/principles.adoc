@@ -35,9 +35,11 @@ Toolkits and apps should own install/pin/health/repair/upgrade rather than outso
 
 == Type-specific honesty
 
-Do not force a GUI About dialog onto a library. Do not skip an installer because a CLI “works as a zip.” Use the xref:explanation/architecture/software-product-essentials.adoc#applicability-matrix[applicability matrix].
+Do not force a GUI About dialog onto a library. Do not skip an installer because a CLI “works as a zip.” Use the xref:explanation/architecture/software-product-essentials.adoc#applicability-matrix[applicability matrix] and the matching xref:explanation/architecture/classes/index.adoc[delivery-class] auxiliary template.
 
 == Related
 
+* xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+* xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features]
 * xref:explanation/architecture/index.adoc[Architecture index]
-* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] (when present)
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]

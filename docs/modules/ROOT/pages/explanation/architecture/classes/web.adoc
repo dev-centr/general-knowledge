@@ -1,0 +1,149 @@
+= Web Apps — Auxiliary Feature Template
+:navtitle: Web Apps
+:description: Template of auxiliary features common to web applications and PWAs—Help, version identity, updates via deploy/service worker, diagnostics, account, and connectivity surfaces.
+
+Use this page when scaffolding or redressing a **browser-delivered** product (SPA, MPA, SSR app, PWA, admin console).
+Parent: xref:explanation/architecture/classes/index.adoc[Delivery classes].
+Vocabulary: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features].
+Dense UI architecture notes: xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
+
+== Must-understand constraints
+
+* **Deploy is the updater** for classic web apps—CI/CD to a CDN or host *is* the update path; still expose **what build** the tab is running.
+* **PWAs / service workers** need an explicit “new version available — Reload” UX; silent swap mid-session causes mysterious bugs.
+* **Account and privacy** surfaces are first-class (cookies, consent, deletion) under common regulations and store-adjacent policies.
+* Marketing sites and logged-in apps share a brand but **not** the same Band A list—don't burden a brochure page with a debug dump.
+
+== Auxiliary feature matrix
+
+[cols="2,1,3"]
+|===
+| Feature | Band | Done means
+
+| **Build / version identity**
+| A
+| Visible in UI footer, About route, or `?` panel; also in API `X-App-Version` / `/version`; stamped at build time
+
+| **Help / docs entry**
+| A
+| In-app Help or Docs link to version-appropriate documentation; search if docs are large
+
+| **Error boundary + report**
+| A
+| Uncaught UI errors show recovery UI; offer “copy diagnostics” (redacted) or support link
+
+| **Auth session UX** (if any)
+| A
+| Sign-in/out; expiry handling; clear error when session dies mid-action
+
+| **Privacy / cookie consent**
+| A
+| Required banners/controls; document telemetry; honor DNT/consent mode where you claim it
+
+| **Status / incident link**
+| A
+| Status page URL reachable from Help or error states when you run multi-user SaaS
+
+| **Connectivity honesty**
+| A
+| Offline / degraded banner when APIs fail; retry; avoid infinite spinners
+
+| **Safe deploy / rollback**
+| A
+| CI pipeline can roll forward/back; health check gates traffic — xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
+
+| **PWA update affordance**
+| A*
+| *Required if you ship a service worker:* detect waiting worker → prompt reload
+
+| **What's new**
+| B
+| In-app release notes or changelog for signed-in product changes
+
+| **Account settings**
+| B
+| Profile, sessions, devices, notification prefs; **account deletion** when legally/store required
+
+| **Support / contact**
+| B
+| Ticket/email/chat entry with build id attached or copyable
+
+| **Feature flags / experiments**
+| B
+| Named flags; dump includes flag set; kill-switch path documented
+
+| **Accessibility baseline**
+| B
+| Focus order, labels, contrast on primary flows; keyboard for critical actions
+
+| **Localization**
+| C
+| Locale routing or picker; RTL if you claim it
+
+| **Admin / audit extras**
+| C
+| For B2B: audit log export, SSO config, SCIM—as product requires
+
+| **Client debug dump**
+| B
+| Copy redacted env (build, route, feature flags, approx clock skew)—no tokens
+
+| **Performance budgets**
+| B
+| Documented; monitored on critical routes (see UI-heavy web apps page)
+
+| **Security headers / CSP**
+| A
+| Deployed with sane defaults; documented exceptions
+|===
+
+== Help for web apps
+
+Minimum Help route (`/help` or docs link) should cover:
+
+* How to get support (and what to paste: build id, time, rough steps)
+* Where status/incidents are published
+* Privacy summary link
+* For PWAs: how updates apply (reload prompt)
+
+Keep Help **reachable when partially broken**—a static route or external docs host beats a Help modal that depends on the failing API.
+
+== Updates and cache
+
+[cols="1,2"]
+|===
+| Model | Practice
+
+| Classic multi-page / SSR
+| Fingerprinted assets; cache headers; users get new HTML on navigation; document hard-refresh for sticky tabs
+
+| SPA
+| Fingerprinted bundles; version check endpoint or meta tag; optional “refresh to update” toast when API requires newer client
+
+| PWA
+| Service worker `skipWaiting` only after user consent; never delete IndexedDB casually on activate
+|===
+
+Force-upgrade when the API breaks old clients: API returns a dedicated error → UI blocks with “Reload to update” rather than a generic 400 loop.
+
+== Suggested chrome map
+
+[source,text]
+----
+User menu
+  Account settings
+  Preferences
+  Help / Docs
+  What's new
+  Status page
+  Sign out
+
+Footer or About
+  Build id · Privacy · Terms · Support
+----
+
+== Related
+
+* xref:explanation/architecture/types/services.adoc[Services] — API health/version pairing
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]

@@ -1,0 +1,149 @@
+= Mobile Apps — Auxiliary Feature Template
+:navtitle: Mobile Apps
+:description: Template of auxiliary features common to iOS and Android apps—store updates, Help, diagnostics export, permissions, push consent, and policy-required account surfaces.
+
+Use this page when scaffolding or redressing **store-distributed** (or sideloaded) mobile clients.
+Parent: xref:explanation/architecture/classes/index.adoc[Delivery classes].
+Vocabulary: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features].
+GUI artifact notes: xref:explanation/architecture/types/gui-apps.adoc[GUI apps].
+
+== Must-understand constraints
+
+* **Stores own the primary update path** (App Store / Play). In-app “update available” should deep-link to the store listing unless you use a blessed distribution channel (MDM, Play internal testing, enterprise).
+* **Policy surfaces are product features**: privacy nutrition labels, account deletion, permission rationales, crash reporting disclosure.
+* Still show **in-app version + build** (CFBundleVersion / `versionCode`) for support—store “what's new” is not enough for bug triage.
+* Sideloaded / alternative stores need an explicit update story (same safety rules as desktop: verify, stage, relaunch).
+
+== Auxiliary feature matrix
+
+[cols="2,1,3"]
+|===
+| Feature | Band | Done means
+
+| **In-app version display**
+| A
+| Settings or About shows marketing version + build number + channel/flavor
+
+| **Store update path**
+| A
+| Users can move to newer builds via store; optional in-app “Open store” when API demands newer client
+
+| **Help / FAQ**
+| A
+| In-app Help or browser docs; includes permissions explanations and support path
+
+| **Crash reporting**
+| A
+| Integrated crash tool with **consent** where required; build id on reports
+
+| **Log / diagnostics export**
+| A
+| Share sheet / export redacted logs for support (no tokens)
+
+| **Permission rationales**
+| A
+| Pre-prompt education for camera/mic/location/notifications; graceful deny paths
+
+| **Privacy policy / licenses**
+| A
+| Reachable from Store listing *and* in-app
+
+| **Account deletion** (if accounts)
+| A
+| In-app or linked flow meeting store requirements
+
+| **Push notification consent**
+| A
+| OS prompt only after value is clear; settings toggle to disable
+
+| **Offline / sync indicators**
+| A
+| Honest state when airplane mode or sync lag matters to the job
+
+| **What's new on update**
+| B
+| Soft highlight of changes after upgrade (don't block startup)
+
+| **Deep links / universal links**
+| B
+| Claimed URLs verified; fail gracefully when app outdated
+
+| **Backup / restore awareness**
+| B
+| Document what iCloud/Google Backup includes; encrypt sensitive local stores
+
+| **Rate / review prompt**
+| B
+| Use OS in-app review APIs; never nag on every launch; never gate features on reviews
+
+| **Force-upgrade gate**
+| B
+| Server-driven minimum version with clear store CTA when protocol breaks
+
+| **Accessibility**
+| B
+| Dynamic type, VoiceOver/TalkBack labels on primary flows
+
+| **Localization**
+| C
+| Store locales + in-app strings; screenshots per locale when you claim them
+
+| **MDM / enterprise config**
+| C
+| Managed App Config / restrictions documented for fleet installs
+
+| **Beta channel (TestFlight/Internal)**
+| C
+| Separate channel identity in About; feedback path for testers
+
+| **Biometric lock** (if sensitive data)
+| C
+| Opt-in; clear fallback; doesn't brick dump export with unreachable encryption
+|===
+
+== Help on mobile
+
+Keep Help usable on a phone:
+
+* Short FAQ + link out to full docs
+* “Contact support” that attaches app version/build automatically when possible
+* Explain **why** each dangerous permission exists
+* Link to OS settings for notifications/permissions the app cannot re-prompt
+
+== Updates (mobile nuance)
+
+[cols="1,2"]
+|===
+| Channel | Practice
+
+| App Store / Play
+| Rely on store; optionally detect `min_supported_version` from API → blocking dialog with store link
+
+| CodePush / OTA JS bundles
+| Only within store policy; never use OTA to bypass review for native binary changes you promised not to
+
+| Enterprise / sideload
+| Signed packages; verify before apply; prompt quit → install → relaunch; see desktop/Unix safety ideas where applicable
+|===
+
+Do not implement a desktop-style “replace my own APK silently” on consumer Android without a clear enterprise/sideload threat model—Play Protect and OS rules will fight you.
+
+== Suggested settings map
+
+[source,text]
+----
+Settings
+  Account
+  Notifications
+  Privacy & permissions
+  Appearance / accessibility
+  Help & support
+  What's new
+  About (version, build, licenses, open-source notices)
+----
+
+== Related
+
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]

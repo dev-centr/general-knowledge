@@ -1,11 +1,18 @@
 = Software Architecture
 :navtitle: Architecture
-:description: Shared product architecture guidance—essentials every shippable artifact should cover, plus type-specific notes for libraries, GUI, CLI, TUI, games, and services.
+:description: Shared product architecture guidance—essentials every shippable artifact should cover, auxiliary feature templates for desktop/web/mobile, plus type-specific notes for libraries, GUI, CLI, TUI, games, and services.
 
-This section is the **general guide for building and shipping software**: what every product needs before “feature complete,” and how those needs change by artifact type.
+This section is the **general guide for building and shipping software**: what every product needs before “feature complete,” how **auxiliary** surfaces (Help, updates, diagnostics, …) look by delivery class, and how needs change by artifact type.
 
 Start here::
 xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials] — the framework and shared checklist.
+
+Auxiliary features and delivery classes::
+* xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog]
+* xref:explanation/architecture/classes/index.adoc[Desktop / web / mobile templates]
+** xref:explanation/architecture/classes/desktop.adoc[Desktop]
+** xref:explanation/architecture/classes/web.adoc[Web]
+** xref:explanation/architecture/classes/mobile.adoc[Mobile]
 
 Deep dives (shared)::
 * xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps]

@@ -5,7 +5,10 @@
 Stale installs are the default failure mode of desktop software. **Automatic updates** (or reliable package-manager updates) are essential for security fixes, compatibility, and supportability—above all on Windows, where users often never revisit your download page.
 
 Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
-Windows how-to: xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows].
+How-tos::
+xref:how-to/windows-auto-updates.adoc[Windows] ·
+xref:how-to/unix-auto-updates.adoc[macOS / Linux]
+Desktop template:: xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary features]
 
 == Goals
 
@@ -13,15 +16,31 @@ Windows how-to: xref:how-to/windows-auto-updates.adoc[Automatic updates on Windo
 * Updates are **channel-aware** (stable vs beta)
 * Failed updates do not brick the install (rollback or last-known-good)
 * Enterprise environments can disable or pin when needed
+* Apply steps respect **locked files** and **running processes** on every OS
 
 == Strategy ladder (prefer left when enough)
 
-. **Platform package manager** — winget, MS Store, Homebrew, apt/dnf, Flatpak, Chocolatey, Scoop
+. **Platform package manager / store** — winget, MS Store, Mac App Store, Homebrew, apt/dnf, Flatpak, Chocolatey, Scoop
 . **Installer that upgrades in place** — MSI major/minor upgrade, MSIX, Sparkle-fed DMG, etc.
-. **In-app updater** — checks a feed, downloads, verifies signature, swaps binaries, restarts
+. **In-app updater** — checks a feed, downloads, verifies signature, stages bits, quits, swaps, relaunches
 . **Manual download page** — last resort; document it; never the only path for a 1.0 GUI app
 
-Many products combine (1) + (3): winget for discovery/install, in-app for faster channels.
+Many products combine (1) + (3): package manager for discovery/install, in-app for faster channels.
+
+[[apply-safety]]
+== Apply safety (all desktop OS)
+
+Updating is not “download over the EXE.” Common failure modes:
+
+* Windows file locks while the app (or tray helper) is running
+* Linux **`ETXTBSY`** when writing over a running ELF; inode confusion if you replace the path while the old binary keeps running
+* macOS mapped frameworks inside a live `.app` bundle
+
+**Canonical sequence:** prompt → save state → **quit process tree** → wait for PID exit → verify artifact → replace → relaunch → show What's new.
+Package managers often own stop/start for you—prefer that on Linux.
+Details and stubs: xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates], xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+
+Scheduled upgrades (kiosk/daemon hosts) belong in **systemd timers** / unattended-upgrades / Flatpak timers with a narrow package allow-list—not a blind full-system upgrade spawned from the GUI.
 
 == Windows-specific reality
 
@@ -37,8 +56,33 @@ Avoid “download Setup.exe from the website every time” as the primary story.
 * Silent/upgrade-friendly packaging
 * A clear **Apps & features** uninstall entry
 * Update checks that respect metered networks and “do not disturb” work hours when reasonable
+* Swap-on-restart when files stay locked
 
 See also: xref:how-to/winget-registration.adoc[Winget registration], xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging].
+
+== macOS and Linux reality
+
+[cols="1,2"]
+|===
+| Channel | Notes
+
+| Mac App Store
+| OS-managed updates; still show in-app version/build for support
+
+| Sparkle-class (macOS direct)
+| Notarize; signed appcast; quit → replace `.app` → relaunch
+
+| Homebrew cask
+| Power-user path; About should mention `brew upgrade …` when detected
+
+| apt/dnf/zypper / Flathub / Snap
+| Preferred Linux story; app may stub “update via your package manager” or run a privileged oneshot after quit
+
+| AppImage / portable
+| Stage beside → wait for exit → atomic rename → exec; never write into the running file
+|===
+
+Web and mobile classes differ: **deploy/CDN** and **stores** are the primary updaters—see xref:explanation/architecture/classes/web.adoc[Web] and xref:explanation/architecture/classes/mobile.adoc[Mobile].
 
 == Update feed design
 
@@ -80,5 +124,7 @@ Pin the feed URL in the binary; allow enterprise override via policy/config.
 
 * xref:explanation/architecture/about-and-build-info.adoc[About and build info]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
+* xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary template]
 * xref:how-to/windows-auto-updates.adoc[How-to: Windows auto-updates]
+* xref:how-to/unix-auto-updates.adoc[How-to: macOS / Linux auto-updates]
 * xref:how-to/automated-releases.adoc[How-to: Automated releases]

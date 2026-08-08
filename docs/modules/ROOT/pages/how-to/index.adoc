@@ -18,6 +18,7 @@ Tied to xref:explanation/architecture/software-product-essentials.adoc[Software 
 
 * xref:how-to/about-screen-and-debug-dump.adoc[About screen and debug dump]
 * xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows]
+* xref:how-to/unix-auto-updates.adoc[Automatic updates on macOS and Linux]
 * xref:how-to/app-installer-packaging.adoc[App installer packaging]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/automated-releases.adoc[Automated releases]
