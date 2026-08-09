@@ -4,6 +4,8 @@
 
 Use with xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]. Mark items that apply to your artifact type.
 
+Interactive CentrMark copies: xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials Checklists] — templates in `examples/product-essentials/`, instances under `.devcentr/checklists/`, progress in `<file>.cmk.checks/state.json5` (xref:reference/checklist-sidecar.adoc[sidecar schema]).
+
 == Shared
 
 * [ ] Marketing version defined

@@ -1,0 +1,9 @@
+= 2026-08-08 — Product Essentials CentrMark checklists
+
+Shipped interactive CentrMark checklist documents for Software Product Essentials and desktop/web/mobile auxiliaries. **Checkoff state lives in sidecars** (`<file>.cmk.checks/state.json5`), not by rewriting markers in the `.cmk`.
+
+* Templates: `docs/modules/ROOT/examples/product-essentials/*.cmk`
+* Schema: xref:reference/checklist-sidecar.adoc[Checklist sidecar]
+* Scripts: `attach-product-essentials.*`, `checkoff-product-essentials.*`, `status-product-essentials.ps1`
+* How-to: xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials Checklists]
+* DevCentr: `modules.product_essentials.sidecar` (+ attach/UI)

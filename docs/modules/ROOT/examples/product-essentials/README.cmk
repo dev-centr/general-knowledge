@@ -1,0 +1,38 @@
+---
+title "Product essentials checklist templates"
+blueprintId "product-essentials-index"
+blueprintVersion "1.1.0"
+status "template"
+---
+
+# Product essentials — CentrMark templates
+
+Interactive checklists for Software Product Essentials. AsciiDoc printables remain the Antora docs; these `.cmk` files hold **labels and stable ids**. **Progress** lives in a sidecar: `<file>.cmk.checks/state.json5`.
+
+| File | blueprintId | When to attach |
+| --- | --- | --- |
+| `app-essentials.cmk` | `app-essentials` | Every shippable project |
+| `auxiliary-desktop.cmk` | `auxiliary-desktop` | Desktop GUI / tray shells |
+| `auxiliary-web.cmk` | `auxiliary-web` | Browser / PWA products |
+| `auxiliary-mobile.cmk` | `auxiliary-mobile` | iOS / Android clients |
+
+## Attach
+
+```
+nu path/to/general-knowledge/scripts/attach-product-essentials.nu --classes desktop,web
+```
+
+Creates `.devcentr/checklists/<id>.cmk` and `<id>.cmk.checks/state.json5`. Do not overwrite progress sidecars casually; `--force` refreshes the `.cmk` only.
+
+## Check off
+
+Update the **sidecar**, not the document markers:
+
+```
+checkoff-product-essentials.ps1 -File .devcentr/checklists/auxiliary-desktop.cmk -Id desktop.a.about -Marker x
+status-product-essentials.ps1 -File .devcentr/checklists/auxiliary-desktop.cmk
+```
+
+Scriptbook `.cmk.runs/` is unrelated (run evidence only).
+
+See how-to + xref checklist-sidecar in general-knowledge docs.

@@ -1,0 +1,55 @@
+---
+title "Desktop auxiliary features"
+blueprintId "auxiliary-desktop"
+blueprintVersion "1.0.0"
+deliveryClass "desktop"
+status "template"
+docs "https://docs.devcentr.org/general-knowledge/latest/explanation/architecture/classes/desktop.html"
+---
+
+# Desktop auxiliary features
+
+Band A/B/C template for desktop shells (native, Electron/Tauri, tray hybrids).
+Copy to `.devcentr/checklists/auxiliary-desktop.cmk`.
+Progress: `auxiliary-desktop.cmk.checks/state.json5` (do not rewrite markers here for checkoff).
+
+Mark N/A in the sidecar with marker `-` and a note.
+Stable ids: trailing `{id="…"}`.
+
+## Band A — 1.0 blockers
+
+::: checklist [type="progress" id="desktop-a"]
+[ ] Help menu / Help page (docs + report issue) {id="desktop.a.help"}
+[ ] About: version + build id + channel {id="desktop.a.about"}
+[ ] Check for updates (+ policy disable) {id="desktop.a.check-updates"}
+[ ] Safe apply (stage / quit / replace / relaunch) {id="desktop.a.safe-apply"}
+[ ] Debug dump (redacted) {id="desktop.a.debug-dump"}
+[ ] Open logs / config folders {id="desktop.a.open-logs"}
+[ ] Preferences with reset {id="desktop.a.preferences"}
+[ ] Crash breadcrumb {id="desktop.a.crash-breadcrumb"}
+[ ] Signed installer + uninstall {id="desktop.a.installer"}
+:::
+
+## Band B — support and retention
+
+::: checklist [type="progress" id="desktop-b"]
+[ ] What's new after update {id="desktop.b.whats-new"}
+[ ] First-run / onboarding {id="desktop.b.first-run"}
+[ ] Single-instance (or documented multi) {id="desktop.b.single-instance"}
+[ ] Protocol/file handlers cleaned on uninstall {id="desktop.b.handlers"}
+[ ] Tray/menu bar quit + status (if used) {id="desktop.b.tray"}
+[ ] Autostart opt-in (if used) {id="desktop.b.autostart"}
+[ ] Offline/connectivity UI {id="desktop.b.connectivity"}
+[ ] Keyboard shortcuts reference {id="desktop.b.shortcuts"}
+[ ] Accessibility baseline {id="desktop.b.a11y"}
+:::
+
+## Band C — fleets and scale
+
+::: checklist [type="progress" id="desktop-c"]
+[ ] Opt-in telemetry {id="desktop.c.telemetry"}
+[ ] Enterprise pin/disable updates {id="desktop.c.enterprise-pin"}
+[ ] Proxy / custom CA doctor notes {id="desktop.c.proxy-ca"}
+[ ] Localization {id="desktop.c.l10n"}
+[ ] Repair / clear-cache {id="desktop.c.repair"}
+:::

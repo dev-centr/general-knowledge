@@ -218,6 +218,7 @@ Principles that keep this sane:
 * xref:how-to/about-screen-and-debug-dump.adoc[Add an About screen and debug dump]
 * xref:how-to/windows-auto-updates.adoc[Automatic updates on Windows]
 * xref:how-to/unix-auto-updates.adoc[Automatic updates on macOS and Linux]
+* xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials CentrMark checklists]
 * xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/automated-releases.adoc[Automated releases in CI]

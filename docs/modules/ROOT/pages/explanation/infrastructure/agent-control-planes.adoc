@@ -31,7 +31,7 @@ Coding agents split across **layers**. Mixing them up is how teams accidentally 
 
 DevCentr sits **above** these layers: environments, toolchains, MCP/skills/providers, rules/preamble, detect → shop → set up → **hand off**. It should not reimplement the Agent-Control Plane Layout. It **should** keep a first-class human shell with refresh intelligence that agent-manager terminals lack.
 
-Living catalog: product SDL `app/src/modules/services/agent_shell_registry.sdl`. Product surfaces: **AI stack topology canvas** + **guided add**, as the `ai-stack` pack of DevCentr’s **Role Topology Composer**. That composer targets only the **hierarchical/layered** slice of the stack (memory bins for UI / env / inference / …); orthogonal ideas (MCP, skills, features) connect later and must not be forced into the spine. Arrangement ids are **layout recipes** that seed those layers.
+Living catalog: product SDL `app/src/modules/services/agent_shell_registry.sdl`. Product surfaces: **AI stack topology canvas** + **guided add**, as the `ai-stack` pack of DevCentr’s **Role Topology Composer**. That composer targets only the **hierarchical/layered** slice of the stack (memory bins for UI / env / inference / …); orthogonal ideas (MCP, skills, marketplace install) connect later and must not be forced into the spine—see xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]. Arrangement ids are **layout recipes** that seed those layers.
 
 xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents] covers the *shell language* problem. xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh] covers stale PATH. xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell] covers *sandbox under* the agent. This page covers *where UI, tools, and weights run*.
 
@@ -277,11 +277,14 @@ Training data and chat assistants **will miss players** (Bionic is the proof). T
 
 . New name → add `shell` / `runtime` / `inference` / `interconnect` / `arrangement` as needed; bump `meta.lastReviewed`
 . New topology pattern (not just another GUI) → update this page’s diagrams and the AI Workflow Arrangement cards
-. MCP/skills stay in `ai_client_profiles.json5`
+. MCP/skills stay in `ai_client_profiles.json5`; **how** those packages enter Cursor-like studios is xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies] (marketplace plugin / deeplink / `mcp.json` ladder—Composio as case study)
 
 == Related
 
 * Product: AI Config; **AI Workflow Arrangement**; repository browser terminal
+* xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+* xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
 * xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
 * xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 * xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]

@@ -1,0 +1,14 @@
+= Developer onboarding
+:navtitle: Developer Onboarding
+:description: Entry point for workstation and docs onboarding; prefer How-to guides for concrete tasks.
+
+Welcome. Use the How-to section for concrete setup; use Tutorials when you want a guided path.
+
+== Start here
+
+* xref:how-to/nushell-setup.adoc[Nushell setup] — recommended default shell
+* xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy] — vault → local → hosting matrix
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — cross-app agent connectors
+* xref:how-to/context7-mcp-setup.adoc[Context7 MCP setup] — library docs for agents
+
+Browse Explanation → Infrastructure for the “why” behind these choices.

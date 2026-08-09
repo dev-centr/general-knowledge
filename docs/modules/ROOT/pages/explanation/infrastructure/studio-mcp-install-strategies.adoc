@@ -1,0 +1,209 @@
+= Studio MCP install strategies
+:navtitle: Studio MCP install strategies
+:description: Options for shipping MCP tooling into AI studios (Cursor and peers)—marketplace plugins, install deeplinks, mcp.json, skills, and thin-client / fat-server patterns illustrated by Composio.
+
+AI studios (Cursor, Copilot-shaped VS Code, terminal agent harnesses) already have **install surfaces**. Tooling that fights those surfaces loses. Tooling that rides them—especially MCP—gets adopted without a second setup novel.
+
+Composio’s Cursor path is a clean case study. This page extracts the **strategy as an option** for anyone building connectors, skills, or agent-facing SaaS into a studio—not only for using Composio itself.
+
+Related product docs::
+xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] ·
+xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+
+Topology / control-plane context::
+xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+(MCP and skills are **orthogonal** to the env/inference spine—do not force them into Role Topology memory bins.)
+
+== The problem this strategy solves
+
+Builders of AI-studio tooling usually face all of these at once:
+
+* Users will not finish a twelve-step OAuth essay before the first useful call
+* Agents drown if you dump thousands of raw SaaS tools into the tool list
+* Each studio has a different preferred install UX (marketplace, deeplink, CLI, JSON)
+* Local `stdio` MCP processes are fragile on Windows PATH and hard to update
+* “Installed” is not the same as “the agent actually ran a tool”
+
+Composio’s answer is a **ladder of install surfaces** plus a **thin studio package** in front of a **hosted MCP server**.
+
+== Case study: how Composio lands in Cursor
+
+=== 1. Hosted streamable HTTP MCP (fat server)
+
+The capability plane lives at `https://connect.composio.dev/mcp`—not as a forever-running local Node process the user must keep alive. Cursor speaks MCP over HTTP; OAuth for Composio itself is a first-class studio flow (`mcp_auth`).
+
+=== 2. Install ladder (pick one; support several)
+
+[cols="1,2,2", options="header"]
+|===
+| Surface | What the user does | What you ship
+
+| **Marketplace plugin**
+| `/add-plugin composio` or marketplace UI
+| Plugin package: `plugin.json` + `mcp.json` + `skills/`
+
+| **One-click MCP deeplink**
+| Open `cursor.com/.../install-mcp?name=…&config=…`
+| Base64 JSON config with the MCP URL (MCP only; no skills)
+
+| **Manual `mcp.json`**
+| Paste into `~/.cursor/mcp.json` (or project MCP)
+| Same URL stanza; works when marketplace CLI is awkward (e.g. PowerShell quoting)
+
+| **Local plugin dir**
+| Symlink into `~/.cursor/plugins/local/<name>` + reload
+| Same plugin tree—for authors and offline testing
+|===
+
+Official client matrix still branches by harness (CLI login for terminal agents, registry links for VS Code, custom connector for Claude). Same *product*; different *on-ramp*. See link:https://connect.composio.dev/api/onboarding/setup[Composio onboarding setup].
+
+=== 3. Thin plugin, fat server
+
+The Cursor plugin is mostly:
+
+* `mcp.json` — register the remote server
+* `skills/` — teach the agent the intended loop
+* Manifest metadata (name, logo, homepage)
+
+Example shape (from link:https://github.com/ComposioHQ/composio-mcp-plugin[composio-mcp-plugin]):
+
+.`plugin.json` (under `.cursor-plugin/`)
+[source,json]
+----
+{
+  "name": "composio",
+  "description": "Connect and operate 1000+ external apps…",
+  "version": "1.0.0",
+  "mcpServers": "../mcp.json",
+  "skills": "./skills/",
+  "homepage": "https://composio.dev",
+  "repository": "https://github.com/ComposioHQ/composio-mcp-plugin",
+  "logo": "logo.svg"
+}
+----
+
+.`mcp.json`
+[source,json]
+----
+{
+  "mcpServers": {
+    "composio": {
+      "url": "https://connect.composio.dev/mcp"
+    }
+  }
+}
+----
+
+The heavy lifting (tool catalog, OAuth to Gmail/GitHub/…, routing, remote sandbox) stays on Composio’s host. Updating tools does not require every user to reinstall a fat local binary.
+
+=== 4. Meta-tools instead of a thousand tools
+
+The agent sees a handful of `COMPOSIO_*` meta-tools (`SEARCH`, `GET_TOOL_SCHEMAS`, `MULTI_EXECUTE`, `MANAGE_CONNECTIONS`, `WAIT_FOR_CONNECTIONS`, remote workbench/bash)—not one MCP tool per SaaS action.
+
+Workflow the skill encodes:
+
+. **Search** for tools and a plan
+. **Connect** the app if needed (agent returns an auth link; user completes it)
+. **Execute** with schema-faithful arguments
+. **Process** large results in a remote sandbox when needed
+
+That keeps context small and stops agents from inventing slugs.
+
+=== 5. Skills as the install-time curriculum
+
+Marketplace install is incomplete without teaching. Composio ships Agent Skills (`composio-mcp`, activity-summary, …) so the first session already knows “search before execute” and “setup is not done until a real tool call runs.”
+
+=== 6. Deferred app OAuth
+
+Composio OAuth ≠ Gmail OAuth. Apps connect **on demand** when a workflow needs them. The studio stays useful with zero app connections; privilege expands only when the agent asks.
+
+== Options matrix for AI-studio tooling
+
+When Dev-Centr (or a partner) ships studio-facing capability, choose deliberately:
+
+[cols="1,2,2,2", options="header"]
+|===
+| Option | Best when | Cost | Avoid when
+
+| **A. Marketplace plugin (MCP + skills)**
+| You want one-click Cursor install *and* agent behavior
+| Maintain plugin repo + marketplace listing
+| The studio has no plugin system
+
+| **B. MCP deeplink / `mcp.json` only**
+| Capability is “just a server”; skills optional
+| Minimal packaging
+| Users need a taught workflow (they will misuse raw tools)
+
+| **C. Local stdio MCP**
+| Tooling must touch the local filesystem/GPU without a host
+| PATH, Node/Python runtime, updates, Windows quoting
+| You only need SaaS HTTP APIs
+
+| **D. CLI agent install (`composio login`, `gemini mcp add`, …)**
+| Terminal harnesses (Claude Code, Codex, Hermes, …)
+| Per-harness docs and binaries
+| IDE-only audience
+
+| **E. In-app DevCentr guided add**
+| Orchestration / discovery inside the DOS
+| Product UI work; still hand off to A–D for the actual connect
+| Reimplementing the connector plane inside DevCentr
+|===
+
+**Recommended default for SaaS connectors:** **A + B** (plugin for Cursor power users; deeplink/`mcp.json` as fallback) and **D** for terminal agents—the Composio pattern. Keep **E** as DevCentr’s *recommendation and status* surface, not a second OAuth stack.
+
+**Recommended default for local-only tools:** **C**, optionally wrapped in **A** if you also need skills.
+
+== What “done” means
+
+Mirror Composio’s product rule in your own tooling docs:
+
+* Settings row visible ≠ success
+* Success = agent executed a real tool call against a connected account (or a documented dry-run)
+
+Bake that into the skill and the how-to smoke test.
+
+== Fit in DevCentr’s AI stack
+
+[cols="1,2", options="header"]
+|===
+| Layer (from agent control planes) | This strategy
+
+| Inference / env / agent runtime topologies
+| Unchanged—install strategy does not pick arrangement A–D
+
+| MCP / skills (orthogonal)
+| **This page**—how capability packages enter the studio
+
+| Human shell (DevCentr)
+| Still the ops PATH; agents may use Composio *and* `gh`
+
+| Role Topology Composer (`ai-stack` pack)
+| May *link* marketplace/MCP install cards later; do not shove connectors into hierarchical memory bins
+|===
+
+Essay (relaxed)::
+link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[When the inbox is the CI pager]
+
+== Checklist for shipping your own connector
+
+. Prefer **streamable HTTP MCP** when the work is remote SaaS
+. Publish an **install ladder** (plugin → deeplink → `mcp.json` → local symlink)
+. Keep the studio package **thin**; version the server independently
+. Expose **meta-tools** or a small stable surface; search/plan before dump
+. Ship **skills** that encode the happy path and the smoke test
+. Defer **secondary OAuth** until a workflow needs it
+. Document **per-client** onboarding (Cursor vs CLI vs VS Code) from one source page
+. Point DevCentr / docs hub at the package; do not fork a private OAuth broker “for convenience”
+
+== See also
+
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
+* xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:reference/recommended-tools.adoc[Recommended tools]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+* xref:home::tools/composio.adoc[Docs hub: Composio]
+* link:https://github.com/ComposioHQ/composio-mcp-plugin[composio-mcp-plugin] (plugin shape reference)
+* link:https://cursor.com/docs/mcp/install-links.md[Cursor MCP install links]

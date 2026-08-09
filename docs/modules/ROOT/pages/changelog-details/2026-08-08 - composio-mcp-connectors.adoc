@@ -1,0 +1,6 @@
+= 2026-08-08 — Composio MCP connectors
+
+* Added xref:../how-to/composio-mcp-setup.adoc[Composio MCP setup]: Cursor marketplace or `mcp.json`, terminal CLI login, app connections, CI-mail triage smoke test.
+* Added xref:../explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]: connector plane vs agent control planes; complementary to Agentic Email Integration (Himalaya), not a substitute.
+* Linked from recommended tools and the docs-hub tools stub (`home::tools/composio.adoc`).
+* Official client matrix remains upstream: https://connect.composio.dev/api/onboarding/setup

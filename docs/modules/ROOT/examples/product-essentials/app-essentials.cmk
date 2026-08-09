@@ -1,0 +1,79 @@
+---
+title "App essentials checklist"
+blueprintId "app-essentials"
+blueprintVersion "1.0.0"
+deliveryClass "any"
+status "template"
+docs "https://docs.devcentr.org/general-knowledge/latest/reference/app-essentials-checklist.html"
+---
+
+# App essentials
+
+Working copy of the Software Product Essentials printable checklist.
+Copy to `.devcentr/checklists/app-essentials.cmk` (do not edit this template in place).
+Progress is recorded in `app-essentials.cmk.checks/state.json5` — do not rewrite markers here for checkoff.
+
+Markers in this file are defaults for weave when no sidecar entry exists.
+Stable ids: trailing `{id="…"}` — agents update the sidecar by id.
+
+## Shared
+
+::: checklist [type="progress" id="shared"]
+[ ] Marketing version defined {id="shared.marketing-version"}
+[ ] Build id stamped at compile/CI time {id="shared.build-id"}
+[ ] Channel stamped (stable / beta / …) {id="shared.channel"}
+[ ] Changelog + README entry points {id="shared.changelog-readme"}
+[ ] CI builds release artifacts on tags {id="shared.ci-release-artifacts"}
+[ ] Checksums (and signatures when required) published {id="shared.checksums-signatures"}
+[ ] Secrets redacted from logs/dumps by default {id="shared.secrets-redacted"}
+[ ] Support doc: what users should attach {id="shared.support-attach"}
+:::
+
+## GUI
+
+::: checklist [type="progress" id="gui"]
+[ ] About dialog with version + build id {id="gui.about"}
+[ ] Help entry (docs + report issue) {id="gui.help"}
+[ ] Debug dump button {id="gui.debug-dump"}
+[ ] Open logs folder {id="gui.open-logs"}
+[ ] Desktop and/or mobile class template triaged {id="gui.class-template-triaged"}
+[ ] Windows installer signed + uninstallable {id="gui.windows-installer"}
+[ ] Auto-update or Store/winget/pkg updates on each desktop OS {id="gui.auto-update"}
+[ ] Update status visible in About {id="gui.update-status"}
+:::
+
+## CLI / TUI
+
+::: checklist [type="progress" id="cli-tui"]
+[ ] --version includes build id {id="cli.version-build-id"}
+[ ] doctor or debug-dump command {id="cli.doctor"}
+[ ] Package manager or documented install {id="cli.package-install"}
+[ ] Self-update disableable if present {id="cli.self-update-disable"}
+[ ] TUI: in-app About/help keybind {id="tui.about-help"}
+:::
+
+## Library
+
+::: checklist [type="progress" id="library"]
+[ ] Registry publish on tag {id="lib.registry-publish"}
+[ ] SemVer policy + changelog {id="lib.semver-changelog"}
+[ ] Support matrix documented {id="lib.support-matrix"}
+[ ] Migration notes on breaks {id="lib.migration-notes"}
+:::
+
+## Game
+
+::: checklist [type="progress" id="game"]
+[ ] Client + content versions visible {id="game.versions-visible"}
+[ ] Crash/log export {id="game.crash-export"}
+[ ] Store/channel update verified {id="game.store-update"}
+:::
+
+## Service
+
+::: checklist [type="progress" id="service"]
+[ ] /health or /version includes build id {id="svc.health-version"}
+[ ] Auth-gated diagnostics {id="svc.auth-diagnostics"}
+[ ] Rollback-tested deploy {id="svc.rollback"}
+[ ] Runbook linked {id="svc.runbook"}
+:::

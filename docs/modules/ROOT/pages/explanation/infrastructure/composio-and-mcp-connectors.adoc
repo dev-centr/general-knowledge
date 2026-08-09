@@ -1,0 +1,103 @@
+= Composio and MCP connectors
+:navtitle: Composio and MCP connectors
+:description: Where Composio sits among agent runtimes, IDE agents, and own-your-inbox tooling—and when to use it for CI mail triage.
+
+MCP (Model Context Protocol) is how many agent runtimes attach *tools* without baking every SaaS SDK into the agent. **Composio** is a hosted MCP connector plane: one OAuth to Composio, then managed connections and tool routing into Gmail, GitHub, Vercel, Slack, and hundreds of other apps.
+
+It does **not** replace your IDE, your shell, or your forge CLI. It sits beside them.
+
+== Layers (short)
+
+Reuse the vocabulary from xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]:
+
+[cols="1,2,2", options="header"]
+|===
+| Layer | Job | Composio’s role
+
+| **Agent runtime**
+| Plan, call tools, edit files
+| Calls Composio MCP tools (`COMPOSIO_SEARCH_TOOLS`, multi-execute, …)
+
+| **MCP / skills**
+| Capability surface
+| Composio is *one* MCP server among Context7, Linear, browser, …
+
+| **Environment / ops host**
+| Working tree, shell, `gh`, builds
+| Still authoritative for local repos and PATH; Composio does not mount your disk
+
+| **Human shell (DevCentr)**
+| Always-on terminal next to the repo
+| Unchanged—use it for installs, secrets rotation, and forge ops the agent already knows
+|===
+
+DevCentr remains the orchestration surface (detect → shop → set up → hand off). It should not reimplement Composio; it may *recommend* connecting it the same way it recommends Cursor or Nushell. How that recommendation becomes a Cursor marketplace plugin, deeplink, or `mcp.json` stanza is documented as xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies].
+
+== What problem it solves
+
+Agents are good at reading a failed Actions log *once they have it*. They are weak at:
+
+* Noticing that **email** is the pager for CI/CD
+* Jumping from a Vercel or GitHub notification into the right project, run, and fix
+* Cleaning up the inbox afterward so the same red alert does not sit unread for a week
+
+Composio makes that loop tool-shaped: search mail → hydrate the thread → hit GitHub/Vercel APIs → mark addressed mail read. Setup is only real after a tool call has executed—not when the MCP row appears in settings.
+
+== Composio vs Agentic Email Integration
+
+They rhyme; they are not the same product.
+
+[cols="1,2,2", options="header"]
+|===
+| | **Composio** | **Agentic Email Integration**
+
+| Shape
+| Hosted multi-app MCP connector
+| Local Himalaya poller + `@cursor/sdk` agents
+
+| Write path
+| Full Gmail tool surface (use carefully)
+| **Drafts only** by default
+
+| Scope
+| Gmail + GitHub + Vercel + …
+| Own-your-inbox Gmail integration thesis
+
+| When to prefer
+| Cross-app triage from Cursor or a terminal agent, fast OAuth
+| Long-running local mail plane you own; no second Gmail OAuth client inside the product
+|===
+
+Portal stub for the product::
+xref:home::tools/agentic-email-integration.adoc[Agentic Email Integration]
+
+Ops email lanes (DMARC, transactional vs marketing) stay in business-bootstrap docs—not here.
+
+== Fit in a developer stack
+
+A practical default for this ecosystem:
+
+. *Editor / agent* — Cursor (or a terminal agent) with MCP enabled
+. *Docs freshness* — Context7 (or local library docs) for APIs
+. *Cross-app actions* — Composio when the task crosses Gmail ↔ forge ↔ host
+. *Forge CLI* — `gh` / `glab` still win for scripted, audited, PATH-local work
+. *Own-inbox product* — Agentic Email Integration when you are building the mail plane itself
+
+Do not force every SaaS call through Composio. Prefer the shell when you already have tokens and scripts. Prefer Composio when the agent needs **interactive OAuth apps** and a single search/execute surface across them.
+
+== Security posture
+
+* Treat Composio connections like deploy tokens: least privilege, revoke when unused.
+* Confirm destructive sends (email replies, force-pushes, production redeploys) before multi-execute write tools.
+* Prefer mark-as-read / archive over delete when clearing CI mail.
+* Keep org secrets in GitHub Actions / Vercel env—not in chat transcripts.
+
+== See also
+
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
+* xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+* xref:reference/recommended-tools.adoc[Recommended tools]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+* xref:home::tools/composio.adoc[Docs hub: Composio]
+* link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[Essay: When the inbox is the CI pager]
+* link:https://connect.composio.dev/api/onboarding/setup[Official Composio setup]

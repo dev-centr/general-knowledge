@@ -1,0 +1,51 @@
+---
+title "Web auxiliary features"
+blueprintId "auxiliary-web"
+blueprintVersion "1.0.0"
+deliveryClass "web"
+status "template"
+docs "https://docs.devcentr.org/general-knowledge/latest/explanation/architecture/classes/web.html"
+---
+
+# Web auxiliary features
+
+Band A/B/C template for browser-delivered products (SPA, MPA, SSR, PWA, admin consoles).
+Copy to `.devcentr/checklists/auxiliary-web.cmk`.
+Progress: `auxiliary-web.cmk.checks/state.json5` (do not rewrite markers here for checkoff).
+
+Mark N/A in the sidecar with marker `-` and a note (e.g. marketing site — no accounts).
+Stable ids: trailing `{id="…"}`.
+
+## Band A — 1.0 blockers
+
+::: checklist [type="progress" id="web-a"]
+[ ] Build/version visible + API /version (or equivalent) {id="web.a.build-version"}
+[ ] Help/docs entry {id="web.a.help"}
+[ ] Error boundary + copy diagnostics {id="web.a.error-boundary"}
+[ ] Auth session expiry UX (if any) {id="web.a.auth-session"}
+[ ] Privacy/cookie consent as required {id="web.a.privacy-consent"}
+[ ] Status/incident link (multi-user SaaS) {id="web.a.status-link"}
+[ ] Connectivity honesty {id="web.a.connectivity"}
+[ ] Deploy/rollback pipeline {id="web.a.deploy-rollback"}
+[ ] CSP/security headers baseline {id="web.a.csp"}
+[ ] PWA reload prompt (if service worker) {id="web.a.pwa-reload"}
+:::
+
+## Band B — support and retention
+
+::: checklist [type="progress" id="web-b"]
+[ ] What's new {id="web.b.whats-new"}
+[ ] Account settings (+ deletion if required) {id="web.b.account-settings"}
+[ ] Support contact with build id {id="web.b.support"}
+[ ] Feature-flag dump {id="web.b.feature-flags"}
+[ ] Client debug dump (redacted) {id="web.b.debug-dump"}
+[ ] Accessibility baseline {id="web.b.a11y"}
+[ ] Performance budgets on critical routes {id="web.b.perf-budgets"}
+:::
+
+## Band C — fleets and scale
+
+::: checklist [type="progress" id="web-c"]
+[ ] Localization / RTL if claimed {id="web.c.l10n"}
+[ ] Admin/audit extras as product requires {id="web.c.admin-audit"}
+:::

@@ -2,6 +2,38 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-08 — Business Bootstrap cross-links (Cal · Penpot · vaults)
+
+* Recommended tools and secrets hub point at Business Bootstrap **capability areas** (Scheduling / Design / Vault) for Cal.com/Cal.diy, Penpot, and Bitwarden/Vaultwarden hosting choices (strategy stays in BB; developer distribution mechanics stay here).
+
+== 2026-08-08 — Secrets distribution (CLI · MCP · hub)
+
+* Explanation xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub] — create in vendors, store in vault/ESC, distribute to local and hosting matrices.
+* How-to xref:how-to/secrets-distribution-cli-mcp.adoc[Distribute API keys with vault CLI, hosting CLI, and MCP].
+* Tutorial xref:tutorials/secrets-from-vendor-to-deploy.adoc[From vendor dashboard to deploy matrix].
+* Illustrated with redacted CLI session and hub flow images; agent-rules suggestion under `suggestions/`.
+* See xref:changelog-details/2026-08-08 - secrets-distribution-cli-mcp.adoc[Detailed changelog].
+
+== 2026-08-08 — Studio MCP install strategies
+
+* Explanation xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies] — Composio’s Cursor ladder (marketplace plugin, deeplink, `mcp.json`, skills, thin/fat split) as an option for AI-studio tooling.
+* Reference xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] master list; wired from agent control planes, Composio pages, recommended tools, and explanation index.
+* See xref:changelog-details/2026-08-08 - studio-mcp-install-strategies.adoc[Detailed changelog].
+
+== 2026-08-08 — Composio MCP connectors
+
+* How-to xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] (Cursor plugin / `mcp.json`, CLI agents, CI-mail smoke test).
+* Explanation xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors] (stack placement vs AEI / Context7 / raw APIs).
+* Recommended-tools entry; hub portal stub xref:home::tools/composio.adoc[Composio].
+* See xref:changelog-details/2026-08-08 - composio-mcp-connectors.adoc[Detailed changelog].
+
+== 2026-08-08 — Product Essentials CentrMark checklists
+
+* CentrMark templates under `examples/product-essentials/`; attach/checkoff/status scripts.
+* **Progress sidecars** `<file>.cmk.checks/state.json5` (JSON5; document markers are not rewritten); schema xref:reference/checklist-sidecar.adoc[Checklist sidecar].
+* How-to xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials Checklists].
+* See xref:changelog-details/2026-08-08 - product-essentials-cmk-checklists.adoc[Detailed changelog].
+
 == 2026-08-08 — Auxiliary features and delivery classes
 
 * Added xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog] and delivery-class templates for xref:explanation/architecture/classes/desktop.adoc[desktop], xref:explanation/architecture/classes/web.adoc[web], and xref:explanation/architecture/classes/mobile.adoc[mobile] (Help, About, updates, diagnostics, connectivity, privacy, …).

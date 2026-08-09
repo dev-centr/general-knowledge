@@ -1,0 +1,24 @@
+= Infrastructure (reference)
+:description: Short infrastructure lookup — IaC, shells, secrets, and links to org email DNS patterns.
+:navtitle: Infrastructure
+
+== Prefer
+
+* **Pulumi** for org-level `infra` repos (DNS, shared platform hosts)
+* **Nushell** as the recommended agent-friendly shell (see Explanation)
+* Secrets via vault → ESC / host env — never commit tokens
+
+== Org email + DNS (business ops)
+
+Developer IaC mechanics stay here / in Explanation. **Vendor choice and personal-Gmail gotchas** live in Business Bootstrap:
+
+* xref:business-bootstrap::infra/reference/pulumi-cloudflare-email-checklist.adoc[Pulumi + Cloudflare email checklist]
+* xref:business-bootstrap::email/explanation/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits]
+* xref:business-bootstrap::email/how-to/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
+
+== See also (Explanation)
+
+* xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)]
+* xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
+* xref:explanation/infrastructure/nushell.adoc[Nushell]
+* xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]

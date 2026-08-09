@@ -1,0 +1,89 @@
+= AI studio tooling catalog
+:navtitle: AI studio tooling catalog
+:description: Master list of documented options for MCP, skills, connectors, and agent-adjacent tooling in AI studios—linked to how-tos and explanations.
+
+Lookup list for **shipping or adopting** tooling that agents use inside AI studios (Cursor and peers). Prefer this page when you need the map; open the linked how-to or explanation for the full argument.
+
+== Connectors and MCP
+
+[cols="1,2,2", options="header"]
+|===
+| Item | Role | Docs
+
+| **Studio MCP install strategies**
+| How to package MCP for studios (marketplace plugin, deeplink, `mcp.json`, skills, thin/fat split)—Composio as case study
+| xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Explanation]
+
+| **Composio**
+| Hosted multi-app MCP connector plane (Gmail, GitHub, Vercel, …)
+| xref:how-to/composio-mcp-setup.adoc[Setup] · xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Stack fit] · xref:home::tools/composio.adoc[Hub]
+
+| **Context7**
+| Library / API docs MCP for agents (nav lists setup; keep docs fresh)
+| xref:how-to/context7-mcp-setup.adoc[Setup] (add/restore page if missing)
+
+| **Agentic Email Integration**
+| Own-your-inbox Gmail (Himalaya + local agents; drafts-first)—not a generic connector plane
+| xref:home::tools/agentic-email-integration.adoc[Hub] · component docs when published
+|===
+
+== Control planes and shells
+
+[cols="1,2,2", options="header"]
+|===
+| Item | Role | Docs
+
+| **Agent control planes**
+| Inference / env / runtime / UI topologies; AI Workflow Arrangement
+| xref:explanation/infrastructure/agent-control-planes.adoc[Explanation]
+
+| **Recommended tools**
+| Day-to-day shop list (Cursor, Composio, Nushell, `gh`, …)
+| xref:reference/recommended-tools.adoc[Reference]
+
+| **Nushell and AI agents**
+| Shell language / DevX next to agents
+| xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Explanation] · xref:how-to/nushell-setup.adoc[Setup]
+
+| **Shell environment refresh**
+| Stale PATH after installs (studio terminals included)
+| xref:explanation/infrastructure/shell-env-refresh.adoc[Explanation]
+|===
+
+== Rules and policy packs
+
+[cols="1,2,2", options="header"]
+|===
+| Item | Role | Docs
+
+| **Agent Rules**
+| Modular rules assembly for coding assistants
+| xref:home::tools/agent-rules.adoc[Hub]
+
+| **Rules Manager**
+| Compose/watch daemon + tray for agent-rules
+| xref:home::tools/rules-manager.adoc[Hub]
+|===
+
+== Essays
+
+* link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[When the inbox is the CI pager] — Composio + email-as-CI-pager in practice
+
+== DevCentr product surfaces
+
+[cols="1,2,2", options="header"]
+|===
+| Item | Role | Docs
+
+| **AI Config Interface**
+| Providers / MCP Setup / Skills tabs; Arrangement opens the AI stack canvas
+| https://github.com/dev-centr/devcentr/blob/main/docs/modules/specifications/pages/components/ai-config-interface.adoc[Spec in `devcentr`]
+
+| **AI Workflow Arrangement**
+| `ai-stack` Role Topology pack; MCP/skills are attachments, not layers
+| https://github.com/dev-centr/devcentr/blob/main/docs/modules/specifications/pages/components/ai-workflow-arrangement.adoc[Spec in `devcentr`]
+
+| **Client profiles**
+| Living registry of studio paths (`mcp.json`, install deeplinks, skills hints)
+| `app/src/modules/services/ai_client_profiles.json5` in https://github.com/dev-centr/devcentr[`devcentr`]
+|===

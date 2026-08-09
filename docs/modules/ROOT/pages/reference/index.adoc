@@ -8,6 +8,7 @@ Reference pages are for **retrieval**—checklists, layouts, tool lists, and reg
 
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
+* xref:reference/checklist-sidecar.adoc[Checklist sidecar]
 * xref:reference/package-registries.adoc[Package registries]
 
 == Workspace and Git
@@ -17,3 +18,9 @@ See the Reference section in the left navigation for workspace organization, Git
 == Tools
 
 * xref:reference/recommended-tools.adoc[Recommended tools]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] — MCP, connectors, control planes, rules (master list)
+
+== Technology
+
+* xref:reference/technology/index.adoc[Technology overview]
+* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC lookup + links to Business Bootstrap email/DNS gotchas

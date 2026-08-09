@@ -1,0 +1,74 @@
+= Product Essentials checklist sidecar
+:navtitle: Checklist sidecar
+:description: Progress state for Product Essentials CentrMark checklists lives beside the document in `.cmk.checks/state.json5` — never by rewriting checklist markers in the `.cmk`.
+
+Checkoff progress is stored in a **sidecar**, parallel to Scriptbook’s `.cmk.runs/` idea: authors and templates edit the narrative/ids in the `.cmk`; tools write progress next to it; UIs **weave** for display.
+
+Distinct from Scriptbook:: `.cmk.runs/` = execution evidence. `.cmk.checks/` = checklist judgment (`[ ]` / `[/]` / `[x]` / `[-]`). Never mix them.
+
+== Path convention
+
+For checklist document `foo.cmk` (typically under `.devcentr/checklists/`):
+
+----
+foo.cmk
+foo.cmk.checks/
+  state.json5
+----
+
+**Canonical format is JSON5** (`.json5`) — comments and trailing commas welcome (DevCentr xref:devcentr:json5.adoc[JSON5 endorsement]). Tools also **read** legacy `state.jsonc` / `state.json` if present; new writes always use `state.json5`.
+
+Commit `.cmk.checks/` when the team wants shared progress. (Scriptbook `*.cmk.runs/` stays gitignored.)
+
+== `state.json5`
+
+[source,json5]
+----
+// Product Essentials checklist progress (JSON5)
+// markers: " " | "/" | "x" | "-"
+{
+  schemaVersion: 1,
+  kind: "centrmark-checklist-progress",
+  blueprintId: "auxiliary-desktop",
+  sourcePath: "C:/proj/.devcentr/checklists/auxiliary-desktop.cmk",
+  updatedAt: "2026-08-08T12:00:00Z",
+  items: {
+    "desktop.a.about": {
+      marker: "x",
+      updatedAt: "2026-08-08T12:00:00Z",
+      note: "",
+    },
+    "desktop.b.tray": {
+      marker: "-",
+      updatedAt: "2026-08-08T12:01:00Z",
+      note: "N/A — no tray",
+    },
+  },
+}
+----
+
+Writers may emit quoted keys (still valid JSON5) for maximum portability; readers accept JSON5/JSONC comments and trailing commas.
+
+`marker` values (same glyphs as CentrMark checklist lines):
+
+* `" "` — unchecked
+* `"/"` — in progress
+* `"x"` / `"X"` — done (normalize to `"x"` on write)
+* `"-"` — blocked / N/A (put reason in `note`)
+
+Item keys **must** match `{id="…"}` props in the source `.cmk`. Unknown ids are rejected by attach/checkoff tools.
+
+== Weave rules
+
+. Load `.cmk` checklist lines with `{id=…}`.
+. For each id, effective marker = `items[id].marker` if present, else the marker character in the `.cmk` (templates ship as `[ ]`).
+. Renderers/viewers show the effective marker; they **do not** persist weave back into the `.cmk`.
+. Agents update only `state.json5` (via checkoff tools). Re-copying templates with `--force` must not delete `.cmk.checks/` unless the user passes an explicit wipe flag.
+
+== Tooling
+
+* Attach: copies template `.cmk` and ensures `state.json5` exists (empty `items`).
+* Checkoff: writes/updates one `items[id]` entry.
+* Status: prints woven table (id, effective marker, note, label).
+
+How-to:: xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials Checklists]

@@ -39,5 +39,5 @@ xref:explanation/index.adoc[💡 Explore Concepts]
 
 [TIP]
 ====
-**Quick Start:** If you are new, start with the xref:tutorials/onboarding.adoc[Onboarding Tutorial], then browse xref:reference/recommended-tools.adoc[Recommended Tools].
+**Quick Start:** If you are new, start with the xref:tutorials/onboarding.adoc[Onboarding Tutorial], then browse xref:reference/recommended-tools.adoc[Recommended Tools]. For agent/MCP tooling in Cursor-like studios, use the xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog].
 ====

@@ -1,0 +1,100 @@
+= Composio MCP setup
+:navtitle: Composio MCP Setup
+:description: Connect Composio so Cursor (or another MCP client) can use Gmail, GitHub, Vercel, and other apps through one authenticated MCP server.
+
+Connect link:https://composio.dev/[Composio] so an AI client can call tools against apps you already use—Gmail, GitHub, Vercel, Slack, and many more—without hand-rolling OAuth for each one.
+
+For *where this sits in the stack*, see xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors].
+For *how the Cursor install ladder works as a reusable pattern*, see xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies].
+
+Official client matrix (source of truth for URLs)::
+link:https://connect.composio.dev/api/onboarding/setup[Composio onboarding setup]
+
+== Cursor
+
+. Install the marketplace plugin: link:https://cursor.com/marketplace/composio[cursor.com/marketplace/composio]
+. Or add a user MCP server in `~/.cursor/mcp.json`:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "composio": {
+      "url": "https://connect.composio.dev/mcp"
+    }
+  }
+}
+----
+
+. Complete Composio OAuth when Cursor prompts (`mcp_auth` / browser).
+. Start a **new** agent chat so the MCP catalog refreshes.
+. Prefer the Composio **search** tool first (`COMPOSIO_SEARCH_TOOLS`), then execute app tools through the multi-execute helper. Do not invent tool slugs.
+
+TIP: On Windows, writing `mcp.json` is more reliable than `cursor --add-mcp` from PowerShell (quote stripping).
+
+== Terminal agents (CLI)
+
+Claude Code, Codex, Hermes, OpenClaw, and similar shells use the Composio CLI:
+
+[source,bash]
+----
+curl -fsSL https://composio.dev/install | sh
+composio login
+----
+
+== Other MCP clients
+
+Any client that speaks MCP over streamable HTTP can use:
+
+* *Name:* `composio`
+* *Transport:* HTTP (streamable)
+* *URL:* `https://connect.composio.dev/mcp`
+
+Examples:
+
+* *Claude (custom connector):* link:https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Composio&connectorUrl=https%3A%2F%2Fconnect.composio.dev%2Fmcp[prefilled Add-connector modal]
+* *VS Code / Copilot:* link:https://github.com/mcp/ComposioHQ/composio[GitHub MCP registry]
+* *Gemini CLI:*
+
+[source,bash]
+----
+gemini mcp add --scope user --transport http composio https://connect.composio.dev/mcp
+----
+
+Clients without OAuth support: see link:https://connect.composio.dev/~/org/connect/clients[Composio clients].
+
+== Connect apps you need
+
+Composio MCP auth is not the same as app auth. After the server is Active:
+
+. Search tools for the workflow (e.g. “fetch Gmail about failed CI”, “list Vercel deployments”).
+. If a toolkit shows *no active connection*, call the manage-connections flow and open the returned link.
+. Wait until the connection is Active before executing that toolkit’s tools.
+
+Typical starter set for “CI emails → fix → clear”:
+
+* *Gmail* — find failure / expired / needs-attention mail; mark read when done
+* *GitHub* — Actions runs, logs, re-runs (optional if you already use `gh` in the shell)
+* *Vercel* (or your host) — deployment events and project scope
+
+== Smoke test: CI mail triage
+
+Once Gmail is connected, run a real tool call before calling setup “done”:
+
+. Search / fetch recent mail about failed workflows, expired checks, or deploy errors.
+. Open the linked run or deployment; fix or re-run until green when that is the right move.
+. Mark addressed threads read (or archive) so the same alert does not linger.
+. After you push a fix, wait briefly and re-check the inbox for new failure mail.
+
+That loop is the intended product use—not “MCP listed in settings.”
+
+== Related
+
+* xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+* xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+* xref:home::tools/composio.adoc[Docs hub: Composio]
+* xref:home::tools/agentic-email-integration.adoc[Agentic Email Integration] — Himalaya + local Cursor SDK path (own-your-inbox product)
+* link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[Essay: When the inbox is the CI pager]
+* link:https://composio.dev/[composio.dev]

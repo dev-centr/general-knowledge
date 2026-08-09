@@ -1,0 +1,89 @@
+= Attach Product Essentials Checklists
+:navtitle: Product Essentials Checklists
+:description: How to attach CentrMark product-essentials checklists and record progress in `.cmk.checks` sidecars without rewriting the document.
+
+Goal:: Give each project a CentrMark checklist **document** plus a **progress sidecar** so humans and agents can check items off while a viewer weaves the two.
+Templates:: `docs/modules/ROOT/examples/product-essentials/*.cmk` in link:https://github.com/dev-centr/general-knowledge[general-knowledge].
+Sidecar schema:: xref:reference/checklist-sidecar.adoc[Checklist sidecar]
+AsciiDoc printables:: xref:reference/app-essentials-checklist.adoc[App essentials] · xref:reference/auxiliary-features-checklist.adoc[Auxiliary features]
+
+== Why a sidecar (not rewriting the `.cmk`)
+
+* Checklist **identity and labels** live in the `.cmk` (`{id="…"}` on each row).
+* Checklist **progress** lives in `<file>.cmk.checks/state.json5` — same “never rewrite the doc” spirit as Scriptbook `.cmk.runs/`, but a **different** sidecar kind.
+* Templates and working copies stay stable for diffs/upgrades; progress can be committed separately for team sharing.
+* UIs **weave** document + sidecar for display; they do not persist weave back into markers.
+
+Do **not** store Product Essentials progress in Scriptbook `.cmk.runs/` (that is run stdout/stderr/exit only).
+
+== Attach templates
+
+From the project root:
+
+[source,powershell]
+----
+& "$env:CODE_ROOT\github.com\dev-centr\general-knowledge\scripts\attach-product-essentials.ps1" -Classes desktop
+----
+
+[source,nu]
+----
+nu $env.CODE_ROOT/github.com/dev-centr/general-knowledge/scripts/attach-product-essentials.nu --classes desktop
+----
+
+Flags:
+
+* `--classes` / `-Classes` — `desktop`, `web`, `mobile` (always includes `app-essentials`)
+* `--force` / `-Force` — overwrite the `.cmk` instance from the template; **does not wipe** existing `.cmk.checks/`
+
+Result:
+
+----
+.devcentr/checklists/app-essentials.cmk
+.devcentr/checklists/app-essentials.cmk.checks/state.json5
+.devcentr/checklists/auxiliary-desktop.cmk
+.devcentr/checklists/auxiliary-desktop.cmk.checks/state.json5
+----
+
+Commit both the `.cmk` and `.cmk.checks/` when the team wants shared progress.
+
+== Check off (sidecar only)
+
+[source,powershell]
+----
+& "...\scripts\checkoff-product-essentials.ps1" `
+  -File .devcentr\checklists\auxiliary-desktop.cmk `
+  -Id desktop.a.about -Marker x
+
+& "...\scripts\checkoff-product-essentials.ps1" `
+  -File .devcentr\checklists\auxiliary-desktop.cmk `
+  -Id desktop.b.tray -Marker "-" -Note "N/A — no tray"
+----
+
+Markers: `" "` unchecked · `/` in progress · `x` done · `-` blocked/N/A (put reason in `-Note`).
+
+Weave / status:
+
+[source,powershell]
+----
+& "...\scripts\status-product-essentials.ps1" -File .devcentr\checklists\auxiliary-desktop.cmk
+----
+
+== Agent protocol
+
+. Detect delivery class(es); attach if `.devcentr/checklists/<blueprintId>.cmk` is missing.
+. When implementing an item: write sidecar progress (`/` then `x`, or `-` + note). **Do not** edit `[ ]` markers in the `.cmk`.
+. Prefer checkoff scripts or DevCentr `setChecklistMarkerById` — locate rows by `{id=…}` declared in the document.
+. Optional Scriptbook `::: step` verification writes `.cmk.runs/`; that never auto-updates `.cmk.checks/` — still call checkoff after accepting the result.
+. Do not mutate templates under `examples/product-essentials/`.
+
+== DevCentr
+
+Attach/open via hallmark toolbar / VCS **Product Essentials**, or `--mode=product-essentials`.
+**View…** opens the in-app weave viewer (`.cmk` + `state.json5`, mtime poll). Spec: DevCentr `features/product-essentials-checklists.adoc`.
+
+== Related
+
+* xref:reference/checklist-sidecar.adoc[Checklist sidecar schema]
+* xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+* xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features]
+* xref:explanation/architecture/classes/index.adoc[Delivery classes]

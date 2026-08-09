@@ -5,6 +5,9 @@
 Use with xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog] and the class templates under xref:explanation/architecture/classes/index.adoc[Delivery classes].
 Essentials (identity, pipeline, packaging): xref:reference/app-essentials-checklist.adoc[App essentials checklist].
 
+Interactive CentrMark working copies::
+xref:how-to/product-essentials-checklists.adoc[Attach Product Essentials Checklists] (`auxiliary-desktop|web|mobile.cmk`).
+
 Mark N/A only with a written reason (e.g. “marketing site — no accounts”).
 
 == Desktop

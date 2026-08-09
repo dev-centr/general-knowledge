@@ -3,6 +3,7 @@
 
 .🎓 Tutorials
 * xref:tutorials/onboarding.adoc[Developer Onboarding]
+* xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy]
 
 .🛠️ How-to Guides
 * xref:how-to/index.adoc[Overview]
@@ -23,14 +24,18 @@
 * xref:how-to/about-screen-and-debug-dump.adoc[About Screen and Debug Dump]
 * xref:how-to/windows-auto-updates.adoc[Windows Auto-Updates]
 * xref:how-to/unix-auto-updates.adoc[Unix/macOS Auto-Updates]
+* xref:how-to/product-essentials-checklists.adoc[Product Essentials Checklists]
 * xref:how-to/app-installer-packaging.adoc[App Installer Packaging]
 * xref:how-to/wsl-setup.adoc[WSL Setup]
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup]
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP Setup]
+* xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
 
 .📚 Reference
 * xref:reference/index.adoc[Overview]
 * xref:reference/workspace-organization.adoc[Workspace Organization]
 * xref:reference/recommended-tools.adoc[Recommended Tools]
+* xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** Shells
 *** xref:reference/shells/nushell.adoc[Nushell]
 ** Languages
@@ -44,6 +49,7 @@
 * xref:reference/package-registries.adoc[Package Registries]
 * xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]
+* xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
 * xref:reference/gitignore-template-sources.adoc[Gitignore Template Sources]
 * xref:reference/vcs-provider-profiles.adoc[VCS Provider Profiles]
 * xref:reference/windows-eol-exceptions.adoc[Windows EOL Exceptions]
@@ -83,6 +89,9 @@
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 *** xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 *** xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+*** xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+*** xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+*** xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
 *** xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]
 *** xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
 *** xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]

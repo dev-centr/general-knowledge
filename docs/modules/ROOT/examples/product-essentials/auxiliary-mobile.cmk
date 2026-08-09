@@ -1,0 +1,51 @@
+---
+title "Mobile auxiliary features"
+blueprintId "auxiliary-mobile"
+blueprintVersion "1.0.0"
+deliveryClass "mobile"
+status "template"
+docs "https://docs.devcentr.org/general-knowledge/latest/explanation/architecture/classes/mobile.html"
+---
+
+# Mobile auxiliary features
+
+Band A/B/C template for store-distributed (or sideloaded) mobile clients.
+Copy to `.devcentr/checklists/auxiliary-mobile.cmk`.
+Progress: `auxiliary-mobile.cmk.checks/state.json5` (do not rewrite markers here for checkoff).
+
+Mark N/A in the sidecar with marker `-` and a note.
+Stable ids: trailing `{id="…"}`.
+
+## Band A — 1.0 blockers
+
+::: checklist [type="progress" id="mobile-a"]
+[ ] In-app version + build {id="mobile.a.version-build"}
+[ ] Store update path (+ optional Open store CTA) {id="mobile.a.store-update"}
+[ ] Help / FAQ + privacy/licenses in-app {id="mobile.a.help-privacy"}
+[ ] Crash reporting with consent {id="mobile.a.crash-reporting"}
+[ ] Diagnostics/log export {id="mobile.a.diagnostics-export"}
+[ ] Permission rationales + deny paths {id="mobile.a.permissions"}
+[ ] Push consent + settings toggle (if used) {id="mobile.a.push-consent"}
+[ ] Offline/sync indicators (if sync matters) {id="mobile.a.offline-sync"}
+[ ] Account deletion flow (if accounts) {id="mobile.a.account-deletion"}
+:::
+
+## Band B — support and retention
+
+::: checklist [type="progress" id="mobile-b"]
+[ ] What's new on update {id="mobile.b.whats-new"}
+[ ] Deep/universal links verified {id="mobile.b.deep-links"}
+[ ] Backup/restore documentation {id="mobile.b.backup-restore"}
+[ ] Tasteful in-app review prompts {id="mobile.b.review-prompts"}
+[ ] Force-upgrade gate for breaking API {id="mobile.b.force-upgrade"}
+[ ] Accessibility (dynamic type, screen readers) {id="mobile.b.a11y"}
+:::
+
+## Band C — fleets and scale
+
+::: checklist [type="progress" id="mobile-c"]
+[ ] Localization + store assets {id="mobile.c.l10n"}
+[ ] MDM/managed config {id="mobile.c.mdm"}
+[ ] Beta channel identity {id="mobile.c.beta-channel"}
+[ ] Biometric lock if holding sensitive data {id="mobile.c.biometric"}
+:::

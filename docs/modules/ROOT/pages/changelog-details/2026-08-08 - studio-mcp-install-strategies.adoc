@@ -1,0 +1,5 @@
+= 2026-08-08 — Studio MCP install strategies
+
+* Added xref:../explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]: install ladder (marketplace plugin → MCP deeplink → `mcp.json` → local plugin dir), thin plugin / fat HTTP MCP server (with `plugin.json` / `mcp.json` shape), meta-tools + skills curriculum, deferred app OAuth; options matrix for AI-studio tooling builders; DevCentr recommend-don’t-reimplement posture.
+* Added xref:../reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] as the master list linking Composio, Context7, AEI, agent control planes, rules, DevCentr AI Config / Workflow Arrangement, and the inbox-as-CI essay.
+* Cross-links from xref:../explanation/infrastructure/agent-control-planes.adoc[Agent control planes], Composio how-to/explanation, recommended tools, how-to index, explanation index; DevCentr specs (`ai-config-interface`, `ai-workflow-arrangement`).

@@ -1,0 +1,14 @@
+= Technology (reference)
+:description: Lookup entry for technology topics — prefer short facts here; long rationale stays in Explanation.
+:navtitle: Technology
+
+Technology Reference is for **quick retrieval**. Deep rationale lives under Explanation.
+
+== Categories
+
+* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC, shells, secrets hubs, org DNS pointers
+
+== Related
+
+* xref:explanation/infrastructure/iac.adoc[Infrastructure as Code] (Explanation)
+* Business ops email / DNS gotchas → xref:business-bootstrap::email/how-to/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
