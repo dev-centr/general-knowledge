@@ -62,6 +62,6 @@ Central repo stores policies; CI validates team repos.
 
 == Related
 
-* xref:business-bootstrap:index.adoc[Business Bootstrap] — email DNS, DMARC, vendor matrix
+* xref:business-bootstrap::index.adoc[Business Bootstrap] — business resources, email DNS, DMARC, vendor matrix
 * xref:DevCentr:specifications:components/iac-discovery.adoc[IaC Discovery]
 * xref:DevCentr:specifications:components/installation-workflow.adoc[Installation workflow]
