@@ -13,6 +13,8 @@
 Developer IaC mechanics stay here / in Explanation. **Vendor choice and personal-Gmail gotchas** live in Business Bootstrap:
 
 * xref:business-bootstrap::infra/reference/pulumi-cloudflare-email-checklist.adoc[Pulumi + Cloudflare email checklist]
+* xref:business-bootstrap::infra/explanation/pulumi-cloud-org-model.adoc[Pulumi Cloud org model] (free tier = no invites)
+* xref:business-bootstrap::infra/how-to/backup-pulumi-state.adoc[Back up Pulumi stack state]
 * xref:business-bootstrap::email/explanation/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits]
 * xref:business-bootstrap::email/how-to/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
 
