@@ -2,10 +2,21 @@
 
 Timeline of notable documentation changes in this repository.
 
-== 2026-08-09 � API key vs token
+== 2026-08-09 — API key vs token
 
-* Explanation xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] � architectural split (API key / scoped key�PAT / access token); forced Dev-Centr naming; cross-links Secrets Manager and News.
+* Explanation xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] — architectural split (API key / scoped key·PAT / access token); forced Dev-Centr naming; cross-links Secrets Manager and News.
 * See xref:changelog-details/2026-08-09 - api-key-vs-token.adoc[Detailed changelog].
+
+== 2026-08-09 — Git's file-shaped change model
+
+* Explanation xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model] — features vs file blobs, missing dependency edges, stash/pull collisions, Unison, syntax-aware auto-forward; cross-links connectome-fs (now `dev-centr/connectome-fs`).
+* See xref:changelog-details/2026-08-09 - git-semantic-boundaries.adoc[Detailed changelog].
+
+== 2026-08-09 — OS install concurrency
+
+* Explanation xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency] — host-wide install mutex for agent workflows; Windows MSI `1618` vs Linux package locks; links the News diptych for deep OS essays.
+* See xref:changelog-details/2026-08-09 - os-install-concurrency.adoc[Detailed changelog].
+
 == 2026-08-08 — Business Bootstrap cross-links (Cal · Penpot · vaults)
 
 * Recommended tools and secrets hub point at Business Bootstrap **capability areas** (Scheduling / Design / Vault) for Cal.com/Cal.diy, Penpot, and Bitwarden/Vaultwarden hosting choices (strategy stays in BB; developer distribution mechanics stay here).

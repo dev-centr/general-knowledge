@@ -1,0 +1,5 @@
+= 2026-08-09 — OS install concurrency
+
+* Added xref:../explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]: short practitioner framing for why parallel agent installs bounce (Windows `_MSIExecute` / `1618`, Linux per-manager locks with optional apt wait) and why orchestration still needs a host-wide install mutex plus silent flags.
+* Deep OS essays and cooperation tables stay on News (Windows / Linux diptych); this page is the durable Antora bridge next to toolchain and agent-control-plane docs—not a product fix we own.
+* Nav + explanation index; Ibex “Related” pointer; News posts link back here.

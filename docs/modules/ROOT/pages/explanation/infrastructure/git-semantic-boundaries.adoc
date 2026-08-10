@@ -1,0 +1,90 @@
+= Git's file-shaped change model
+:navtitle: Git's file-shaped change model
+:description: Why committing features feels hard in Git—unrelated work inside one file, missing inter-file dependencies, stash/pull collisions, Unison, and connectome-fs semantic units.
+:toc:
+
+Git feels difficult for many teams for a structural reason: it does not model *features* or *dependencies*.
+It models *files* (blobs in trees) and *commits* over those trees.
+Everything that makes collaborative coding pleasant—orthogonal functions in one module, API edges across modules, “just take Alice's typo fix”—is metadata Git never stored.
+
+This is the Dev-Centr practitioner framing.
+Canonical connectome design for the same thesis:
+link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units].
+
+image::git-blobs-vs-graph-units.webp[Left: Git sees file blobs with mixed features. Right: a graph sees feature nodes and dependency edges projected onto files]
+
+== The file is the wrong primary key
+
+=== Intra-file unrelated work
+
+Developers routinely park independent changes in one path: a bugfix beside a feature, a rename beside a refactor.
+Git can stage hunks, but hunks are not durable identities.
+History, code review, and bisect still speak in paths and line ranges.
+You cannot ask the object store for “feature B” as a first-class unit that happened to share a file with “feature A.”
+
+=== Inter-file dependencies
+
+Compilers, bundlers, and LSPs maintain dependency graphs.
+Git merge does not.
+When two people edit opposite ends of a call chain, the VCS has no edge that says the changes are coupled—or that they are not.
+Conflict detection collapses to “did the same lines move,” which both over-reports (unrelated functions in one file) and under-reports (semantic break across files with a clean text merge).
+
+== The stash / pull / pop tax
+
+A common team failure mode:
+
+. Person A lands a tiny fix (typo, import sort, comment) on `main`.
+. Person B was editing an *unrelated* function in the same file.
+. B stashes, pulls, unstashes—and now negotiates a diff for a system they were not touching.
+
+image::team-sync-unrelated-hunk.webp[Stash-pull-pop collision on an unrelated function versus syntax-aware forward of a typo fix]
+
+The pain is not that B refuses to integrate.
+The pain is that *file identity forced a dependency that did not exist in the problem domain*.
+
+== Adjacent attempts
+
+* **Patch modes and virtual branches** (e.g. GitButler) — better hunk bookkeeping in one working tree; still path-shaped under the hood.
+* **Jujutsu-style operation logs** — healthier uncommitted graph; still blob-centric unless a semantic layer is added.
+* **link:https://www.unison-lang.org/[Unison]** — content-addressed definitions; renames and refactors are graph ops. Strong proof that *code identity* should not be “path + line.”
+* **connectome-fs** — GUID nodes, typed associations (`depends-on`, …), and
+  link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[editions]
+  so the filesystem itself can carry the meta-model Unison demonstrates for one language.
+
+== Syntax-aware auto-forward
+
+The desirable end state for *provably boring* edits (identifier typo in one definition, pure formatting inside an AST node):
+
+* Attach the patch to a stable semantic id
+* Forward it into peer editions / in-flight work that share that id
+* Skip the conflict UI when interference analysis says the peer never touched that unit
+
+image::syntax-aware-autoforward.webp[Typo patch auto-forwards across editions; Git conflict markers as the contrast case]
+
+Behavioral changes stay in review.
+Broadcast hygiene should not require a merge ceremony.
+
+== How this fits the concurrency essays
+
+xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+asks why *many live states* are hard (worktrees, virtual branches, Phase A bridges → filesystem editions).
+
+This page asks why *one live state* is still hard when the unit of change is wrong.
+You need both:
+
+* Editions (or a Phase A bridge) so agents and humans do not thrash one working tree
+* Semantic units so merges and sync respect features and dependencies, not only paths
+
+Stub for “what remains of Git after editions”:
+xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions].
+
+== Related
+
+* xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://github.com/connectome-fs/connectome-fs[github.com/dev-centr/connectome-fs]
+* link:https://www.unison-lang.org/[Unison language]

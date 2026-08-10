@@ -1,0 +1,60 @@
+= OS install concurrency
+:navtitle: OS install concurrency
+:description: Why parallel agent installs bounce on Windows MSI 1618 and Linux package locks, and why orchestration still needs a host-wide install mutex.
+:toc:
+
+Package managers and installer engines serialize *some* installs.
+They do not give concurrent agent workflows a machine-wide admission queue.
+When two workers both decide a toolchain is missing, “install” is often a bounce—or a silent race—unless the **agent host** owns a critical section.
+
+This page is the short practitioner framing for Dev-Centr toolchain and agent work.
+The long OS essays (failure modes, feature asks, cooperation tables) live on News:
+
+* link:https://devcentr.org/news/2026-08-09-windows-install-concurrency[Installation concurrency when Windows has a mutex but not a queue]
+* link:https://devcentr.org/news/2026-08-09-linux-install-concurrency[Installation concurrency when Linux locks wait—or don't]
+
+== What the OS actually gives you
+
+[cols="1,2"]
+|===
+| Platform | Reality
+
+| **Windows**
+| MSI execute sequences take a global `_MSIExecute` mutex and **fail fast** with `ERROR_INSTALL_ALREADY_RUNNING` (`1618`) or a modal dialog. Custom EXE setups (Inno, NSIS, …) often share *no* system mutex. `winget` / Chocolatey / Scoop serialize inside their own trees; they do not invent an OS job queue across independent agent PIDs.
+
+| **Linux**
+| Distro DBs use lock files (`dpkg`, DNF, pacman, …). Modern `apt` can **wait** (`DPkg::Lock::Timeout`; `apt(8)` waits by default). Flatpak, Snap, language toolchains, and vendor `.run` scripts do not join those locks. PackageKit is a broker pattern, not a solved cross-manager queue.
+|===
+
+Neither story is “install is safe to fire in parallel.”
+Windows fails closed on MSI and open on EXE chaos.
+Linux waits inside one manager and still races at the seams.
+
+== The rule for agent hosts
+
+Until an OS (or a trusted broker) exposes a real install job queue:
+
+. **One host-wide install lock** (named mutex or flock) around every mutating install path you care about—MSI, winget, apt/dnf, Flatpak, vendor `.run`, generated setup EXE.
+. **Silent / unattended flags inside that lock** so a modal dialog is not the concurrency failure mode.
+. **Prefer wait over kill** when a distro or MSI lock is held (apt timeout; poll `_MSIExecute` / Installer service). Do not clear foreign locks.
+. **Treat package-manager internal serialization as necessary, not sufficient**—two agent trees each starting their own `winget` or `apt` still need the outer lock.
+
+This sits next to xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] (where agents run) and xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (install/pin/repair lifecycle).
+It is the same *class* of problem as xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]: concurrent workers + shared mutable state + tools that assume a single human.
+
+== Dev-Centr stake (light, real)
+
+We do not ship the OS queue.
+We do ship install *entrypoints* and agent-facing toolchain docs:
+
+* xref:ibex:ROOT:index.adoc[Ibex] (Easy Installer) and xref:msi-generator:ROOT:index.adoc[msi-generator] should emit **quiet-capable**, lock-aware setups and never imply that parallel EXE installs are safe without an outer mutex.
+* Toolchain bootstrap notes (xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh], winget/apt how-tos) assume someone already won admission to install.
+
+If you are designing an agent runner that spans Windows and Linux, keep one orchestration verb (“install with exclusive host admission”) and two platform adapters—not a fantasy that `winget` and `apt` already solved peer agents.
+
+== See also
+
+* News diptych (deep dive): link:https://devcentr.org/news/2026-08-09-windows-install-concurrency[Windows] · link:https://devcentr.org/news/2026-08-09-linux-install-concurrency[Linux]
+* xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
+* xref:how-to/app-installer-packaging.adoc[App Installer Packaging] (shipping installers—not running them concurrently)
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces] (worktree/sandbox how-to; related agent isolation)

@@ -151,6 +151,7 @@ DevCentr’s **Ecosystem Management** vision treats shells, toolchains, and infr
 * xref:devcentr:specifications:components/toolchain-management.adoc[DevCentr TCM component]
 * xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
 * link:https://github.com/dev-centr/toolchain-framework[dev-centr/toolchain-framework]
+* xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency] — when agents race host package installs during bootstrap
 * xref:reference/recommended-tools.adoc[Recommended Tools]
 
 == Relation to OpenShellOrg

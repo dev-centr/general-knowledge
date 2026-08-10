@@ -49,12 +49,13 @@ DevCentr lets you pick between those two (Appearance in the top bar). Install th
 
 == Business ops (cross-link)
 
-Founder/ops support systems (scheduling, design hosts, vault servers) live in Business Bootstrap — not duplicated here:
+Founder/ops support systems (scheduling, design hosts, vault servers, team chat) live in Business Bootstrap — not duplicated here:
 
-* xref:business-bootstrap::index.adoc[Business Bootstrap] · xref:business-bootstrap::reference/business-resources.adoc[Stack map]
+* xref:business-bootstrap::index.adoc[Business Bootstrap] · xref:business-bootstrap::reference/business-resources.adoc[Stack map] · xref:business-bootstrap::reference/defaults-by-org-stage.adoc[Defaults by stage]
 * xref:business-bootstrap::scheduling/explanation/cal-com-and-cal-diy.adoc[Cal.com and Cal.diy]
 * xref:business-bootstrap::design/explanation/penpot.adoc[Penpot]
 * xref:business-bootstrap::vault/explanation/bitwarden-and-vaultwarden.adoc[Bitwarden and Vaultwarden]
+* xref:business-bootstrap::chat/explanation/mattermost-self-host.adoc[Mattermost self-host]
 
 == Design & Brand Motion
 

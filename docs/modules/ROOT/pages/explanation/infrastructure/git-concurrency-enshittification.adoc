@@ -9,8 +9,11 @@ implementation comparison, and agentic workflows feel broken—even when
 individual tools (worktrees, GitButler, jj) each paper over one symptom.
 
 This page is the Dev-Centr practitioner framing. Canonical filesystem
-design lives in link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs editions]
-and link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse].
+design lives in link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs editions]
+and link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse].
+For the complementary thesis—Git's unit of change is the file, not the
+feature—see xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+and link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[Semantic change units].
 
 == What each partial fix optimizes
 
@@ -72,7 +75,7 @@ for adjacent runtime and shell concerns.
 
 == Phase B — filesystem editions
 
-link:https://github.com/AMDphreak/connectome-fs[connectome-fs] treats
+link:https://github.com/connectome-fs/connectome-fs[connectome-fs] treats
 hierarchy as a navigation slice and the connectome graph as truth.
 *Editions* (folder/file forks with process edition context) move
 multi-state trees into the VFS: same path string, different bindings,
@@ -81,7 +84,7 @@ CoW extents, O(1) agent micro-forks.
 VCS then shrinks toward graph orchestration and semantic merge. What
 stays above the FS: AST-aware merge, and isolation for daemons/sockets
 that bypass the tree. Details:
-link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
 
 Stub for “what remains of Git/jj after editions”:
 xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions].
@@ -91,9 +94,11 @@ xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
 
 == Related
 
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
-* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
-* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
 * link:https://hci-nerdz.github.io/docs/hci-nerdz/connectome-editions-ux.html[HCI Nerdz: Connectome editions UX]
 * link:https://docs.opensh.org/shell-architecture/graph-navigation.html[OpenShellOrg: Graph navigation]

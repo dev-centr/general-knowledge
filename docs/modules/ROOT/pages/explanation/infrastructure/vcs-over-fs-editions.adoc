@@ -7,7 +7,9 @@
 ====
 *Stub.* Expand after the connectome-fs editions implementation matures.
 Canonical design:
-link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+Semantic units (features/dependencies, not only paths):
+link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[Semantic change units].
 ====
 
 == Abstract
@@ -22,7 +24,7 @@ CoW storage), version-control products stop owning:
 They keep:
 
 * Remote sync and collaboration policy
-* Semantic / AST-aware merge
+* Semantic / AST-aware merge (and syntax-aware auto-forward for boring patches)
 * Signed history, code review, and release metadata
 * Graph orchestration over edition ids (tags, named lines of work)
 
@@ -32,9 +34,14 @@ Until Phase B ships, use the Phase A bridge described in
 xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 and the near-term how-to
 xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+For why path-shaped commits hurt even in one tree, see
+xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model].
 
 == Related
 
 * xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
-* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
-* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
+* link:https://github.com/connectome-fs/connectome-fs[github.com/dev-centr/connectome-fs]

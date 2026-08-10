@@ -285,6 +285,7 @@ Training data and chat assistants **will miss players** (Bionic is the proof). T
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+* xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency] (host-wide install mutex when agents provision tools)
 * xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
 * xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 * xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]

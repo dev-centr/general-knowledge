@@ -55,6 +55,8 @@ tradeoffs.
 == Related
 
 * xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
-* link:https://amdphreak.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
