@@ -1,0 +1,5 @@
+= 2026-08-09 — API key vs token
+
+Documented the architectural split between API keys (app/project identity), scoped
+keys / PATs (still keys), and true access tokens (short-lived handshake credentials).
+Forced Dev-Centr naming for docs and Secrets Manager; linked the DevCentr News essay.

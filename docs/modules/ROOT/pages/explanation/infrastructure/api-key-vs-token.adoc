@@ -1,0 +1,123 @@
+= API key vs token
+:navtitle: API key vs token
+:description: What an API key identifies versus what an access token authorizes—and why vendors keep labeling scoped keys as tokens.
+
+The industry keeps calling long-lived secrets "tokens" when they are still **keys**.
+That blur makes security reviews, Secrets Manager labels, and agent prompts wrong by default.
+This page is the Dev-Centr vocabulary lock: use the architectural sense, not the vendor button label.
+
+Companion narrative: link:https://devcentr.org/news/2026-08-09-api-keys-wearing-token-costumes[When API keys wear token costumes].
+Product enforcement: xref:devcentr:secrets-manager:explanation/api-key-vs-token.adoc[Secrets Manager — API key vs token].
+
+== The real split
+
+An **API key** identifies the *application or project* making the call.
+It exists for tracking, rate limits, billing, and "this traffic belongs to that app."
+It does not prove which human is sitting at the keyboard.
+
+An **access token** (OAuth access token, JWT bearer, session token) identifies an *authorized subject*—usually a user or a delegated session—for a short window.
+It answers "what may this holder do *right now*?" and expires (or is refreshed) on purpose.
+
+[cols="1,2,2"]
+|===
+| Aspect | API key | Access token (OAuth / JWT / session)
+
+| Identifies
+| Application / project
+| Authenticated user or session
+
+| Purpose
+| Project tracking, quotas, billing
+| Authorization, scopes, fine-grained access
+
+| Lifespan
+| Long-lived until revoked or rotated
+| Short-lived (minutes to hours); refresh separately
+
+| Leak impact
+| High—app-level access until you rotate
+| Time-bound—damage window shrinks with TTL
+
+| Shape
+| Opaque identifier (often)
+| Often carries claims (sub, scopes, exp)
+
+| Owner in the mental model
+| Developer / application
+| End user / delegated principal
+|===
+
+Analogy that sticks:
+
+* An API key is the project's **driver's license**—who is calling for the meter.
+* An access token is a **hotel keycard**—permission for this stay, not forever.
+
+== What vendors actually ship
+
+Vendor UIs overload the word *token*.
+"Generate your API access token," "personal access token," and "API token" usually mean a **scoped, long-lived API key** owned by an account or project—not an OAuth access token.
+
+Rough map of what people click versus what they get:
+
+[source]
+----
+[ Classic API key ] ──────────────► Unscoped / project-wide long-lived secret
+         │
+         ▼
+"API access token" / PAT ─────────► Scoped long-lived key (still a key)
+         │
+         ▼
+[ Bearer / OAuth access token ] ──► Short-lived, handshake-issued credential
+----
+
+Why the mislabel stuck:
+
+* **OAuth vocabulary spillover.** OAuth popularized *access token* + scopes. Dashboard products borrowed "token" to mean "you can check boxes for scopes," even when the secret never expires on its own.
+* **Revocation story.** Classic single account keys were catastrophic to rotate. Sub-keys that you can mint and revoke got sold as "tokens" to sound safer.
+* **HTTP habit.** Many scoped keys ride `Authorization: Bearer …`, which is the access-token transport—so marketing copies the header name onto the credential type.
+
+== Dev-Centr naming (forced)
+
+When you write docs, UI copy, `.env` names, Secrets Manager types, or agent instructions for Dev-Centr:
+
+[cols="1,2,2"]
+|===
+| Call it | When | Do not call it
+
+| **API key**
+| Long-lived secret identifying an app, project, or integration; may be unscoped or scoped
+| "Token" just because the vendor did
+
+| **Scoped API key** (or **PAT** only when quoting a vendor)
+| Long-lived secret with capability / IP / repo restrictions; still manually revoked
+| "OAuth token" or "bearer token" as if it were ephemeral
+
+| **Access token**
+| Short-lived credential from an auth handshake (OAuth, OIDC, session mint)
+| "API key"
+
+| **Refresh token**
+| Long-lived *token-family* secret used only to mint new access tokens
+| Generic "API key" in app request paths
+|===
+
+Decision test (ignore the button label):
+
+1. Was it issued by a login / consent / client-credentials *handshake*, or pasted from a dashboard forever-box?
+2. Does it expire in minutes/hours by design, or only when someone deletes it?
+3. Does it carry a subject (user/session) for authorization, or only project identity for metering?
+
+If it was pasted from a dashboard and lives until you revoke it → **API key** (scoped or not).
+If it was minted by a protocol and dies on a timer → **access token**.
+
+== How this connects to secrets distribution
+
+xref:secrets-distribution-hub.adoc[Secrets distribution hub] still says *create in vendors, store in vault, distribute to targets*.
+The type label matters when agents invent env names (`API_TOKEN` vs `API_KEY`) or when Secrets Manager profiles suggest fields.
+Prefer names that match the architectural type (`STRIPE_API_KEY`, `GITHUB_PAT` as a scoped key alias, `ACCESS_TOKEN` only for true access tokens).
+
+== Related
+
+* xref:ssh-keys.adoc[SSH keys] — different credential family (asymmetric identity), same discipline: name by mechanism, not by marketing.
+* Tutorial xref:tutorials/secrets-from-vendor-to-deploy.adoc[From vendor dashboard to deploy matrix]
+* How-to xref:how-to/secrets-distribution-cli-mcp.adoc[Distribute API keys with vault CLI, hosting CLI, and MCP]

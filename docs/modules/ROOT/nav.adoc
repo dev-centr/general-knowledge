@@ -100,6 +100,7 @@
 *** xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
 *** xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)]
 *** xref:explanation/infrastructure/ssh-keys.adoc[SSH Keys]
+*** xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
 *** xref:explanation/infrastructure/git-branching.adoc[Branching Strategies]
 *** xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 *** xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
