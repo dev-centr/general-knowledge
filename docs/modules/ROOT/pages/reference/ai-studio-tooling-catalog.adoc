@@ -56,6 +56,14 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 |===
 | Item | Role | Docs
 
+| **Vibe coding bootstrap**
+| Where AI-studio setup lives (skills / MCP / rules) vs Business Bootstrap; operator vs paste-into-agent on-ramps
+| xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Explanation]
+
+| **Bootstrap Cursor skills**
+| Personal `~/.cursor/skills/` curriculum kept out of always-on User Rules
+| xref:how-to/bootstrap-cursor-skills.adoc[How-to]
+
 | **Agent Rules**
 | Modular rules assembly for coding assistants
 | xref:home::tools/agent-rules.adoc[Hub]

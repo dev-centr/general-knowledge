@@ -1,0 +1,58 @@
+= Vibe coding bootstrap
+:navtitle: Vibe coding bootstrap
+:description: Where AI-studio setup (Cursor skills, MCP, agent rules) lives versus Business Bootstrap—and the two on-ramps: configure yourself or drop instructions into a permissive agent.
+
+**Vibe coding bootstrap** means getting an AI studio ready to ship code and prose with you: Cursor (or peer) skills, MCP connectors, agent rules, and thin pointers—not founder ops tooling.
+
+Related::
+xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] ·
+xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] ·
+xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+
+== Why not under Business Bootstrap?
+
+xref:business-bootstrap::index.adoc[Business Bootstrap] covers **org IT capability areas**: email, scheduling, design, vault, chat, funding, infra. That stack supports a company.
+
+Vibe-coding tools support the **developer ↔ agent loop**. They belong with AI-studio documentation in general-knowledge (and product specs in DevCentr)—not as a child of Business Bootstrap.
+
+Mental model::
+
+* **Business Bootstrap → …** — stand up the org (inbox, calendar, vault, …)
+* **Vibe coding → Bootstrap** — stand up the studio (skills, MCP, rules packs)
+
+Cross-link when a connector is shared (for example Composio used for both CI mail and founder workflows). Do not nest the taxonomies.
+
+== Two on-ramps
+
+The same outcome (a working skill or MCP install) has two legitimate paths:
+
+[cols="1,2,2", options="header"]
+|===
+| On-ramp | Who does the work | When to use it
+
+| **A. Operator configures**
+| You create folders, paste `SKILL.md`, edit User Rules, click marketplace OAuth
+| Studio is locked down, you prefer exact control, or the agent cannot write under `~/.cursor/`
+
+| **B. Drop instructions into the LLM**
+| You paste a short recipe (or point at this how-to); a **permissive** agent reads, writes, junctions, and updates thin rule pointers
+| Agent already has filesystem + shell access to the code hive and Cursor config; you want the session to leave a durable skill behind
+|===
+
+Both on-ramps should produce the **same durable layout**. Prefer:
+
+* Full curriculum in a **Cursor skill** (`~/.cursor/skills/<name>/`) so it is **not** always-on context
+* Thin one-line pointers in User Rules / `RULES.md` only when discovery matters
+* Canonical copy in a versioned repo (for example `agent-rules/skills/…`) with a junction or copy into `~/.cursor/skills/`
+
+TIP: Always-on User Rules are expensive. Skills load when the task matches the skill description (or when you name the skill). That is the default for prose and workflow curricula.
+
+== What “bootstrap” usually includes
+
+. **Rules pack** — modular agent-rules (or Rules Manager compose) for constants and OS facts
+. **Skills** — task curricula kept out of always-on rules (news vs blog copy, connector loops, …)
+. **MCP / connectors** — Composio, Context7, and peers via the studio install ladder
+. **Verification** — new chat, skill discovery, one real tool or draft that proves the loop
+
+Worked example for a personal writing skill::
+xref:how-to/bootstrap-cursor-skills.adoc#worked-example-writing-news-vs-blog[Bootstrap Cursor skills — writing-news-vs-blog]

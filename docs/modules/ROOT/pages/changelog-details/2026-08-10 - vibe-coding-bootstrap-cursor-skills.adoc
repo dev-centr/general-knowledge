@@ -1,0 +1,5 @@
+= 2026-08-10 — Vibe coding bootstrap (Cursor skills)
+
+* Added xref:../explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — places AI-studio setup under **Vibe coding → Bootstrap**, not Business Bootstrap; documents operator vs “drop instructions into a permissive agent” on-ramps.
+* Added xref:../how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] — personal `~/.cursor/skills/` layout, thin rule pointers, worked example `writing-news-vs-blog` (news vs blog body copy kept out of always-on User Rules).
+* Catalog, how-to index, and nav wiring; hub activity-log note.

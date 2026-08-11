@@ -29,6 +29,7 @@
 * xref:how-to/wsl-setup.adoc[WSL Setup]
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup]
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP Setup]
+* xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor Skills]
 * xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
 
 .📚 Reference
@@ -89,6 +90,7 @@
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 *** xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 *** xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+*** xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 *** xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 *** xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 *** xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]

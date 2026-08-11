@@ -1,0 +1,134 @@
+= Bootstrap Cursor skills
+:navtitle: Bootstrap Cursor skills
+:description: Install personal Cursor Agent Skills without clogging always-on User Rules—operator path or drop-the-recipe-into-a-permissive-agent path, with a writing-news-vs-blog worked example.
+
+Add a **Cursor Agent Skill** so agents load specialized instructions only when the task matches—not on every chat.
+
+Framing (taxonomy)::
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
+(this is **not** a Business Bootstrap child page).
+
+Install ladder for marketplace MCP + skills plugins::
+xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
+
+Catalog::
+xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+
+== Choose an on-ramp
+
+=== A. Configure it yourself
+
+Use when you want exact control or the agent cannot write under `~/.cursor/`.
+
+. Create `~/.cursor/skills/<skill-name>/` (never under `~/.cursor/skills-cursor/`—that tree is Cursor-managed).
+. Add `SKILL.md` with YAML frontmatter (`name`, `description`) and a short body.
+. Put long directives in sibling files (`news.md`, `blog.md`, …) and link them from `SKILL.md` (progressive disclosure).
+. Optionally keep a **canonical** copy in a git repo and junction/symlink into `~/.cursor/skills/<skill-name>/`.
+. Add at most a **one-line** pointer in User Rules / `RULES.md` if agents must discover the skill by name; do not paste the full curriculum into always-on rules.
+. Start a **new** agent chat and confirm the skill appears / can be read.
+
+=== B. Drop the recipe into a permissive agent
+
+Use when the studio already allows the agent to edit the code hive and Cursor config.
+
+Paste (or `@`-mention) something like:
+
+----
+Install a personal Cursor skill from these directives.
+Keep the full text out of always-on User Rules.
+Canonical path: <repo>/skills/<skill-name>/
+Junction or copy to ~/.cursor/skills/<skill-name>/
+Add only a thin pointer in RULES.md / documentation.md.
+Follow create-skill guidance: description with WHAT + WHEN; progressive disclosure.
+----
+
+Then attach the source notes (export, gist, or chat). The agent should:
+
+. Author `SKILL.md` + reference files
+. Install into `~/.cursor/skills/`
+. Update thin pointers only
+. Avoid dumping the body into the always-on User Rule paste
+
+Same end state as on-ramp A.
+
+[#worked-example-writing-news-vs-blog]
+== Worked example: `writing-news-vs-blog`
+
+Recorded from a session that turned a Gemini news-vs-blog style export into a durable skill next to agent-rules.
+
+=== Goal
+
+* News body copy: inverted pyramid, neutral attribution, no editorializing
+* Blog body copy: thesis early, conversational authority, anti-slop hygiene
+* Keep house **title** stance (news outward / blog inward) in thin rules
+* Keep **body** directives in a skill so they stay out of always-on context
+
+=== Steps taken
+
+. Read the export and Cursor’s create-skill guidance (`~/.cursor/skills-cursor/create-skill/SKILL.md` is built-in reference; do not author there).
+. Chose **personal skill + versioned canonical copy**, not a full paste into User Rules.
+. Created canonical tree under the personal agent-rules fork::
++
+----
+skills/writing-news-vs-blog/
+  SKILL.md
+  news.md
+  blog.md
+  published-sources.md
+----
+. Wrote `SKILL.md` as a **mode router** (news vs blog) with house stance and links to `news.md` / `blog.md`.
+. Incorporated published suite pointers (claude-blog, marketingskills, Kimi anti-slop, news researcher/writer) into `published-sources.md` as optional reference—local directives win unless asked otherwise.
+. Junctioned for Cursor discovery (Windows)::
++
+[source,powershell]
+----
+cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-news-vs-blog" `
+  "C:\code\github.com\AMDphreak\.forks\agent-rules\skills\writing-news-vs-blog"
+----
+. Added **thin** pointers only:
++
+* `general/documentation.md` — body-copy section pointing at the skill
+* `general/global.md` — optional skill note (like talk-normal)
+* `RULES.md` / Cursor User Rule — one AI-ops line: skill path; do not paste full directives
+* `MAIN.md` — note that `skills/` is **not** part of MAIN context assembly
+
+. Left existing title guidance (news outward / blog inward) in Docs rules unchanged aside from the pointer.
+
+=== Layout reminder
+
+[cols="1,2", options="header"]
+|===
+| Location | Role
+
+| `~/.cursor/skills/<name>/`
+| What Cursor discovers (junction or copy)
+
+| `agent-rules/skills/<name>/` (or other repo)
+| Canonical, reviewable, shareable
+
+| User Rules / `RULES.md`
+| One-line pointer at most
+
+| `~/.cursor/skills-cursor/`
+| Built-in Cursor skills — do not author here
+|===
+
+=== Verify
+
+. New agent chat.
+. Ask for a short **news** ship note and a short **blog** lede on the same topic.
+. Confirm the agent reads `writing-news-vs-blog` (or follows its directives) and the modes differ (no `you` / first person in news; thesis and `you` allowed in blog).
+
+== Skills vs always-on rules (checklist)
+
+* [ ] Curriculum lives under `skills/`, not in the User Rule paste
+* [ ] `description` states WHAT and WHEN (third person)
+* [ ] Long material is one level deep from `SKILL.md`
+* [ ] Titles / constants that must always apply stay in thin rules
+* [ ] Published upstream suites are cited as optional, not silently overriding house STYLE
+
+== See also
+
+* xref:home::tools/agent-rules.adoc[Agent Rules] hub · https://github.com/dev-centr/agent-rules[`dev-centr/agent-rules`]
+* xref:home::tools/rules-manager.adoc[Rules Manager] — compose/watch for rules packs
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — marketplace plugin that ships `skills/` beside MCP

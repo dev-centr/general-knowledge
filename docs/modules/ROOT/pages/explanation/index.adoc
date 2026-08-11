@@ -23,10 +23,10 @@ Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:expl
 Featured agent / studio topics:
 
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
-* xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] (reference master list)
 
 == Documentation

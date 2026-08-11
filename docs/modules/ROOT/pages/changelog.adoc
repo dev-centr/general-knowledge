@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-10 — Vibe coding bootstrap (Cursor skills)
+
+* Explanation xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — AI-studio setup under **Vibe coding → Bootstrap** (not Business Bootstrap); operator vs drop-into-permissive-agent on-ramps.
+* How-to xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] — personal skills layout, thin rule pointers, worked example `writing-news-vs-blog`.
+* See xref:changelog-details/2026-08-10 - vibe-coding-bootstrap-cursor-skills.adoc[Detailed changelog].
+
 == 2026-08-09 — API key vs token
 
 * Explanation xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] — architectural split (API key / scoped key·PAT / access token); forced Dev-Centr naming; cross-links Secrets Manager and News.

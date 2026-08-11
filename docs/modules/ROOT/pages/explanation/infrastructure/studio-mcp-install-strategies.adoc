@@ -8,7 +8,9 @@ Composio’s Cursor path is a clean case study. This page extracts the **strateg
 
 Related product docs::
 xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] ·
-xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors] ·
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] ·
+xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
 
 Topology / control-plane context::
 xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
