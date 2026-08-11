@@ -4,6 +4,9 @@
 
 **Vibe coding bootstrap** means getting an AI studio ready to ship code and prose with you: Cursor (or peer) skills, MCP connectors, agent rules, and thin pointers—not founder ops tooling.
 
+In-repo shop for agent-rules (thin; links here)::
+https://github.com/dev-centr/agent-rules/blob/main/skills/BOOTSTRAP.md[`agent-rules/skills/BOOTSTRAP.md`]
+
 Related::
 xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] ·
 xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] ·
@@ -19,6 +22,8 @@ Mental model::
 
 * **Business Bootstrap → …** — stand up the org (inbox, calendar, vault, …)
 * **Vibe coding → Bootstrap** — stand up the studio (skills, MCP, rules packs)
+
+They often run in the **same weeks** (especially solo / product-shipping). Business Bootstrap therefore **links this page as related** on the hub, stage defaults, stack map, business overview, and Chat interconnect—without nesting vibe coding under a BB capability area.
 
 Cross-link when a connector is shared (for example Composio used for both CI mail and founder workflows). Do not nest the taxonomies.
 

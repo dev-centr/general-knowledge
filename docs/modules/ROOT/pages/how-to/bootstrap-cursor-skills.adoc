@@ -14,6 +14,10 @@ xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP in
 Catalog::
 xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
 
+In-repo shop (agent-rules; avoids duplicating this page)::
+https://github.com/dev-centr/agent-rules/blob/main/skills/BOOTSTRAP.md[`skills/BOOTSTRAP.md`] ·
+xref:agent-rules::bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]
+
 == Choose an on-ramp
 
 === A. Configure it yourself

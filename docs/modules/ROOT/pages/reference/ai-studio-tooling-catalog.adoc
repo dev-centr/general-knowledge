@@ -62,7 +62,7 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 
 | **Bootstrap Cursor skills**
 | Personal `~/.cursor/skills/` curriculum kept out of always-on User Rules
-| xref:how-to/bootstrap-cursor-skills.adoc[How-to]
+| xref:how-to/bootstrap-cursor-skills.adoc[How-to] · https://github.com/dev-centr/agent-rules/blob/main/skills/BOOTSTRAP.md[agent-rules shop file]
 
 | **Agent Rules**
 | Modular rules assembly for coding assistants
