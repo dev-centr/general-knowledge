@@ -1,0 +1,36 @@
+= Context7 MCP and Skills setup
+:navtitle: Context7 MCP and Skills Setup
+:description: Connect Context7 so agents can pull current library and API docs instead of stale training data.
+
+Use link:https://context7.com/[Context7] when code depends on a library or framework whose APIs may have moved since the model’s training cutoff. Prefer it over guessing from memory for version-sensitive work.
+
+Stack placement::
+xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] ·
+xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies] ·
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
+
+== Cursor
+
+. Install the Context7 marketplace / MCP plugin for Cursor when available, **or** register the server in `~/.cursor/mcp.json` per current Context7 docs.
+. Complete any auth / API-key step Context7 requires (`mcp_auth` or account settings).
+. Start a **new** agent chat so the MCP tool list refreshes.
+. In agent rules, keep a thin always-on pointer (as in Dev-Centr agent-rules): prefer Context7 for stale APIs; fall back to the Outdated Code Protocol / local library docs when Context7 is unavailable.
+
+TIP: Confirm the live install URL and `mcp.json` shape on https://context7.com/[context7.com] — marketplace deeplinks change; do not invent endpoints.
+
+== When to call it
+
+* Generating or editing code against a specific library version
+* Migrating APIs (auth, routing, ORM, UI kit)
+* Reviewing whether an example from chat still matches current docs
+
+Do **not** use Context7 for business logic unique to your repo, or for docs you already index locally under `docs/_local-library-docs/` / `AI-LOCAL-LIBRARY-DOCS.local.json5`.
+
+== Skills
+
+If Context7 ships Agent Skills with the plugin, leave them enabled—they teach the search → resolve-library → query-docs loop. Do not paste that curriculum into always-on User Rules. See xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills].
+
+== Related
+
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] (app connectors, not library docs)
+* xref:agent-rules::bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]

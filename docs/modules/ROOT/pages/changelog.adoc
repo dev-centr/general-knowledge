@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-10 — Context7 setup, AI docs writing, nav prune
+
+* How-to xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills setup]; explanation xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI].
+* Pruned nav entries that pointed at pages never authored (git how-tos, sync essays, etc.) so the hub nav matches the tree.
+* See xref:changelog-details/2026-08-10 - context7-writing-docs-nav-prune.adoc[Detailed changelog].
+
 == 2026-08-10 — Vibe coding bootstrap (Cursor skills)
 
 * Explanation xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — AI-studio setup under **Vibe coding → Bootstrap** (not Business Bootstrap); operator vs drop-into-permissive-agent on-ramps.

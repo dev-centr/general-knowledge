@@ -1,0 +1,45 @@
+= Writing clear docs with AI
+:navtitle: Writing Clear Docs with AI
+:description: How to use agents for documentation without dumping always-on rules or shipping telegraphic AI prose.
+
+Agents are useful for docs when the **curriculum is on demand** and the **house voice** stays thin and durable.
+
+== Split the load
+
+[cols="1,2", options="header"]
+|===
+| Keep always-on (rules / STYLE)
+
+| Put in Cursor skills / optional layers
+
+| Titles stance, Diátaxis shape, AsciiDoc checklists, Nieman anti-terse tips
+| Mode-split body packs (news vs blog), long anti-slop rubrics, connector loops
+
+| Site `STYLE.adoc` / `AGENTS.md`
+| `skills/<name>/` via xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
+|===
+
+Framing for studio setup::
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
+
+== Practical loop
+
+. Point the agent at the **component** `docs/` tree and the site STYLE before drafting.
+. Name the channel: **news** (outward shared record) vs **blog/essay** (inward idea) vs **changelog** (shipping minutiae).
+. For News/blog narrative, apply the Nieman scene checklist in agent-rules `general/documentation.md` (camera angle, scene vs summary, pace, time cues, pull-forward endings).
+. Prefer short always-on rules; load heavy voice packs only when drafting that genre.
+. Verify links, nav, and changelog entries the same way you would for hand-written docs.
+
+== Anti-patterns
+
+* Pasting a full style guide into User Rules (context bloat every chat)
+* Telegraphic bullet-essays on the narrative channel
+* Inventing facts, quotes, or “everyone knows” filler
+* Publishing a second Antora site for one page—wire into the org hub instead (xref:home::where-docs-live.adoc[Where docs live])
+
+== Related
+
+* xref:explanation/literate-programming.adoc[Literate Programming]
+* xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
+* xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
+* xref:agent-rules::bootstrap.adoc[Agent Rules bootstrap]

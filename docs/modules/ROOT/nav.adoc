@@ -9,12 +9,6 @@
 * xref:how-to/index.adoc[Overview]
 * xref:how-to/nushell-setup.adoc[Nushell Setup]
 * xref:how-to/flutter-setup.adoc[Flutter Setup]
-* xref:how-to/tailwind-setup.adoc[Tailwind Setup]
-* xref:how-to/file-sync.adoc[File Sync]
-* xref:how-to/git-ignore-local.adoc[.gitignore.local]
-* xref:how-to/git-hooks.adoc[Git Hooks]
-* xref:how-to/git-lfs.adoc[Large Files & LFS]
-* xref:how-to/git-recovery.adoc[Git Recovery]
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages Custom Domain]
 * xref:how-to/git-release-workflow.adoc[Git Release Workflow]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent Agent Workspaces]
@@ -34,26 +28,17 @@
 
 .📚 Reference
 * xref:reference/index.adoc[Overview]
-* xref:reference/workspace-organization.adoc[Workspace Organization]
 * xref:reference/recommended-tools.adoc[Recommended Tools]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** Shells
 *** xref:reference/shells/nushell.adoc[Nushell]
 ** Languages
 *** xref:reference/languages/c.adoc[C Language]
-* xref:reference/git-management.adoc[Git Management]
 * xref:reference/git-performance.adoc[Git Performance]
-* xref:reference/github-actions-templates-vs-marketplace.adoc[Actions Templates vs Marketplace]
-* xref:reference/git-installation.adoc[Git Installation]
-* xref:reference/nodejs-env.adoc[Node.js Environment]
-* xref:reference/asciidoc-tools.adoc[AsciiDoc Tooling]
 * xref:reference/package-registries.adoc[Package Registries]
 * xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]
 * xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
-* xref:reference/gitignore-template-sources.adoc[Gitignore Template Sources]
-* xref:reference/vcs-provider-profiles.adoc[VCS Provider Profiles]
-* xref:reference/windows-eol-exceptions.adoc[Windows EOL Exceptions]
 
 .🧠 Explanation
 * xref:explanation/index.adoc[Overview]
@@ -84,7 +69,6 @@
 ***** xref:explanation/architecture/types/services.adoc[Services]
 *** xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
 *** xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms] (Dev-Centr docs playbook)
-*** xref:explanation/architecture/google-docs-apps-script.adoc[Apps Script Optimization]
 ** Infrastructure
 *** xref:explanation/infrastructure/nushell.adoc[Nushell (recommended shell)]
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
@@ -102,24 +86,16 @@
 *** xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
 *** xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]
 *** xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)]
-*** xref:explanation/infrastructure/ssh-keys.adoc[SSH Keys]
 *** xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
-*** xref:explanation/infrastructure/git-branching.adoc[Branching Strategies]
 *** xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 *** xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 *** xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
-*** xref:explanation/infrastructure/git-submodules.adoc[Submodules & Monorepos]
 *** xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics]
 *** xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]
-*** xref:explanation/infrastructure/self-hosting.adoc[Self-Hosting]
-*** xref:explanation/infrastructure/windows-testing-on-linux.adoc[Windows Testing on Linux]
 *** xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL Distro Comparison]
-*** xref:explanation/infrastructure/sync-by-gemini.adoc[Sync: Gemini]
-*** xref:explanation/infrastructure/sync-grok4.adoc[Sync: Grok4]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]
 *** xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]
 *** xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
 *** xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]
-

@@ -19,8 +19,8 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 | xref:how-to/composio-mcp-setup.adoc[Setup] · xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Stack fit] · xref:home::tools/composio.adoc[Hub]
 
 | **Context7**
-| Library / API docs MCP for agents (nav lists setup; keep docs fresh)
-| xref:how-to/context7-mcp-setup.adoc[Setup] (add/restore page if missing)
+| Library / API docs MCP for agents
+| xref:how-to/context7-mcp-setup.adoc[Setup]
 
 | **Agentic Email Integration**
 | Own-your-inbox Gmail (Himalaya + local agents; drafts-first)—not a generic connector plane
