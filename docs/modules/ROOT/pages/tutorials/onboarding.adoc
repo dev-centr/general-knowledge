@@ -12,3 +12,12 @@ Welcome. Use the How-to section for concrete setup; use Tutorials when you want 
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP setup] — library docs for agents
 
 Browse Explanation → Infrastructure for the “why” behind these choices.
+
+== Dev-Centr team members
+
+Org-specific agent setup (`agent-rules` org layer: `AGENTS.md`, junction, skills, org-over-personal precedence) is on the **member-only** sister site:
+
+* link:https://team.docs.devcentr.org[team.docs.devcentr.org] — start at *Org agent rules setup*
+* Repository: link:https://github.com/dev-centr/team-docs[`dev-centr/team-docs`] (private)
+
+Public portable rules remain on link:https://docs.devcentr.org/agent-rules/[Agent Rules].

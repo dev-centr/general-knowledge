@@ -1,6 +1,6 @@
 = Bootstrap Cursor skills
 :navtitle: Bootstrap Cursor skills
-:description: Install personal Cursor Agent Skills without clogging always-on User Rules—operator path or drop-the-recipe-into-a-permissive-agent path, with a writing-news-vs-blog worked example.
+:description: Install personal Cursor Agent Skills without clogging always-on User Rules—operator path or drop-the-recipe-into-a-permissive-agent path, with writing-news and writing-blog worked examples.
 
 Add a **Cursor Agent Skill** so agents load specialized instructions only when the task matches—not on every chat.
 
@@ -55,73 +55,49 @@ Then attach the source notes (export, gist, or chat). The agent should:
 
 Same end state as on-ramp A.
 
-[#worked-example-writing-news-vs-blog]
-== Worked example: `writing-news-vs-blog`
+[#worked-example-writing-news-and-blog]
+== Worked example: `writing-news` and `writing-blog`
 
-Recorded from a session that turned a Gemini news-vs-blog style export into a durable skill next to agent-rules.
+Separate skills — one per job — with descriptions that trigger on news work vs blog work. Canonical copies live in `dev-centr/agent-rules/skills/`.
 
 === Goal
 
-* News body copy: inverted pyramid, neutral attribution, no editorializing
-* Blog body copy: thesis early, conversational authority, anti-slop hygiene
-* Keep house **title** stance (news outward / blog inward) in thin rules
-* Keep **body** directives in a skill so they stay out of always-on context
+* **News** body: inverted pyramid, neutral attribution, outward shared record
+* **Blog** body: thesis early, conversational authority, inward framing
+* **Titles** stay in thin rules (`general/documentation.md`, org `agents/editorial/titles.md`)
+* **Bodies** in skills so they stay out of always-on context
 
-=== Steps taken
+=== Layout
 
-. Read the export and Cursor’s create-skill guidance (`~/.cursor/skills-cursor/create-skill/SKILL.md` is built-in reference; do not author there).
-. Chose **personal skill + versioned canonical copy**, not a full paste into User Rules.
-. Created canonical tree under the personal agent-rules fork::
-+
+[source,text]
 ----
-skills/writing-news-vs-blog/
+skills/writing-news/
   SKILL.md
-  news.md
-  blog.md
-  published-sources.md
+  body.md
+skills/writing-blog/
+  SKILL.md
+  body.md
 ----
-. Wrote `SKILL.md` as a **mode router** (news vs blog) with house stance and links to `news.md` / `blog.md`.
-. Incorporated published suite pointers (claude-blog, marketingskills, Kimi anti-slop, news researcher/writer) into `published-sources.md` as optional reference—local directives win unless asked otherwise.
-. Junctioned for Cursor discovery (Windows)::
-+
+
+Each `SKILL.md` `description` names WHAT and WHEN (third person) so Cursor triggers on the matching task — not a combined router skill.
+
+=== Junction (Windows)
+
 [source,powershell]
 ----
-cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-news-vs-blog" `
-  "C:\code\github.com\AMDphreak\.forks\agent-rules\skills\writing-news-vs-blog"
+$base = "$env:code\github.com\dev-centr\agent-rules\skills"
+cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-news" "$base\writing-news"
+cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-blog" "$base\writing-blog"
 ----
-. Added **thin** pointers only:
-+
-* `general/documentation.md` — body-copy section pointing at the skill
-* `general/global.md` — optional skill note (like talk-normal)
-* `RULES.md` / Cursor User Rule — one AI-ops line: skill path; do not paste full directives
-* `MAIN.md` — note that `skills/` is **not** part of MAIN context assembly
-
-. Left existing title guidance (news outward / blog inward) in Docs rules unchanged aside from the pointer.
-
-=== Layout reminder
-
-[cols="1,2", options="header"]
-|===
-| Location | Role
-
-| `~/.cursor/skills/<name>/`
-| What Cursor discovers (junction or copy)
-
-| `agent-rules/skills/<name>/` (or other repo)
-| Canonical, reviewable, shareable
-
-| User Rules / `RULES.md`
-| One-line pointer at most
-
-| `~/.cursor/skills-cursor/`
-| Built-in Cursor skills — do not author here
-|===
 
 === Verify
 
 . New agent chat.
-. Ask for a short **news** ship note and a short **blog** lede on the same topic.
-. Confirm the agent reads `writing-news-vs-blog` (or follows its directives) and the modes differ (no `you` / first person in news; thesis and `you` allowed in blog).
+. Ask for a short **news** ship note — should use `writing-news`.
+. Ask for a short **blog** lede on the same topic — should use `writing-blog`.
+. Modes differ: no first person in news; thesis and `you` allowed in blog.
+
+**Removed pattern:** `writing-news-vs-blog` router skill — split into two skills instead.
 
 == Skills vs always-on rules (checklist)
 

@@ -60,4 +60,4 @@ TIP: Always-on User Rules are expensive. Skills load when the task matches the s
 . **Verification** — new chat, skill discovery, one real tool or draft that proves the loop
 
 Worked example for a personal writing skill::
-xref:how-to/bootstrap-cursor-skills.adoc#worked-example-writing-news-vs-blog[Bootstrap Cursor skills — writing-news-vs-blog]
+xref:how-to/bootstrap-cursor-skills.adoc#worked-example-writing-news-and-blog[Bootstrap Cursor skills — writing-news and writing-blog]
