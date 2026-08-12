@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Access setup order: GitHub OAuth App, then IdP, then policy, then Access apps</title>
+  <desc id="desc">Do not create Access applications first. They deny by default. Register the GitHub OAuth App in GitHubs UI (no API), add it as a Zero Trust identity provider, write the Allow policy, then attach Access apps to both hostnames.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .n { font-family: "Segoe UI", system-ui, sans-serif; fill: #fff; font-size: 13px; font-weight: 700; }
+      .box { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .ui { fill: #1f3a2e; }
+      .t-inv { font-family: Georgia, "Times New Roman", serif; fill: #f7f3e8; }
+      .s-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #e8f0ea; font-size: 12px; }
+      .warn { fill: #f6e8e6; stroke: #7a3a32; stroke-width: 2; }
+      .arrow { stroke: #2c2c2c; stroke-width: 1.75; fill: none; marker-end: url(#m); }
+    </style>
+    <marker id="m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2c2c2c"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="960" height="420"/>
+  <text class="label" x="28" y="28">ORDER OF OPERATIONS  GitHub OAuth App has no API; Access apps deny by default</text>
+  <text class="t" x="28" y="58" font-size="22">IdP first, lock last</text>
+
+  <circle cx="48" cy="130" r="12" fill="#2c2c2c"/><text class="n" x="44" y="135">1</text>
+  <rect class="ui" x="68" y="96" width="190" height="88" rx="4"/>
+  <text class="t-inv" x="80" y="122" font-size="15">GitHub UI</text>
+  <text class="s-inv" x="80" y="144">Register OAuth App</text>
+  <text class="s-inv" x="80" y="164">No REST create</text>
+
+  <path class="arrow" d="M258,140 H286"/>
+
+  <circle cx="306" cy="130" r="12" fill="#2c2c2c"/><text class="n" x="302" y="135">2</text>
+  <rect class="box" x="326" y="96" width="190" height="88" rx="4"/>
+  <text class="t" x="338" y="122" font-size="15">Zero Trust IdP</text>
+  <text class="s" x="338" y="144">Paste Client ID + secret</text>
+  <text class="s" x="338" y="164">Authorize orgs + email</text>
+
+  <path class="arrow" d="M516,140 H544"/>
+
+  <circle cx="564" cy="130" r="12" fill="#2c2c2c"/><text class="n" x="560" y="135">3</text>
+  <rect class="box" x="584" y="96" width="160" height="88" rx="4"/>
+  <text class="t" x="596" y="122" font-size="15">Allow policy</text>
+  <text class="s" x="596" y="144">GitHub org = your-org</text>
+  <text class="s" x="596" y="164">Reuse on both hosts</text>
+
+  <path class="arrow" d="M744,140 H772"/>
+
+  <circle cx="792" cy="130" r="12" fill="#2c2c2c"/><text class="n" x="788" y="135">4</text>
+  <rect class="box" x="812" y="96" width="120" height="88" rx="4"/>
+  <text class="t" x="824" y="122" font-size="15">Access apps</text>
+  <text class="s" x="824" y="144">custom domain</text>
+  <text class="s" x="824" y="164">and pages.dev</text>
+
+  <rect class="warn" x="28" y="220" width="904" height="88" rx="4"/>
+  <text class="t" x="48" y="252" font-size="16">Do not start at step 4</text>
+  <text class="s" x="48" y="276">An Access application with no Allow policy is deny-by-default. The origin goes dark for everyone, including you, until an IdP and policy exist.</text>
+  <text class="s" x="48" y="296">Agents can create apps and policies via the Cloudflare API. They cannot register the GitHub OAuth App  GitHub has no create endpoint.</text>
+
+  <text class="label" x="28" y="340">SIMPLIFIED DIAGRAM  not a live screenshot</text>
+  <text class="s" x="28" y="372">Zero Trust may already have a One-time PIN identity provider. That is not GitHub org membership. Add GitHub as a second IdP; do not assume PIN is the gate you wanted.</text>
+  <text class="s" x="28" y="394">Cloudflare rejects POST /access/identity_providers type=github without client_id and client_secret.</text>
+</svg>

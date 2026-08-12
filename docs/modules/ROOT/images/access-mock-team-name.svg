@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="400" viewBox="0 0 840 400" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: Zero Trust team name is the OAuth Homepage and callback host</title>
+  <desc id="desc">Zero Trust Settings shows Team name. Homepage URL is https://team-name.cloudflareaccess.com. Callback adds /cdn-cgi/access/callback. This is not the docs hostname.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .field { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .mono { font-family: Consolas, "Cascadia Mono", monospace; fill: #1a1a1a; font-size: 13px; }
+      .ok { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 1.5; }
+      .no { fill: #f6e8e6; stroke: #7a3a32; stroke-width: 1.5; }
+    </style>
+  </defs>
+  <rect class="bg" width="840" height="400"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  Zero Trust ’ Settings ’ Team name and domain</text>
+
+  <rect class="win" x="24" y="48" width="792" height="328" rx="6"/>
+  <rect class="chrome" x="24" y="48" width="792" height="36" rx="6"/>
+  <rect class="chrome" x="24" y="66" width="792" height="18"/>
+  <text class="s" x="44" y="72">Zero Trust / Settings / Team name</text>
+
+  <text class="t" x="48" y="118" font-size="20">Team name</text>
+  <rect class="field" x="48" y="132" width="280" height="32" rx="3"/>
+  <text class="mono" x="60" y="153">&lt;team-name&gt;</text>
+
+  <text class="s" x="48" y="192">Auth domain (OAuth host)</text>
+  <rect class="ok" x="48" y="204" width="520" height="36" rx="3"/>
+  <text class="mono" x="60" y="226">https://&lt;team-name&gt;.cloudflareaccess.com</text>
+
+  <text class="s" x="48" y="268">GitHub Authorization callback URL</text>
+  <rect class="ok" x="48" y="280" width="720" height="36" rx="3"/>
+  <text class="mono" x="60" y="302">https://&lt;team-name&gt;.cloudflareaccess.com/cdn-cgi/access/callback</text>
+
+  <rect class="no" x="580" y="132" width="212" height="88" rx="3"/>
+  <text class="s" x="592" y="156">Not the docs host</text>
+  <text class="mono" x="592" y="178">team.docs.example.org</text>
+  <text class="s" x="592" y="200">wrong Homepage URL</text>
+</svg>

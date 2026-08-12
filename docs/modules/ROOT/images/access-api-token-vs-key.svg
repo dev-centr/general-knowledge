@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="380" viewBox="0 0 920 380" role="img" aria-labelledby="title desc">
+  <title id="title">Pages-scoped API token vs Global API Key for Access APIs</title>
+  <desc id="desc">A Cloudflare API token scoped to Pages can list Access apps as empty and still 403 on identity providers, organizations, and policies. Access writes need a Global API Key or a token with Access: Apps and Policies plus Access: Organizations / Identity Providers.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .ok { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 2; }
+      .no { fill: #f6e8e6; stroke: #7a3a32; stroke-width: 2; }
+      .box { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .mono { font-family: Consolas, "Cascadia Mono", monospace; fill: #1a1a1a; font-size: 12px; }
+    </style>
+  </defs>
+  <rect class="bg" width="920" height="380"/>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK  redacted API responses. Composio ACTIVE is not Access permission.</text>
+  <text class="t" x="28" y="58" font-size="22">Same account, two secrets</text>
+
+  <rect class="no" x="28" y="84" width="420" height="248" rx="4"/>
+  <text class="t" x="48" y="116" font-size="16">Pages / DNS API token</text>
+  <text class="s" x="48" y="140">Composio toolkit: Cloudflare API Key</text>
+  <text class="mono" x="48" y="168">GET /access/apps            ’ []  200</text>
+  <text class="mono" x="48" y="188">GET /access/identity_providers ’ 403</text>
+  <text class="mono" x="48" y="208">GET /access/organizations      ’ 403</text>
+  <text class="mono" x="48" y="228">GET /access/policies           ’ 403</text>
+  <text class="s" x="48" y="260">Error body (generic):</text>
+  <text class="mono" x="48" y="280">10000 Authentication error</text>
+  <text class="s" x="48" y="308">Fine for wrangler pages deploy.</text>
+
+  <rect class="ok" x="472" y="84" width="420" height="248" rx="4"/>
+  <text class="t" x="492" y="116" font-size="16">Global API Key + email</text>
+  <text class="s" x="492" y="140">Composio toolkit: Cloudflare</text>
+  <text class="mono" x="492" y="168">GET /access/apps               ’ 200</text>
+  <text class="mono" x="492" y="188">GET /access/identity_providers ’ 200</text>
+  <text class="mono" x="492" y="208">GET /access/organizations      ’ 200</text>
+  <text class="mono" x="492" y="228">POST GitHub IdP (with secrets) ’ 200</text>
+  <text class="s" x="492" y="260">Or a token with Access scopes:</text>
+  <text class="s" x="492" y="280">Apps and Policies · Identity Providers</text>
+  <text class="s" x="492" y="308">Use this for Access writes.</text>
+</svg>

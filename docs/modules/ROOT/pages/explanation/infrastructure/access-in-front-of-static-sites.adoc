@@ -100,6 +100,26 @@ If someone **joins** the org after a failed login, GitHub may keep serving the o
 
 If the GitHub organization **restricts third-party OAuth apps**, an org owner must approve this OAuth app or Access cannot see membership — people in the org still look like outsiders. Approve the app under the org’s **Third-party access** / OAuth app policy, then have readers sign in again.
 
+[[what-agents-cannot-automate]]
+== What agents cannot automate
+
+The GitHub OAuth App is a **dashboard** object. GitHub’s REST API has no “create OAuth App” route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
+
+.Human step, then API
+image::access-setup-order.svg[IdP first, lock last: GitHub UI OAuth App, then Zero Trust IdP, policy, Access apps]
+
+.GitHub OAuth Apps have no create API
+image::access-github-oauth-no-api.svg[POST OAuth App does not exist; Cloudflare IdP create needs client_id and client_secret]
+
+A **Pages-scoped API token** (typical CI secret for `wrangler pages deploy`) is a second trap. It may list Access applications as an empty array (`200`) and still return **`403 Authentication error`** on identity providers, organizations, and policies. Access writes need the **Global API Key** (plus account email) or a token that includes Access Apps/Policies and Identity Providers. In Composio those are two different toolkits: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio].
+
+.Same account, two secrets (redacted statuses)
+image::access-api-token-vs-key.svg[Pages token 403s on identity providers; Global API Key can write Access]
+
+Do not attach Access applications to live hostnames until the GitHub IdP and Allow policy exist. Applications deny by default.
+
+Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access].
+
 == What Access is not
 
 * Not Cloudflare **account** seats (people who edit DNS and Workers). Readers never need the dashboard.
@@ -108,7 +128,7 @@ If the GitHub organization **restricts third-party OAuth apps**, an org owner mu
 
 == Related
 
-* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — IdP, policies, seats, both hostnames, mock screens
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — IdP, policies, seats, both hostnames, mock screens, setup order, API credential split
 * xref:business-bootstrap::infra/index.adoc[Org infra] — DNS and platform resources
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] — public hostname; opposite of this pattern
 * xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]

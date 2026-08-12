@@ -38,7 +38,17 @@ Send a Global API Key as a Bearer token (or a token as `X-Auth-Key` without emai
 
 Architectural types (xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]): both of these dashboard secrets are **API keys** (long-lived). Cloudflare’s “API Token” is a **scoped API key**, not an OAuth access token. Composio may still file the first toolkit under an “OAuth” slug.
 
-Minimum scopes for DNS work on an API Token:: `Zone:Read` to list; `Zone:Edit` (DNS) to create/update records. Add **Access** scopes only if the agent must manage Access apps.
+Minimum scopes for DNS work on an API Token:: `Zone:Read` to list; `Zone:Edit` (DNS) to create/update records.
+
+Access is a **different permission set**. A Pages-scoped token (typical `wrangler pages deploy` secret) can look healthy and still fail Access:
+
+* `GET /accounts/{account_id}/access/apps` → `200` with an empty list
+* `GET …/access/identity_providers`, `…/organizations`, `…/policies` → **`403`** / `10000 Authentication error`
+
+Use the **Cloudflare** toolkit (Global API Key + email) for Access writes, or mint a token that includes **Access: Apps and Policies** and **Access: Organizations / Identity Providers**. Do not create Access applications until a GitHub identity provider exists (GitHub OAuth Apps have **no create API** — an operator pastes Client ID/secret). Order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] · xref:how-to/cloudflare-access-static-site.adoc#access-api-credentials[Agents and API credentials].
+
+.Pages-scoped token vs Global API Key (redacted)
+image::access-api-token-vs-key.svg[Pages API token 403s on Access IdPs; Global API Key can write Access]
 
 == ACTIVE is not a smoke test
 

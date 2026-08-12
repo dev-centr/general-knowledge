@@ -2,6 +2,14 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — Access setup order and API credentials
+
+* How-to: GitHub OAuth App is **UI-only** (no REST create); Zero Trust **team domain** is the OAuth Homepage/callback (not the docs host); Access apps **deny by default** — IdP and Allow policy first. xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Order of operations].
+* Agents: Pages-scoped API token may `GET /access/apps` as `200 []` and still **403** on identity providers and policies. Access writes need Global API Key (Composio **Cloudflare** toolkit) or an Access-scoped token. xref:how-to/cloudflare-access-static-site.adoc#access-api-credentials[Agents and API credentials] · xref:how-to/composio-cloudflare-connection.adoc[Composio Cloudflare connection].
+* Explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#what-agents-cannot-automate[What agents cannot automate].
+* New mocks: setup order, team name, token vs key, GitHub OAuth-no-API.
+* See xref:changelog-details/2026-08-12 - access-setup-order-and-api-credentials.adoc[Detailed changelog].
+
 == 2026-08-12 — How Access learns GitHub org membership
 
 * Explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership] — GitHub OAuth + `GET /user/orgs` at login; session cookie afterwards; third-party OAuth app approval; join-after-fail revoke.
