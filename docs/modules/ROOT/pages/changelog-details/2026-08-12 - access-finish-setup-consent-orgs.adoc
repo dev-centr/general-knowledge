@@ -1,0 +1,12 @@
+= 2026-08-12 — Finish setup browser order and multi-org consent
+
+Closed two operator surprises after Access was already live:
+
+* **Browser order:** open Zero Trust as a **Cloudflare** operator; keep **GitHub** unlocked in the same browser so Finish setup / Test / 2FA does not break the return. “Sign into GitHub first” alone is incomplete.
+* **Authorize org list:** GitHub shows every org the authorizer belongs to (`read:org`). Org-owned apps auto-grant the owning org. Orgs without OAuth App access restrictions may show as already granted — that does **not** let those orgs’ members through Access. The Allow policy still matches one org slug.
+
+Pages:
+
+* xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup]
+* xref:how-to/cloudflare-access-static-site.adoc#github-consent-other-orgs[Other orgs on the Authorize screen]
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]

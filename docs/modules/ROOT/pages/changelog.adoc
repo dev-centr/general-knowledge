@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — Finish setup browser order and multi-org consent
+
+* How-to: **Cloudflare** dashboard first, **GitHub** unlocked in the same browser for Finish setup / Test (not GitHub alone). xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].
+* Consent lists every org you belong to; unrestricted orgs may show “already granted” — that does not widen the Access Allow policy. xref:how-to/cloudflare-access-static-site.adoc#github-consent-other-orgs[Other orgs on Authorize] · xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[Explanation].
+* See xref:changelog-details/2026-08-12 - access-finish-setup-consent-orgs.adoc[Detailed changelog].
+
 == 2026-08-12 — Language recommendations
 
 * Explanation: a small language set (D, Rust, TypeScript, Julia, Lisp/Haskell) that culls the ecosystem; reconstructed C/D, C++/D, Julia/D/Java, and D/Rust comparisons (replacing dead Gemini shares).
@@ -10,8 +16,9 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-08-12 — Finish GitHub IdP setup (enterprise-setup 500)
 
-* After `POST` GitHub identity provider, Cloudflare may return a one-time `…/cdn-cgi/access/enterprise-setup/…` URL. It can **500**. Durable path: Zero Trust → Identity providers → GitHub → **Finish setup**, then **Test**.
+* After `POST` GitHub identity provider, Cloudflare may return a one-time `…/cdn-cgi/access/enterprise-setup/…` URL. It can **500**. Durable path: sign into **Cloudflare** Zero Trust → Identity providers → GitHub → **Finish setup**, with **GitHub** unlocked in the same browser, then **Test**.
 * How-to xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup]; explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#what-agents-cannot-automate[What agents cannot automate].
+* Follow-up the same day: xref:changelog-details/2026-08-12 - access-finish-setup-consent-orgs.adoc[browser order + multi-org consent].
 * See xref:changelog-details/2026-08-12 - access-github-finish-setup.adoc[Detailed changelog].
 
 == 2026-08-12 — Access setup order and API credentials

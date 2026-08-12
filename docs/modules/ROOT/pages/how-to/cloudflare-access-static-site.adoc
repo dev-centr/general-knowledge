@@ -90,7 +90,7 @@ One-time PIN is the fastest spike. GitHub org membership is the durable default 
 . Copy Client ID. Generate a Client secret (shown once).
 . In Zero Trust: **Integrations** → **Identity providers** → **Add** → **GitHub**. Paste the credentials and **Save**.
 . **Finish setup** (dashboard) — GitHub consent. See <<finish-github-setup>>. Agents that `POST` the IdP skip this UI and get a fragile one-time URL instead.
-. **Test** the login method. If GitHub 2FA is on, sign into GitHub first, then test.
+. **Test** the login method (same browser order as Finish setup).
 
 .Mock: GitHub OAuth App fields Access needs
 image::access-mock-github-oauth-app.svg[Simplified mock of GitHub Register a new OAuth application: Homepage URL and callback on the Zero Trust team domain]
@@ -106,8 +106,15 @@ image::access-mock-zero-trust-github-idp.svg[Simplified mock of Add GitHub IdP w
 
 Saving the IdP stores Client ID and secret. It does **not** grant Cloudflare `read:org`. Someone who can authorize the OAuth App must still click through GitHub.
 
-Dashboard (durable)::
-**Zero Trust** → **Integrations** → **Identity providers** → **GitHub** → **Finish setup**. GitHub asks for organizations and teams (read-only) and email (read-only). Then **Test**.
+Browser order (both accounts)::
+
+. Sign into the **Cloudflare** dashboard (Zero Trust lives there).
+. In the **same browser**, unlock **GitHub** (complete 2FA if prompted) so Authorize does not interrupt the return to Cloudflare.
+. Open **Zero Trust** → **Integrations** → **Identity providers** → **GitHub** → **Finish setup**.
+. On GitHub: Authorize organizations and teams (read-only) and email (read-only).
+. Back in Zero Trust: **Test**.
+
+“Sign into GitHub first” alone is not enough — you still open Zero Trust as a Cloudflare operator. GitHub unlocked in the same browser is the Cloudflare GitHub-IdP tip for 2FA.
 
 .Mock: Finish setup and Test on the GitHub login method
 image::access-mock-finish-setup.svg[Simplified mock of Identity providers list with Finish setup and Test on GitHub]
@@ -124,9 +131,22 @@ Treat that URL as optional. It is one-shot (a later `GET` on the IdP does not re
 .API enterprise-setup URL can 500 — use the dashboard
 image::access-api-enterprise-setup.svg[Redacted API message with enterprise-setup URL; 500 fallback to Finish setup]
 
-If the one-time URL 500s: ignore it. Use **Finish setup** in the dashboard, or open the protected hostname in a logged-out browser and complete GitHub Authorize there. Sign into GitHub first if 2FA is on.
+If the one-time URL 500s: ignore it. Use **Finish setup** in the dashboard, or open the protected hostname in a logged-out browser and complete GitHub Authorize there (with GitHub already unlocked if 2FA is on).
 
-If the GitHub org **restricts third-party OAuth apps**, an org owner must approve this app or Access cannot see membership. Why that matters: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership].
+[[github-consent-other-orgs]]
+==== Other orgs on the Authorize screen
+
+GitHub’s consent page lists **every organization you belong to**, not only the org in the Access Allow policy. Cloudflare asked for `read:org`; the screen is “which of *your* orgs may this OAuth App see?”
+
+* An **organization-owned** OAuth App is auto-granted for the **owning** org — expected.
+* Orgs that do **not** have link:https://docs.github.com/en/organizations/managing-oauth-access-to-your-organizations-data/about-oauth-app-access-restrictions[OAuth App access restrictions] may show as **already granted** when any member authorizes the app. That is GitHub’s default when restrictions are off (common on older orgs). Newer orgs often enable restrictions by default.
+* Extra orgs on that screen do **not** admit their members to the member docs. The Access policy still requires **GitHub organization = `your-org`**.
+* To stop auto-grant on an unrelated org: that org’s **Settings** → **Third-party access** → revoke the app, then enable OAuth App access restrictions. Deny / uncheck the org on Authorize when GitHub still offers a choice.
+
+.Mock: consent lists every org you belong to
+image::access-mock-github-consent-orgs.svg[Simplified mock: owning org granted; unrelated org already granted when restrictions are off; Access policy still one org]
+
+If the **gate** org **restricts** third-party OAuth apps, an org owner must approve this app or Access cannot see membership. Why that matters: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership].
 
 === One-time PIN as IdP
 

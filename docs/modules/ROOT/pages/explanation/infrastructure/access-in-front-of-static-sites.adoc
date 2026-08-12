@@ -100,6 +100,10 @@ If someone **joins** the org after a failed login, GitHub may keep serving the o
 
 If the GitHub organization **restricts third-party OAuth apps**, an org owner must approve this OAuth app or Access cannot see membership — people in the org still look like outsiders. Approve the app under the org’s **Third-party access** / OAuth app policy, then have readers sign in again.
 
+=== Consent lists every org you are in
+
+Authorize is not “pick the Access Allow org.” Cloudflare requested `read:org`, so GitHub shows **all** orgs on the operator’s (or reader’s) account. An org-owned OAuth App is auto-granted for its owner org. Orgs **without** OAuth App access restrictions may appear as already granted when any member authorizes the app — that does **not** put those orgs’ members through Access. The Allow policy still matches one org slug. Operator how-to: xref:how-to/cloudflare-access-static-site.adoc#github-consent-other-orgs[Other orgs on the Authorize screen].
+
 [[what-agents-cannot-automate]]
 == What agents cannot automate
 
@@ -118,7 +122,7 @@ image::access-api-token-vs-key.svg[Pages token 403s on identity providers; Globa
 
 Do not attach Access applications to live hostnames until the GitHub IdP and Allow policy exist. Applications deny by default.
 
-Creating the GitHub IdP via API is still not the last human step. `POST …/identity_providers` can succeed (`200`) and return `messages`: “Finish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`.” That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the dashboard: **Finish setup**, then **Test**. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step “Finish setup”).
+Creating the GitHub IdP via API is still not the last human step. `POST …/identity_providers` can succeed (`200`) and return `messages`: “Finish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`.” That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the **Cloudflare** dashboard (**Finish setup**, then **Test**), with **GitHub** already unlocked in the same browser so 2FA does not break the return. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step “Finish setup”).
 
 .API enterprise-setup can 500
 image::access-api-enterprise-setup.svg[Redacted API enterprise-setup message and 500 fallback]

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="460" viewBox="0 0 720 460" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: GitHub Authorize lists every org you belong to</title>
+  <desc id="desc">Consent is which of your orgs the OAuth App may see. Owning org expected. Unrelated org may show already granted when OAuth access restrictions are off. Access Allow policy still gates on one org slug.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .row { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .ok { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 1.5; }
+      .warn { fill: #f6e8e6; stroke: #7a3a32; stroke-width: 1.5; }
+      .btn { fill: #1f3a2e; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 13px; font-weight: 600; }
+      .hint { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 11px; }
+    </style>
+  </defs>
+  <rect class="bg" width="720" height="460"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  Authorize is not the Access Allow list</text>
+
+  <rect class="win" x="24" y="48" width="672" height="388" rx="6"/>
+  <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
+  <rect class="chrome" x="24" y="66" width="672" height="18"/>
+  <text class="s" x="44" y="72">github.com / login / oauth / authorize</text>
+
+  <text class="t" x="48" y="118" font-size="18">Authorize Team docs (Access)</text>
+  <text class="s" x="48" y="142">Organization access</text>
+
+  <rect class="ok" x="48" y="160" width="624" height="56" rx="3"/>
+  <text class="s" x="64" y="184">your-org  (owns the OAuth App)</text>
+  <text class="hint" x="64" y="204">Granted  expected for org-owned apps</text>
+
+  <rect class="warn" x="48" y="228" width="624" height="72" rx="3"/>
+  <text class="s" x="64" y="252">other-org  (you are a member)</text>
+  <text class="hint" x="64" y="272">Already granted  OAuth App access restrictions off</text>
+  <text class="hint" x="64" y="288">Does not admit other-org members to Access</text>
+
+  <rect class="row" x="48" y="316" width="624" height="40" rx="3"/>
+  <text class="s" x="64" y="340">Access Allow policy still: GitHub organization = your-org</text>
+
+  <rect class="btn" x="48" y="376" width="120" height="36" rx="4"/>
+  <text class="t-inv" x="76" y="398">Authorize</text>
+</svg>
