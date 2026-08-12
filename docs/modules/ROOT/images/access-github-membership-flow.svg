@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
   <title id="title">How Cloudflare Access learns GitHub org membership</title>
-  <desc id="desc">Visitor hits Access. With no session, Access sends them to GitHub OAuth. GitHub returns a token. Access lists the users orgs and matches the Allow policy. Allow sets a JWT cookie and the static HTML is served. Deny never reaches the origin.</desc>
+  <desc id="desc">Visitor hits Access. With no session, Access sends them to GitHub OAuth. GitHub returns a token. Access lists the user's orgs and matches the Allow policy. Allow sets a JWT cookie and the static HTML is served. Deny never reaches the origin.</desc>
   <defs>
     <style>
       .bg { fill: #f3f1ec; }
@@ -22,20 +23,20 @@
     </marker>
   </defs>
   <rect class="bg" width="960" height="520"/>
-  <text class="label" x="32" y="32">HOW IT WORKS  membership is asked at login, not stored as a Cloudflare member list</text>
-  <text class="t" x="32" y="62" font-size="22">GitHub answers are they in the org?</text>
+  <text class="label" x="32" y="32">HOW IT WORKS - membership is asked at login, not stored as a Cloudflare member list</text>
+  <text class="t" x="32" y="62" font-size="22">GitHub answers  are they in the org? </text>
 
   <circle cx="52" cy="118" r="12" fill="#2c2c2c"/><text class="n" x="48" y="123">1</text>
   <rect class="box" x="72" y="92" width="200" height="72" rx="4"/>
   <text class="t" x="88" y="122" font-size="16">Visitor</text>
-  <text class="s" x="88" y="144">GET team.docs&</text>
+  <text class="s" x="88" y="144">GET team.docs...</text>
 
   <path class="arrow" d="M272,128 H300"/>
 
   <circle cx="320" cy="118" r="12" fill="#2c2c2c"/><text class="n" x="316" y="123">2</text>
   <rect class="cf" x="340" y="92" width="220" height="72" rx="4"/>
   <text class="t" x="356" y="122" font-size="16">Cloudflare Access</text>
-  <text class="s" x="356" y="144">No JWT cookie ’ login</text>
+  <text class="s" x="356" y="144">No JWT cookie ' login</text>
 
   <path class="arrow" d="M560,128 H588"/>
 
@@ -50,7 +51,7 @@
   <rect class="box" x="628" y="208" width="300" height="88" rx="4"/>
   <text class="t" x="644" y="236" font-size="16">GitHub API</text>
   <text class="s" x="644" y="258">GET /user/orgs  (token from step 3)</text>
-  <text class="s" x="644" y="278">Returns [ your-org, & ]</text>
+  <text class="s" x="644" y="278">Returns [ your-org, ... ]</text>
 
   <path class="arrow" d="M628,252 H400"/>
 
@@ -64,7 +65,7 @@
 
   <rect class="ok" x="72" y="336" width="400" height="88" rx="4"/>
   <text class="t" x="88" y="364" font-size="16">Allow</text>
-  <text class="s" x="88" y="386">Set Access JWT cookie ’ fetch static HTML</text>
+  <text class="s" x="88" y="386">Set Access JWT cookie ' fetch static HTML</text>
   <text class="s" x="88" y="406">Lunr index is behind the same cookie</text>
 
   <rect class="no" x="500" y="336" width="428" height="88" rx="4"/>
@@ -73,6 +74,6 @@
   <text class="s" x="516" y="406">cannot see the org). Origin never runs.</text>
 
   <text class="s" x="32" y="456">Cloudflare does not keep a copy of the GitHub member roster. It asks GitHub at login, then trusts the session cookie until it expires.</text>
-  <text class="s" x="32" y="478">Kick someone from the org: they stay in until the cookie dies, unless you revoke them in Zero Trust ’ Users.</text>
-  <text class="label" x="32" y="506">SIMPLIFIED DIAGRAM  not a network capture</text>
+  <text class="s" x="32" y="478">Kick someone from the org: they stay in until the cookie dies, unless you revoke them in Zero Trust ' Users.</text>
+  <text class="label" x="32" y="506">SIMPLIFIED DIAGRAM - not a network capture</text>
 </svg>

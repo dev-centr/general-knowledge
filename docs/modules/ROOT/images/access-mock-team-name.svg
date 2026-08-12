@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="400" viewBox="0 0 840 400" role="img" aria-labelledby="title desc">
   <title id="title">Mock: Zero Trust team name is the OAuth Homepage and callback host</title>
   <desc id="desc">Zero Trust Settings shows Team name. Homepage URL is https://team-name.cloudflareaccess.com. Callback adds /cdn-cgi/access/callback. This is not the docs hostname.</desc>
@@ -16,7 +17,7 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="400"/>
-  <text class="label" x="24" y="28">SIMPLIFIED MOCK  Zero Trust ’ Settings ’ Team name and domain</text>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK - Zero Trust ' Settings ' Team name and domain</text>
 
   <rect class="win" x="24" y="48" width="792" height="328" rx="6"/>
   <rect class="chrome" x="24" y="48" width="792" height="36" rx="6"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="460" viewBox="0 0 720 460" role="img" aria-labelledby="title desc">
   <title id="title">Mock: GitHub Authorize lists every org you belong to</title>
   <desc id="desc">Consent is which of your orgs the OAuth App may see. Owning org expected. Unrelated org may show already granted when OAuth access restrictions are off. Access Allow policy still gates on one org slug.</desc>
@@ -18,7 +19,7 @@
     </style>
   </defs>
   <rect class="bg" width="720" height="460"/>
-  <text class="label" x="24" y="28">SIMPLIFIED MOCK  Authorize is not the Access Allow list</text>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK - Authorize is not the Access Allow list</text>
 
   <rect class="win" x="24" y="48" width="672" height="388" rx="6"/>
   <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
@@ -30,11 +31,11 @@
 
   <rect class="ok" x="48" y="160" width="624" height="56" rx="3"/>
   <text class="s" x="64" y="184">your-org  (owns the OAuth App)</text>
-  <text class="hint" x="64" y="204">Granted  expected for org-owned apps</text>
+  <text class="hint" x="64" y="204">Granted - expected for org-owned apps</text>
 
   <rect class="warn" x="48" y="228" width="624" height="72" rx="3"/>
   <text class="s" x="64" y="252">other-org  (you are a member)</text>
-  <text class="hint" x="64" y="272">Already granted  OAuth App access restrictions off</text>
+  <text class="hint" x="64" y="272">Already granted - OAuth App access restrictions off</text>
   <text class="hint" x="64" y="288">Does not admit other-org members to Access</text>
 
   <rect class="row" x="48" y="316" width="624" height="40" rx="3"/>

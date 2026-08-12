@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
   <title id="title">Mock: Cloudflare Access login with Continue with GitHub</title>
   <desc id="desc">What a logged-out visitor should see on the member hostname after Access is on. One primary button: Continue with GitHub. Not the Antora homepage.</desc>
@@ -16,7 +17,7 @@
     </style>
   </defs>
   <rect class="bg" width="720" height="420"/>
-  <text class="label" x="24" y="28">SIMPLIFIED MOCK  incognito visit after Access is on (success = this page, not HTML)</text>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK - incognito visit after Access is on (success = this page, not HTML)</text>
 
   <rect class="win" x="24" y="48" width="672" height="348" rx="6"/>
   <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>

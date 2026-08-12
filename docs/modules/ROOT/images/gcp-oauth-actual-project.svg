@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="460" viewBox="0 0 920 460" role="img" aria-labelledby="title desc">
   <title id="title">Actual Google Cloud model: project owns consent and quotas</title>
   <desc id="desc">One project shares consent screen, APIs, and quotas across multiple OAuth client IDs.</desc>
@@ -21,8 +22,8 @@
     </marker>
   </defs>
   <rect class="bg" width="920" height="460" rx="0"/>
-  <text class="label" x="32" y="36">ACTUAL  Project is the shared boundary</text>
-  <text class="t" x="32" y="68" font-size="22">One Project · shared consent · shared quotas</text>
+  <text class="label" x="32" y="36">ACTUAL - Project is the shared boundary</text>
+  <text class="t" x="32" y="68" font-size="22">One Project - shared consent - shared quotas</text>
 
   <rect class="you" x="32" y="120" width="170" height="200" rx="4"/>
   <text class="t-inv" x="48" y="160" font-size="18">You</text>
@@ -43,15 +44,15 @@
   <text class="s" x="286" y="242">Enabled APIs</text>
   <text class="s" x="286" y="262">API quotas</text>
   <text class="s" x="286" y="282">Scope union</text>
-  <text class="s" x="286" y="318">One branding · one revoke story</text>
+  <text class="s" x="286" y="318">One branding - one revoke story</text>
 
   <rect class="cred" x="560" y="180" width="280" height="64" rx="4"/>
-  <text class="s" x="576" y="206">Client ID A ’ rclone</text>
+  <text class="s" x="576" y="206">Client ID A ' rclone</text>
   <text class="s" x="576" y="226">does not isolate consent</text>
 
   <rect class="cred" x="560" y="266" width="280" height="64" rx="4"/>
-  <text class="s" x="576" y="292">Client ID B ’ Composio</text>
+  <text class="s" x="576" y="292">Client ID B ' Composio</text>
   <text class="s" x="576" y="312">shares the same screen</text>
 
-  <text class="s" x="32" y="430">Map ideal apps onto separate Projects when you need real isolation; lump only when you want one trust platform.</text>
+  <text class="s" x="32" y="430">Map ideal  apps  onto separate Projects when you need real isolation; lump only when you want one trust platform.</text>
 </svg>

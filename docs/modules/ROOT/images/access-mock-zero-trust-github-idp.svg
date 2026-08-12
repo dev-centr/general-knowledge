@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
   <title id="title">Mock: Add GitHub as a Zero Trust identity provider</title>
-  <desc id="desc">Zero Trust Integrations ’ Identity providers ’ GitHub. App ID and Client secret come from the GitHub OAuth App. Secrets are shown redacted.</desc>
+  <desc id="desc">Zero Trust Integrations ' Identity providers ' GitHub. App ID and Client secret come from the GitHub OAuth App. Secrets are shown redacted.</desc>
   <defs>
     <style>
       .bg { fill: #f3f1ec; }
@@ -17,7 +18,7 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="440"/>
-  <text class="label" x="28" y="28">SIMPLIFIED MOCK  Zero Trust ’ Integrations ’ Identity providers ’ Add ’ GitHub</text>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK - Zero Trust ' Integrations ' Identity providers ' Add ' GitHub</text>
 
   <rect class="win" x="28" y="48" width="784" height="368" rx="6"/>
   <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
@@ -42,5 +43,5 @@
 
   <rect class="btn" x="56" y="348" width="88" height="36" rx="4"/>
   <text class="t-inv" x="80" y="370">Save</text>
-  <text class="s" x="160" y="370">Then Finish setup ’ GitHub Authorize (orgs + email).</text>
+  <text class="s" x="160" y="370">Then Finish setup ' GitHub Authorize (orgs + email).</text>
 </svg>

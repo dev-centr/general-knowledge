@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="360" viewBox="0 0 840 360" role="img" aria-labelledby="title desc">
   <title id="title">GitHub OAuth Apps are registered in the UI; there is no create API</title>
   <desc id="desc">Agents can list org members and call Cloudflare Access APIs. They cannot POST a GitHub OAuth App. An operator registers it under the GitHub organization Developer settings, then pastes Client ID and secret into Zero Trust.</desc>
@@ -13,7 +14,7 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="360"/>
-  <text class="label" x="24" y="28">SIMPLIFIED MOCK  GitHub REST has no create OAuth App route</text>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK - GitHub REST has no  create OAuth App  route</text>
   <text class="t" x="24" y="58" font-size="22">Human step the agent cannot take</text>
 
   <rect class="no" x="24" y="84" width="384" height="232" rx="4"/>
@@ -24,15 +25,15 @@
   <text class="s" x="44" y="220">cannot mint Client ID + secret</text>
   <text class="s" x="44" y="252">Cloudflare then answers:</text>
   <text class="mono" x="44" y="276">missing_client_id_or_client_secret</text>
-  <text class="s" x="44" y="300">on POST &/access/identity_providers</text>
+  <text class="s" x="44" y="300">on POST .../access/identity_providers</text>
 
   <rect class="ok" x="432" y="84" width="384" height="232" rx="4"/>
   <text class="t" x="452" y="116" font-size="16">Operator in GitHub UI</text>
-  <text class="s" x="452" y="144">Org ’ Settings ’ Developer settings</text>
-  <text class="s" x="452" y="164">’ OAuth Apps ’ New</text>
+  <text class="s" x="452" y="144">Org ' Settings ' Developer settings</text>
+  <text class="s" x="452" y="164">' OAuth Apps ' New</text>
   <text class="s" x="452" y="196">Prefer organization-owned</text>
   <text class="s" x="452" y="216">(org controls the secret)</text>
   <text class="s" x="452" y="248">Paste Client ID + secret into</text>
-  <text class="s" x="452" y="268">Zero Trust ’ Identity providers</text>
+  <text class="s" x="452" y="268">Zero Trust ' Identity providers</text>
   <text class="s" x="452" y="300">Then an agent can finish Access.</text>
 </svg>

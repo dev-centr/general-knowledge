@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="500" viewBox="0 0 840 500" role="img" aria-labelledby="title desc">
   <title id="title">Mock: Access Allow policy using GitHub organization</title>
   <desc id="desc">Allow when login method is GitHub and GitHub organization equals your-org. Optional Require repeats the org so a personal GitHub login cannot sneak through a broad Include.</desc>
@@ -17,7 +18,7 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="500"/>
-  <text class="label" x="28" y="28">SIMPLIFIED MOCK  Zero Trust ’ Access ’ Applications ’ policy builder</text>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK - Zero Trust ' Access ' Applications ' policy builder</text>
 
   <rect class="win" x="28" y="48" width="784" height="428" rx="6"/>
   <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>

@@ -11,7 +11,7 @@ This is the Dev-Centr practitioner framing.
 Canonical connectome design for the same thesis:
 link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units].
 
-image::git-blobs-vs-graph-units.webp[Left: Git sees file blobs with mixed features. Right: a graph sees feature nodes and dependency edges projected onto files]
+image::git-blobs-vs-graph-units.webp[alt="Left: Git sees file blobs with mixed features. Right: a graph sees feature nodes and dependency edges projected onto files"]
 
 == The file is the wrong primary key
 
@@ -37,7 +37,7 @@ A common team failure mode:
 . Person B was editing an *unrelated* function in the same file.
 . B stashes, pulls, unstashes—and now negotiates a diff for a system they were not touching.
 
-image::team-sync-unrelated-hunk.webp[Stash-pull-pop collision on an unrelated function versus syntax-aware forward of a typo fix]
+image::team-sync-unrelated-hunk.webp[alt="Stash-pull-pop collision on an unrelated function versus syntax-aware forward of a typo fix"]
 
 The pain is not that B refuses to integrate.
 The pain is that *file identity forced a dependency that did not exist in the problem domain*.
@@ -59,7 +59,7 @@ The desirable end state for *provably boring* edits (identifier typo in one defi
 * Forward it into peer editions / in-flight work that share that id
 * Skip the conflict UI when interference analysis says the peer never touched that unit
 
-image::syntax-aware-autoforward.webp[Typo patch auto-forwards across editions; Git conflict markers as the contrast case]
+image::syntax-aware-autoforward.webp[alt="Typo patch auto-forwards across editions; Git conflict markers as the contrast case"]
 
 Behavioral changes stay in review.
 Broadcast hygiene should not require a merge ceremony.

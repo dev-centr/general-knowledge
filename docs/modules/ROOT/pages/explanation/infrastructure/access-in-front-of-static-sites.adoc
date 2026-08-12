@@ -8,7 +8,7 @@ This is the Dev-Centr pattern for member-only sister sites (and any other static
 
 == Why not an app
 
-A SolidStart (or Next, or Rails) rewrite would add sessions, user tables, and a deploy surface — and you would still put Access or equivalent in front of it. Antora already matches the public hub (Valentus, Lunr, AsciiDoc). Split **public hub vs member hub** at the playbook; do not split at the framework.
+A SolidStart (or Next, or Rails) rewrite would add sessions, user tables, and a deploy surface â€” and you would still put Access or equivalent in front of it. Antora already matches the public hub (Valentus, Lunr, AsciiDoc). Split **public hub vs member hub** at the playbook; do not split at the framework.
 
 Per-page ACLs inside one site are the exception. Two playbooks (public vs private) are cheaper than app-level auth.
 
@@ -54,17 +54,17 @@ Orange-cloud (proxied) DNS is required so Access can intercept the request. Grey
 
 Cloudflare does not scrape the GitHub org, and it does not keep a member roster of its own. **GitHub answers at login.** Access then stores that answer in a session cookie until the cookie expires.
 
-.GitHub answers “are they in the org?” at login
-image::access-github-membership-flow.svg[How Cloudflare Access learns GitHub org membership: OAuth, GET /user/orgs, Allow or Deny]
+.GitHub answers â€œare they in the org?â€ at login
+image::access-github-membership-flow.svg[alt="How Cloudflare Access learns GitHub org membership: OAuth, GET /user/orgs, Allow or Deny"]
 
 === Handshake
 
-. You register a **GitHub OAuth App** (org-owned is best) and paste its Client ID / secret into Zero Trust as the GitHub identity provider. Homepage and callback URLs are the Zero Trust team domain (`https://<team-name>.cloudflareaccess.com`), not the docs hostname. Mocks: xref:how-to/cloudflare-access-static-site.adoc#github-as-idp[How-to · GitHub as IdP].
-. The first **Authorize** grants Cloudflare Access **read-only organizations and teams** plus **read-only email**. Those are GitHub’s `read:org` and `user:email` scopes.
-. A visitor hits the member hostname. Access has no JWT cookie, so it sends them to GitHub’s login / consent screen.
+. You register a **GitHub OAuth App** (org-owned is best) and paste its Client ID / secret into Zero Trust as the GitHub identity provider. Homepage and callback URLs are the Zero Trust team domain (`https://<team-name>.cloudflareaccess.com`), not the docs hostname. Mocks: xref:how-to/cloudflare-access-static-site.adoc#github-as-idp[How-to Â· GitHub as IdP].
+. The first **Authorize** grants Cloudflare Access **read-only organizations and teams** plus **read-only email**. Those are GitHubâ€™s `read:org` and `user:email` scopes.
+. A visitor hits the member hostname. Access has no JWT cookie, so it sends them to GitHubâ€™s login / consent screen.
 . GitHub authenticates them and (if they approve) hands Access a short-lived token.
-. Access calls GitHub’s API with that token (`GET /user/orgs`, and teams when the policy asks) and builds an identity: GitHub user, email, org list, team list.
-. The Access **Allow** rule is “login method = GitHub **and** GitHub organization = `your-org`” (optionally a team). If `your-org` is in that list, Access sets a JWT cookie and the static HTML loads. If not, deny — the origin never runs.
+. Access calls GitHubâ€™s API with that token (`GET /user/orgs`, and teams when the policy asks) and builds an identity: GitHub user, email, org list, team list.
+. The Access **Allow** rule is â€œlogin method = GitHub **and** GitHub organization = `your-org`â€ (optionally a team). If `your-org` is in that list, Access sets a JWT cookie and the static HTML loads. If not, deny â€” the origin never runs.
 
 [source,mermaid]
 ----
@@ -73,12 +73,12 @@ sequenceDiagram
   participant A as Cloudflare Access
   participant G as GitHub
   participant O as Static origin
-  V->>A: GET https://team.docs…
+  V->>A: GET https://team.docsâ€¦
   A-->>V: Access login (no JWT)
   V->>G: OAuth (orgs + teams, email)
   G-->>A: token
   A->>G: GET /user/orgs
-  G-->>A: [your-org, …]
+  G-->>A: [your-org, â€¦]
   alt org matches Allow policy
     A-->>V: JWT cookie
     V->>O: GET (cookie)
@@ -88,49 +88,49 @@ sequenceDiagram
   end
 ----
 
-GitHub login **without** an org (or team) rule would let any GitHub user in. The organization selector is the gate. You do not need a GitHub organization to use GitHub as an IdP at all — but then you must gate on email or another selector.
+GitHub login **without** an org (or team) rule would let any GitHub user in. The organization selector is the gate. You do not need a GitHub organization to use GitHub as an IdP at all â€” but then you must gate on email or another selector.
 
 === Session vs live membership
 
-Access does **not** re-query GitHub on every page view. Membership is checked when the person signs in. Kick them from the org and they stay in until the Access session expires, unless you revoke the user under Zero Trust **Team & Resources** → **Users**.
+Access does **not** re-query GitHub on every page view. Membership is checked when the person signs in. Kick them from the org and they stay in until the Access session expires, unless you revoke the user under Zero Trust **Team & Resources** â†’ **Users**.
 
-If someone **joins** the org after a failed login, GitHub may keep serving the old (empty) org list until they revoke the OAuth app under GitHub **Settings** → **Applications** and sign in again. Cloudflare documents this under the GitHub IdP troubleshooting notes.
+If someone **joins** the org after a failed login, GitHub may keep serving the old (empty) org list until they revoke the OAuth app under GitHub **Settings** â†’ **Applications** and sign in again. Cloudflare documents this under the GitHub IdP troubleshooting notes.
 
 === When GitHub will not tell Access
 
-If the GitHub organization **restricts third-party OAuth apps**, an org owner must approve this OAuth app or Access cannot see membership — people in the org still look like outsiders. Approve the app under the org’s **Third-party access** / OAuth app policy, then have readers sign in again.
+If the GitHub organization **restricts third-party OAuth apps**, an org owner must approve this OAuth app or Access cannot see membership â€” people in the org still look like outsiders. Approve the app under the orgâ€™s **Third-party access** / OAuth app policy, then have readers sign in again.
 
 === Consent lists every org you are in
 
-Authorize is not “pick the Access Allow org.” Cloudflare requested `read:org`, so GitHub shows **all** orgs on the operator’s (or reader’s) account. An org-owned OAuth App is auto-granted for its owner org. Orgs **without** OAuth App access restrictions may appear as already granted when any member authorizes the app — that does **not** put those orgs’ members through Access. The Allow policy still matches one org slug. Operator how-to: xref:how-to/cloudflare-access-static-site.adoc#github-consent-other-orgs[Other orgs on the Authorize screen].
+Authorize is not â€œpick the Access Allow org.â€ Cloudflare requested `read:org`, so GitHub shows **all** orgs on the operatorâ€™s (or readerâ€™s) account. An org-owned OAuth App is auto-granted for its owner org. Orgs **without** OAuth App access restrictions may appear as already granted when any member authorizes the app â€” that does **not** put those orgsâ€™ members through Access. The Allow policy still matches one org slug. Operator how-to: xref:how-to/cloudflare-access-static-site.adoc#github-consent-other-orgs[Other orgs on the Authorize screen].
 
 [[what-agents-cannot-automate]]
 == What agents cannot automate
 
-The GitHub OAuth App is a **dashboard** object. GitHub’s REST API has no “create OAuth App” route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
+The GitHub OAuth App is a **dashboard** object. GitHubâ€™s REST API has no â€œcreate OAuth Appâ€ route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
 
 .Human step, then API
-image::access-setup-order.svg[IdP first, lock last: GitHub UI OAuth App, then Zero Trust IdP, policy, Access apps]
+image::access-setup-order.svg[alt="IdP first, lock last: GitHub UI OAuth App, then Zero Trust IdP, policy, Access apps"]
 
 .GitHub OAuth Apps have no create API
-image::access-github-oauth-no-api.svg[POST OAuth App does not exist; Cloudflare IdP create needs client_id and client_secret]
+image::access-github-oauth-no-api.svg[alt="POST OAuth App does not exist; Cloudflare IdP create needs client_id and client_secret"]
 
 A **Pages-scoped API token** (typical CI secret for `wrangler pages deploy`) is a second trap. It may list Access applications as an empty array (`200`) and still return **`403 Authentication error`** on identity providers, organizations, and policies. Access writes need the **Global API Key** (plus account email) or a token that includes Access Apps/Policies and Identity Providers. In Composio those are two different toolkits: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio].
 
 .Same account, two secrets (redacted statuses)
-image::access-api-token-vs-key.svg[Pages token 403s on identity providers; Global API Key can write Access]
+image::access-api-token-vs-key.svg[alt="Pages token 403s on identity providers; Global API Key can write Access"]
 
 Do not attach Access applications to live hostnames until the GitHub IdP and Allow policy exist. Applications deny by default.
 
-Creating the GitHub IdP via API is still not the last human step. `POST …/identity_providers` can succeed (`200`) and return `messages`: “Finish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`.” That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the **Cloudflare** dashboard (**Finish setup**, then **Test**), with **GitHub** already unlocked in the same browser so 2FA does not break the return. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step “Finish setup”).
+Creating the GitHub IdP via API is still not the last human step. `POST â€¦/identity_providers` can succeed (`200`) and return `messages`: â€œFinish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`.â€ That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the **Cloudflare** dashboard (**Finish setup**, then **Test**), with **GitHub** already unlocked in the same browser so 2FA does not break the return. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step â€œFinish setupâ€).
 
 .API enterprise-setup can 500
-image::access-api-enterprise-setup.svg[Redacted API enterprise-setup message and 500 fallback]
+image::access-api-enterprise-setup.svg[alt="Redacted API enterprise-setup message and 500 fallback"]
 
 .Dashboard Finish setup / Test
-image::access-mock-finish-setup.svg[Identity providers list with Finish setup and Test]
+image::access-mock-finish-setup.svg[alt="Identity providers list with Finish setup and Test"]
 
-Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] · xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].
+Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] Â· xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].
 
 == What Access is not
 
@@ -140,9 +140,9 @@ Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setu
 
 == Related
 
-* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — IdP, policies, seats, both hostnames, mock screens, setup order, API credential split
-* xref:business-bootstrap::infra/index.adoc[Org infra] — DNS and platform resources
-* xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] — public hostname; opposite of this pattern
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] â€” IdP, policies, seats, both hostnames, mock screens, setup order, API credential split
+* xref:business-bootstrap::infra/index.adoc[Org infra] â€” DNS and platform resources
+* xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] â€” public hostname; opposite of this pattern
 * xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
 * link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[Cloudflare: GitHub identity provider]
 * link:https://developers.cloudflare.com/cloudflare-one/access-controls/policies/[Cloudflare: Access policies]

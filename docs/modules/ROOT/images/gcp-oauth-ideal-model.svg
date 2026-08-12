@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="420" viewBox="0 0 920 420" role="img" aria-labelledby="title desc">
   <title id="title">Ideal mental model: account, apps, credentials</title>
   <desc id="desc">You authorize separate apps; each app owns its own consent and client credentials.</desc>
@@ -20,13 +21,13 @@
     </marker>
   </defs>
   <rect class="bg" width="920" height="420" rx="0"/>
-  <text class="label" x="32" y="36">IDEAL  apps are first-class</text>
-  <text class="t" x="32" y="68" font-size="22">Account ’ Apps ’ Credentials</text>
+  <text class="label" x="32" y="36">IDEAL - apps are first-class</text>
+  <text class="t" x="32" y="68" font-size="22">Account ' Apps ' Credentials</text>
 
   <rect class="you" x="32" y="110" width="200" height="220" rx="4"/>
   <text class="t-inv" x="52" y="150" font-size="18">You</text>
   <text class="s-inv" x="52" y="178">Google account</text>
-  <text class="s-inv" x="52" y="200">Drive · Gmail · Calendar</text>
+  <text class="s-inv" x="52" y="200">Drive - Gmail - Calendar</text>
   <text class="s-inv" x="52" y="238">Personal trust</text>
   <text class="s-inv" x="52" y="258">and your data</text>
 
@@ -35,7 +36,7 @@
   <g transform="translate(310,100)">
     <rect class="app" x="0" y="0" width="280" height="70" rx="4"/>
     <text class="t" x="16" y="28" font-size="16">App: Composio</text>
-    <text class="s" x="16" y="50">own consent · own scopes</text>
+    <text class="s" x="16" y="50">own consent - own scopes</text>
     <rect class="cred" x="300" y="8" width="220" height="54" rx="4"/>
     <text class="s" x="316" y="30">Client ID + secret</text>
     <text class="s" x="316" y="48">redirect URIs</text>
@@ -43,7 +44,7 @@
 
     <rect class="app" x="0" y="90" width="280" height="70" rx="4"/>
     <text class="t" x="16" y="118" font-size="16">App: rclone</text>
-    <text class="s" x="16" y="140">own consent · own scopes</text>
+    <text class="s" x="16" y="140">own consent - own scopes</text>
     <rect class="cred" x="300" y="98" width="220" height="54" rx="4"/>
     <text class="s" x="316" y="120">Client ID + secret</text>
     <text class="s" x="316" y="138">redirect URIs</text>
@@ -51,7 +52,7 @@
 
     <rect class="app" x="0" y="180" width="280" height="70" rx="4"/>
     <text class="t" x="16" y="208" font-size="16">App: personal script</text>
-    <text class="s" x="16" y="230">own consent · own scopes</text>
+    <text class="s" x="16" y="230">own consent - own scopes</text>
     <rect class="cred" x="300" y="188" width="220" height="54" rx="4"/>
     <text class="s" x="316" y="210">Client ID + secret</text>
     <text class="s" x="316" y="228">redirect URIs</text>

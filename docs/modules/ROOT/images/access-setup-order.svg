@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
   <title id="title">Access setup order: GitHub OAuth App, then IdP, then policy, then Access apps</title>
-  <desc id="desc">Do not create Access applications first. They deny by default. Register the GitHub OAuth App in GitHubs UI (no API), add it as a Zero Trust identity provider, write the Allow policy, then attach Access apps to both hostnames.</desc>
+  <desc id="desc">Do not create Access applications first. They deny by default. Register the GitHub OAuth App in GitHub's UI (no API), add it as a Zero Trust identity provider, write the Allow policy, then attach Access apps to both hostnames.</desc>
   <defs>
     <style>
       .bg { fill: #f3f1ec; }
@@ -20,7 +21,7 @@
     </marker>
   </defs>
   <rect class="bg" width="960" height="420"/>
-  <text class="label" x="28" y="28">ORDER OF OPERATIONS  GitHub OAuth App has no API; Access apps deny by default</text>
+  <text class="label" x="28" y="28">ORDER OF OPERATIONS - GitHub OAuth App has no API; Access apps deny by default</text>
   <text class="t" x="28" y="58" font-size="22">IdP first, lock last</text>
 
   <circle cx="48" cy="130" r="12" fill="#2c2c2c"/><text class="n" x="44" y="135">1</text>
@@ -56,9 +57,9 @@
   <rect class="warn" x="28" y="220" width="904" height="88" rx="4"/>
   <text class="t" x="48" y="252" font-size="16">Do not start at step 4</text>
   <text class="s" x="48" y="276">An Access application with no Allow policy is deny-by-default. The origin goes dark for everyone, including you, until an IdP and policy exist.</text>
-  <text class="s" x="48" y="296">Agents can create apps and policies via the Cloudflare API. They cannot register the GitHub OAuth App  GitHub has no create endpoint.</text>
+  <text class="s" x="48" y="296">Agents can create apps and policies via the Cloudflare API. They cannot register the GitHub OAuth App - GitHub has no create endpoint.</text>
 
-  <text class="label" x="28" y="340">SIMPLIFIED DIAGRAM  not a live screenshot</text>
+  <text class="label" x="28" y="340">SIMPLIFIED DIAGRAM - not a live screenshot</text>
   <text class="s" x="28" y="372">Zero Trust may already have a One-time PIN identity provider. That is not GitHub org membership. Add GitHub as a second IdP; do not assume PIN is the gate you wanted.</text>
   <text class="s" x="28" y="394">Cloudflare rejects POST /access/identity_providers type=github without client_id and client_secret.</text>
 </svg>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="520" viewBox="0 0 840 520" role="img" aria-labelledby="title desc">
   <title id="title">Mock: Register a GitHub OAuth App for Cloudflare Access</title>
   <desc id="desc">Simplified GitHub form. Homepage URL is the Zero Trust team domain. Authorization callback URL ends with /cdn-cgi/access/callback. Client secret is shown redacted.</desc>
@@ -17,7 +18,7 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="520"/>
-  <text class="label" x="28" y="28">SIMPLIFIED MOCK  not a live screenshot · GitHub ’ Settings ’ Developer settings ’ OAuth Apps</text>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK - not a live screenshot - GitHub ' Settings ' Developer settings ' OAuth Apps</text>
 
   <rect class="win" x="28" y="48" width="784" height="448" rx="6"/>
   <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
@@ -34,7 +35,7 @@
   <text class="s" x="56" y="236">Homepage URL</text>
   <rect class="field" x="56" y="244" width="720" height="32" rx="3"/>
   <text class="mono" x="68" y="265">https://&lt;team-name&gt;.cloudflareaccess.com</text>
-  <text class="hint" x="56" y="292">Zero Trust ’ Settings ’ Team name. Not the docs hostname.</text>
+  <text class="hint" x="56" y="292">Zero Trust ' Settings ' Team name. Not the docs hostname.</text>
 
   <text class="s" x="56" y="324">Authorization callback URL</text>
   <rect class="field" x="56" y="332" width="720" height="32" rx="3"/>
