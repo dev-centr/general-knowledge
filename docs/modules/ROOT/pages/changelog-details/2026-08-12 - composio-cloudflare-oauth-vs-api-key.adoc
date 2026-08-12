@@ -1,11 +1,11 @@
-= 2026-08-12 — Composio Cloudflare OAuth vs API key
+= 2026-08-12 — Composio Cloudflare connect forms
 
-Documented the duplicate Composio catalog trap for Cloudflare (and the general OAuth-app vs API-key-app pattern):
+Documented the duplicate Composio catalog trap for Cloudflare. **Correction:** do not trust catalog names or “OAuth” slugs — read the connect form.
 
-* **Cloudflare** toolkit wants OAuth; **Cloudflare API Key** wants email + Global API Key or a scoped API Token
-* Pasting a dashboard key into the OAuth app still shows **ACTIVE**, then Cloudflare returns **9109 Invalid access token**
-* No in-app refresh — disconnect and reconnect on the matching toolkit
-* **10502** after too many auth failures is a cool-down, not proof the new secret is wrong
+* **Cloudflare** asks verbatim for **Global API Key** + **Cloudflare account email**
+* **Cloudflare API Key** asks for a **key only** (Cloudflare API Token / Bearer)
+* Wrong pairing still shows **ACTIVE**, then Cloudflare **9109 Invalid access token**
+* **10502** after too many auth failures is a cool-down
 * Composio stores credentials server-side (laptop vs desktop is irrelevant)
 
 Pages:

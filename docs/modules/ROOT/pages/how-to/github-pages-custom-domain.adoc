@@ -135,11 +135,11 @@ Apex `opensh.org` on the `openshellorg/opensh.org` site can be healthy on GitHub
 
 * Prefer leaving DNS **grey-cloud** if you want GitHub Enforce HTTPS to stay meaningful.
 * If you turn the orange cloud back on for CDN/WAF features, treat Cloudflare as the TLS edge again; expect GitHub's HTTPS warning to return. Use Cloudflare "Always Use HTTPS" / HSTS there.
-* Automating grey-cloud via Cloudflare API is a reasonable follow-on; not required for the algorithm above. Agent path: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] (OAuth vs API Key toolkit — do not paste a dashboard key into the OAuth app).
+* Automating grey-cloud via Cloudflare API is a reasonable follow-on; not required for the algorithm above. Agent path: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] (match Global API Key + email vs key-only forms).
 
 == See also
 
-* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — OAuth vs API Key toolkit; 9109 / ACTIVE trap
+* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — Global API Key + email vs key-only; 9109 / ACTIVE trap
 * link:https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site[GitHub: Configuring a custom domain]
 * link:https://developers.cloudflare.com/dns/proxy-status/[Cloudflare: Proxy status (orange vs grey)]
 * xref:how-to/index.adoc[How-to guides overview]

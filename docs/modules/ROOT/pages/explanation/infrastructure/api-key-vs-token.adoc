@@ -112,9 +112,12 @@ If it was minted by a protocol and dies on a timer → **access token**.
 
 === Worked example: Composio’s two Cloudflares
 
-Composio lists **Cloudflare** (OAuth — wants an *access token* from consent) and **Cloudflare API Key** (wants a dashboard *key*: Global API Key + email, or a Cloudflare “API Token” which is a **scoped API key**).
+Composio lists **Cloudflare** and **Cloudflare API Key**. The names (and even an “OAuth” slug) do not match the connect screens:
 
-Pasting a Global API Key or API Token into the OAuth app is the costume problem in product form: the UI accepts the string, the connection shows **ACTIVE**, Cloudflare returns **`9109 Invalid access token`**. Fix: use the toolkit that matches the secret kind. How-to: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]. General duplicate-toolkit pattern: xref:how-to/composio-mcp-setup.adoc#duplicate-toolkits[Composio MCP setup].
+* **Cloudflare** asks for **Global API Key** + **account email** (classic `X-Auth-Email` / `X-Auth-Key`).
+* **Cloudflare API Key** asks for a **key only** — a Cloudflare **API Token** (scoped API key, Bearer).
+
+Put the Global API Key in the key-only app and Cloudflare returns **`9109 Invalid access token`** while Composio still shows **ACTIVE**. How-to: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]. General pattern: xref:how-to/composio-mcp-setup.adoc#duplicate-toolkits[read the form].
 
 == How this connects to secrets distribution
 

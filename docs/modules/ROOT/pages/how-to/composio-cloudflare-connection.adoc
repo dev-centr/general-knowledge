@@ -1,6 +1,6 @@
 = Connect Cloudflare in Composio
 :navtitle: Composio Cloudflare connection
-:description: Pick the right Composio Cloudflare toolkit—OAuth vs API key—and match Cloudflare credential types so agents can list zones and change DNS without 9109 errors.
+:description: Match Composio’s two Cloudflare apps to the actual connect forms—Global API Key + email vs key-only—so agents can list zones without 9109 errors.
 
 Use this when an agent needs **Cloudflare DNS, zones, or Access** through Composio (custom domains, `team.docs` hostnames, email MX, orange-cloud vs grey-cloud). MCP install is separate: xref:how-to/composio-mcp-setup.adoc[Composio MCP setup].
 
@@ -8,45 +8,35 @@ Credential vocabulary: xref:explanation/infrastructure/api-key-vs-token.adoc[API
 
 == Two Composio apps that look the same
 
-Composio lists **Cloudflare** and **Cloudflare API Key** as nearly identical catalog entries. They are **not** interchangeable.
+Composio lists **Cloudflare** and **Cloudflare API Key** as nearly identical catalog entries. Tool metadata may even call the first one “OAuth.” **Trust the connect form, not the catalog name.**
+
+Observed connect screens (verbatim fields):
 
 [cols="1,2,2", options="header"]
 |===
-| Composio toolkit | Auth it actually wants | Use when
+| Composio toolkit | Form asks for | Cloudflare secret that belongs there
 
 | **Cloudflare**
-| **OAuth** — browser consent; Composio stores a Cloudflare *access token*
-| You can complete Cloudflare’s OAuth screen. Prefer this if the grant stays healthy.
+| **Global API Key** and **Cloudflare account email**
+| My Profile → API Tokens → **Global API Key**, plus the login email for that account
 
 | **Cloudflare API Key**
-| Dashboard secret — **email + Global API Key**, *or* a Cloudflare **API Token** (scoped long-lived key), depending on the form fields
-| OAuth is broken, you already mint API tokens, or you need a machine-style key
+| **Key only** (no email field)
+| A Cloudflare **API Token** (scoped long-lived key from My Profile → API Tokens → Create Token). Not the Global API Key.
 |===
 
-Connect **one**. Do not paste a Global API Key or API Token into the **OAuth** app. The OAuth form will often accept the paste, mark the connection **ACTIVE**, and then every zone call fails with Cloudflare **`9109 Invalid access token`**. Composio has no “refresh” for that — the stored credential is the wrong *kind*. Disconnect and use the matching toolkit.
+Connect **one**. Putting a Global API Key into the key-only app (or an API Token into the email + Global API Key app) still shows **ACTIVE**, then zone calls fail with Cloudflare **`9109 Invalid access token`**. Composio has no refresh for a wrong-kind secret. Disconnect and reconnect on the matching toolkit.
 
-== Match the form to the Cloudflare secret
+== Why 9109 happens
 
-Cloudflare’s dashboard also overloads “token.” Decision test (ignore button labels):
+Cloudflare’s HTTP auth is two different schemes:
 
-[cols="1,2,2", options="header"]
-|===
-| What you copied | Architectural type | Composio field
+* **Global API Key** — `X-Auth-Email` + `X-Auth-Key`. Needs the email. That is the **Cloudflare** Composio app.
+* **API Token** — `Authorization: Bearer …`. No email. That is the **Cloudflare API Key** Composio app.
 
-| Browser OAuth / “Allow Composio”
-| Access token (handshake-issued)
-| **Cloudflare** (OAuth) only
+Send a Global API Key as a Bearer token (or a token as `X-Auth-Key` without email) and Cloudflare answers **9109**.
 
-| **API Token** from My Profile → API Tokens (scoped, lives until revoked)
-| Scoped API key (vendor still says “token”)
-| **Cloudflare API Key** — the single Bearer / API Token field
-
-| **Global API Key** + account **email**
-| Unscoped API key
-| **Cloudflare API Key** — email + Global API Key fields, not the OAuth app
-|===
-
-If the form asks for email + Global API Key, do not put an API Token in the key box (or vice versa).
+Architectural types (xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]): both of these dashboard secrets are **API keys** (long-lived). Cloudflare’s “API Token” is a **scoped API key**, not an OAuth access token. Composio may still file the first toolkit under an “OAuth” slug.
 
 Minimum scopes for DNS work on an API Token:: `Zone:Read` to list; `Zone:Edit` (DNS) to create/update records. Add **Access** scopes only if the agent must manage Access apps.
 
@@ -56,7 +46,7 @@ Composio **ACTIVE** means “we stored *something*.” It does not mean Cloudfla
 
 . After connect, run a real list: zones for the intended domain (e.g. `devcentr.org`).
 . Success: zone `id`, `name`, `status`.
-. **`9109 Invalid access token`** — wrong toolkit or wrong secret kind. Disconnect, reconnect on the other app, match the table above.
+. **`9109 Invalid access token`** — wrong toolkit or wrong secret kind. Match the table above.
 . **`10502 Too many authentication failures`** — Cloudflare rate-limited the bad attempts. Wait several minutes; do not hammer retries.
 
 Machine does not matter. Composio stores the credential server-side; a connection that “worked on the laptop” is the same object on every studio.
@@ -71,7 +61,7 @@ Typical next steps (confirm with the user before writes):
 
 == Related
 
-* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — duplicate-toolkit pattern for any vendor pair
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — duplicate-toolkit pattern; read the form
 * xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS]

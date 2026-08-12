@@ -74,27 +74,27 @@ Composio MCP auth is not the same as app auth. After the server is Active:
 When Composio (or a Google toolkit) asks for a **Client ID** and **Client Secret**, create them in Google Cloud as a dedicated trust platform—do not squash every personal CLI into one “Personal” Project. Steps: xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools]. Why the Console feels wrong: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].
 
 [#duplicate-toolkits]
-== Duplicate toolkits (OAuth vs API key)
+== Duplicate toolkits (read the form)
 
-Some vendors appear **twice** in Composio with almost the same name and icon. One entry is **OAuth**; the other is **API key / API token** (dashboard secret). They look identical in the catalog. They are not.
+Some vendors appear **twice** in Composio with almost the same name and icon. Catalog subtitles and tool slugs can say “OAuth” when the connect screen is a dashboard key. **Read the fields on the connect form.** They are the source of truth.
 
 [cols="1,2,2", options="header"]
 |===
-| Toolkit flavor | What to put in the form | What goes wrong if you mix them
+| What the form shows | What to paste | What goes wrong if you mix them
 
-| **OAuth** (often the shorter name, e.g. “Cloudflare”)
-| Complete the provider’s consent screen. Do **not** paste a Global API Key or API Token.
-| Composio may still show **ACTIVE**. Provider calls then fail (Cloudflare: **`9109 Invalid access token`**). There is no refresh — the stored credential is the wrong kind.
+| Email + **Global API Key** (or similar two-field key auth)
+| Those two values from the vendor dashboard
+| A scoped “API token” in the Global Key box (or a Global Key in a token-only box) can still show **ACTIVE**, then the vendor returns auth errors (Cloudflare: **`9109 Invalid access token`**).
 
-| **API Key** (often “… API Key”)
-| Match the fields: email + Global API Key, *or* a scoped API Token, as the form asks. See xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] — vendor “token” is usually a long-lived **key**.
-| Token in a Global-key field (or the reverse) also 9109s. Hammering retries can hit **`10502 Too many authentication failures`**; wait, then reconnect once.
+| **Key only** / Bearer / API Token
+| The scoped dashboard key that scheme expects
+| Same ACTIVE-then-fail pattern. Hammering retries can hit **`10502 Too many authentication failures`**; wait, then reconnect once.
 |===
 
 Connect **one** toolkit per vendor. **ACTIVE is not a smoke test** — run a real list/read before calling the connection done. Credentials live on Composio’s servers, not on a particular laptop.
 
-Worked example (DNS / Access)::
-xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
+Worked example (Cloudflare forms are the opposite of the catalog names)::
+xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** asks for Global API Key + account email; **Cloudflare API Key** asks for a key only.
 
 Typical starter set for “CI emails → fix → clear”:
 
