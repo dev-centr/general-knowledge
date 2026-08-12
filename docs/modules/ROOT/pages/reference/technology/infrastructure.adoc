@@ -24,3 +24,5 @@ Developer IaC mechanics stay here / in Explanation. **Vendor choice and personal
 * xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
 * xref:explanation/infrastructure/nushell.adoc[Nushell]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+* xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
+* xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]

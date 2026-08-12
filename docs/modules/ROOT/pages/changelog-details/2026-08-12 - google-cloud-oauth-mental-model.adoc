@@ -1,0 +1,16 @@
+= 2026-08-12 — Google Cloud OAuth mental model
+
+Documented the schema mismatch people hit when wiring personal Google OAuth (Composio, rclone, scripts):
+
+* Ideal nouns: account → app → credentials → grant
+* Actual Console: Project owns consent screen, API enablement, and quotas; Client IDs do not isolate those
+* Mapping rule: treat a Project as a *trust platform* stand-in for an app; lump Google toolkits under one Composio Project/Client ID; split unrelated products into separate Projects
+* Illustrations: `gcp-oauth-ideal-model.svg`, `gcp-oauth-actual-project.svg`, `gcp-oauth-ideal-to-project-map.svg`, plus Mermaid in the explanation page
+
+Pages:
+
+* xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Explanation]
+* xref:how-to/google-cloud-oauth-for-personal-tools.adoc[How-to]
+* xref:reference/google-cloud-oauth-concept-map.adoc[Reference]
+
+Navigation: How-to, Reference, Explanation → Infrastructure.

@@ -95,6 +95,8 @@ Do not force every SaaS call through Composio. Prefer the shell when you already
 == See also
 
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
+* xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth for personal tools]
+* xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:reference/recommended-tools.adoc[Recommended tools]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]

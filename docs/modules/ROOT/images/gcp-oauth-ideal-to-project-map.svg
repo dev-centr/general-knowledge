@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">Mapping ideal apps onto Google Cloud projects</title>
+  <desc id="desc">Composio maps to one project used as a trust platform; rclone maps to a separate project.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .ideal { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 2; }
+      .proj { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .dash { stroke: #2c2c2c; stroke-width: 1.5; stroke-dasharray: 6 4; fill: none; marker-end: url(#m); }
+    </style>
+    <marker id="m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2c2c2c"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="920" height="360"/>
+  <text class="label" x="32" y="36">MAP  keep ideal nouns; label Projects as stand-ins</text>
+  <text class="t" x="32" y="68" font-size="22">App ’ Project (trust platform)</text>
+
+  <text class="label" x="32" y="110">IDEAL</text>
+  <rect class="ideal" x="32" y="124" width="300" height="70" rx="4"/>
+  <text class="t" x="48" y="154" font-size="16">App: Composio</text>
+  <text class="s" x="48" y="176">one trust platform</text>
+  <rect class="ideal" x="32" y="220" width="300" height="70" rx="4"/>
+  <text class="t" x="48" y="250" font-size="16">App: rclone</text>
+  <text class="s" x="48" y="272">separate product</text>
+
+  <path class="dash" d="M340,159 H420"/>
+  <path class="dash" d="M340,255 H420"/>
+
+  <text class="label" x="430" y="110">GOOGLE CLOUD</text>
+  <rect class="proj" x="430" y="124" width="450" height="70" rx="4"/>
+  <text class="t" x="446" y="154" font-size="16">Project: composio-integrations</text>
+  <text class="s" x="446" y="176">one Client ID · grow scopes for Google toolkits</text>
+  <rect class="proj" x="430" y="220" width="450" height="70" rx="4"/>
+  <text class="t" x="446" y="250" font-size="16">Project: rclone-personal</text>
+  <text class="s" x="446" y="272">isolated consent · quotas · revoke</text>
+
+  <text class="s" x="32" y="330">A second Client ID inside one Project does not create a second apponly a second credential string.</text>
+</svg>

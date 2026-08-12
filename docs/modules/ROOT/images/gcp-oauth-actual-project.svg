@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="460" viewBox="0 0 920 460" role="img" aria-labelledby="title desc">
+  <title id="title">Actual Google Cloud model: project owns consent and quotas</title>
+  <desc id="desc">One project shares consent screen, APIs, and quotas across multiple OAuth client IDs.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .proj { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .shared { fill: #f3e6e2; stroke: #7a3e32; stroke-width: 1.75; }
+      .cred { fill: #eef2f6; stroke: #3a4a5a; stroke-width: 1.5; }
+      .you { fill: #1f3a2e; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .t-inv { font-family: Georgia, "Times New Roman", serif; fill: #f7f3e8; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .s-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #e8f0ea; font-size: 12px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .warn { font-family: "Segoe UI", system-ui, sans-serif; fill: #7a3e32; font-size: 13px; }
+      .arrow { stroke: #2c2c2c; stroke-width: 1.75; fill: none; marker-end: url(#m); }
+    </style>
+    <marker id="m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2c2c2c"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="920" height="460" rx="0"/>
+  <text class="label" x="32" y="36">ACTUAL  Project is the shared boundary</text>
+  <text class="t" x="32" y="68" font-size="22">One Project · shared consent · shared quotas</text>
+
+  <rect class="you" x="32" y="120" width="170" height="200" rx="4"/>
+  <text class="t-inv" x="48" y="160" font-size="18">You</text>
+  <text class="s-inv" x="48" y="188">Authorize</text>
+  <text class="s-inv" x="48" y="208">against the</text>
+  <text class="s-inv" x="48" y="228">project's</text>
+  <text class="s-inv" x="48" y="248">app name</text>
+
+  <path class="arrow" d="M210,220 H250"/>
+
+  <rect class="proj" x="250" y="100" width="620" height="280" rx="4"/>
+  <text class="t" x="270" y="132" font-size="18">Google Cloud Project</text>
+  <text class="warn" x="270" y="154">Consent, APIs, and quotas are project-wide</text>
+
+  <rect class="shared" x="270" y="170" width="260" height="180" rx="4"/>
+  <text class="t" x="286" y="198" font-size="15">Shared bundle</text>
+  <text class="s" x="286" y="222">OAuth consent screen</text>
+  <text class="s" x="286" y="242">Enabled APIs</text>
+  <text class="s" x="286" y="262">API quotas</text>
+  <text class="s" x="286" y="282">Scope union</text>
+  <text class="s" x="286" y="318">One branding · one revoke story</text>
+
+  <rect class="cred" x="560" y="180" width="280" height="64" rx="4"/>
+  <text class="s" x="576" y="206">Client ID A ’ rclone</text>
+  <text class="s" x="576" y="226">does not isolate consent</text>
+
+  <rect class="cred" x="560" y="266" width="280" height="64" rx="4"/>
+  <text class="s" x="576" y="292">Client ID B ’ Composio</text>
+  <text class="s" x="576" y="312">shares the same screen</text>
+
+  <text class="s" x="32" y="430">Map ideal apps onto separate Projects when you need real isolation; lump only when you want one trust platform.</text>
+</svg>

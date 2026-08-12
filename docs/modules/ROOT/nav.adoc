@@ -23,6 +23,7 @@
 * xref:how-to/wsl-setup.adoc[WSL Setup]
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills Setup]
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP Setup]
+* xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth (personal tools)]
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor Skills]
 * xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
 
@@ -30,6 +31,7 @@
 * xref:reference/index.adoc[Overview]
 * xref:reference/recommended-tools.adoc[Recommended Tools]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
+* xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 ** Shells
 *** xref:reference/shells/nushell.adoc[Nushell]
 ** Languages
@@ -76,6 +78,7 @@
 *** xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
 *** xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 *** xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
+*** xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud project mental model]
 *** xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 *** xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
 *** xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]

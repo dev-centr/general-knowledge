@@ -19,6 +19,7 @@ See the Reference section in the left navigation for workspace organization, Git
 
 * xref:reference/recommended-tools.adoc[Recommended tools]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] — MCP, connectors, control planes, rules (master list)
+* xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map] — ideal app nouns → Console objects
 
 == Technology
 

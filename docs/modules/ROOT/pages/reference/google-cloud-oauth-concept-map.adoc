@@ -1,0 +1,87 @@
+= Google Cloud OAuth concept map
+:navtitle: Google Cloud OAuth map
+:description: Ideal app-shaped concepts mapped to Google Cloud Console objects—for lookup while setting up personal OAuth clients.
+
+Quick map while you work in the Console. Narrative and diagrams: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]. Steps: xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools].
+
+== Ideal → Console
+
+[cols="1,1,2", options="header"]
+|===
+| Ideal concept | Closest GCP object | Notes
+
+| You / personal data
+| Google account (+ Workspace user)
+| Data lives on the account; Cloud Project is not your Drive root.
+
+| App (trust boundary)
+| **Project** used as a stand-in
+| One Project per platform or product you want to isolate.
+
+| App branding + permission story
+| **OAuth consent screen**
+| One per Project; shared by all Client IDs in that Project.
+
+| App credentials
+| **OAuth Client ID** (+ secret)
+| Redirect URIs (and optional JS origins) live here.
+
+| Permission set
+| Consent **scopes** + enabled **APIs**
+| Enable API *and* declare scopes; then re-authorize.
+
+| User grant
+| OAuth access / refresh tokens
+| Issued at authorize time; scope changes need a new grant.
+
+| Rate limits
+| Project quotas
+| Shared across Client IDs in the Project.
+
+| Real infrastructure (VMs, billing)
+| Project (literal)
+| Prefer not to mix with personal OAuth trust platforms.
+|===
+
+== Isolation cheat sheet
+
+[cols="1,1,1", options="header"]
+|===
+| Want | Same Project? | Same Client ID?
+
+| Multiple Google toolkits inside Composio
+| Yes
+| Yes (grow scopes)
+
+| Composio + rclone
+| No (recommended)
+| No
+
+| Second Client ID “for isolation” in one Project
+| Yes (not isolated)
+| Different IDs, **shared** consent/quota
+|===
+
+== Common Console fields
+
+[cols="1,2", options="header"]
+|===
+| Field | Personal-tool default
+
+| Application type
+| Web application (hosted callback)
+
+| Authorized JavaScript origins
+| Empty unless the tool documents origins
+
+| Authorized redirect URIs
+| Tool callback URL only (exact match)
+
+| User type
+| External (personal Gmail) / Internal (Workspace-only)
+|===
+
+== Related
+
+* xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]

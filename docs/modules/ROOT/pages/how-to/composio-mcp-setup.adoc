@@ -71,6 +71,8 @@ Composio MCP auth is not the same as app auth. After the server is Active:
 . If a toolkit shows *no active connection*, call the manage-connections flow and open the returned link.
 . Wait until the connection is Active before executing that toolkit’s tools.
 
+When Composio (or a Google toolkit) asks for a **Client ID** and **Client Secret**, create them in Google Cloud as a dedicated trust platform—do not squash every personal CLI into one “Personal” Project. Steps: xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools]. Why the Console feels wrong: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].
+
 Typical starter set for “CI emails → fix → clear”:
 
 * *Gmail* — find failure / expired / needs-attention mail; mark read when done
@@ -90,10 +92,13 @@ That loop is the intended product use—not “MCP listed in settings.”
 
 == Related
 
+* xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth for personal tools]
+* xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
+* xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 * xref:home::tools/composio.adoc[Docs hub: Composio]
 * xref:home::tools/agentic-email-integration.adoc[Agentic Email Integration] — Himalaya + local Cursor SDK path (own-your-inbox product)
 * link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[Essay: When the inbox is the CI pager]

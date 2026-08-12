@@ -2,6 +2,15 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — Google Cloud project mental model (OAuth)
+
+* Explanation xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries] — ideal app-shaped model vs Project-coupled consent/quotas; SVG + Mermaid maps.
+* How-to xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools] — trust-boundary first, Drive vs Workbench trap, Composio callback, grow scopes on one Client ID.
+* Reference xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map].
+* Cross-links from Composio how-to / explanation and infrastructure reference.
+* News essay on devcentr.org: link:https://devcentr.org/news/2026-08-12-when-a-cloud-project-pretends-to-be-an-app[When a Cloud project pretends to be an app].
+* See xref:changelog-details/2026-08-12 - google-cloud-oauth-mental-model.adoc[Detailed changelog].
+
 == 2026-08-10 — Context7 setup, AI docs writing, nav prune
 
 * How-to xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills setup]; explanation xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI].

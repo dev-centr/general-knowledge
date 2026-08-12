@@ -1,0 +1,111 @@
+= Set up Google Cloud OAuth for personal tools
+:navtitle: Google Cloud OAuth (personal tools)
+:description: Create a Google Cloud project, consent screen, and OAuth client for tools like Composio—without stuffing every personal CLI into one tangled project.
+
+Use this when a tool asks for a **Google Client ID** and **Client Secret** (Composio custom auth, rclone, personal scripts). For *why* Google couples consent and quotas to a Project, and how to map “app” thinking onto the Console, see xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].
+
+== Decide the trust boundary first
+
+Pick **one** of these before clicking Create Project:
+
+[cols="1,2", options="header"]
+|===
+| Goal | Project strategy
+
+| All Google toolkits inside **one** platform (e.g. Composio)
+| One dedicated Project + one OAuth Client ID. Reuse credentials; add APIs/scopes as you grow.
+
+| A separate product (rclone, hobby web app)
+| Its **own** Project. Do not share with Composio.
+
+| Fastest path on an existing “Personal” project
+| Allowed, but you share consent name, scope union, quotas, and revoke coupling. Prefer a dedicated Project.
+|===
+
+Recommended default for Composio:: a Project named like `composio-integrations`, used only as that trust platform.
+
+== Create the Project
+
+. Open link:https://console.cloud.google.com/[Google Cloud Console].
+. Project picker (top bar) → **New Project**.
+. Name it for the *trust platform*, not “Personal 3”.
+. Create and select it.
+
+== Enable the right APIs
+
+. **APIs & Services → Library**.
+. Enable only APIs the tool actually calls.
+
+Examples:
+
+* Drive / NotebookLM-style doc access → **Google Drive API**
+* Gmail toolkit → **Gmail API**
+* Calendar toolkit → **Google Calendar API**
+
+WARNING: Do **not** enable Vertex AI Workbench / Enterprise Notebooks for consumer NotebookLM or Drive document access. That API manages GCP Jupyter instances; it is unrelated.
+
+== Configure the OAuth consent screen
+
+. **APIs & Services → OAuth consent screen**.
+. User type: **External** for personal Google accounts; **Internal** only on a Workspace domain that fits.
+. App name: the trust platform people will see (e.g. `Composio Integrations`), not an old rclone label.
+. Support email and developer contact: yours.
+. **Scopes:** add what this platform needs now (see below).
+. **Test users:** add your Google address while the app is in Testing.
+. Save.
+
+=== Scopes (Drive example)
+
+Filter by Google Drive API and pick the least that still works:
+
+[cols="1,2", options="header"]
+|===
+| Scope | When
+
+| `https://www.googleapis.com/auth/drive.readonly`
+| Read-only context (search / read files)
+
+| `https://www.googleapis.com/auth/drive.file`
+| Only files the app creates or the user explicitly opens
+
+| `https://www.googleapis.com/auth/drive`
+| Full read/write when the agent must organize, upload, or edit
+|===
+
+Add Gmail / Calendar / Docs scopes the same way when you enable those toolkits.
+
+== Create the OAuth Client ID
+
+. **APIs & Services → Credentials → Create Credentials → OAuth client ID**.
+. Application type: **Web application** (typical for hosted callbacks such as Composio).
+. **Authorized JavaScript origins:** leave empty unless the tool documents browser origins. A lone `https://` value is invalid—delete it.
+. **Authorized redirect URIs:** add the tool’s callback exactly.
+
+Composio callback (confirm in Composio’s current docs if unsure)::
+`https://backend.composio.dev/api/v3.1/toolkits/auth/callback`
+
+. Create. Copy **Client ID** and **Client Secret** into the tool’s custom auth fields.
+
+== Paste into Composio (or similar)
+
+. In Composio, choose custom / bring-your-own OAuth for the Google toolkit.
+. Paste the same Client ID and Client Secret.
+. Complete the authorization link so Google issues a grant with the current scopes.
+
+For MCP install (marketplace / `mcp.json`), see xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]. App connection is separate from MCP server auth.
+
+== Add another Google toolkit later (same Client ID)
+
+When you want Gmail (or Calendar, …) on the **same** Composio trust platform:
+
+. Enable the API in **Library**.
+. Add scopes on the **same** consent screen → Save.
+. Reuse the **same** Client ID / secret in Composio.
+. **Re-authorize** the connection. Old tokens do not gain new scopes automatically.
+
+== Related
+
+* xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
+* xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
+* xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
