@@ -5,7 +5,8 @@
   <defs>
     <style>
       .bg { fill: #f3f1ec; }
-      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; }
+      .chrome-rule { stroke: #2c2c2c; stroke-width: 2; }
       .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
       .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
       .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
@@ -18,12 +19,13 @@
     </style>
   </defs>
   <rect class="bg" width="840" height="520"/>
-  <text class="label" x="28" y="28">SIMPLIFIED MOCK - not a live screenshot - GitHub ' Settings ' Developer settings ' OAuth Apps</text>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK - not a live screenshot - GitHub / Settings / Developer settings / OAuth Apps</text>
 
   <rect class="win" x="28" y="48" width="784" height="448" rx="6"/>
   <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
   <rect class="chrome" x="28" y="66" width="784" height="18"/>
-  <text class="s" x="48" y="72">github.com / settings / applications / new</text>
+  <line class="chrome-rule" x1="28" y1="84" x2="812" y2="84"/>
+  <text class="s" x="48" y="71">github.com / settings / applications / new</text>
 
   <text class="t" x="56" y="118" font-size="20">Register a new OAuth application</text>
   <text class="hint" x="56" y="138">Prefer an organization-owned app so the org controls the client secret.</text>
@@ -35,16 +37,16 @@
   <text class="s" x="56" y="236">Homepage URL</text>
   <rect class="field" x="56" y="244" width="720" height="32" rx="3"/>
   <text class="mono" x="68" y="265">https://&lt;team-name&gt;.cloudflareaccess.com</text>
-  <text class="hint" x="56" y="292">Zero Trust ' Settings ' Team name. Not the docs hostname.</text>
+  <text class="hint" x="56" y="292">Zero Trust / Settings / Team name. Not the docs hostname.</text>
 
   <text class="s" x="56" y="324">Authorization callback URL</text>
   <rect class="field" x="56" y="332" width="720" height="32" rx="3"/>
   <text class="mono" x="68" y="353">https://&lt;team-name&gt;.cloudflareaccess.com/cdn-cgi/access/callback</text>
 
   <text class="s" x="56" y="392">Client ID</text>
-  <text class="mono" x="140" y="392">Iv1.""""""""""""  (copy after register)</text>
+  <text class="mono" x="140" y="392">Iv1.xxxxxxxxxxxx  (copy after register)</text>
   <text class="s" x="56" y="414">Client secret</text>
-  <text class="mono" x="160" y="414">""""""""""""""""  (generate once; store in the vault)</text>
+  <text class="mono" x="160" y="414">xxxxxxxxxxxxxxxx  (generate once; store in the vault)</text>
 
   <rect class="btn" x="56" y="436" width="168" height="36" rx="4"/>
   <text class="t-inv" x="78" y="458">Register application</text>

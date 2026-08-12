@@ -6,7 +6,8 @@
     <style>
       .bg { fill: #f3f1ec; }
       .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
-      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; }
+      .chrome-rule { stroke: #2c2c2c; stroke-width: 2; }
       .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
       .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
       .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
@@ -22,7 +23,8 @@
   <rect class="win" x="24" y="48" width="792" height="328" rx="6"/>
   <rect class="chrome" x="24" y="48" width="792" height="36" rx="6"/>
   <rect class="chrome" x="24" y="66" width="792" height="18"/>
-  <text class="s" x="44" y="72">Zero Trust / Settings / Team name</text>
+  <line class="chrome-rule" x1="24" y1="84" x2="816" y2="84"/>
+  <text class="s" x="44" y="71">Zero Trust / Settings / Team name</text>
 
   <text class="t" x="48" y="118" font-size="20">Team name</text>
   <rect class="field" x="48" y="132" width="280" height="32" rx="3"/>
