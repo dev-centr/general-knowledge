@@ -1,0 +1,149 @@
+= Protect a static site with Cloudflare Access
+:navtitle: Cloudflare Access for static sites
+:description: Put Cloudflare Access in front of a static member site, choose an identity provider, and add people without creating Cloudflare dashboard users.
+
+Use this when a **static** site (Antora, MkDocs, Docusaurus, a Pages Direct Upload) must be member-only. Why the lock belongs at the edge: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
+
+Worked shape (Dev-Centr)::
+custom domain `team.docs.devcentr.org` (orange-cloud CNAME) plus the Pages hostname `*.pages.dev` for the same project.
+
+== Prerequisites
+
+* Zone on Cloudflare; hostname **proxied** (orange cloud)
+* Static origin already serving HTTPS (Cloudflare Pages custom domain, or another origin behind the same zone)
+* A Zero Trust / Cloudflare One organization on the **same** account as the zone (dashboard: **Zero Trust**)
+
+Free Zero Trust is enough for small orgs (on the order of **50 seats**). A seat is consumed on first Access login, not when you type an email into a policy.
+
+== Protect every public hostname
+
+Access on the pretty domain is not enough. Also cover:
+
+* The custom domain (`team.docs.example.org`)
+* The Pages project hostname (`project.pages.dev`)
+* Preview / alias hosts (`*.project.pages.dev`) if those URLs exist
+
+Create one Access application per hostname (or a wildcard application where Cloudflare allows it). Same Allow policy on all of them.
+
+== Create the Access application
+
+. Open **Zero Trust** → **Access** → **Applications** → **Add an application**.
+. Choose **Self-hosted**.
+. Application name: something operators will recognize (`Team docs`).
+. Public hostname: the custom domain (and repeat for `pages.dev`).
+. Session duration: hours to a day is typical for docs; shorter if the content is sensitive.
+
+Leave the application **deny by default**. Nobody gets in until they match an Allow policy.
+
+== Choose how people prove who they are
+
+You do **not** create a username in Cloudflare for each reader. They sign in with an identity provider (IdP). Pick one primary method so the login page is not a menu.
+
+[cols="1,2,2",options="header"]
+|===
+| IdP | Who already has an account | Policy you write
+
+| **GitHub** (default for forge-centric orgs)
+| A GitHub user. You invite them to the **GitHub organization** (or a team).
+| Allow when login method is GitHub **and** GitHub organization is `your-org` (optionally require a team).
+
+| **Google**
+| A Google account, or a Google Workspace user you created in Admin.
+| Allow emails ending in `@yourdomain` or an allowlist of addresses.
+
+| **One-time PIN**
+| An inbox. No GitHub/Google app to register.
+| Allow specific email addresses. Cloudflare emails a 10-minute PIN; it only sends mail if the address is already allowed.
+|===
+
+One-time PIN is the fastest spike. GitHub org membership is the durable default when the same people already have forge access.
+
+=== GitHub as IdP
+
+. In GitHub: **Settings** → **Developer settings** → **OAuth Apps** → **Register a new application** (prefer an **organization-owned** app).
+. Homepage URL: `https://<team-name>.cloudflareaccess.com`
+. Authorization callback URL: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/callback`
++
+`<team-name>` is the Zero Trust team name (**Zero Trust** → **Settings** → **Team name**).
+. Copy Client ID and Client secret.
+. In Zero Trust: **Integrations** → **Identity providers** → **Add** → **GitHub**. Paste the credentials and finish the GitHub authorization (orgs and email, read-only).
+. **Test** the login method. If GitHub 2FA is on, sign into GitHub first, then test.
+
+=== One-time PIN as IdP
+
+. **Integrations** → **Identity providers** → **Add** → **One-time PIN**.
+. You still need an Allow policy that lists emails. Cloudflare will not send a PIN to an address the policy would reject.
+
+== Allow policy
+
+. On the application, **Add a policy** (or attach an existing one).
+. Action: **Allow**.
+. Include (GitHub path): login method **GitHub**, and **GitHub organization** = your org slug.
+. Include (PIN / Google path): **Emails** or **Emails ending in**.
+. Optional **Require**: the same GitHub org, so a personal GitHub login that is not in the org cannot sneak through an overly broad Include.
+
+Reuse the policy (or an Access Group of emails) on the `pages.dev` application so you do not maintain two allowlists.
+
+== Set up user accounts
+
+This is the part that is easy to overbuild.
+
+=== Readers (the member site)
+
+[cols="1,2",options="header"]
+|===
+| You do | You do not
+
+| Invite them to the **GitHub org** (Member is enough) — or add their email to the Access policy
+| Add them as a **Cloudflare account member** (that is for people who change DNS, Pages, and Workers)
+
+| Tell them the URL. First visit: Access login → GitHub / Google / PIN → the docs
+| Create an Antora, Pages, or “docs app” user table
+
+| After first successful login they appear under Zero Trust **Team & Resources** → **Users** and consume **one seat**
+| Hand them the Global API Key or a Pages deploy token
+|===
+
+GitHub path, in order:
+
+. They create a GitHub account if they do not have one (github.com signup — not Cloudflare).
+. An org owner invites them to `your-org` (and to a team if the policy requires a team).
+. They accept the invite.
+. They open the member hostname and complete GitHub OAuth for the Access app (once).
+. Later visits use the Access session cookie until it expires.
+
+PIN path: add the address to the Allow policy, send them the URL, they request a code. No dashboard user is created for them unless they are also an operator.
+
+=== Operators (Cloudflare dashboard)
+
+Only people who must edit zones, Pages projects, or Access policies need a Cloudflare **account invitation** (Super Administrator / appropriate role). That list is much smaller than “everyone who reads team docs.”
+
+=== Removing someone
+
+. GitHub path: remove them from the org (or the required team). Existing Access cookies last until the session expires; you can revoke the user in Zero Trust **Users** if you need them out immediately.
+. PIN / email path: delete the address from the policy (and revoke the Zero Trust user).
+. Do not leave them in the GitHub org if org membership is the only gate.
+
+=== Seats
+
+* First Access authentication creates an active Zero Trust user and takes a seat.
+* One person, many devices, still one seat.
+* Free plan: further logins are **blocked** when seats are full (not silently billed). Reclaim seats by removing users or enabling inactivity expiry (months, configurable).
+* CI that must fetch the protected site should use an **Access service token**, not a human seat.
+
+== Check that it is actually closed
+
+. Incognito / logged-out browser: `https://your.custom.domain/` → Access login, **not** HTML.
+. Same for `https://your-project.pages.dev/`.
+. A member who matches the policy gets through and can use Lunr search (the index is behind Access too).
+. A GitHub user **not** in the org (or an email not on the list) sees the Access deny page.
+
+== Related
+
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
+* xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] — public sites; grey-cloud for GitHub’s certificate
+* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — DNS/Access API credentials for agents
+* xref:business-bootstrap::infra/index.adoc[Org infra]
+* link:https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/[Cloudflare: self-hosted Access application]
+* link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[Cloudflare: GitHub identity provider]
+* link:https://developers.cloudflare.com/cloudflare-one/team-and-resources/users/seat-management/[Cloudflare: seat management]

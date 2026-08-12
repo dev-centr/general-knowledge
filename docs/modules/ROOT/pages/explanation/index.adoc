@@ -18,7 +18,7 @@ Explanation pages teach **why**. Start with architecture if you are building a p
 
 == Infrastructure
 
-Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model], xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token], xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries], and related topics live under Explanation → Infrastructure in the nav.
+Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model], xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token], xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries], xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites], and related topics live under Explanation → Infrastructure in the nav.
 
 Featured agent / studio topics:
 

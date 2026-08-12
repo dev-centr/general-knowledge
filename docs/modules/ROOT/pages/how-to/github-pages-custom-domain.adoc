@@ -140,6 +140,7 @@ Apex `opensh.org` on the `openshellorg/opensh.org` site can be healthy on GitHub
 == See also
 
 * xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — Global API Key + email vs key-only; 9109 / ACTIVE trap
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — member-only hostnames; opposite of public Pages
 * link:https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site[GitHub: Configuring a custom domain]
 * link:https://developers.cloudflare.com/dns/proxy-status/[Cloudflare: Proxy status (orange vs grey)]
 * xref:how-to/index.adoc[How-to guides overview]

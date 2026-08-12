@@ -65,4 +65,5 @@ Typical next steps (confirm with the user before writes):
 * xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS]
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access]
 * xref:business-bootstrap::infra/reference/pulumi-cloudflare-email-checklist.adoc[Pulumi + Cloudflare email checklist]

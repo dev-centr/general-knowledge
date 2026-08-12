@@ -24,4 +24,4 @@ See the Reference section in the left navigation for workspace organization, Git
 == Technology
 
 * xref:reference/technology/index.adoc[Technology overview]
-* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC lookup + links to Business Bootstrap email/DNS gotchas
+* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC lookup, member-hostname Access, Business Bootstrap email/DNS gotchas

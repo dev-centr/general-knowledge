@@ -1,5 +1,5 @@
 = Infrastructure (reference)
-:description: Short infrastructure lookup — IaC, shells, secrets, and links to org email DNS patterns.
+:description: Short infrastructure lookup — IaC, shells, secrets, member-hostname Access, and links to org email DNS patterns.
 :navtitle: Infrastructure
 
 == Prefer
@@ -7,6 +7,14 @@
 * **Pulumi** for org-level `infra` repos (DNS, shared platform hosts)
 * **Nushell** as the recommended agent-friendly shell (see Explanation)
 * Secrets via vault → ESC / host env — never commit tokens
+
+== Member-only static hostnames
+
+Do not rewrite Antora as an app. Put **Cloudflare Access** on the orange-cloud hostname (and on `*.pages.dev`). Reader identities live in GitHub / Google / email PIN — not Cloudflare dashboard users.
+
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access]
+* Org-ops placement: xref:business-bootstrap::infra/index.adoc[Org infra]
 
 == Org email + DNS (business ops)
 
@@ -25,5 +33,6 @@ Developer IaC mechanics stay here / in Explanation. **Vendor choice and personal
 * xref:explanation/infrastructure/nushell.adoc[Nushell]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
 * xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
 * xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]

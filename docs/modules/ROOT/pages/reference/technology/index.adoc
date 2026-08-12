@@ -6,7 +6,7 @@ Technology Reference is for **quick retrieval**. Deep rationale lives under Expl
 
 == Categories
 
-* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC, shells, secrets hubs, org DNS pointers
+* xref:reference/technology/infrastructure.adoc[Infrastructure] — IaC, member-hostname Access, org DNS pointers
 
 == Related
 

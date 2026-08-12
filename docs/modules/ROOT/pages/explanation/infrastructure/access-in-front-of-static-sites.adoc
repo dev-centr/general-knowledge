@@ -1,0 +1,63 @@
+= Access in front of static sites
+:navtitle: Access in front of static sites
+:description: Why member-only docs stay static (Antora, MkDocs, Docusaurus) and put Cloudflare Access on the hostname instead of rewriting the site as an app.
+
+Static documentation generators do not log people in. They emit HTML, CSS, and a search index. **Privacy is a hosting job:** put an identity-aware reverse proxy on the hostname so unauthenticated requests never see those files.
+
+This is the Dev-Centr pattern for member-only sister sites (and any other static host that must not be world-readable). Task steps: xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access].
+
+== Why not an app
+
+A SolidStart (or Next, or Rails) rewrite would add sessions, user tables, and a deploy surface — and you would still put Access or equivalent in front of it. Antora already matches the public hub (Valentus, Lunr, AsciiDoc). Split **public hub vs member hub** at the playbook; do not split at the framework.
+
+Per-page ACLs inside one site are the exception. Two playbooks (public vs private) are cheaper than app-level auth.
+
+== Where the lock sits
+
+[cols="1,2",options="header"]
+|===
+| Layer | Job
+
+| Git forge
+| Source stays in a **private** repo. That does not protect the **built** site.
+
+| CI
+| Build on the private repo (GitHub Actions still runs on free-plan private repos). Direct-upload the `build/` tree to the host.
+
+| Host
+| Cloudflare Pages, object storage, or any origin. Treat `*.pages.dev` (and preview URLs) as public unless they are in the same Access policy as the custom domain.
+
+| Edge
+| **Cloudflare Access** (Zero Trust) on the orange-cloud hostname. SSO cookie; HTML never leaves the edge for strangers.
+
+| Identity
+| GitHub org, Google Workspace / Google accounts, or email one-time PIN. Access does **not** invent a second password database.
+|===
+
+[source,mermaid]
+----
+flowchart LR
+  visitor[Visitor]
+  access[Cloudflare Access]
+  idp[IdP: GitHub / Google / OTP]
+  origin[Static origin]
+  visitor --> access
+  access -->|"no session"| idp
+  idp -->|"Allow policy"| access
+  access -->|"JWT cookie"| origin
+----
+
+Orange-cloud (proxied) DNS is required so Access can intercept the request. Grey-cloud to GitHub Pages cannot do this; that path is for **public** sites (xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain]).
+
+== What Access is not
+
+* Not Cloudflare **account** seats (people who edit DNS and Workers). Readers never need the dashboard.
+* Not encryption of the AsciiDoc in git. Do not put secrets in docs; Access is a gate.
+* Not a substitute for keeping the aggregator repo private.
+
+== Related
+
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — IdP, policies, seats, both hostnames
+* xref:business-bootstrap::infra/index.adoc[Org infra] — DNS and platform resources
+* xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] — public hostname; opposite of this pattern
+* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]

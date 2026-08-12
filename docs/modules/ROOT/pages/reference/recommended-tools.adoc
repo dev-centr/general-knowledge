@@ -46,6 +46,7 @@ DevCentr lets you pick between those two (Appearance in the top bar). Install th
 == Documentation
 
 * AsciiDoc + Antora for Dev-Centr published docs (see org publishing guides).
+* **Cloudflare Access** for member-only static sister sites (not an app rewrite). xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Pattern] · xref:how-to/cloudflare-access-static-site.adoc[how-to (accounts + IdP)].
 
 == Business ops (cross-link)
 

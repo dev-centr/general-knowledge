@@ -1,0 +1,16 @@
+= 2026-08-12 — Access in front of static sites
+
+Documented the standard pattern for member-only static documentation: keep Antora (or any static generator), Direct Upload from private CI, put **Cloudflare Access** on the orange-cloud hostname **and** the Pages `*.pages.dev` host.
+
+Reader “accounts”:
+
+* GitHub org invite (default for forge-centric orgs), or
+* Google / Workspace, or
+* email one-time PIN allowlist
+
+Not Cloudflare dashboard members. First Access login consumes a Zero Trust seat (~50 on the free plan).
+
+Pages:
+
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access]

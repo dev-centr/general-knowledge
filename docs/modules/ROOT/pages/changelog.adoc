@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — Access in front of static sites
+
+* Explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites] — member-only docs stay Antora; Cloudflare Access on the hostname, not an app rewrite.
+* How-to xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — GitHub / Google / one-time PIN; reader accounts are org invites or email allowlists (not Cloudflare dashboard users); cover `*.pages.dev`; seats.
+* See xref:changelog-details/2026-08-12 - access-in-front-of-static-sites.adoc[Detailed changelog].
+
 == 2026-08-12 — Composio Cloudflare connect forms
 
 * How-to xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** = Global API Key + email; **Cloudflare API Key** = **Cloudflare API token** field. Catalog names lie. **ACTIVE** is not a smoke test (`9109` / `10502`).
