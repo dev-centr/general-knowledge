@@ -6,7 +6,9 @@ Agents that create the IdP via API may get a `messages` URL:
 
 `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`
 
-That URL is one-shot (not returned on later `GET`) and can fail with Cloudflare **error 500** / Internal server error (a Ray ID). Fallback: dashboard Finish setup / Test, or the first GitHub login on the Access application.
+That URL is one-shot (not returned on later `GET`) and can fail with Cloudflare **error 500** / Internal server error (a Ray ID). Fallback: sign into the **Cloudflare** dashboard → **Finish setup** / **Test** (with **GitHub** unlocked in the same browser), or the first GitHub login on the Access application.
+
+Follow-up: xref:changelog-details/2026-08-12 - access-finish-setup-consent-orgs.adoc[browser order + multi-org consent].
 
 Pages:
 
