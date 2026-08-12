@@ -23,5 +23,7 @@ For details, see xref:explanation/literate-programming.adoc[Literate Programming
 * **Entangled**: Use Markdown-based LP with real-time syncing if you prefer a standard source-file-first IDE workflow but want synchronous documentation.
 
 == See Also
+* xref:explanation/languages/index.adoc[Language recommendations] — D (or Rust) over C for *new* systems work you control
+* xref:explanation/languages/c-and-d.adoc[C and D]
 * xref:tutorials/onboarding.adoc[Developer Onboarding]
 * xref:reference/recommended-tools.adoc[Recommended Tools]

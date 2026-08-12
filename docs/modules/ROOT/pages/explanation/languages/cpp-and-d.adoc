@@ -1,0 +1,44 @@
+= C++ and D
+:navtitle: C++ and D
+:description: Why application and systems-adjacent code should default to D rather than C++.
+
+This page reconstructs the old “C++ vs D” note.
+It is about **new application and systems-adjacent code you control**.
+
+xref:explanation/literate-programming.adoc[Literate programming] still applies: C++ codebases especially accumulate “how” without “why.”
+
+== The problem with C++ as a default
+
+C++ is several languages in a trench coat: C with classes, template metaprogramming, a moving standard, and a culture of undefined behavior with a standards-committee changelog.
+
+For application code — GUI hosts, tools, services that are not a browser — that budget is usually the wrong purchase:
+
+* **Complexity is the product.** Move semantics, overload resolution, header hygiene, ABI, and three ways to initialize a thing are not a learning ramp. They are a career.
+* **Safety is optional.** Smart pointers and guidelines help. The language still lets you alias, dangle, and race by default.
+* **Build and package story is fragmented.** There is no Cargo. There are a dozen CMake dialects.
+
+A loud version of the same thesis: link:https://youtu.be/7fGB-hjc2Gc[this C++ rant on YouTube].
+Use it as color, not as a citation.
+
+== What D is for here
+
+D is the suggestion for **application programming** and for **scripting-shaped tools that still talk to the OS**:
+
+* Syntax that stays readable (the “Python-shaped” pitch) without shipping a massive interpreter.
+* Modules, slices, and a standard library aimed at getting work done.
+* GC when you want to think about the problem; `@nogc` / `-betterC` when you need to think about the heap. See xref:d-and-rust.adoc[D and Rust] for the honest cost of that split.
+* C interop when you must call into an existing world.
+
+That is the cull: **D instead of C++** for owned application code, not “never call a C++ library.”
+
+== What this is not
+
+* Not a claim that game engines, Unreal, or Qt shops should rewrite next quarter.
+* Not a claim that D's GUI ecosystem matches those incumbents. Pair D (or Rust) in the host with a webview UI when that is the product; see xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
+* Not a claim that Rust is the wrong application language. Rust is the no-GC / ecosystem pole. D is the default when you want the high-level surface.
+
+== See also
+
+* xref:index.adoc[Language recommendations]
+* xref:c-and-d.adoc[C and D]
+* xref:d-and-rust.adoc[D and Rust]

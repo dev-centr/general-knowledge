@@ -1,0 +1,99 @@
+= D and Rust
+:navtitle: D and Rust
+:description: How D and Rust split the systems pole—optional GC versus affine types—and why TypeScript still owns the browser.
+
+D and Rust are the two systems poles in xref:index.adoc[language recommendations].
+This page is the honest comparison, including why a “minimal industry pair” of **Rust + TypeScript** keeps showing up in research, and why that does not erase D as an owned-code default.
+
+xref:explanation/literate-programming.adoc[Literate programming] applies to both.
+
+== Encapsulation without inheritance spaghetti
+
+Classic OOP bundles **data**, **behavior**, and **subtype hierarchy**.
+The failure mode is familiar: fragile base classes, mutation through aliases, and “which override actually ran?”
+
+Both D and Rust can encapsulate without that bundle:
+
+* **Data layout** (`struct`, `enum` / algebraic variants) separate from **behavior** (`impl` / member functions / templates).
+* **Interfaces as contracts** (D interfaces and template constraints; Rust traits) rather than implementation inheritance as the default.
+* **Explicit mutation** (D `pure`/`immutable`/`shared`; Rust `&` vs `&mut`).
+
+If you wanted “some OO for encapsulation” without OO spaghetti, this is the mechanism — composition and interfaces, not class trees.
+
+== Why Rust + TypeScript is a coherent collapse
+
+Attempts to collapse *the whole industry* into one language fail on two constraints:
+
+. **The browser executes JavaScript** (or WASM loaded from JS). TypeScript is the typed way to live there.
+. **Bare-metal and predictable-latency systems** pay for a tracing GC. Rust's runtime does not include one.
+
+A two-language map that respects those constraints:
+
+* **TypeScript** — DOM, webview UI, rapid application layer (including the UI half of a Tauri-style desktop shell).
+* **Rust** — host process, WASM hot paths, CLI, services, kernels, anything that should not pause the world.
+
+That is ecosystem-coherence thinking: Cargo, WASM targets, and a single no-GC systems story.
+
+== Why D is still the owned-code default
+
+D is trying to be **both** high-level application language **and** systems language, with a GC you can opt out of.
+
+That is exactly why it is a good *default for code you own*:
+
+* Readable surface for apps and OS-talking tools (the job C++ and Python both claim).
+* Modules and `@safe` instead of C headers and a global namespace. See xref:c-and-d.adoc[C and D].
+* C interop when the world is a `.so` / `.dll`.
+
+It is also why D is **not** the winner of the two-language collapse:
+
+* **GC is not per-module.** `@nogc` is a **per-function** compile-time check. You can mix `@nogc` inner loops with GC setup code in one program. A collection in a GC thread still **stop-the-worlds the process**, including `@nogc` threads, unless those threads are detached from the collector and never touch GC memory.
+* **Idiomatic D uses the GC.** Dynamic arrays, concatenation, many Phobos APIs, and exceptions allocate. Mark a hot path `@nogc` and you lose a large fraction of the standard library unless you drop to malloc/RAII/`-betterC`.
+* **Web pressure.** D is not the WASM/browser story Rust is. The UI half stays TypeScript (or another JS UI) regardless.
+* **Tooling momentum.** `dub` + DMD/LDC is fine. It is not Cargo. Platform adoption (kernels, infra, WASM) currently leans Rust.
+
+So: **D for owned systems/apps**; **Rust when the no-GC / ecosystem pole is the actual requirement**.
+They compete. Rust currently has more gravity in systems. D covers more of the high-level application surface.
+
+== Mixing GC and `@nogc` in D
+
+You can profile and *contain* GC work:
+
+* Annotate real-time loops `@nogc` so the compiler rejects accidental `new` / `~=` / GC exceptions.
+* `GC.disable()` / `GC.collect()` around loading screens or other non-critical phases.
+* `dmd -profile=gc` to see where allocations happen.
+
+What you cannot do without extra runtime work: run a GC actor on core A while a `@nogc` OS loop on core B is **guaranteed** never to pause, *inside one process*, while still using Phobos GC containers on A.
+Detached `@nogc` threads (`thread_detachThis()`) must not touch GC objects.
+Per-thread or per-region heaps would fix the pause topology; D's collector is still a **shared heap** today.
+
+D already has actor-shaped messaging (`std.concurrency`: `spawn`, `Tid`, `send`/`receive`) and thread-local storage by default.
+The GC does not yet use that isolation.
+Isolated heaps, region GC, and opt-in shared arenas are a plausible runtime evolution — they are not the language you download this week.
+
+Phobos v3 / `-betterC` are the two official paths toward less GC in the library and a C-shaped subset that keeps D's metaprogramming.
+
+== How Rust “solved” it
+
+Rust did not synthesize `@nogc` from GC code.
+It put an **affine type system** in the grammar: one owner, aliasing XOR mutability, `Drop` at scope exit.
+The standard library has no tracing GC.
+The cost is front-loaded: the program must be designed for ownership, or it does not compile.
+
+That is a better system for the no-GC pole, not a magic compiler that writes D's high-level style at Rust's latency.
+
+== Desktop split
+
+A useful architecture (Tauri-shaped, not Electron-shaped by default):
+
+* **Host:** D or Rust — files, sockets, crypto, worker threads.
+* **Webview:** TypeScript — layout, DOM, the actual GUI.
+
+Electron remains in the stack when the product needs that ecosystem; it is the heavy webview.
+The language recommendation does not change: do not put the OS half in JavaScript if you can help it.
+
+== See also
+
+* xref:index.adoc[Language recommendations]
+* xref:c-and-d.adoc[C and D]
+* xref:cpp-and-d.adoc[C++ and D]
+* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]

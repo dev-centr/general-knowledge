@@ -1,0 +1,49 @@
+= C and D
+:navtitle: C and D
+:description: Why new systems work should start in D (or Rust), not C—modules, safety, and headers versus a global namespace.
+
+This page reconstructs the old “C vs D” note.
+It is a **suggestion for new work you control**, not a demand to rewrite every kernel module tomorrow.
+
+Mention xref:explanation/literate-programming.adoc[literate programming] before you write much C *or* D: C especially rewards an explain-then-tangle habit.
+
+== What C still is
+
+C is a sharp tool for talking to hardware and to a C ABI.
+Dev-Centr still has a xref:reference/languages/c.adoc[C reference] for firmware, drivers, and performance-critical cores that *are* C.
+
+That is not the same as picking C as the language for **new** systems programs.
+
+== Why C is a weak default
+
+* **No module system.** Names live in a global namespace. Libraries must dance around each other's symbols.
+* **Headers.** The compilation model is textual inclusion. Include graphs, `#ifdef` soup, and “this typedef exists twice” are the tax.
+* **Safety is convention.** Bounds, lifetimes, and aliasing are comments and discipline. The common libraries are full of short, collision-prone names.
+
+You can write careful C.
+The language does not help you do it, and it fights large programs.
+
+== What D changes
+
+D keeps a C-family feel and a C-compatible ABI, then adds the pieces C refused:
+
+* **Modules** instead of a global namespace and header files.
+* **Richer types and abstractions** (slices, `struct`/`class` split, templates, CTFE) without jumping to C++'s complexity budget.
+* **`@safe` / `@trusted` / `@system`** — a memory-safety mode you can require on the critical path. It is not Rust's borrow checker, but it is a real language-level story rather than a linter afterthought.
+* **Optional GC.** Idiomatic D can allocate with a garbage collector. You can disable it (`@nogc`, `-betterC`) when firmware size or latency demands it. That flexibility is the point — and also the trap; see xref:d-and-rust.adoc[D and Rust].
+
+For a lot of “I would have written this in C” work — userland tools, daemons, native libraries, even some embedded — **D is the better default**.
+
+== When Rust is the systems pole instead
+
+If the program cannot have a GC in the picture, needs WASM/kernel ecosystem gravity, or you want affine types as the center of the language, **Rust** is the stronger systems pole.
+D competes there; it does not currently win on platform momentum.
+
+xref:index.adoc[Language recommendations] is the map.
+This page is only the C-shaped corner of it.
+
+== See also
+
+* xref:cpp-and-d.adoc[C++ and D]
+* xref:d-and-rust.adoc[D and Rust]
+* xref:reference/languages/c.adoc[C reference]

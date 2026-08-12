@@ -1,0 +1,86 @@
+= Language recommendations
+:navtitle: Language recommendations
+:description: A small set of languages that culls the ecosystem to a few essential ways of thinking—systems, apps, the browser, numerical work, and mathematical style.
+
+These are **suggestions for what to pick**, not a taste list and not a claim that one language wins every job.
+The point is to **cull**: most of the industry's options fold into a few ways of thinking.
+Learn those poles well; reach for a specialist language when the pole is the wrong tool, not because a blog post named a new default.
+
+In Dev-Centr, language pages mention xref:explanation/literate-programming.adoc[literate programming] up front: explain the architecture in the document, then tangle the code.
+That habit matters more than which syntax you typed.
+
+== The small set
+
+[cols="1,2,2"]
+|===
+| Job | Reach for | Not the default for new work you control
+
+| Systems, firmware-adjacent, OS-talking tools
+| **D**; **Rust** when you cannot afford a GC, need WASM/kernel gravity, or want affine types from day one
+| **C** (no modules, header soup, global namespace). See xref:c-and-d.adoc[C and D].
+
+| Native applications
+| **D**
+| **C++**. See xref:cpp-and-d.adoc[C++ and D].
+
+| Browser UI (and the webview half of a desktop shell)
+| **TypeScript**
+| Pretending D or Rust replace the DOM. The browser still executes JavaScript; TypeScript is the typed way in.
+
+| Numerical / ML when you control the stack
+| **Julia**
+| **Python** as the compute language; **Java** as the scientific platform. See xref:julia-d-and-java.adoc[Julia, D, and Java].
+
+| Mathematical / functional *thinking*
+| **Lisp**, then **Haskell**
+| Using them as the daily product stack. They are on-ramps to lambda-calculus-shaped design, not a replacement for D/Rust/TypeScript/Julia.
+|===
+
+Desktop shells that need a webview still split: TypeScript (or a JS UI) in the webview, D or Rust in the host.
+xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] covers that split for dense browser products.
+
+== Why cull instead of collecting languages
+
+A “full stack” that is really twelve languages is not flexibility.
+It is twelve on-ramps, twelve package managers, and twelve ways to forget how memory works.
+
+The poles above are different *ideas*:
+
+* **D** — C-family control with modules, `@safe`, and an optional GC. High-level enough to replace a lot of application C++ and “scripting that talks to the OS,” without dragging a huge interpreter.
+* **Rust** — compile-time ownership. No GC in the runtime. The industry's systems/WASM gravity well. Steeper wall; stronger no-GC story. See xref:d-and-rust.adoc[D and Rust].
+* **TypeScript** — the browser constraint. You do not get to wish this away.
+* **Julia** — a language actually designed for numerical work, instead of a slow host with native kernels glued on.
+* **Lisp / Haskell** — programming as math. Learn the shape; ship in the poles above.
+
+Everything else is usually a dialect of one of those ideas, an ecosystem you inherited, or a job the poles already cover.
+
+== Two-language collapse vs owned-code defaults
+
+If you optimize only for **ecosystem coherence and industry momentum**, a serious answer is **Rust + TypeScript**:
+native/WASM/systems on one side, the browser on the other, Cargo-scale tooling, no second GC story in the systems half.
+
+That pair is coherent.
+It is **not** the same question as “what should we teach and default to in code we own?”
+
+* **D** is the better default for *new systems and apps you control*: readable surface, modules, C interop, `@safe`, GC when you want it, `@nogc` / `-betterC` when you do not.
+* **Rust** is the stronger *systems pole* when GC pauses are unacceptable, when you need the WASM/kernel/infra ecosystem, or when you want affine types as the language's center rather than a retrofit.
+* They **compete** in systems work. Rust currently has more platform gravity. D covers more of the high-level application surface. Treat them as complementary poles, not as a single winner.
+
+The GC/`@nogc` split, stop-the-world collections, and why “just mix them” is not free are in xref:d-and-rust.adoc[D and Rust].
+
+== Comparisons (reconstructed)
+
+Google deletes Gemini shares after a while.
+The arguments that used to live on those links are here, rewritten as docs rather than chat logs:
+
+* xref:c-and-d.adoc[C and D]
+* xref:cpp-and-d.adoc[C++ and D]
+* xref:julia-d-and-java.adoc[Julia, D, and Java]
+* xref:d-and-rust.adoc[D and Rust] — ownership, GC, and the webview split
+
+== See also
+
+* xref:reference/languages/c.adoc[C reference] — how we write C when we *must* (legacy, firmware, a C ABI)
+* xref:reference/recommended-tools.adoc[Recommended tools]
+* link:https://lotz84.github.io/haskellbyexample/[Haskell by Example]
+* link:https://youtu.be/7fGB-hjc2Gc[C++ rant (YouTube)] — same thesis as the C++ page, louder volume

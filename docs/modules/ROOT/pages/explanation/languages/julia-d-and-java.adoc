@@ -1,0 +1,61 @@
+= Julia, D, and Java
+:navtitle: Julia, D, and Java
+:description: Why numerical and ML work you control should default to Julia, and why Java is a weak default in that space.
+
+This page reconstructs the old “Julia and D vs Java” note.
+It is about **scientific, numerical, and ML work when you control the stack** — not about rewriting a bank's JVM estate.
+
+xref:explanation/literate-programming.adoc[Literate programming] fits this work unusually well: the narrative *is* the experiment.
+
+== Julia instead of Python for compute you own
+
+Python won teaching, glue, and the notebook culture.
+It is a weak **compute language**:
+
+* The hot path is almost never Python. It is C/C++/Fortran/CUDA with a Python costume. You debug two languages and a FFI.
+* Everything is an object, including small numbers. That is a design choice with a cost.
+* Shipping means bundling a large runtime (`pyinstaller` and friends). Startup and size suffer.
+* Library assumptions collide. One stack's dtypes, memory layout, and “who owns the array” fight another's.
+
+**Julia** was designed as a high-level numerical language that can still be fast: multiple dispatch, a compiler, and an array-native culture.
+When you control the stack, that is the suggestion for serious numerical / ML work.
+
+Python remains fine as *glue you inherited* (and xref:reference/recommended-tools.adoc[uv] is how we install it when we must).
+It is not the recommended compute pole.
+
+== Why Java is a weak default here
+
+Java (and the JVM culture around it) is a large, organized language with a confusing *ecosystem*:
+
+* Frameworks lean on **annotations** until the program is configuration in disguise.
+* Tooling and packaging are a maze of build tools, bytecode versions, and “which JDK.”
+* The managed runtime is a poor fit for bare-metal systems work and a heavy fit for numerical kernels you could write in Julia or D.
+
+The JVM remains a gravity well for enterprise services and Android.
+That is inheritance, not a recommendation for new scientific or systems work.
+
+**D** covers a lot of the “I wanted a serious language with a GC and a readable surface” niche that Java occupied for applications — modules, optional GC, C interop — without the annotation-framework culture.
+It is not a Julia replacement for array-heavy research code.
+It *is* a better default than Java for native tools and apps next to that research code.
+
+== How the three sit
+
+[cols="1,2"]
+|===
+| Language | Role in the small set
+
+| **Julia**
+| Numerical / ML when you own the stack
+
+| **D**
+| Native apps, tools, and systems-adjacent code next to that work
+
+| **Java**
+| Operate it when the org already runs on it. Do not pick it as the scientific or systems default.
+|===
+
+== See also
+
+* xref:index.adoc[Language recommendations]
+* xref:cpp-and-d.adoc[C++ and D] — same “huge runtime / huge language” instinct, different victim
+* xref:d-and-rust.adoc[D and Rust]

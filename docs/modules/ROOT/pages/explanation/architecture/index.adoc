@@ -31,6 +31,7 @@ By software type::
 * xref:explanation/architecture/types/services.adoc[Services and daemons]
 
 Related (other components)::
+* xref:explanation/languages/index.adoc[Language recommendations] — small-set defaults (D, Rust, TypeScript, Julia)
 * xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense browser UIs (Dev-Centr docs playbook)
 * xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms]
 

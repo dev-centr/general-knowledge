@@ -12,6 +12,11 @@ We recommend these tools for a consistent, cross-platform developer workflow.
 * link:https://learn.microsoft.com/en-us/windows/advanced-settings/sudo/[`sudo` for Windows] — Elevate when the OS requires it.
 * PowerShell 7 — Use only when an OS feature, installer, or legacy script demands it. **Not** the Dev-Centr default shell.
 
+== Languages
+
+What to *pick* (not a tool install list): xref:explanation/languages/index.adoc[Language recommendations].
+D and Rust for systems/apps, TypeScript for the browser, Julia for numerical work you control.
+
 == Package Management
 
 * link:https://www.marticliment.com/unigetui/[UniGetUI] — GUI over `winget` and other managers (Windows).
@@ -19,6 +24,7 @@ We recommend these tools for a consistent, cross-platform developer workflow.
 * link:https://bun.sh/[Bun] — Practical OSS Node-shaped runtime + package manager when you want speed in one tool; see xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers].
 * **Orogene** — Catalogued as *closed-aspirational* (once and future king of `node_modules/` installs if it re-open-sources); not a shop default while closed. Same comparison page.
 * link:https://docs.astral.sh/uv/[uv] — Preferred Python environment and package tool.
+
 == Editors & Agents
 
 * link:https://cursor.com/[Cursor] — Primary AI-assisted IDE in this workspace.
