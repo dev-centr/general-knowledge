@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: Finish GitHub IdP setup in Zero Trust, not the API one-time URL</title>
+  <desc id="desc">After saving GitHub as an identity provider, click Finish setup then Test. That launches GitHub Authorize for organizations and teams plus email, read-only. Do not depend on the API enterprise-setup URL.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .row { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .btn { fill: #1f3a2e; }
+      .ghost { fill: #fff; stroke: #2c2c2c; stroke-width: 1.5; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+  <rect class="bg" width="840" height="440"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  Zero Trust ’ Integrations ’ Identity providers ’ GitHub</text>
+
+  <rect class="win" x="24" y="48" width="792" height="368" rx="6"/>
+  <rect class="chrome" x="24" y="48" width="792" height="36" rx="6"/>
+  <rect class="chrome" x="24" y="66" width="792" height="18"/>
+  <text class="s" x="44" y="72">Zero Trust / Identity providers</text>
+
+  <text class="t" x="48" y="118" font-size="20">Login methods</text>
+
+  <rect class="row" x="48" y="140" width="744" height="56" rx="3"/>
+  <text class="s" x="64" y="164">One-time PIN</text>
+  <text class="s" x="64" y="184">often already present  not GitHub org membership</text>
+
+  <rect class="row" x="48" y="208" width="744" height="72" rx="3"/>
+  <text class="s" x="64" y="232">GitHub</text>
+  <text class="s" x="64" y="252">App ID saved · waiting on GitHub consent</text>
+  <rect class="btn" x="400" y="224" width="120" height="36" rx="4"/>
+  <text class="t-inv" x="418" y="246">Finish setup</text>
+  <rect class="ghost" x="532" y="224" width="72" height="36" rx="4"/>
+  <text class="s" x="552" y="246">Test</text>
+
+  <text class="s" x="48" y="316">Finish setup opens GitHub Authorize (orgs/teams + email, read-only).</text>
+  <text class="s" x="48" y="336">Then Test. If GitHub 2FA is on, sign into GitHub first, then Test.</text>
+  <text class="s" x="48" y="368">This is the durable path. The API enterprise-setup URL is optional and can 500.</text>
+</svg>

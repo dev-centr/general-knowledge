@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+  <title id="title">API create GitHub IdP returns a one-time enterprise-setup URL that can 500</title>
+  <desc id="desc">POST identity_providers type github succeeds and may include a messages entry pointing at /cdn-cgi/access/enterprise-setup/ with an opaque token. That URL can return Cloudflare error 500 Internal server error. Use Zero Trust Finish setup instead. Token redacted.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .ok { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 2; }
+      .no { fill: #f6e8e6; stroke: #7a3a32; stroke-width: 2; }
+      .mono { font-family: Consolas, "Cascadia Mono", monospace; fill: #1a1a1a; font-size: 12px; }
+    </style>
+  </defs>
+  <rect class="bg" width="920" height="360"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  redacted API message. Do not paste the opaque token into docs.</text>
+  <text class="t" x="24" y="58" font-size="22">API create ` GitHub consent</text>
+
+  <rect class="ok" x="24" y="80" width="872" height="120" rx="4"/>
+  <text class="t" x="44" y="108" font-size="16">POST /accounts/{id}/access/identity_providers  ’  200</text>
+  <text class="mono" x="44" y="132">messages[0]: Finish enterprise enablement by going to</text>
+  <text class="mono" x="44" y="152">https://&lt;team-name&gt;.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/""""</text>
+  <text class="s" x="44" y="180">One-shot. GET on the IdP later does not return this URL again.</text>
+
+  <rect class="no" x="24" y="216" width="872" height="112" rx="4"/>
+  <text class="t" x="44" y="244" font-size="16">That URL can fail</text>
+  <text class="s" x="44" y="268">Cloudflare error 500 · Internal server error · a Ray ID</text>
+  <text class="s" x="44" y="288">Not a bad Client ID. The setup token endpoint is fragile.</text>
+  <text class="s" x="44" y="308">Fallback: dashboard Finish setup, then Test. Or first GitHub login on the app.</text>
+</svg>

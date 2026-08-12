@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — Finish GitHub IdP setup (enterprise-setup 500)
+
+* After `POST` GitHub identity provider, Cloudflare may return a one-time `…/cdn-cgi/access/enterprise-setup/…` URL. It can **500**. Durable path: Zero Trust → Identity providers → GitHub → **Finish setup**, then **Test**.
+* How-to xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup]; explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#what-agents-cannot-automate[What agents cannot automate].
+* See xref:changelog-details/2026-08-12 - access-github-finish-setup.adoc[Detailed changelog].
+
 == 2026-08-12 — Access setup order and API credentials
 
 * How-to: GitHub OAuth App is **UI-only** (no REST create); Zero Trust **team domain** is the OAuth Homepage/callback (not the docs host); Access apps **deny by default** — IdP and Allow policy first. xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Order of operations].

@@ -118,7 +118,15 @@ image::access-api-token-vs-key.svg[Pages token 403s on identity providers; Globa
 
 Do not attach Access applications to live hostnames until the GitHub IdP and Allow policy exist. Applications deny by default.
 
-Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access].
+Creating the GitHub IdP via API is still not the last human step. `POST …/identity_providers` can succeed (`200`) and return `messages`: “Finish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`.” That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the dashboard: **Finish setup**, then **Test**. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step “Finish setup”).
+
+.API enterprise-setup can 500
+image::access-api-enterprise-setup.svg[Redacted API enterprise-setup message and 500 fallback]
+
+.Dashboard Finish setup / Test
+image::access-mock-finish-setup.svg[Identity providers list with Finish setup and Test]
+
+Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] · xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].
 
 == What Access is not
 
