@@ -10,6 +10,8 @@ Reader “accounts”:
 
 Not Cloudflare dashboard members. First Access login consumes a Zero Trust seat (~50 on the free plan).
 
+Follow-up the same day: xref:changelog-details/2026-08-12 - access-github-org-membership.adoc[How Access learns GitHub org membership] (flow diagram + simplified mocks).
+
 Pages:
 
 * xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]

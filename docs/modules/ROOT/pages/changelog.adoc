@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-12 — How Access learns GitHub org membership
+
+* Explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership] — GitHub OAuth + `GET /user/orgs` at login; session cookie afterwards; third-party OAuth app approval; join-after-fail revoke.
+* How-to xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — simplified mocks (OAuth app, consent, Zero Trust IdP, Allow policy, login page) and a membership flow diagram.
+* See xref:changelog-details/2026-08-12 - access-github-org-membership.adoc[Detailed changelog].
+
 == 2026-08-12 — Access in front of static sites
 
 * Explanation xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites] — member-only docs stay Antora; Cloudflare Access on the hostname, not an app rewrite.

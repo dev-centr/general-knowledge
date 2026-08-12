@@ -10,7 +10,7 @@
 
 == Member-only static hostnames
 
-Do not rewrite Antora as an app. Put **Cloudflare Access** on the orange-cloud hostname (and on `*.pages.dev`). Reader identities live in GitHub / Google / email PIN — not Cloudflare dashboard users.
+Do not rewrite Antora as an app. Put **Cloudflare Access** on the orange-cloud hostname (and on `*.pages.dev`). Reader identities live in GitHub / Google / email PIN — not Cloudflare dashboard users. GitHub org membership is checked at login, not scraped.
 
 * xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
 * xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access]

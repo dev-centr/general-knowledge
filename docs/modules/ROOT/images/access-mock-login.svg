@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: Cloudflare Access login with Continue with GitHub</title>
+  <desc id="desc">What a logged-out visitor should see on the member hostname after Access is on. One primary button: Continue with GitHub. Not the Antora homepage.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .card { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .btn { fill: #1f3a2e; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 14px; font-weight: 600; }
+      .hint { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; }
+    </style>
+  </defs>
+  <rect class="bg" width="720" height="420"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  incognito visit after Access is on (success = this page, not HTML)</text>
+
+  <rect class="win" x="24" y="48" width="672" height="348" rx="6"/>
+  <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
+  <rect class="chrome" x="24" y="66" width="672" height="18"/>
+  <text class="s" x="44" y="72">https://team.docs.example.org/</text>
+
+  <rect class="card" x="160" y="120" width="400" height="220" rx="6"/>
+  <text class="t" x="184" y="160" font-size="18">Sign in</text>
+  <text class="hint" x="184" y="182">team.docs.example.org</text>
+  <text class="s" x="184" y="210">Use the GitHub account that is in the org.</text>
+
+  <rect class="btn" x="184" y="236" width="352" height="44" rx="4"/>
+  <text class="t-inv" x="268" y="263">Continue with GitHub</text>
+
+  <text class="hint" x="184" y="308">A GitHub user who is not in the org is denied after OAuth.</text>
+</svg>

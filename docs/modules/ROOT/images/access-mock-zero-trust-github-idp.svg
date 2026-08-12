@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: Add GitHub as a Zero Trust identity provider</title>
+  <desc id="desc">Zero Trust Integrations ’ Identity providers ’ GitHub. App ID and Client secret come from the GitHub OAuth App. Secrets are shown redacted.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .field { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .btn { fill: #1f3a2e; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 13px; font-weight: 600; }
+      .mono { font-family: Consolas, "Cascadia Mono", monospace; fill: #1a1a1a; font-size: 13px; }
+      .pill { fill: #f4ebe0; stroke: #8a5a20; stroke-width: 1.25; }
+    </style>
+  </defs>
+  <rect class="bg" width="840" height="440"/>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK  Zero Trust ’ Integrations ’ Identity providers ’ Add ’ GitHub</text>
+
+  <rect class="win" x="28" y="48" width="784" height="368" rx="6"/>
+  <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
+  <rect class="chrome" x="28" y="66" width="784" height="18"/>
+  <text class="s" x="48" y="72">dash.cloudflare.com / Zero Trust / Identity providers</text>
+
+  <text class="t" x="56" y="118" font-size="20">Add GitHub</text>
+  <rect class="pill" x="200" y="100" width="72" height="24" rx="12"/>
+  <text class="s" x="214" y="117">IdP</text>
+
+  <text class="s" x="56" y="156">Name</text>
+  <rect class="field" x="56" y="164" width="360" height="32" rx="3"/>
+  <text class="s" x="68" y="185">GitHub</text>
+
+  <text class="s" x="56" y="220">App ID  (GitHub Client ID)</text>
+  <rect class="field" x="56" y="228" width="520" height="32" rx="3"/>
+  <text class="mono" x="68" y="249">Iv1.""""""""""""""""</text>
+
+  <text class="s" x="56" y="284">Client secret</text>
+  <rect class="field" x="56" y="292" width="520" height="32" rx="3"/>
+  <text class="mono" x="68" y="313">""""""""""""""""""""""""</text>
+
+  <rect class="btn" x="56" y="348" width="88" height="36" rx="4"/>
+  <text class="t-inv" x="80" y="370">Save</text>
+  <text class="s" x="160" y="370">Then Finish setup ’ GitHub Authorize (orgs + email).</text>
+</svg>

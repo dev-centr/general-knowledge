@@ -1,0 +1,14 @@
+= 2026-08-12 — How Access learns GitHub org membership
+
+Recorded the GitHub-as-IdP handshake in public docs so operators are not left thinking Cloudflare scrapes the org or keeps a member roster.
+
+How it works::
+Cloudflare Access asks GitHub at **login** (OAuth scopes: organizations and teams read-only, email read-only; then `GET /user/orgs`). The Allow policy matches **GitHub organization** (optionally a team). Access stores that answer in a JWT cookie until the session expires. Kick someone from the org and revoke them in Zero Trust **Users** if the cookie must die immediately. If they joined the org after a failed login, they revoke the OAuth app on GitHub and sign in again. Org **third-party OAuth** restrictions can hide membership until an owner approves the app.
+
+How to::
+Same how-to as Access-in-front-of-static-sites, now with **simplified mocks** (not live screenshots): GitHub OAuth App fields, GitHub consent, Zero Trust GitHub IdP (redacted secrets), Allow policy with GitHub organization, Access login “Continue with GitHub”.
+
+Pages:
+
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership]
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access]

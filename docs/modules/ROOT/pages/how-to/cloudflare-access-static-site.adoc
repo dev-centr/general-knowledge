@@ -1,11 +1,13 @@
 = Protect a static site with Cloudflare Access
 :navtitle: Cloudflare Access for static sites
-:description: Put Cloudflare Access in front of a static member site, choose an identity provider, and add people without creating Cloudflare dashboard users.
+:description: Put Cloudflare Access in front of a static member site, choose an identity provider, and add people without creating Cloudflare dashboard users. Includes simplified mocks of the GitHub OAuth app, Zero Trust IdP, Allow policy, and login page.
 
-Use this when a **static** site (Antora, MkDocs, Docusaurus, a Pages Direct Upload) must be member-only. Why the lock belongs at the edge: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
+Use this when a **static** site (Antora, MkDocs, Docusaurus, a Pages Direct Upload) must be member-only. Why the lock belongs at the edge, and how GitHub org membership is checked: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
 
 Worked shape (Dev-Centr)::
 custom domain `team.docs.devcentr.org` (orange-cloud CNAME) plus the Pages hostname `*.pages.dev` for the same project.
+
+Figures on this page are **simplified mocks** (field labels from Cloudflare / GitHub docs as of 2026-08). They are not live dashboard captures. Secrets are drawn as bullets.
 
 == Prerequisites
 
@@ -58,16 +60,28 @@ You do **not** create a username in Cloudflare for each reader. They sign in wit
 
 One-time PIN is the fastest spike. GitHub org membership is the durable default when the same people already have forge access.
 
+[[github-as-idp]]
 === GitHub as IdP
 
 . In GitHub: **Settings** → **Developer settings** → **OAuth Apps** → **Register a new application** (prefer an **organization-owned** app).
 . Homepage URL: `https://<team-name>.cloudflareaccess.com`
 . Authorization callback URL: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/callback`
 +
-`<team-name>` is the Zero Trust team name (**Zero Trust** → **Settings** → **Team name**).
+`<team-name>` is the Zero Trust team name (**Zero Trust** → **Settings** → **Team name**). This is **not** the docs hostname.
 . Copy Client ID and Client secret.
 . In Zero Trust: **Integrations** → **Identity providers** → **Add** → **GitHub**. Paste the credentials and finish the GitHub authorization (orgs and email, read-only).
 . **Test** the login method. If GitHub 2FA is on, sign into GitHub first, then test.
+
+.Mock: GitHub OAuth App fields Access needs
+image::access-mock-github-oauth-app.svg[Simplified mock of GitHub Register a new OAuth application: Homepage URL and callback on the Zero Trust team domain]
+
+.Mock: GitHub consent — orgs/teams and email, read-only
+image::access-mock-github-consent.svg[Simplified mock of GitHub Authorize: Organizations and teams read-only, email read-only]
+
+.Mock: Zero Trust GitHub identity provider (secrets redacted)
+image::access-mock-zero-trust-github-idp.svg[Simplified mock of Add GitHub IdP with redacted App ID and Client secret]
+
+If the GitHub org **restricts third-party OAuth apps**, an org owner must approve this app or Access cannot see membership. Why that matters: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[How Cloudflare learns GitHub org membership].
 
 === One-time PIN as IdP
 
@@ -83,6 +97,9 @@ One-time PIN is the fastest spike. GitHub org membership is the durable default 
 . Optional **Require**: the same GitHub org, so a personal GitHub login that is not in the org cannot sneak through an overly broad Include.
 
 Reuse the policy (or an Access Group of emails) on the `pages.dev` application so you do not maintain two allowlists.
+
+.Mock: Allow when GitHub organization is your-org
+image::access-mock-policy-github-org.svg[Simplified mock of an Access Allow policy: login method GitHub and GitHub organization your-org]
 
 == Set up user accounts
 
@@ -112,6 +129,9 @@ GitHub path, in order:
 . They open the member hostname and complete GitHub OAuth for the Access app (once).
 . Later visits use the Access session cookie until it expires.
 
+.Mock: what a logged-out visitor should see
+image::access-mock-login.svg[Simplified mock of the Access login page with Continue with GitHub]
+
 PIN path: add the address to the Allow policy, send them the URL, they request a code. No dashboard user is created for them unless they are also an operator.
 
 === Operators (Cloudflare dashboard)
@@ -124,6 +144,8 @@ Only people who must edit zones, Pages projects, or Access policies need a Cloud
 . PIN / email path: delete the address from the policy (and revoke the Zero Trust user).
 . Do not leave them in the GitHub org if org membership is the only gate.
 
+If they **joined** the org after a failed Access login, have them revoke the OAuth app under GitHub **Settings** → **Applications** and sign in again so GitHub sends a fresh org list.
+
 === Seats
 
 * First Access authentication creates an active Zero Trust user and takes a seat.
@@ -133,14 +155,16 @@ Only people who must edit zones, Pages projects, or Access policies need a Cloud
 
 == Check that it is actually closed
 
-. Incognito / logged-out browser: `https://your.custom.domain/` → Access login, **not** HTML.
+. Incognito / logged-out browser: `https://your.custom.domain/` → Access login (**Continue with GitHub**), **not** HTML.
 . Same for `https://your-project.pages.dev/`.
 . A member who matches the policy gets through and can use Lunr search (the index is behind Access too).
 . A GitHub user **not** in the org (or an email not on the list) sees the Access deny page.
 
+Until Access is on, the origin is world-readable even if the git repo is private. Treat the hostname as unpublished.
+
 == Related
 
-* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
+* xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites] — why the lock is at the edge; xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[how GitHub org membership is checked]
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain] — public sites; grey-cloud for GitHub’s certificate
 * xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — DNS/Access API credentials for agents
 * xref:business-bootstrap::infra/index.adoc[Org infra]

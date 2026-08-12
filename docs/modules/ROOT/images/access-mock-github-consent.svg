@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: GitHub consent for Cloudflare Access</title>
+  <desc id="desc">GitHub asks the operator (and later each reader) to grant Cloudflare Access read-only organizations and teams, plus read-only email addresses.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .row { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .btn { fill: #1f3a2e; }
+      .ghost { fill: #fff; stroke: #2c2c2c; stroke-width: 1.5; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+  <rect class="bg" width="720" height="420"/>
+  <text class="label" x="24" y="28">SIMPLIFIED MOCK  GitHub authorization page after Zero Trust Finish setup</text>
+
+  <rect class="win" x="24" y="48" width="672" height="348" rx="6"/>
+  <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
+  <rect class="chrome" x="24" y="66" width="672" height="18"/>
+  <text class="s" x="44" y="72">github.com / login / oauth / authorize</text>
+
+  <text class="t" x="52" y="122" font-size="20">Authorize Team docs (Access)</text>
+  <text class="s" x="52" y="146">Cloudflare Access wants to access your GitHub account.</text>
+
+  <rect class="row" x="52" y="168" width="616" height="48" rx="3"/>
+  <text class="s" x="68" y="188">Organizations and teams</text>
+  <text class="s" x="68" y="206">Read-only  list orgs and teams the user belongs to</text>
+
+  <rect class="row" x="52" y="228" width="616" height="48" rx="3"/>
+  <text class="s" x="68" y="248">Email addresses</text>
+  <text class="s" x="68" y="266">Read-only  identity for the Access JWT</text>
+
+  <rect class="btn" x="52" y="300" width="120" height="36" rx="4"/>
+  <text class="t-inv" x="80" y="322">Authorize</text>
+  <rect class="ghost" x="184" y="300" width="100" height="36" rx="4"/>
+  <text class="s" x="212" y="322">Cancel</text>
+
+  <text class="s" x="52" y="368">This is how Access later asks GitHub which orgs is this person in?</text>
+</svg>

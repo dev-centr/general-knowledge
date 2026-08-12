@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="500" viewBox="0 0 840 500" role="img" aria-labelledby="title desc">
+  <title id="title">Mock: Access Allow policy using GitHub organization</title>
+  <desc id="desc">Allow when login method is GitHub and GitHub organization equals your-org. Optional Require repeats the org so a personal GitHub login cannot sneak through a broad Include.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .win { fill: #fff; stroke: #2c2c2c; stroke-width: 2; }
+      .chrome { fill: #e7e4dc; stroke: #2c2c2c; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .field { fill: #f7f5f0; stroke: #2c2c2c; stroke-width: 1.25; }
+      .ok { fill: #e8f0ea; stroke: #1f3a2e; stroke-width: 1.5; }
+      .btn { fill: #1f3a2e; }
+      .t-inv { font-family: "Segoe UI", system-ui, sans-serif; fill: #f7f3e8; font-size: 13px; font-weight: 600; }
+      .mono { font-family: Consolas, "Cascadia Mono", monospace; fill: #1a1a1a; font-size: 13px; }
+    </style>
+  </defs>
+  <rect class="bg" width="840" height="500"/>
+  <text class="label" x="28" y="28">SIMPLIFIED MOCK  Zero Trust ’ Access ’ Applications ’ policy builder</text>
+
+  <rect class="win" x="28" y="48" width="784" height="428" rx="6"/>
+  <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
+  <rect class="chrome" x="28" y="66" width="784" height="18"/>
+  <text class="s" x="48" y="72">Zero Trust / Access / Applications / Team docs / Policies</text>
+
+  <text class="t" x="56" y="118" font-size="20">Allow org members</text>
+  <rect class="ok" x="280" y="98" width="88" height="28" rx="4"/>
+  <text class="s" x="300" y="117">Allow</text>
+
+  <text class="s" x="56" y="156">Session duration</text>
+  <rect class="field" x="200" y="140" width="160" height="28" rx="3"/>
+  <text class="s" x="212" y="159">24 hours</text>
+
+  <text class="t" x="56" y="196" font-size="16">Include  (match any)</text>
+  <rect class="field" x="56" y="208" width="720" height="40" rx="3"/>
+  <text class="s" x="72" y="233">Login method</text>
+  <text class="s" x="280" y="233">is</text>
+  <text class="mono" x="320" y="233">GitHub</text>
+
+  <rect class="field" x="56" y="256" width="720" height="40" rx="3"/>
+  <text class="s" x="72" y="281">GitHub organization</text>
+  <text class="s" x="280" y="281">is</text>
+  <text class="mono" x="320" y="281">your-org</text>
+  <text class="s" x="520" y="281">optional: also a GitHub team</text>
+
+  <text class="t" x="56" y="328" font-size="16">Require  (optional, all must match)</text>
+  <rect class="field" x="56" y="340" width="720" height="40" rx="3"/>
+  <text class="s" x="72" y="365">GitHub organization</text>
+  <text class="s" x="280" y="365">is</text>
+  <text class="mono" x="320" y="365">your-org</text>
+
+  <rect class="btn" x="56" y="404" width="88" height="36" rx="4"/>
+  <text class="t-inv" x="80" y="426">Save</text>
+  <text class="s" x="160" y="426">Reuse this policy on the custom domain and on *.pages.dev.</text>
+</svg>
