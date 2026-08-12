@@ -21,8 +21,8 @@ Observed connect screens (verbatim fields):
 | My Profile → API Tokens → **Global API Key**, plus the login email for that account
 
 | **Cloudflare API Key**
-| **Key only** (no email field)
-| A Cloudflare **API Token** (scoped long-lived key from My Profile → API Tokens → Create Token). Not the Global API Key.
+| **Cloudflare API token** (key-only field; no email)
+| A Cloudflare **API Token** from My Profile → API Tokens → Create Token. Not the Global API Key.
 |===
 
 Connect **one**. Putting a Global API Key into the key-only app (or an API Token into the email + Global API Key app) still shows **ACTIVE**, then zone calls fail with Cloudflare **`9109 Invalid access token`**. Composio has no refresh for a wrong-kind secret. Disconnect and reconnect on the matching toolkit.

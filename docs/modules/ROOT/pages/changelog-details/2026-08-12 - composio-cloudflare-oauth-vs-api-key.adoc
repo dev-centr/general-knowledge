@@ -3,7 +3,7 @@
 Documented the duplicate Composio catalog trap for Cloudflare. **Correction:** do not trust catalog names or “OAuth” slugs — read the connect form.
 
 * **Cloudflare** asks verbatim for **Global API Key** + **Cloudflare account email**
-* **Cloudflare API Key** asks for a **key only** (Cloudflare API Token / Bearer)
+* **Cloudflare API Key** asks for **Cloudflare API token** (no email)
 * Wrong pairing still shows **ACTIVE**, then Cloudflare **9109 Invalid access token**
 * **10502** after too many auth failures is a cool-down
 * Composio stores credentials server-side (laptop vs desktop is irrelevant)

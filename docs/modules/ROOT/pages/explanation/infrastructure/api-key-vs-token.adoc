@@ -115,7 +115,7 @@ If it was minted by a protocol and dies on a timer → **access token**.
 Composio lists **Cloudflare** and **Cloudflare API Key**. The names (and even an “OAuth” slug) do not match the connect screens:
 
 * **Cloudflare** asks for **Global API Key** + **account email** (classic `X-Auth-Email` / `X-Auth-Key`).
-* **Cloudflare API Key** asks for a **key only** — a Cloudflare **API Token** (scoped API key, Bearer).
+* **Cloudflare API Key** asks for **Cloudflare API token** (key only, no email) — a scoped API Token (Bearer).
 
 Put the Global API Key in the key-only app and Cloudflare returns **`9109 Invalid access token`** while Composio still shows **ACTIVE**. How-to: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]. General pattern: xref:how-to/composio-mcp-setup.adoc#duplicate-toolkits[read the form].
 

@@ -4,7 +4,7 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-08-12 — Composio Cloudflare connect forms
 
-* How-to xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** = Global API Key + email; **Cloudflare API Key** = key only. Catalog names lie. **ACTIVE** is not a smoke test (`9109` / `10502`).
+* How-to xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** = Global API Key + email; **Cloudflare API Key** = **Cloudflare API token** field. Catalog names lie. **ACTIVE** is not a smoke test (`9109` / `10502`).
 * Composio setup: xref:how-to/composio-mcp-setup.adoc#duplicate-toolkits[read the form] on duplicate toolkits.
 * Worked example on xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token].
 * See xref:changelog-details/2026-08-12 - composio-cloudflare-oauth-vs-api-key.adoc[Detailed changelog].

@@ -94,7 +94,7 @@ Some vendors appear **twice** in Composio with almost the same name and icon. Ca
 Connect **one** toolkit per vendor. **ACTIVE is not a smoke test** — run a real list/read before calling the connection done. Credentials live on Composio’s servers, not on a particular laptop.
 
 Worked example (Cloudflare forms are the opposite of the catalog names)::
-xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** asks for Global API Key + account email; **Cloudflare API Key** asks for a key only.
+xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio] — **Cloudflare** asks for Global API Key + account email; **Cloudflare API Key** asks for **Cloudflare API token**.
 
 Typical starter set for “CI emails → fix → clear”:
 
