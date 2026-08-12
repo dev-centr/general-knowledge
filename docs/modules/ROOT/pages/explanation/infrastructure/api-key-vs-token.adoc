@@ -110,6 +110,12 @@ Decision test (ignore the button label):
 If it was pasted from a dashboard and lives until you revoke it → **API key** (scoped or not).
 If it was minted by a protocol and dies on a timer → **access token**.
 
+=== Worked example: Composio’s two Cloudflares
+
+Composio lists **Cloudflare** (OAuth — wants an *access token* from consent) and **Cloudflare API Key** (wants a dashboard *key*: Global API Key + email, or a Cloudflare “API Token” which is a **scoped API key**).
+
+Pasting a Global API Key or API Token into the OAuth app is the costume problem in product form: the UI accepts the string, the connection shows **ACTIVE**, Cloudflare returns **`9109 Invalid access token`**. Fix: use the toolkit that matches the secret kind. How-to: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]. General duplicate-toolkit pattern: xref:how-to/composio-mcp-setup.adoc#duplicate-toolkits[Composio MCP setup].
+
 == How this connects to secrets distribution
 
 xref:secrets-distribution-hub.adoc[Secrets distribution hub] still says *create in vendors, store in vault, distribute to targets*.
@@ -119,5 +125,6 @@ Prefer names that match the architectural type (`STRIPE_API_KEY`, `GITHUB_PAT` a
 == Related
 
 * xref:ssh-keys.adoc[SSH keys] — different credential family (asymmetric identity), same discipline: name by mechanism, not by marketing.
+* How-to xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
 * Tutorial xref:tutorials/secrets-from-vendor-to-deploy.adoc[From vendor dashboard to deploy matrix]
 * How-to xref:how-to/secrets-distribution-cli-mcp.adoc[Distribute API keys with vault CLI, hosting CLI, and MCP]

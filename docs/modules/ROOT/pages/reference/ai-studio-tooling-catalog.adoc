@@ -16,7 +16,7 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 
 | **Composio**
 | Hosted multi-app MCP connector plane (Gmail, GitHub, Vercel, …)
-| xref:how-to/composio-mcp-setup.adoc[Setup] · xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Stack fit] · xref:home::tools/composio.adoc[Hub]
+| xref:how-to/composio-mcp-setup.adoc[Setup] · xref:how-to/composio-cloudflare-connection.adoc[Cloudflare] · xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Stack fit] · xref:home::tools/composio.adoc[Hub]
 
 | **Context7**
 | Library / API docs MCP for agents

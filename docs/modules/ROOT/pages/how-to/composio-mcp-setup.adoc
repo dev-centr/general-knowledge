@@ -73,6 +73,29 @@ Composio MCP auth is not the same as app auth. After the server is Active:
 
 When Composio (or a Google toolkit) asks for a **Client ID** and **Client Secret**, create them in Google Cloud as a dedicated trust platform—do not squash every personal CLI into one “Personal” Project. Steps: xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools]. Why the Console feels wrong: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].
 
+[#duplicate-toolkits]
+== Duplicate toolkits (OAuth vs API key)
+
+Some vendors appear **twice** in Composio with almost the same name and icon. One entry is **OAuth**; the other is **API key / API token** (dashboard secret). They look identical in the catalog. They are not.
+
+[cols="1,2,2", options="header"]
+|===
+| Toolkit flavor | What to put in the form | What goes wrong if you mix them
+
+| **OAuth** (often the shorter name, e.g. “Cloudflare”)
+| Complete the provider’s consent screen. Do **not** paste a Global API Key or API Token.
+| Composio may still show **ACTIVE**. Provider calls then fail (Cloudflare: **`9109 Invalid access token`**). There is no refresh — the stored credential is the wrong kind.
+
+| **API Key** (often “… API Key”)
+| Match the fields: email + Global API Key, *or* a scoped API Token, as the form asks. See xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] — vendor “token” is usually a long-lived **key**.
+| Token in a Global-key field (or the reverse) also 9109s. Hammering retries can hit **`10502 Too many authentication failures`**; wait, then reconnect once.
+|===
+
+Connect **one** toolkit per vendor. **ACTIVE is not a smoke test** — run a real list/read before calling the connection done. Credentials live on Composio’s servers, not on a particular laptop.
+
+Worked example (DNS / Access)::
+xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
+
 Typical starter set for “CI emails → fix → clear”:
 
 * *Gmail* — find failure / expired / needs-attention mail; mark read when done
@@ -92,7 +115,9 @@ That loop is the intended product use—not “MCP listed in settings.”
 
 == Related
 
+* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
 * xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth for personal tools]
+* xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
 * xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]

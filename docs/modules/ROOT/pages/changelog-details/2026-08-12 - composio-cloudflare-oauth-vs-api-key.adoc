@@ -1,0 +1,15 @@
+= 2026-08-12 — Composio Cloudflare OAuth vs API key
+
+Documented the duplicate Composio catalog trap for Cloudflare (and the general OAuth-app vs API-key-app pattern):
+
+* **Cloudflare** toolkit wants OAuth; **Cloudflare API Key** wants email + Global API Key or a scoped API Token
+* Pasting a dashboard key into the OAuth app still shows **ACTIVE**, then Cloudflare returns **9109 Invalid access token**
+* No in-app refresh — disconnect and reconnect on the matching toolkit
+* **10502** after too many auth failures is a cool-down, not proof the new secret is wrong
+* Composio stores credentials server-side (laptop vs desktop is irrelevant)
+
+Pages:
+
+* xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio]
+* Section on xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
+* Worked example on xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
