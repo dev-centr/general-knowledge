@@ -4,9 +4,9 @@
 
 People arrive at Google Cloud Console with a simple picture: *my Google account*, *the apps I trust*, and *what each app may do with my Drive / Gmail / Calendar*.
 
-Google Cloud answers with a different noun: the **Project**. Consent screens, API enablement, and quotas all hang off that Project. Client IDs are children of it. Personal â€œjust let Composio read my Driveâ€ work gets the same enterprise workflow Fortune 500 teams use for VMs and billing.
+Google Cloud answers with a different noun: the **Project**. Consent screens, API enablement, and quotas all hang off that Project. Client IDs are children of it. Personal "just let Composio read my Drive" work gets the same enterprise workflow Fortune 500 teams use for VMs and billing.
 
-This page names the mismatch, shows an **ideal** model, then shows how to **map** todayâ€™s console onto that model without pretending the schema is fine.
+This page names the mismatch, shows an **ideal** model, then shows how to **map** today's console onto that model without pretending the schema is fine.
 
 Task guide (steps only)::
 xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools]
@@ -26,7 +26,7 @@ What you actually care about as a person wiring tools:
 | Concept | Job
 
 | **You (account)**
-| Identity and the data (Drive, mail, calendar). Quotas for â€œaccess *my* stuffâ€ could live here.
+| Identity and the data (Drive, mail, calendar). Quotas for "access *my* stuff" could live here.
 
 | **App**
 | A named trust boundary: Composio, rclone, a personal web app. Own branding, own consent copy, own scope set.
@@ -43,9 +43,9 @@ What you actually care about as a person wiring tools:
 flowchart TB
   You["You (Google account + your data)"]
   subgraph Apps["Apps directory (ideal)"]
-    A1["App: Composio\nconsent Â· scopes Â· branding"]
-    A2["App: rclone\nconsent Â· scopes Â· branding"]
-    A3["App: personal script\nconsent Â· scopes Â· branding"]
+    A1["App: Composio\nconsent / scopes / branding"]
+    A2["App: rclone\nconsent / scopes / branding"]
+    A3["App: personal script\nconsent / scopes / branding"]
   end
   You -->|authorize grant| A1
   You -->|authorize grant| A2
@@ -55,14 +55,14 @@ flowchart TB
   A3 --> C3[Client ID + secret]
 ----
 
-In this world you would **not** invent a new â€œPersonal 2.0â€ project every time you add a sync tool. Apps would be first-class. Infrastructure projects (VMs, BigQuery, Cloud Run) would be optional and separate.
+In this world you would **not** invent a new "Personal 2.0" project every time you add a sync tool. Apps would be first-class. Infrastructure projects (VMs, BigQuery, Cloud Run) would be optional and separate.
 
 .Ideal: account, apps, credentials
 image::gcp-oauth-ideal-model.svg[alt="Ideal mental model: You authorize separate apps; each app owns consent and client credentials"]
 
 == What Google Cloud actually couples
 
-In the Console today, several concerns that feel like â€œappâ€ properties are **project-wide**:
+In the Console today, several concerns that feel like "app" properties are **project-wide**:
 
 [cols="1,2,2", options="header"]
 |===
@@ -72,7 +72,7 @@ In the Console today, several concerns that feel like â€œappâ€ properti
 | App
 | **Project** (one screen shared by every Client ID in that project)
 
-| API enablement (Drive, Gmail, â€¦)
+| API enablement (Drive, Gmail, ...)
 | App or client
 | **Project**
 
@@ -109,16 +109,16 @@ flowchart TB
 Consequences people feel in the UI:
 
 * Two Client IDs in one project still share **one** consent screen and the **union** of declared scopes.
-* Revoking or resetting trust for â€œthat project appâ€ can couple token lifetimes across tools you thought were separate.
+* Revoking or resetting trust for "that project app" can couple token lifetimes across tools you thought were separate.
 * Heavy Drive use from rclone can exhaust **project** quota and starve Composio (or the reverse).
-* Pure consumer workflows (NotebookLM context via Drive) still require a Project, consent screen, and Client IDâ€”there is no personal API sandbox.
+* Pure consumer workflows (NotebookLM context via Drive) still require a Project, consent screen, and Client ID--there is no personal API sandbox.
 
 .Actual: Project owns the shared bundle
 image::gcp-oauth-actual-project.svg[alt="Actual model: one Project shares consent screen, APIs, and quotas across Client IDs"]
 
-== Mapping ideal â†’ Console (without self-deception)
+== Mapping ideal -> Console (without self-deception)
 
-Keep the ideal nouns in your head. Label Projects as **stand-ins for apps** (or for *trust platforms*), not as â€œfolders for personal stuff.â€
+Keep the ideal nouns in your head. Label Projects as **stand-ins for apps** (or for *trust platforms*), not as "folders for personal stuff."
 
 .Map ideal apps onto Projects
 image::gcp-oauth-ideal-to-project-map.svg[alt="Mapping: Composio and rclone each get their own Project used as a trust platform"]
@@ -145,40 +145,40 @@ Practical mapping rules:
 | Ideal intent | What to create in GCP
 
 | One **trust platform** (e.g. all Google tools inside Composio)
-| **One** Project + **one** OAuth Client ID; grow scopes/APIs as you add Gmail, Calendar, Drive, â€¦
+| **One** Project + **one** OAuth Client ID; grow scopes/APIs as you add Gmail, Calendar, Drive, ...
 
 | A **different** product with its own brand and revoke story (rclone, a hobby web app)
 | A **separate** Project (and its own Client ID)
 
 | Only cloud VMs / billing / IaC
-| A Project used as real infrastructureâ€”do not overload it as an OAuth app unless you accept coupling
+| A Project used as real infrastructure--do not overload it as an OAuth app unless you accept coupling
 
-| â€œPersonal catch-allâ€
+| "Personal catch-all"
 | Avoid. That is how consent names, scopes, quotas, and revokes tangle.
 |===
 
 === Lumping vs splitting
 
-**Lump** when the tools share a platform and you *want* one mental revoke surface (recommended for â€œeverything Google inside Composioâ€): same Project, same Client ID, enable APIs and add scopes as you grow, then **re-authorize** so tokens pick up new scopes.
+**Lump** when the tools share a platform and you *want* one mental revoke surface (recommended for "everything Google inside Composio"): same Project, same Client ID, enable APIs and add scopes as you grow, then **re-authorize** so tokens pick up new scopes.
 
 **Split** when products are unrelated (rclone sync vs Composio agent tools): separate Projects so consent branding, scope unions, quotas, and revocation stay independent.
 
-Do **not** put a second Client ID in an existing â€œPersonalâ€ project and assume isolation. You only isolated the credential stringâ€”not consent, quotas, or API enablement.
+Do **not** put a second Client ID in an existing "Personal" project and assume isolation. You only isolated the credential string--not consent, quotas, or API enablement.
 
 == Scopes, APIs, and lookalike traps
 
-* **Enable the consumer API you actually call.** NotebookLM-style access to docs in Drive uses **Google Drive API**, not Vertex AI Workbench / â€œEnterprise Notebooks.â€
+* **Enable the consumer API you actually call.** NotebookLM-style access to docs in Drive uses **Google Drive API**, not Vertex AI Workbench / "Enterprise Notebooks."
 * **Consent scopes** are the human-visible permission set. Enabling an API without adding scopes (and re-authorizing) does not grant access.
-* **Authorized redirect URIs** are required for web-style OAuth callbacks (e.g. Composioâ€™s callback). **Authorized JavaScript origins** are for browser clients; leave them empty when the tool only needs a redirect URI.
-* Expanding scopes does not rewrite old tokensâ€”open the connection again and complete OAuth.
+* **Authorized redirect URIs** are required for web-style OAuth callbacks (e.g. Composio's callback). **Authorized JavaScript origins** are for browser clients; leave them empty when the tool only needs a redirect URI.
+* Expanding scopes does not rewrite old tokens--open the connection again and complete OAuth.
 
 Detail and click-path::
 xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools]
 
 == Related
 
-* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] â€” install the MCP server; use the Google OAuth how-to when Composio asks for Client ID / secret
+* xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] -- install the MCP server; use the Google OAuth how-to when Composio asks for Client ID / secret
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
-* xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] â€” Client ID/secret vs the user grant
-* xref:explanation/infrastructure/iac.adoc[Infrastructure as Code] â€” when a Project really *is* infra
+* xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token] -- Client ID/secret vs the user grant
+* xref:explanation/infrastructure/iac.adoc[Infrastructure as Code] -- when a Project really *is* infra
 * xref:reference/google-cloud-oauth-concept-map.adoc[Concept map]

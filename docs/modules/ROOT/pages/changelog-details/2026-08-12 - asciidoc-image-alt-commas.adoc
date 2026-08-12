@@ -11,3 +11,7 @@ Pages touched include the Cloudflare Access how-to/explanation, Google Cloud OAu
 Opening some Access/GCP SVGs directly showed XML *Encoding error* (or *EntityName* parse failures). Cause: non-UTF-8 bytes (Windows-1252 smart punctuation) and bare `&` left after ellipsis scrubbing (`GET team.docs&`, `POST &/access/…`). Browsers treat SVG as UTF-8 XML.
 
 Fix: declare `<?xml version="1.0" encoding="UTF-8"?>`, keep label text ASCII (or properly escaped entities), and use `&amp;` / `&lt;` where needed. All `access-*.svg` and `gcp-*.svg` under `modules/ROOT/images/` now parse as XML.
+
+== Same day — Mojibake in Access/GCP AsciiDoc
+
+Four pages (Access how-to/explanation, Composio Cloudflare connection, GCP OAuth mental model) had **double-encoded** UTF-8: curly quotes and dashes stored as the Latin-1 lookalikes `â€œ` / `â€”`, which rendered literally in the HTML. Recovered to ASCII quotes/dashes/arrows.

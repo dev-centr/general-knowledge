@@ -7,6 +7,7 @@ Timeline of notable documentation changes in this repository.
 * Unquoted `image::file.svg[A, B, C]` was emitting HTML `width="B" height="C"`, so figures looked broken even though `_images/` files were fine (`200`).
 * Quoted with `alt="…"` across Access mocks, GCP OAuth diagrams, secrets figures, and git-semantic figures.
 * Same day: Access/GCP SVGs that opened with XML *Encoding error* / *EntityName* (Windows-1252 bytes, bare `&`) rewritten as UTF-8 XML with escaped entities.
+* Same day: double-encoded curly quotes in Access/GCP AsciiDoc (`â€œ…â€`) recovered to ASCII.
 * See xref:changelog-details/2026-08-12 - asciidoc-image-alt-commas.adoc[Detailed changelog].
 
 == 2026-08-12 — Finish setup browser order and multi-org consent
