@@ -21,10 +21,9 @@
   <text class="label" x="24" y="28">SIMPLIFIED MOCK - incognito visit after Access is on (success = this page, not HTML)</text>
 
   <rect class="win" x="24" y="48" width="672" height="348" rx="6"/>
-  <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
-  <rect class="chrome" x="24" y="66" width="672" height="18"/>
-  <line class="chrome-rule" x1="24" y1="84" x2="696" y2="84"/>
-  <text class="s" x="44" y="71">https://team.docs.example.org/</text>
+  <path class="chrome" d="M24,88 L24,54 Q24,48 30,48 L690,48 Q696,48 696,54 L696,88 Z"/>
+  <line class="chrome-rule" x1="24" y1="88" x2="696" y2="88"/>
+  <text class="s" x="44" y="74">https://team.docs.example.org/</text>
 
   <rect class="card" x="160" y="120" width="400" height="220" rx="6"/>
   <text class="t" x="184" y="160" font-size="18">Sign in</text>

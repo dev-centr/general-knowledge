@@ -23,10 +23,9 @@
   <text class="label" x="24" y="28">SIMPLIFIED MOCK - Authorize is not the Access Allow list</text>
 
   <rect class="win" x="24" y="48" width="672" height="388" rx="6"/>
-  <rect class="chrome" x="24" y="48" width="672" height="36" rx="6"/>
-  <rect class="chrome" x="24" y="66" width="672" height="18"/>
-  <line class="chrome-rule" x1="24" y1="84" x2="696" y2="84"/>
-  <text class="s" x="44" y="71">github.com / login / oauth / authorize</text>
+  <path class="chrome" d="M24,88 L24,54 Q24,48 30,48 L690,48 Q696,48 696,54 L696,88 Z"/>
+  <line class="chrome-rule" x1="24" y1="88" x2="696" y2="88"/>
+  <text class="s" x="44" y="74">github.com / login / oauth / authorize</text>
 
   <text class="t" x="48" y="118" font-size="18">Authorize Team docs (Access)</text>
   <text class="s" x="48" y="142">Organization access</text>

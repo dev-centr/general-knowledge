@@ -21,10 +21,9 @@
   <text class="label" x="24" y="28">SIMPLIFIED MOCK - Zero Trust ' Integrations ' Identity providers ' GitHub</text>
 
   <rect class="win" x="24" y="48" width="792" height="368" rx="6"/>
-  <rect class="chrome" x="24" y="48" width="792" height="36" rx="6"/>
-  <rect class="chrome" x="24" y="66" width="792" height="18"/>
-  <line class="chrome-rule" x1="24" y1="84" x2="816" y2="84"/>
-  <text class="s" x="44" y="71">Zero Trust / Identity providers</text>
+  <path class="chrome" d="M24,88 L24,54 Q24,48 30,48 L810,48 Q816,48 816,54 L816,88 Z"/>
+  <line class="chrome-rule" x1="24" y1="88" x2="816" y2="88"/>
+  <text class="s" x="44" y="74">Zero Trust / Identity providers</text>
 
   <text class="t" x="48" y="118" font-size="20">Login methods</text>
 

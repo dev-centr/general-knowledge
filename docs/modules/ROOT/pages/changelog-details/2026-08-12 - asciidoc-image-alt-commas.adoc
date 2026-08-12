@@ -1,17 +1,21 @@
-= 2026-08-12 — Quote AsciiDoc image alts that contain commas
+= 2026-08-12 -- Quote AsciiDoc image alts that contain commas
 
-Root cause of “Antora images never work” on several general-knowledge pages: AsciiDoc attribute lists split on commas. An alt like `Setup: OAuth App, IdP, policy` became `width="IdP"` / `height="policy"` in the HTML. The SVG/PNG was in `modules/ROOT/images/` and served from `_images/` (`200`); the broken attributes made the figure look empty or wrong.
+Root cause of "Antora images never work" on several general-knowledge pages: AsciiDoc attribute lists split on commas. An alt like `Setup: OAuth App, IdP, policy` became `width="IdP"` / `height="policy"` in the HTML. The SVG/PNG was in `modules/ROOT/images/` and served from `_images/` (`200`); the broken attributes made the figure look empty or wrong.
 
-Fix: always use `image::file.svg[alt="…"]` (and `width=N` as a named attribute) when the description has commas.
+Fix: always use `image::file.svg[alt="..."]` (and `width=N` as a named attribute) when the description has commas.
 
 Pages touched include the Cloudflare Access how-to/explanation, Google Cloud OAuth mental model, secrets distribution figures, and git-semantic boundaries.
 
-== Same day — SVG encoding (open URL → “Encoding error”)
+== Same day -- SVG encoding (open URL -> "Encoding error")
 
-Opening some Access/GCP SVGs directly showed XML *Encoding error* (or *EntityName* parse failures). Cause: non-UTF-8 bytes (Windows-1252 smart punctuation) and bare `&` left after ellipsis scrubbing (`GET team.docs&`, `POST &/access/…`). Browsers treat SVG as UTF-8 XML.
+Opening some Access/GCP SVGs directly showed XML *Encoding error* (or *EntityName* parse failures). Cause: non-UTF-8 bytes (Windows-1252 smart punctuation) and bare `&` left after ellipsis scrubbing (`GET team.docs&`, `POST &/access/...`). Browsers treat SVG as UTF-8 XML.
 
 Fix: declare `<?xml version="1.0" encoding="UTF-8"?>`, keep label text ASCII (or properly escaped entities), and use `&amp;` / `&lt;` where needed. All `access-*.svg` and `gcp-*.svg` under `modules/ROOT/images/` now parse as XML.
 
-== Same day — Mojibake in Access/GCP AsciiDoc
+== Same day -- Mojibake in Access/GCP AsciiDoc
 
-Four pages (Access how-to/explanation, Composio Cloudflare connection, GCP OAuth mental model) had **double-encoded** UTF-8: curly quotes and dashes stored as the Latin-1 lookalikes `â€œ` / `â€”`, which rendered literally in the HTML. Recovered to ASCII quotes/dashes/arrows.
+Four pages (Access how-to/explanation, Composio Cloudflare connection, GCP OAuth mental model) had **double-encoded** UTF-8: curly quotes mis-decoded as Windows-1252 and saved again (classic mojibake), which rendered literally in the HTML. Recovered to ASCII quotes/dashes/arrows. Repair tooling: org skill `fix-docs-encoding` in `dev-centr/agent-rules`.
+
+== Same day -- Mock chrome breadcrumb layout
+
+Access simplified mocks stacked a second **stroked** chrome `<rect>` across the URL label. Redrawn as one fill-only top-rounded `<path class="chrome">` plus `<line class="chrome-rule">` below the baseline. Note: docs.devcentr.org only refreshes component `_images/` when the **docs** hub redeploys.

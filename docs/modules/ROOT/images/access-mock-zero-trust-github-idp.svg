@@ -22,10 +22,9 @@
   <text class="label" x="28" y="28">SIMPLIFIED MOCK - Zero Trust ' Integrations ' Identity providers ' Add ' GitHub</text>
 
   <rect class="win" x="28" y="48" width="784" height="368" rx="6"/>
-  <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
-  <rect class="chrome" x="28" y="66" width="784" height="18"/>
-  <line class="chrome-rule" x1="28" y1="84" x2="812" y2="84"/>
-  <text class="s" x="48" y="71">dash.cloudflare.com / Zero Trust / Identity providers</text>
+  <path class="chrome" d="M28,88 L28,54 Q28,48 34,48 L806,48 Q812,48 812,54 L812,88 Z"/>
+  <line class="chrome-rule" x1="28" y1="88" x2="812" y2="88"/>
+  <text class="s" x="48" y="74">dash.cloudflare.com / Zero Trust / Identity providers</text>
 
   <text class="t" x="56" y="118" font-size="20">Add GitHub</text>
   <rect class="pill" x="200" y="100" width="72" height="24" rx="12"/>

@@ -22,10 +22,9 @@
   <text class="label" x="28" y="28">SIMPLIFIED MOCK - not a live screenshot - GitHub / Settings / Developer settings / OAuth Apps</text>
 
   <rect class="win" x="28" y="48" width="784" height="448" rx="6"/>
-  <rect class="chrome" x="28" y="48" width="784" height="36" rx="6"/>
-  <rect class="chrome" x="28" y="66" width="784" height="18"/>
-  <line class="chrome-rule" x1="28" y1="84" x2="812" y2="84"/>
-  <text class="s" x="48" y="71">github.com / settings / applications / new</text>
+  <path class="chrome" d="M28,88 L28,54 Q28,48 34,48 L806,48 Q812,48 812,54 L812,88 Z"/>
+  <line class="chrome-rule" x1="28" y1="88" x2="812" y2="88"/>
+  <text class="s" x="48" y="74">github.com / settings / applications / new</text>
 
   <text class="t" x="56" y="118" font-size="20">Register a new OAuth application</text>
   <text class="hint" x="56" y="138">Prefer an organization-owned app so the org controls the client secret.</text>
