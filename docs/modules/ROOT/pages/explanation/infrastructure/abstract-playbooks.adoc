@@ -1,0 +1,264 @@
+= Abstract playbooks
+:navtitle: Abstract playbooks
+:description: Write what you want. PlayTime binds how on this computer. Equivalence Engine is a catalog, not a bash-to-PowerShell translator.
+
+Write this so someone with no background can follow.
+
+== What do I need?
+
+A `.cmk` playbook (CentrMark file). The Scriptbook app. PlayTime (the engine inside Scriptbook). The Equivalence Engine plus its CLI catalog, for install steps.
+
+You do **not** need a bash-to-PowerShell translator. That is the whole point.
+
+Companion essay::
+link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Intents, not shell translation]
+
+Contracts::
+link:https://github.com/dev-centr/scriptbook/blob/main/spec/playtime.adoc[PlayTime] ·
+link:https://github.com/dev-centr/scriptbook/blob/main/spec/playbook-profile.adoc[Playbook profile] ·
+link:https://github.com/dev-centr/scriptbook/blob/main/spec/host-awareness.adoc[Host Awareness]
+
+OpenShellOrg cousins::
+link:https://docs.opensh.org/shell-architecture/playtime-at-the-shell-boundary.html[PlayTime at the shell boundary] ·
+link:https://docs.opensh.org/shell-architecture/argv-as-execution-currency.html[Argv as execution currency]
+
+== The idea in one kitchen
+
+A **playbook** is a recipe written as a document. Each step says what you want: install this tool, put config here, check that it worked.
+
+**CentrMark** is the file format (`.cmk`). It is only writing.
+
+**PlayTime** is the kitchen. It looks at *this* computer, asks the Equivalence Engine for the matching command, runs it, and writes a **sidecar** (a run record next to the file). It never rewrites the recipe.
+
+**Scriptbook** is the waiter. Today that is the `scriptbook` CLI. Later it is also a DevCentr screen. It opens the book and talks to you.
+
+.Cookbook, kitchen, waiter
+image::playtime-layers.svg[alt="Three layers: CentrMark the book, PlayTime the stage, Scriptbook the app"]
+
+Keep the word **playbook** for the document (`::: playbook`). PlayTime is the moment it runs.
+
+Do **not** split PlayTime into a new GitHub repo yet. It is the library in `dev-centr/scriptbook`. The binary stays `scriptbook`. OpenShellOrg may be a better long-term home for a document runner that spawns **argv** (program + args, no shell). That move waits. The kitchen is mid-service.
+
+.PlayTime stays in the Dev-Centr workshop
+image::playtime-sibling-home.svg[alt="PlayTime lives in Dev-Centr; a dotted maybe-later path points at OpenShellOrg"]
+
+== The wrong default: hot-replace
+
+People often want one script that works everywhere. The trap is to write bash, then ask a machine to rewrite `apt` into `winget` inside the same file.
+
+That is a **shell compiler**. Quoting, elevation, path separators, and package side effects do not survive string substitution. Equivalence Engine's `code` domain walks library *versions*. It is not a bash-to-pwsh path.
+
+.Do not put a bash script through a blender
+image::playtime-wrong-translator.svg[alt="A Linux apt script enters a hot-replace grinder and comes out as broken Windows commands"]
+
+Portable glue can stay **Nushell**. Scriptbook already prefers `nu` when `shell=auto`. OS-native work should be an **intent**, not a dialect.
+
+== The right default: bind
+
+Author a procedure of **intents**. An intent is a registered name plus arguments, for example `cli.install` + tool `gh`.
+
+At **play time** (when PlayTime runs the book):
+
+. Take a **host snapshot** (Host Awareness). Freeze it.
+. Filter catalog rows this host can run.
+. If more than one method remains, ask (or take `--format`).
+. Bind the intent to **argv**, or **expand** it into more intents.
+. Run. Write the sidecar. Leave the `.cmk` alone.
+
+.Detect, filter, maybe ask, bind, run
+image::playtime-bind-flow.svg[alt="Five boxes: snapshot, filter, ask, bind, run"]
+
+Two layers that look similar but are not:
+
+[cols="1,2,2", options="header"]
+|===
+| Layer | Same process? | Example
+
+| **Realization**
+| Yes. One step, different command.
+| `cli.install gh` becomes `winget install GitHub.cli` or `nix profile install nixpkgs#gh`
+
+| **Method choice**
+| Same goal. Extra satellite steps.
+| AppImage needs a desktop file. MSI needs elevation. Flatpak does not need PATH surgery.
+|===
+
+The spine is almost always: detect → acquire → configure → verify. Windows vs Linux does not usually need two playbooks. Rare true forks (GPU drivers, tray app vs service) get `when-context=` or two books that share narrative.
+
+== Who asks, who binds
+
+[cols="1,2", options="header"]
+|===
+| Piece | Job
+
+| Equivalence Engine + catalogs
+| Vocabulary of intents. Filter and rank methods. Ground argv or expand-to-intents. Never parse `.cmk`.
+
+| PlayTime
+| Snapshot the host. Call the engine. Execute. Sidecars. `when=` / `when-answer` / `when-context`.
+
+| Scriptbook
+| Open the book. Questionnaire UX. `--format`, `--yes`, answer files. Must not rank methods itself.
+|===
+
+CentrMark must not call the engine. The engine must not parse CentrMark. That stops "is EE a script translator now?"
+
+== Questionnaire is a Venn diagram
+
+Do not put every Linux package format in the playbook language. The catalog owns formats per tool.
+
+Show the user: **this tool's methods ∩ this host's capabilities**. Ask only if that set has more than one member.
+
+.Ask only the overlap
+image::playtime-venn.svg[alt="Two circles: catalog methods for gh, and formats this computer can run; ask only in the overlap"]
+
+== Koan: MSI or bash?
+
+Format is which installer (msi, deb, flatpak, winget, …).
+
+**Shell** is how a *string* would be parsed. Almost never an Equivalence Engine axis.
+
+**Runtime** is a rare constraint: this method *is* a script (`runtime bash` for `curl | bash`). Filter the row if bash is missing. Do not multiply it by format.
+
+`winget install GitHub.cli` is argv. Any shell can spawn it. Prefer spawning it with **no** shell. You do not need winget-in-pwsh, winget-in-nu, and winget-in-bash as three equivalent things.
+
+.The student asked: MSI or bash?
+image::playtime-two-doors.svg[alt="Two doors labeled MSI and bash; that is not a questionnaire"]
+
+.One suitcase, no costumes
+image::playtime-argv.svg[alt="argv box for winget install; dashed bash, pwsh, and nu coats are not needed"]
+
+== Format x shell is not a graph
+
+Equivalence Engine already has two machines. People mix them up.
+
+[cols="1,2,2", options="header"]
+|===
+| Domain | Mechanism | An edge means
+
+| `code`
+| Shortest path, then rewrite
+| Version 5.15 → 6.0 transform
+
+| `filesystem` / `cli`
+| Lookup + inherit
+| This host key is more specific than that one
+|===
+
+CLI install was never "migrate this bash to pwsh." It is intent + host → a catalog row. Putting `shell` in `--to` (`windows/pwsh/msi`) would explode into a lattice. That *would* break the engine. So we do not.
+
+.Columns, not a cube
+image::playtime-facets-not-lattice.svg[alt="A catalog table of os, format, runtime versus a forbidden path-segment lattice"]
+
+If we later want `ls` ↔ `Get-ChildItem`, that is a **separate** `shell`/`cmd` domain. Installing a `.deb` does not change what `ls` means.
+
+== Register, then dereference
+
+Abstract instructions live in Equivalence Engine **definitions**. A playbook step names an intent id. The engine returns either:
+
+* **Ground** — argv (preferred) or a required-runtime script. Bottom. Stop.
+* **Expand** — a list of other intent calls (not a `.cmk`). Recurse.
+
+Unknown intent = author error, not another nesting level.
+
+Do not expand `cli.install` into "find OS, then find winget, then install." The snapshot already found the OS. Expansion is for compound *operations* (AppImage → download, chmod, desktop file).
+
+Human playbooks may include other books for narrative. Equivalence Engine must not parse CentrMark. Those are two different loops.
+
+== Host Awareness (bootstrap is not an intent)
+
+PlayTime must know the computer **before** it asks the engine for commands. Using the engine to answer "what OS am I?" in order to pick the "what OS am I?" command is a cycle. So we do not.
+
+**Host Awareness** is the bootstrap contract. Every probe fills a **Host Identity Record**:
+
+`family`, `distro`, `like[]`, `version`, `arch`, `overlays[]`, `caps` (shells, package managers, formats).
+
+There is no world `get_os()` API. Close cousins already exist: POSIX `uname`, Freedesktop `/etc/os-release`, Windows `RtlGetVersion`, Darwin `sw_vers`. We sit on those.
+
+.Snapshot, then dereference
+image::playtime-bootstrap.svg[alt="Deadlock cycle crossed out; snapshot then Equivalence Engine bind"]
+
+**Probe kinds** are code in PlayTime (`compileTime`, `uname`, `osReleaseFile`, `ntVersion`, `pathHas`, and `command` as escape hatch). A table cannot invent a new kernel ABI.
+
+**Probe table** is shared data. CI runs Equivalence Engine as a **compiler** and bakes an ordered cascade into the PlayTime binary. Pin the rules git revision. Runtime PlayTime does not call the engine to learn `family`.
+
+PowerShell-on-Linux does not save bootstrap. `$IsLinux` only works if you are already inside pwsh. PlayTime is not. Shells can anchor *ground methods* after a runtime exists. They cannot tell the engine which planet it is on.
+
+WSL is Linux plus overlay `wsl`. Cygwin is Windows plus a POSIX hat. Containers are an overlay on whatever family. Not new planets.
+
+.Overlays are stickers
+image::playtime-overlays.svg[alt="linux, windows, and any family circles with wsl, cygwin, container stickers"]
+
+== The growth loop (wanted) vs the deadlock (forbidden)
+
+Forbidden: PlayTime calls the engine to learn `family` so that it can call the engine. That never starts.
+
+Wanted: catalogs get richer → CI bakes a better cascade → PlayTime wakes up on more machines → people write more playbooks → they register more intents and probes → the next bake is richer. Each release is a ratchet.
+
+.Ratchet at build time
+image::playtime-growth-ratchet.svg[alt="Rules to CI bake to shipped PlayTime to more playbooks back to new catalog rows"]
+
+Humans live at the intent layer. When winget flags change, you rewrite **one basement row**. Every book above it dereferences better. You stop maintaining a Windows script and a Linux script.
+
+.Attic intents, basement argv
+image::playtime-attic-basement.svg[alt="House cross-section: intents in the attic, PlayTime stairs, catalog in the basement"]
+
+A new Unix-like distro that speaks `os-release` is data (next bake). A kernel that is neither NT nor POSIX needs a new probe *kind* in PlayTime, then a table row. That is "register with us": fill the record, not an `os.family` intent.
+
+Ship PlayTime able to detect Windows, Linux, and macOS **offline**. Empty-engine-plus-network-rules would recreate the cycle on a plane.
+
+== Authoring sketch
+
+[source,centrmark]
+----
+::: playbook [id="install-gh" shell="auto"]
+
+::: choose [id="pkg-format" prompt="How should we install gh?" intent="cli.install" tool="gh"]
+:::
+
+::: step [id="install" intent="cli.install" tool="gh" bind="pkg-format"]
+:::
+
+::: step [id="desktop-file" when-answer="pkg-format=appimage" intent="desktop.install"]
+:::
+
+::: step [id="verify" when="install"]
+```
+gh --version
+```
+:::
+:::
+----
+
+Concrete script cells stay valid. Mixed books are the sweet spot: Nushell for glue, intents for OS-native ops.
+
+== What we will not do
+
+* Bash ↔ pwsh translation via Equivalence Engine `code`
+* Context paths that include shell (`windows/pwsh/msi`)
+* One catalog row per `(format x shell)` pair
+* Equivalence Engine parsing `.cmk`
+* `os.family` as the intent that starts a run
+* Moving PlayTime to OpenShellOrg while it is being built
+
+== Where the pages live
+
+[cols="1,2", options="header"]
+|===
+| Place | Job
+
+| This page
+| Vision plus the model, with pictures
+
+| link:https://github.com/dev-centr/scriptbook[scriptbook] `spec/`
+| Directives, sidecars, Host Awareness contract
+
+| xref:dev-center:specifications:features/scriptbook-system-playbooks.adoc[DevCentr Scriptbook spec]
+| Product pointer (not SLP, not shell translation)
+
+| xref:equivalence-engine::host-awareness.adoc[Equivalence Engine: Host Awareness]
+| Bake vs run; `--list` / `--format`; `--to` stays a host alias
+
+| link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Blog essay]
+| Inward tour of the same system
+|===

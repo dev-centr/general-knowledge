@@ -19,7 +19,7 @@ In the Dev-Centr ecosystem, we endorse **Synchronous Literate Programming (SLP)*
 For projects within the Dev-Centr core, we recommend **CentrMark** (`.cmk`). It uses a flexible directive system (`::: tangle`) and is designed for structural synchronization.
 
 === Runnable script documents (Scriptbook)
-SLP tangles **source**. For docs you **play on the machine** (install steps, DNS checks, setup recipes), use link:https://github.com/dev-centr/scriptbook[Scriptbook]: CentrMark `::: playbook` / `::: step` with run output in sidecars (never rewritten into the `.cmk`). Shell backends first; other runners later.
+SLP tangles **source**. For docs you **play on the machine** (install steps, DNS checks, setup recipes), use link:https://github.com/dev-centr/scriptbook[Scriptbook]: CentrMark `::: playbook` / `::: step` with run output in sidecars (never rewritten into the `.cmk`). Author **intents**, not a bash-to-PowerShell rewrite. Illustrated model: xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks].
 
 === CommonMark (Markdown)
 If you prefer standard Markdown, use:

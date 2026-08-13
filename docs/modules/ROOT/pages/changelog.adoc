@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-13 -- Abstract playbooks
+
+* Explanation xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks] -- write what you want; PlayTime binds how; Equivalence Engine is a catalog, not a bash-to-PowerShell blender.
+* Figures: layers, hot-replace, bind flow, facets vs lattice, Venn, two-doors koan, argv suitcase, bootstrap, ratchet, attic/basement, overlays, sibling home.
+* Essay: link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Intents, not shell translation].
+* See xref:changelog-details/2026-08-13 - abstract-playbooks.adoc[Detailed changelog].
+
 == 2026-08-12 -- Quote AsciiDoc image alts that contain commas
 
 * Unquoted `image::file.svg[A, B, C]` was emitting HTML `width="B" height="C"`, so figures looked broken even though `_images/` files were fine (`200`).

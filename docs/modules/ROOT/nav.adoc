@@ -92,6 +92,7 @@
 *** xref:explanation/infrastructure/nvidia-openshell.adoc[NVIDIA OpenShell]
 *** xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
 *** xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh]
+*** xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks]
 *** xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
 *** xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
 *** xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]

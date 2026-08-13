@@ -1,0 +1,6 @@
+= 2026-08-13 -- Abstract playbooks
+
+Encyclopedia page for PlayTime / Scriptbook / Equivalence Engine: intents not
+shell translation, Host Awareness bootstrap, format vs shell facets, growth
+ratchet. Hand-authored SVG illustrations (layers, blender, bind flow, facets,
+ratchet, attic/basement, two-doors koan, sibling home).
