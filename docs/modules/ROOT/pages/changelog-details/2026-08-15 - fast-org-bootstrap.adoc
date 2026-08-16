@@ -1,0 +1,4 @@
+= 2026-08-15 -- Fast org bootstrap cross-link
+
+* Canonical tutorial lives in Business Bootstrap: xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (agent skill `bootstrap-org`, named SDLang profiles).
+* General-knowledge only **points** at it from xref:../how-to/index.adoc[How-to index], xref:../how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills], and xref:../explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] so studio bootstrap and org identity stay distinct.

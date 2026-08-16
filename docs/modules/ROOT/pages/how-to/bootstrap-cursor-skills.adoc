@@ -6,7 +6,7 @@ Add a **Cursor Agent Skill** so agents load specialized instructions only when t
 
 Framing (taxonomy)::
 xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
-(this is **not** a Business Bootstrap child page).
+(this is **not** a Business Bootstrap child page). Standing up a GitHub **organization** is xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (skill `bootstrap-org`).
 
 Install ladder for marketplace MCP + skills plugins::
 xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]

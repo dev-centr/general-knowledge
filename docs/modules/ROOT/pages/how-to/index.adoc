@@ -11,6 +11,7 @@ Task-oriented guides. Pick a guide when you already know what you want to do.
 * xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth for personal tools] — Project + consent + Client ID when Composio (or rclone) asks for credentials; mental model: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills setup] — Library/API docs MCP for version-sensitive agent work.
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] — Personal Agent Skills without clogging always-on User Rules; operator path or drop the recipe into a permissive agent. Framing: xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap].
+* xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] — GitHub org identity (profile, site, docs hub) as an agent skill; capability-area IT stays in Business Bootstrap. Not the same as installing Cursor skills.
 * xref:how-to/nushell-setup.adoc[Install and set up Nushell] — Default shell for Dev-Centr on every OS.
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.
 * xref:how-to/flutter-setup.adoc[Set up Flutter tooling] — SDK bootstrap; community version bridges until an official Toolchain Control Plane exists (see Toolchain Management Pattern).

@@ -20,7 +20,7 @@ Vibe-coding tools support the **developer ↔ agent loop**. They belong with AI-
 
 Mental model::
 
-* **Business Bootstrap → …** — stand up the org (inbox, calendar, vault, …)
+* **Business Bootstrap → …** — stand up the org (inbox, calendar, vault, …). GitHub identity in a hurry: xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (Cursor skill `bootstrap-org`) — not this page.
 * **Vibe coding → Bootstrap** — stand up the studio (skills, MCP, rules packs)
 
 They often run in the **same weeks** (especially solo / product-shipping). Business Bootstrap therefore **links this page as related** on the hub, stage defaults, stack map, business overview, and Chat interconnect—without nesting vibe coding under a BB capability area.

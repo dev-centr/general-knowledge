@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-15 -- Fast org bootstrap (not vibe coding)
+
+* Business Bootstrap gained xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (Cursor skill `bootstrap-org`) for GitHub org identity. This how-to index and vibe-coding explanation point at it so it is not confused with installing Cursor skills.
+* See xref:changelog-details/2026-08-15 - fast-org-bootstrap.adoc[Detailed changelog].
+
 == 2026-08-13 -- Abstract playbooks
 
 * Explanation xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks] -- write what you want; PlayTime binds how; Equivalence Engine is a catalog, not a bash-to-PowerShell blender.
