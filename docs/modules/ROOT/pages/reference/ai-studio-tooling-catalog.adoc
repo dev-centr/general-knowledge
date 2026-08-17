@@ -64,9 +64,9 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 | Personal `~/.cursor/skills/` curriculum kept out of always-on User Rules
 | xref:how-to/bootstrap-cursor-skills.adoc[How-to] · https://github.com/dev-centr/agent-rules/blob/main/skills/BOOTSTRAP.md[agent-rules shop file]
 
-| **write-skill**
+| **write-a-skill**
 | YAML `description` is trigger words (utterances, filenames, tasks), not a lay blurb; `create-skill` stays layout
-| https://github.com/dev-centr/agent-rules/blob/main/skills/write-skill/SKILL.md[`skills/write-skill`] · xref:agent-rules::skills-catalog.adoc[Catalog]
+| https://github.com/dev-centr/agent-rules/blob/main/skills/write-a-skill/SKILL.md[`skills/write-a-skill`] · xref:agent-rules::skills-catalog.adoc[Catalog]
 
 | **Agent Rules**
 | Modular rules assembly for coding assistants
