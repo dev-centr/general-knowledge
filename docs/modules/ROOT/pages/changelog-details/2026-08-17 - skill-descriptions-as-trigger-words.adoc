@@ -1,0 +1,6 @@
+= 2026-08-17 -- Skill descriptions as trigger words
+
+* Agents match Cursor skills from the YAML `description` field. A lay summary of capabilities never appears in chat, so matching fails.
+* Updated xref:../how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] (on-ramps, paste recipe, worked example, checklist), xref:../explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] (load tip), xref:../how-to/index.adoc[How-to index], and xref:../reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] (`write-skill` row).
+* Canonical skill: https://github.com/dev-centr/agent-rules/blob/main/skills/write-skill/SKILL.md[`write-skill`] in `dev-centr/agent-rules`. Team SOP: link:https://team.docs.devcentr.org/home/latest/how-to/cursor-skills-team.html[Cursor skills (team)].
+* `create-skill` remains for folders, the 500-line cap, and progressive disclosure only.

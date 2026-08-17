@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-17 -- Skill descriptions as trigger words
+
+* How-to xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills], explanation xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap], and the studio catalog now treat YAML `description` as **trigger words** (utterances, filenames, task phrases), not a lay summary of the skill. Cursor `create-skill` stays layout; skill `write-skill` wins on matching.
+* See xref:changelog-details/2026-08-17 - skill-descriptions-as-trigger-words.adoc[Detailed changelog].
+
 == 2026-08-15 -- Fast org bootstrap (not vibe coding)
 
 * Business Bootstrap gained xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (Cursor skill `bootstrap-org`) for GitHub org identity. This how-to index and vibe-coding explanation point at it so it is not confused with installing Cursor skills.

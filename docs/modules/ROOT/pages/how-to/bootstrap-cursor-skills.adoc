@@ -25,7 +25,7 @@ xref:agent-rules::bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]
 Use when you want exact control or the agent cannot write under `~/.cursor/`.
 
 . Create `~/.cursor/skills/<skill-name>/` (never under `~/.cursor/skills-cursor/`—that tree is Cursor-managed).
-. Add `SKILL.md` with YAML frontmatter (`name`, `description`) and a short body.
+. Add `SKILL.md` with YAML frontmatter (`name` + **trigger-word** `description`, not a lay blurb). Cursor `create-skill` is layout only; skill `write-skill` wins on matching. Body = how.
 . Put long directives in sibling files (`news.md`, `blog.md`, …) and link them from `SKILL.md` (progressive disclosure).
 . Optionally keep a **canonical** copy in a git repo and junction/symlink into `~/.cursor/skills/<skill-name>/`.
 . Add at most a **one-line** pointer in User Rules / `RULES.md` if agents must discover the skill by name; do not paste the full curriculum into always-on rules.
@@ -43,7 +43,7 @@ Keep the full text out of always-on User Rules.
 Canonical path: <repo>/skills/<skill-name>/
 Junction or copy to ~/.cursor/skills/<skill-name>/
 Add only a thin pointer in RULES.md / documentation.md.
-Follow create-skill guidance: description with WHAT + WHEN; progressive disclosure.
+YAML description = trigger words (utterances, filenames, task phrases), not a lay blurb. Skill write-skill. create-skill is layout / progressive disclosure only.
 ----
 
 Then attach the source notes (export, gist, or chat). The agent should:
@@ -79,7 +79,7 @@ skills/writing-blog/
   body.md
 ----
 
-Each `SKILL.md` `description` names WHAT and WHEN (third person) so Cursor triggers on the matching task — not a combined router skill.
+Each `SKILL.md` `description` lists **trigger words** (third person: utterances, filenames, task phrases) so Cursor matches the job—not a lay summary of the skill, and not a combined router. Capability rules stay in the body. Authoring: skill `write-skill`.
 
 === Junction (Windows)
 
@@ -102,7 +102,7 @@ cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-blog" "$base\writing-b
 == Skills vs always-on rules (checklist)
 
 * [ ] Curriculum lives under `skills/`, not in the User Rule paste
-* [ ] `description` states WHAT and WHEN (third person)
+* [ ] `description` is trigger words only (third person), not a lay summary of the skill
 * [ ] Long material is one level deep from `SKILL.md`
 * [ ] Titles / constants that must always apply stay in thin rules
 * [ ] Published upstream suites are cited as optional, not silently overriding house STYLE
@@ -110,5 +110,6 @@ cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-blog" "$base\writing-b
 == See also
 
 * xref:home::tools/agent-rules.adoc[Agent Rules] hub · https://github.com/dev-centr/agent-rules[`dev-centr/agent-rules`]
+* Skill `write-skill` (trigger-word descriptions): https://github.com/dev-centr/agent-rules/blob/main/skills/write-skill/SKILL.md[`skills/write-skill`] · xref:agent-rules::skills-catalog.adoc[Skills catalog]
 * xref:home::tools/rules-manager.adoc[Rules Manager] — compose/watch for rules packs
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — marketplace plugin that ships `skills/` beside MCP

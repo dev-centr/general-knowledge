@@ -50,7 +50,7 @@ Both on-ramps should produce the **same durable layout**. Prefer:
 * Thin one-line pointers in User Rules / `RULES.md` only when discovery matters
 * Canonical copy in a versioned repo (for example `agent-rules/skills/…`) with a junction or copy into `~/.cursor/skills/`
 
-TIP: Always-on User Rules are expensive. Skills load when the task matches the skill description (or when you name the skill). That is the default for prose and workflow curricula.
+TIP: Always-on User Rules are expensive. Skills load when the task matches **trigger words** in YAML `description` (or when you name the skill)—not a lay summary of what the skill does. Authoring: skill `write-skill`. Layout leftover: Cursor `create-skill`.
 
 == What “bootstrap” usually includes
 
