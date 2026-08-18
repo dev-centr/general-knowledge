@@ -1,0 +1,6 @@
+= 2026-08-18 -- Polyglot distribution (experimental)
+
+* Documented a research path for unified **binary** distribution that is not "compile everything with cosmocc": native slices in one pack, Binary Tailor strips non-target headers on delivery, optional APE launcher, in-memory Mach-O via `macho-memload`.
+* CI matrix: Windows x64/arm64, macOS arm64 only (no GitHub Intel Mac), Linux x64/arm64, BSD via Cirrus/self-hosted. Cursor skill `polyglot-ci`.
+* PackageHub remains OIDC registry publish; experimental future is attaching the pack to a release / CDN tailor.
+* Debugger work is chord-scoring patches in `polyglot-debug`, not a claim that GDB/LLDB already understand APE.

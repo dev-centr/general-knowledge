@@ -1,0 +1,52 @@
+= Polyglot CI matrix
+:navtitle: Polyglot CI
+:description: GitHub Actions matrix for Windows, macOS arm64, Linux, and BSD — x64 and arm — packing one download.
+
+Skill:: `polyglot-ci` in https://github.com/dev-centr/agent-rules[agent-rules] (`skills/polyglot-ci/`).
+Why:: xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] · xref:explanation/architecture/build-pipeline.adoc[Build pipeline].
+
+== Hosted runners we use
+
+[cols="1,1,2"]
+|===
+| OS | Arch | Runner
+
+| Windows
+| x64
+| `windows-latest`
+
+| Windows
+| arm64
+| `windows-11-arm` (GitHub-hosted ARM; skip the job if the org has not enabled it)
+
+| macOS
+| arm64
+| `macos-14` or `macos-15`
+
+| macOS
+| x64
+| **Do not.** Intel GitHub-hosted Macs are not a supported path.
+
+| Linux
+| x64
+| `ubuntu-latest`
+
+| Linux
+| arm64
+| `ubuntu-24.04-arm`
+
+| FreeBSD / OpenBSD / NetBSD
+| x64 / arm64
+| No GitHub-hosted images. Use Cirrus CI, a VM, or cross-compile **and** a smoke test on that kernel.
+|===
+
+Copy `skills/polyglot-ci/workflow.yml` into `.github/workflows/release.yml`. After the matrix, a `pack` job runs `binary-tailor pack` and attaches **one** GitHub Release asset.
+
+== Cosmopolitan optional job
+
+If the project can build with `cosmocc`, add a job that emits `app.com` **in addition to** native slices. Do not replace native GUI/GPU builds with `cosmocc` unless the app is actually Cosmopolitan-shaped (static, no host `.dll`).
+
+== Related
+
+* xref:how-to/binary-tailor.adoc[Binary Tailor]
+* xref:how-to/automated-releases.adoc[Automated releases]

@@ -1,0 +1,95 @@
+= Polyglot distribution
+:navtitle: Polyglot distribution
+:description: Experimental single-artifact binary distribution — APE packs, Binary Tailor, native-compiler graft, and debugger chords.
+
+**Status:** experimental. Not a replacement for MSI, winget, or language registries. A research path for *one download link* while still shipping **system-optimized native code**.
+
+Ordinary distribution still applies: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging], xref:explanation/architecture/build-pipeline.adoc[build pipeline].
+
+== The accident
+
+Almost every compiled program encodes **one** kernel, **one** CPU, and **one** loader grammar. Toolchain maintainers treat that as physics. It is a local default: first-match parsers, one GitHub Actions `runs-on`, twelve buttons on a Download page.
+
+Cosmopolitan Libc's **Actually Portable Executable (APE)** showed the file can be a *chord* — valid as a POSIX shell stub, PE, ELF, Mach-O, and a ZIP at the same time. Fat `apelink` images add AMD64 and ARM64 code in one file.
+
+That chord is unaccounted for in the overwhelming majority of binaries compiled worldwide. Debuggers, EDR, and CI matrices were not designed for it. This page is Dev-Centr's attempt to **factor the chord into the release**, not to pretend Cosmopolitan already solved antivirus, `dlopen`, or LLDB.
+
+== What we are trying to unify
+
+[cols="1,2"]
+|===
+| Layer | Job
+
+| CI
+| One workflow matrix: Windows x64/arm64, macOS **arm64 only** (GitHub's Intel Mac runners are not a supported path), Linux x64/arm64, BSD x64/arm64 via Cirrus or self-hosted — not a second maintainer laptop per OS.
+
+| Artifact
+| One pack: either a true APE, or a ZIP of **native** slices (MSVC / Apple clang / GCC) with a `manifest.sdl`.
+
+| Delivery
+| xref:how-to/binary-tailor.adoc[Binary Tailor] — persistent install adapter. Strips non-target headers on the user's machine (or at a PackageHub CDN edge) so Windows Defender sees a PE, `ld.so` sees ELF, dyld sees Mach-O.
+
+| Runtime (optional)
+| Thin APE launcher that `exec`s the tailored native payload, or in-memory map: Linux `memfd_create` + `fexecve`; Windows drop or reflective PE (out of scope here); macOS custom loader link:https://github.com/dev-centr/macho-memload[macho-memload].
+|===
+
+Binary Tailor *kind of* defeats a unified on-disk binary. It keeps a unified **pipeline and Download page**. That trade is intentional.
+
+== Patterns (from the research note)
+
+=== Pack of native slices (default v0)
+
+Native compilers produce optimized PE/ELF/Mach-O **with host dynamic linking** (DirectX, Metal, CUDA, `.dll` / `.so` / `.dylib`). CI uploads those slices. `binary-tailor pack` writes one ZIP + `manifest.sdl`. The user downloads one file and runs Binary Tailor.
+
+This is Cosmopolitan's ZIP-at-the-end idea without requiring the application itself to be compiled by `cosmocc`.
+
+=== APE as launcher, not as the app
+
+A tiny Cosmopolitan stub (~15–30 KB) identifies the host (`IsWindows()`, `IsXnu()`, …) and `exec`s the matching payload from the zip. First-run may extract to a cache directory. Antivirus may still flag the **stub**; Tailor can assimilate or replace the stub with the native payload on delivery.
+
+=== In-memory map (no `noexec` / no drop)
+
+* Linux/FreeBSD: `memfd_create` + `fexecve` of the embedded ELF.
+* macOS: no `fexecve`. link:https://github.com/dev-centr/macho-memload[macho-memload] maps segments and applies classic `dyld_info` rebase/bind.
+* Windows: Tailor-to-disk is the supported path; in-memory PE mapping is a separate, dual-use-sensitive problem we are not shipping as a product feature.
+
+=== Polyglot core + host bridges (inverted)
+
+Keep a Cosmopolitan process for portable logic; spawn small native helpers for GPU, keychain, tray. IPC cost; use when the core *should* stay one ABI.
+
+== cosmocc and native-compiler graft
+
+`cosmocc` today is a GCC/Clang wrapper (`tlscc`, `-mno-red-zone`, assembly TLS rewrites) that emits APE. It does **not** take an MSVC or Apple-clang optimized image and transplant `.text` into a frozen APE header.
+
+The APE header schema is specified (`ape/specification.md`: magics, `printf` octal ELF, `dd` Mach-O windows) and changes slowly. Dev-Centr's position:
+
+* **Should:** compile with the **host-native** compiler for that slice (so LLVM/MSVC bugfixes land in the bytes users run), then **graft** PT_LOAD / PE sections into the APE payload slots or into the ZIP pack.
+* **v0 we ship:** `binary-tailor graft` / `pack` — native files become ZIP members. Reliable. No overlapping PE+ELF surgery.
+* **Later:** surgical transplant into a pinned APE template once we version the header blob. File that as a Cosmopolitan enhancement, not a silent fork of `cosmocc`.
+
+== Antivirus
+
+Polyglot magics (`MZ` + `/bin/sh` + ELF) look like file infectors. Mitigations we will actually implement:
+
+* Binary Tailor / CDN strip on delivery (this page's default).
+* Authenticode on the PE slice; Apple notarization on the Mach-O slice.
+* Optional UNIX-only APE magic `jartsr='` when Windows is not in the support vector.
+
+We do not claim EDR will love the stub. We claim the **tailored** output is a normal binary.
+
+== Debuggers
+
+GDB (BFD) and LLDB (`ObjectFile` plugins) **first-match**. `MZ` wins; Linux `ptrace` then maps PE RVAs and dies.
+
+The fix is a **chord**: survey every plugin, score, and if PE+ELF (or more) hit, a meta-plugin asks the process plugin which kernel is live. Patches: link:https://github.com/dev-centr/polyglot-debug[polyglot-debug]. Separated debug files (`.pdb`, `.dSYM`, `.debug`) remain the practical path while those patches are unmerged.
+
+== PackageHub
+
+PackageHub today is registry publish (npm, PyPI, crates) via OIDC. The experimental future is: the same dashboard can attach **one polyglot pack** to a GitHub Release and optionally run Tailor at the CDN. See the PackageHub docs page *Unified binaries (experimental)*. That does not replace trusted publishing for libraries.
+
+== Related
+
+* xref:how-to/binary-tailor.adoc[How-to: Binary Tailor]
+* xref:how-to/polyglot-ci.adoc[How-to: polyglot CI matrix]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* link:https://justine.lol/ape.html[APE] · link:https://github.com/jart/cosmopolitan[cosmopolitan]

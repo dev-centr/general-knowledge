@@ -32,6 +32,8 @@ Pass `GITHUB_SHA`, tag name, and channel into the compiler or a generated file s
 * Separate “build” and “publish” jobs with environment protection for production secrets
 * Never echo signing passwords into logs
 
+Copy the house OS/arch matrix from xref:how-to/polyglot-ci.adoc[Polyglot CI] when the project claims Windows, macOS, Linux, and BSD. Optional pack step: xref:how-to/binary-tailor.adoc[Binary Tailor].
+
 == Related
 
 * xref:how-to/git-release-workflow.adoc[Git release workflow]

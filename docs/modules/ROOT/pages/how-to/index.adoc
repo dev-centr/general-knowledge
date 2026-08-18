@@ -30,6 +30,8 @@ Tied to xref:explanation/architecture/software-product-essentials.adoc[Software 
 * xref:how-to/app-installer-packaging.adoc[App installer packaging]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/binary-tailor.adoc[Binary Tailor]
 * xref:how-to/winget-registration.adoc[Winget registration]
 
 == Index

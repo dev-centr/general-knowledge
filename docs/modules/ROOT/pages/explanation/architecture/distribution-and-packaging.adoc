@@ -72,6 +72,10 @@ For each release tag, aim for:
 * [ ] Portable builds optional and labeled
 * [ ] Checksums published with the release
 
+== Experimental: one download
+
+A research path for a **single release artifact** that still contains native, system-optimized slices (APE / ZIP pack + xref:how-to/binary-tailor.adoc[Binary Tailor] on delivery) lives in xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution]. It does not replace installers or package managers on this page.
+
 == Related
 
 * xref:reference/package-registries.adoc[Package registries]

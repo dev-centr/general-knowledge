@@ -18,6 +18,7 @@ Deep dives (shared)::
 * xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps]
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
 * xref:explanation/architecture/distribution-and-packaging.adoc[Distribution, packaging, and installers]
+* xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline and release engineering]
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
 * xref:explanation/architecture/principles.adoc[Core principles]

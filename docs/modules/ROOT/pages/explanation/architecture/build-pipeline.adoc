@@ -38,6 +38,8 @@ flowchart LR
 
 Build on the OS you support, or cross-compile only when you also **test** on the target. Windows artifacts should be produced (or at least smoke-tested) on Windows runners when native dependencies demand it.
 
+House matrix (including macOS **arm64 only** and BSD off GitHub-hosted): xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]. Packing those slices into one download is xref:explanation/architecture/polyglot-distribution.adoc[experimental].
+
 == Secrets and signing keys
 
 * Store signing certs in CI secret stores / hardware-backed providers

@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-18 -- Polyglot distribution (experimental)
+
+* Explanation xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] -- one CI matrix, one download pack, Binary Tailor on delivery, cosmocc native graft as a later transplant, debugger chords.
+* How-to xref:how-to/binary-tailor.adoc[Binary Tailor] and xref:how-to/polyglot-ci.adoc[Polyglot CI matrix].
+* Tools: https://github.com/dev-centr/binary-tailor[binary-tailor], https://github.com/dev-centr/macho-memload[macho-memload], https://github.com/dev-centr/polyglot-debug[polyglot-debug].
+* See xref:changelog-details/2026-08-18 - polyglot-distribution.adoc[Detailed changelog].
+
 == 2026-08-17 -- write-a-skill
 
 * Renamed Cursor skill `write-skill` to `write-a-skill` so the slug is not ambiguous with “write” as a verb.
