@@ -24,6 +24,14 @@ For the full Band A/B/C auxiliary matrices, use the delivery-class templates (GU
 * **Windows:** MSI/MSIX or winget-friendly installer; code-sign; auto-update or Store/winget before 1.0 — xref:how-to/windows-auto-updates.adoc[Windows auto-updates], xref:how-to/winget-registration.adoc[Winget]
 * **macOS / Linux:** prefer Store/Sparkle/Homebrew or distro/Flatpak/AppImage; quit → replace → relaunch (never overwrite a running ELF) — xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates]
 
+== Rendering and framework choice
+
+Pick a UI stack with enough **rendering headroom** for how long the client stays open and how large in-app documents grow (chat, mail, live logs).
+Electron and Chromium shells excel at ecosystem reach; retained-mode native stacks (Avalonia, Qt, Flutter, GPUI) avoid DOM/V8 overhead for dense, long-lived surfaces.
+
+* xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — comparison tables, large-document patterns, and what comes after Skia (Graphite, Impeller, Vello)
+* link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed] (essay)
+
 == UX notes
 
 * Do not hide version solely in logs

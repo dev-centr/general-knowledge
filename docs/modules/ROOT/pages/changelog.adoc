@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-19 -- Graphics rendering engines
+
+* Explanation xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stack comparison, large-document architecture, Skia successors (Graphite, Impeller, Vello, Rive, Blend2D).
+* Linked from xref:explanation/architecture/types/gui-apps.adoc[GUI apps], xref:explanation/architecture/classes/desktop.adoc[Desktop template], and DevCentr toolchain advisor.
+* Essay: link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed].
+
 == 2026-08-19 -- pnpm run routing reference
 
 * Reference xref:reference/pnpm-run-routing.adoc[pnpm run routing] — grammar of `pnpm run`, `package.json` scripts, `--filter` vs `-C`, root-first monorepo commands.

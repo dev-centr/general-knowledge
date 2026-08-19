@@ -1,0 +1,256 @@
+= Graphics rendering engines
+:navtitle: Rendering engines
+:description: How desktop and cross-platform UI stacks compare on memory, latency, and large-document behavior—and what comes after Skia (Graphite, Impeller, Vello, Rive, Blend2D).
+
+When you pick a **desktop** or **dense client** stack, you are not only choosing a language.
+You are choosing a **rendering pipeline**: how vectors become pixels, how much work happens on the CPU before the GPU sees a frame, and whether a long-lived document can grow without turning every scroll into layout reflow.
+
+This page is a working map for that decision.
+It complements xref:explanation/architecture/types/gui-apps.adoc[GUI applications] and xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (browser-heavy products on the Dev-Centr docs playbook).
+Essay (inward voice): link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed].
+
+== Why rendering choice shows up late—and hurts early
+
+Teams often default to **Electron** or a **web shell** because the HTML/CSS ecosystem is familiar and shippable.
+That works until the UI holds a **large, streaming document**: chat with thousands of messages, a repo map with live syntax tokens, a mail client that never unloads its thread list.
+
+The failure mode is structural, not “JavaScript is slow”:
+
+* **DOM tree explosion** — each message, code block, and token becomes live DOM; streaming tokens trigger style recalc and reflow across the tree.
+* **Heap + IPC pressure** — the main process holds conversation state; the renderer's V8 heap crosses ~1.5–2 GB; major GC pauses freeze input; OOM kills the tab.
+* **Process overhead** — Chromium ships multiple processes (main, renderer, GPU, utilities) with duplicated runtime state even at idle.
+
+Native and retained-mode UI stacks avoid the DOM entirely.
+They still need **virtualization** and **off-heap storage** for gigabyte-scale history—but the baseline memory and frame budget are different.
+
+== Framework comparison (performance + visual control)
+
+The chart is qualitative: exact numbers vary by build flags, platform, and what you mount on first paint.
+
+[source,text]
+----
+                     Visual expressiveness / customizability
+                                       ▲
+                                       │
+                      Flutter Desktop  │  Qt Quick / QML
+                                       │
+                      Avalonia UI      │
+                                       │
+                                       │  GPUI (Zed)
+                                       │  Slint
+                                       │
+        ───────────────────────────────┼───────────────────────────────►
+        Standard performance           │          Extreme low-latency /
+                                       │          raw data throughput
+----
+
+=== Avalonia UI (.NET)
+
+*Best for:* enterprise richness, deep templating, built-in UI virtualization.
+
+* **Pipeline:** Skia → DirectX / Vulkan / Metal / OpenGL; retained visual tree with control templates.
+* **Large data:** `VirtualizingStackPanel` / `ItemsControl`; `Span<T>`, memory-mapped I/O without JSON IPC boundaries.
+* **Idle RAM (typical):** ~40–80 MB baseline for a modest desktop shell.
+
+=== GPUI (Rust, Zed)
+
+*Best for:* text throughput, sub-millisecond input, zero GC.
+
+* **Pipeline:** hybrid immediate/retained model; draw lists and text atlases piped to GPU shaders.
+* **Large data:** piece tables / ropes; memory-mapped streams without duplicating buffers.
+* **Idle RAM (typical):** ~20–40 MB.
+
+=== Qt 6 / QML (C++)
+
+*Best for:* industrial GPU scene graphs, mature tooling, shader-level effects.
+
+* **Pipeline:** Qt Quick scene graph on RHI (Vulkan, D3D12, Metal).
+* **Large data:** `QAbstractItemModel` feeds QML on demand; C++ backend shares address space with the renderer.
+* **Idle RAM (typical):** ~30–60 MB.
+
+=== Flutter Desktop (Dart)
+
+*Best for:* cross-platform visual consistency, fast iteration.
+
+* **Pipeline:** Impeller (preferred) or Skia; bypasses native widgets.
+* **Large data:** `ListView.builder` / isolates for heavy parsing; Dart GC still matters for multi-GB in-memory graphs.
+* **Idle RAM (typical):** ~60–110 MB.
+
+=== Electron (Chromium)
+
+*Best for:* web ecosystem reach, fastest path to a shippable cross-platform shell.
+
+* **Pipeline:** Blink + compositor + Skia; DOM/CSS layout on every meaningful update.
+* **Large data:** poor fit for unbounded in-document growth without aggressive virtualization *and* architectural discipline outside the renderer.
+* **Idle RAM (typical):** ~200–400+ MB; cold start often 800 ms–2 s+.
+
+== Comparison table
+
+[cols="2,2,1,2,1",options="header"]
+|===
+| Framework | Rendering backend | Baseline idle RAM | Large data / streaming | Customizability
+
+| **GPUI (Rust)**
+| Custom GPU shaders / Metal / Vulkan / DX12
+| ~20–40 MB
+| Maximum (ropes, zero-copy streams)
+| High (code-first, flex layout)
+
+| **Qt 6 / QML**
+| Scene graph / RHI
+| ~30–60 MB
+| Maximum (C++ models, mmap)
+| Extreme (QML + custom shaders)
+
+| **Avalonia UI**
+| Skia (DX / Vulkan / Metal / GL)
+| ~40–80 MB
+| Very high (virtualization, spans)
+| Extreme (retemplating)
+
+| **Flutter Desktop**
+| Impeller / Skia
+| ~60–110 MB
+| High (virtual lists, isolates)
+| Extreme (canvas-level)
+
+| **Electron**
+| Chromium / Blink / DOM
+| ~200–400+ MB
+| Poor without strict architecture
+| Extreme (HTML/CSS ecosystem)
+|===
+
+== Architectural requirements for multi-gigabyte client documents
+
+Regardless of framework:
+
+. **Viewport windowing** — never mount more items than visible plus a small overdraw buffer (e.g. 20–30 chat rows).
+. **Off-heap / mapped storage** — append-only log, SQLite, DuckDB, or memory-mapped files; do not keep full history as live heap objects in the UI process.
+
+Electron can survive large histories only when both patterns are enforced *and* the DOM surface stays small.
+Native stacks make the same patterns easier but do not remove the obligation.
+
+== Is Skia being replaced?
+
+**Not overnight.** Skia remains the 2D backbone for Chrome, Android, Flutter (legacy paths), and Avalonia.
+Google's **Graphite** backend is a ground-up rewrite of Skia's GPU layer—modern APIs (Vulkan, D3D12, Metal, Dawn/WebGPU), batched command buffers, pre-baked pipeline state objects instead of dynamic runtime shader generation.
+
+**Impeller** is Flutter's precompiled-shader renderer.
+It is tightly coupled to Flutter's display-list architecture—not a drop-in Skia replacement for arbitrary apps.
+Impeller targets mobile first but has desktop paths (Vulkan on Windows/Linux among them).
+
+The more interesting **generation shift** is compute-first vector rendering:
+
+[source,text]
+----
+Generation 1 (CPU raster):        Cairo, GDI+, software Skia
+Generation 2 (GPU tessellation):  Skia (Ganesh/Graphite), Direct2D, Impeller
+Generation 3 (GPU compute-first): Vello, Rive Renderer
+----
+
+=== Vello (Linebender / wgpu)
+
+Path filling, Bézier flattening, and binning run largely in **GPU compute shaders** via parallel scan algorithms—not classic CPU tessellation + draw-call storms.
+Built on `wgpu` → **D3D12 / Vulkan on Windows**, **Vulkan on Linux**, Metal, WebGPU.
+Apache-2.0 / MIT (dual).
+
+=== Skia Graphite
+
+Google's internal successor layer to legacy Ganesh; landing in Chrome and Android stacks over time.
+BSD 3-Clause.
+
+=== Rive Renderer
+
+Vector animation runtime using pixel-local storage / subgroup tricks to resolve overlaps without intermediate render targets.
+MIT (`rive-app/rive-runtime`).
+
+=== Blend2D
+
+When GPU is unavailable or virtualized: JIT-generated SIMD (AVX2, NEON) CPU rasterization, often 2×–5× CPU Skia on software paths.
+Zlib license.
+
+== Successor comparison
+
+[cols="2,2,2,2",options="header"]
+|===
+| Engine | Architecture | Pipeline model | Primary platforms
+
+| **Skia (Ganesh)**
+| CPU tessellation + draw calls
+| Legacy GPU (GL / Vulkan / D3D11)
+| Universal
+
+| **Skia (Graphite)**
+| Batched command buffers + precompiled PSOs
+| Modern GPU (Vulkan / D3D12 / Metal)
+| Chrome, Android, desktop embedders
+
+| **Impeller**
+| Precompiled shaders, multi-threaded dispatch
+| Modern GPU
+| Flutter-centric
+
+| **Vello**
+| Parallel prefix-sum / GPU compute
+| Compute shaders (`wgpu`)
+| Windows, Linux, macOS, WebGPU
+
+| **Rive Renderer**
+| PLS / overdraw-optimized vector raster
+| Modern GPU
+| Cross-platform embed
+
+| **Blend2D**
+| JIT SIMD CPU raster
+| Software
+| CPU-only / headless
+|===
+
+== Open source and licenses
+
+All engines listed here are open source under permissive licenses:
+
+[cols="2,1,1,2",options="header"]
+|===
+| Project | Language | License | Governance
+
+| **Vello**
+| Rust
+| Apache-2.0 / MIT
+| Linebender community
+
+| **Skia Graphite**
+| C++
+| BSD 3-Clause
+| Google / Skia
+
+| **Impeller**
+| C++
+| BSD 3-Clause
+| Flutter engine (Google)
+
+| **Rive Renderer**
+| C++
+| MIT
+| Rive Inc.
+
+| **Blend2D**
+| C++
+| Zlib
+| Independent OSS
+|===
+
+== Practical guidance
+
+* **Ship fast, bounded UI:** Electron/Tauri + strict virtualization is valid when time-to-market and web hiring dominate.
+* **Dense, long-lived client:** prefer retained-mode native stacks (Avalonia, Qt, Flutter, GPUI) and treat rendering engine generation (Skia vs Graphite vs compute-first) as a *secondary* bet—framework integration matters more near term.
+* **Watch Vello and Graphite** when you need vector-heavy, animation-rich UIs at high frame rates without CPU tessellation bottlenecks—especially on Windows and Linux where Impeller is Flutter-specific.
+* **Pair with xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary template]** for Help, About, updates, and diagnostics regardless of renderer.
+
+== See also
+
+* xref:explanation/architecture/types/gui-apps.adoc[GUI applications]
+* xref:explanation/architecture/classes/desktop.adoc[Desktop apps — auxiliary template]
+* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
+* link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed] (essay)

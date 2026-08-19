@@ -21,6 +21,7 @@ Deep dives (shared)::
 * xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline and release engineering]
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
+* xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stacks, large-document behavior, post-Skia pipelines
 * xref:explanation/architecture/principles.adoc[Core principles]
 
 By software type::

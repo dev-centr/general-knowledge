@@ -169,6 +169,7 @@ macOS: About and Preferences under the application menu; Help contents under Hel
 
 == Related
 
+* xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — Electron vs native stacks, virtualization, post-Skia pipelines
 * xref:explanation/architecture/types/gui-apps.adoc[GUI apps (artifact type)]
 * xref:how-to/about-screen-and-debug-dump.adoc[How-to: About and debug dump]
 * xref:how-to/app-installer-packaging.adoc[How-to: Installer packaging]
