@@ -41,6 +41,7 @@
 ** Languages
 *** xref:reference/languages/c.adoc[C Language]
 * xref:reference/git-performance.adoc[Git Performance]
+* xref:reference/pnpm-run-routing.adoc[pnpm run routing]
 * xref:reference/package-registries.adoc[Package Registries]
 * xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]

@@ -2,6 +2,15 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-19 -- pnpm run routing reference
+
+* Reference xref:reference/pnpm-run-routing.adoc[pnpm run routing] — grammar of `pnpm run`, `package.json` scripts, `--filter` vs `-C`, root-first monorepo commands.
+* xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm mechanics] links to the new page.
+
+== 2026-08-18 -- TCF practice kit on the hub
+
+* xref:explanation/infrastructure/toolchain-framework.adoc[TCF explanation] and the naming table on xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] now point at xref:toolchain-framework::index.adoc[the TCF Antora component] (no longer a "planned" kit).
+
 == 2026-08-18 -- Polyglot distribution (experimental)
 
 * Explanation xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] -- one CI matrix, one download pack, Binary Tailor on delivery, cosmocc native graft as a later transplant, debugger chords.

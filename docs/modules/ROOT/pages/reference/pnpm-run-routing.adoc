@@ -1,0 +1,237 @@
+= pnpm run routing
+:navtitle: pnpm run routing
+:description: Where each token in `pnpm run …` comes from, how package.json scripts map to commands, and how to run workspace packages from the repo root without cd.
+
+Most tutorials show a command like `pnpm run dev` and move on. This page is the missing grammar: **what each word means**, **where the script name is defined**, and **how to stay at the repo root** in a monorepo.
+
+== Command shape
+
+A typical invocation looks like this:
+
+[source,text]
+----
+pnpm  [global flags]  run  <script-name>  [-- script-args]
+----
+
+[cols="1,3"]
+|===
+| Token | Meaning
+
+| `pnpm`
+| The package manager binary (installed via Corepack or otherwise on your PATH).
+
+| Global flags (optional)
+| Options that apply before the subcommand — e.g. `--filter`, `-C`, `-r`, `--workspace-root`. They change *which package* pnpm treats as the context.
+
+| `run`
+| Subcommand: execute a **named script** from a `package.json` `scripts` block. For common script names, `run` is optional (`pnpm dev` ≡ `pnpm run dev`).
+
+| `<script-name>`
+| A key under `"scripts"` in the target package's `package.json` — e.g. `"dev"`, `"build"`, `"lint"`. **Not** invented by pnpm; defined by the project (or a tool template).
+
+| `-- script-args`
+| Arguments passed through to the underlying command (everything after `--` goes to the script, not to pnpm).
+|===
+
+=== Where `dev` comes from
+
+Yes: **`dev` is almost always a script name in `package.json`**, not a built-in pnpm target.
+
+[source,json]
+----
+{
+  "name": "site-nextjs",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "lint": "next lint"
+  }
+}
+----
+
+When you run `pnpm run dev` (or `pnpm dev`), pnpm:
+
+1. Finds the **target package** (see <<root-first>> below).
+2. Looks up `"dev"` in that package's `"scripts"`.
+3. Runs the associated shell command (`next dev --turbopack` here) with that package as the working directory.
+
+If the script key does not exist, pnpm fails — there is no universal `dev` script across all Node projects. Some repos use `start`, `serve`, or only `build`. **Always check `package.json` → `scripts`.**
+
+== Single package vs monorepo
+
+=== Single-package repo
+
+If the repo has one `package.json` at the root and no workspace:
+
+[source,powershell]
+----
+pnpm install    # from repo root
+pnpm dev        # runs root package.json → scripts.dev
+----
+
+Your mental model holds: clone, install once at root, run `pnpm dev`.
+
+=== Monorepo (pnpm workspace)
+
+A workspace adds `pnpm-workspace.yaml` listing package directories. pnpm treats **each listed folder plus the repo root** as separate packages, each with its own `package.json`.
+
+[source,yaml]
+----
+# pnpm-workspace.yaml
+packages:
+  - "site-nextjs"
+  - "shared"
+----
+
+Implications:
+
+* The **root** `package.json` may have *no* `dev` script (only deploy helpers, formatters, etc.).
+* The app you care about (`site-nextjs`, `apps/web`, …) defines `dev` in **its** `package.json`.
+* Running bare `pnpm dev` at the root fails if root `scripts` has no `dev` key — that is expected, not a broken install.
+
+**Shop default:** install from the **repo root** (`pnpm install`), but **route** run commands to the app package without `cd` (<<root-first>>).
+
+== Root-first: run from the repo root
+
+Once you are at the repo root, you should not need to `cd` into `site-nextjs/` (or similar) for day-to-day scripts. Two pnpm mechanisms select the target package:
+
+=== `--filter` / `-F` (workspace selector)
+
+**Exact meaning:** run this command in one or more **workspace packages** pnpm knows about from `pnpm-workspace.yaml`, matched by **package name** or **path pattern**.
+
+[source,powershell]
+----
+pnpm --filter site-nextjs dev
+pnpm -F site-nextjs dev          # short form
+----
+
+* Uses the `"name"` field in the target `package.json` (`site-nextjs`) or a path glob (`./site-*`).
+* Workspace-aware: can target dependents/dependencies with graph suffixes (`...` — see <<filter-graph>>).
+* Preferred when you want **monorepo semantics** (names, patterns, multiple packages).
+
+=== `-C` / `--dir` (directory override)
+
+**Exact meaning:** behave as if pnpm's current working directory were this **filesystem path** before running the subcommand.
+
+[source,powershell]
+----
+pnpm -C site-nextjs dev
+pnpm --dir site-nextjs dev
+----
+
+* Takes a **path**, not necessarily a workspace name.
+* Does **not** understand workspace dependency graphs.
+* Equivalent to `cd site-nextjs; pnpm dev` for a single folder — but you stay in the shell at repo root.
+
+For one app package, `-C` and `--filter` usually do the same thing. Prefer **`--filter`** when you might later use patterns or graph selectors; prefer **`-C`** when you just mean “that folder's package.json.”
+
+=== Side-by-side
+
+[cols="1,2,2"]
+|===
+| | `--filter` / `-F` | `-C` / `--dir`
+
+| Selects by
+| Workspace package name or glob
+| Filesystem path
+
+| Monorepo graph (`...`)
+| Yes
+| No
+
+| Works outside a workspace
+| No (needs workspace)
+| Yes (any directory with package.json)
+
+| Typical use
+| `pnpm -F site-nextjs dev`
+| `pnpm -C site-nextjs dev`
+|===
+
+[[filter-graph]]
+=== Filter graph suffixes (optional)
+
+[cols="1,3"]
+|===
+| Pattern | Effect
+
+| `--filter site-nextjs`
+| That package only.
+
+| `--filter site-nextjs...`
+| Package **and its workspace dependencies** (build order helpers).
+
+| `--filter ...site-nextjs`
+| Package **and workspace dependents** (things that depend on it).
+
+| `--filter "./packages/*"`
+| All packages matching the path glob.
+|===
+
+=== Recursive `-r`
+
+`pnpm -r dev` runs `dev` in **every workspace package that defines it**. Useful for “start all apps,” noisy when only one package has `dev`. Combine with filter to limit scope:
+
+[source,powershell]
+----
+pnpm -r --filter site-nextjs dev
+----
+
+== Recipes (stay at repo root)
+
+[cols="1,3"]
+|===
+| Goal | Command (from repo root)
+
+| Install entire workspace
+| `pnpm install`
+
+| Dev server for one app
+| `pnpm --filter site-nextjs dev` or `pnpm -C site-nextjs dev`
+
+| Build one app
+| `pnpm --filter site-nextjs build`
+
+| Run a bin from a package (e.g. Convex CLI)
+| `pnpm --filter site-nextjs exec convex dev`
+
+| Lint only the app package
+| `pnpm --filter site-nextjs lint`
+
+| Run root-only script (if defined)
+| `pnpm run vercel:deploy` (no filter — root is already the default cwd)
+|===
+
+== Epistemology checklist (how to read a tutorial command)
+
+When a blog post throws `pnpm run dev` at you, ask:
+
+. **Which package?** Root or nested? In a monorepo, `dev` may not live at root.
+. **Where is the script defined?** Open that package's `package.json` → `"scripts"`.
+. **What does the script actually run?** The value is the real command (`next dev`, `vite`, `tsx watch`, …).
+. **Where should I stand?** Repo root + `--filter` / `-C`, or genuinely single-package root.
+. **Is `run` required?** No for standard script names; `pnpm dev` and `pnpm run dev` are the same.
+
+== Related commands (not `run`)
+
+[cols="1,3"]
+|===
+| Command | Role
+
+| `pnpm exec <bin>`
+| Run a dependency binary from the target package's `node_modules/.bin` (e.g. `pnpm exec convex dev`).
+
+| `pnpm dlx <pkg>`
+| One-off download + run (like `npx`); not a project script.
+
+| `pnpm install`
+| Always workspace-wide from repo root in monorepos; do not `cd` into an app to install unless you know why.
+|===
+
+== Related
+
+* xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm mechanics] — store, hoisting, why we prefer pnpm
+* xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers] — pnpm vs npm, Yarn, Bun
+* xref:reference/recommended-tools.adoc[Recommended tools] — pnpm as shop default
+* https://pnpm.io/filtering[pnpm filtering docs]
+* https://pnpm.io/cli/run[pnpm run docs]

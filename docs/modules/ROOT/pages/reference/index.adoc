@@ -10,6 +10,7 @@ Reference pages are for **retrieval**—checklists, layouts, tool lists, and reg
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
 * xref:reference/checklist-sidecar.adoc[Checklist sidecar]
 * xref:reference/package-registries.adoc[Package registries]
+* xref:reference/pnpm-run-routing.adoc[pnpm run routing] — script names, `--filter`, `-C`, root-first monorepos
 
 == Workspace and Git
 

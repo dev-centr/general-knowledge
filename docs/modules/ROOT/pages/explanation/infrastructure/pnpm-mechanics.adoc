@@ -14,6 +14,8 @@
 
 For Bun, Yarn, npm, and the aspirational role of **Orogene** (closed-source today; once-and-future open inspiration), see xref:npm-package-managers.adoc[npm package managers and alternatives]. That page is the comparison; this page stays focused on pnpm’s mechanics and shop default.
 
+For **command routing** — where `dev` comes from in `package.json`, `--filter` vs `-C`, and running from the repo root without `cd` — see xref:../../reference/pnpm-run-routing.adoc[pnpm run routing].
+
 == Related
 
 * xref:reference/recommended-tools.adoc[Recommended Tools]
