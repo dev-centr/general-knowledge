@@ -1,0 +1,11 @@
+= 2026-08-25 — Internet Reliability
+
+Systems-altitude encyclopedia under DevCentr general-knowledge:
+
+* Hub: xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] (⊆ Internet Architecture)
+* Framing: machine ↔ DevX/ecosystem ↔ internet reliability; usability + reference durability
+* Reciprocal deep links to HCI symptom ↔ diagnosis/treatment (*Labels versus wires*) and connectome-fs substrate
+* Local figures: hand SVG altitudes + rename-breakage mockup; Mermaid + PlantUML blocks for hub Kroki→SVG
+* Nav: Explanation → Internet Architecture (separate from SPE Architecture)
+
+Portal visibility: `dev-centr/docs` home nav peer group **Internet Architecture**.

@@ -34,6 +34,7 @@ By software type::
 
 Related (other components)::
 * xref:explanation/languages/index.adoc[Language recommendations] — small-set defaults (D, Rust, TypeScript, Julia)
+* xref:explanation/internet-architecture/index.adoc[Internet Architecture] — systems altitude (Internet Reliability); not SPE ship checklists
 * xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense browser UIs (Dev-Centr docs playbook)
 * xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms]
 

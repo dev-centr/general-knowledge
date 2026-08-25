@@ -1,0 +1,25 @@
+= Internet Architecture
+:navtitle: Internet Architecture
+:description: Systems-altitude framing for how the public internet and multi-repo webs stay usable—starting with Internet Reliability.
+
+**Internet Architecture** on DevCentr is the systems altitude: how references, identity, and delivery behave at internet and org scale.
+It is *not* product SPE xref:explanation/architecture/index.adoc[Software Architecture] (ship checklists, auxiliary templates, artifact types).
+
+Start here::
+xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] — usability of the internet and reference durability, not packet uptime alone.
+
+== Why this sits on DevCentr
+
+DevCentr is the **developer surface** within broader system / digital architecture.
+Practitioners feel rename and URL rot as a DevX tax; the diagnosis spans machine reliability, ecosystem reliability, and internet reliability.
+HCI Nerdz keeps the **symptom ↔ diagnosis/treatment** face for humans (*Labels versus wires*); connectome-fs keeps the **substrate**.
+This section orients the altitudes and points at those faces without duplicating every Mermaid treatise.
+
+== In this section
+
+* xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability]
+* xref:explanation/internet-architecture/reliability/three-altitudes.adoc[Three altitudes]
+* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability]
+* xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]
+* xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]
+* xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends]

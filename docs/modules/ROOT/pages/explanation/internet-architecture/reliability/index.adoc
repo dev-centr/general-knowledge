@@ -1,0 +1,65 @@
+= Internet Reliability
+:navtitle: Internet Reliability
+:description: Usability of the internet and reference durability—machine, developer-ecosystem, and internet altitudes under Internet Architecture.
+
+**Internet Reliability** is a slice of xref:explanation/internet-architecture/index.adoc[Internet Architecture].
+It is broader than network uptime: it includes whether people and tools can still *find and use* the thing they meant after names, hosts, and paths move.
+
+People usually arrive with a **symptom** — a rename that broke half their docs, a Cool URI that went cold.
+The HCI Nerdz face names that feeling and the diagnosis (*labels used as wires*).
+DevCentr hosts the **systems altitude**: how the same mistake scales from a machine to a developer ecosystem to the public internet.
+
+image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine, developer ecosystem, internet,width=720]
+
+== What counts as reliability here
+
+[cols="1,2"]
+|===
+| Layer people mean | What Internet Reliability adds
+
+| Packet / host uptime
+| Necessary, not sufficient — a 200 on the wrong identity is still a broken reference
+
+| Docs and API URLs
+| Reference durability: citations, `xref:`, READMEs, agent trees keep resolving
+
+| Developer experience
+| Ecosystem reliability: renames are search-and-fix under known consumers, not org-wide archaeology
+
+| Human usability of the web
+| The internet remains usable as a shared memory, not only as a transport
+|===
+
+== Map
+
+* xref:explanation/internet-architecture/reliability/three-altitudes.adoc[Three altitudes] — machine ↔ DevX/ecosystem ↔ internet
+* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability] — URL rot as the familiar slice → HCI *Labels versus wires*
+* xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack] — CAS, mutable pointers, reverse consumers → HCI + connectome-fs
+* xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb] — redirects, aliases, Cool URI, `CONSUMERS.md`
+* xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends] — delivery-name vs application-label
+
+== Sibling faces (do not collapse)
+
+[cols="1,2"]
+|===
+| Face | Where
+
+| Symptom essay + demo
+| link:https://hci-nerdz.github.io/blog/when-renaming-a-page-breaks-half-your-docs/[When renaming a page breaks half your docs] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
+
+| Diagnosis / treatment (HCI)
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[Labels versus wires] (slug kept)
+
+| Substrate
+| link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs — Labels versus wires]
+
+| Symptom ↔ diagnosis dialectic
+| HCI STYLE — either face can revise without retitling the other
+|===
+
+Do **not** confuse with instruction-flows *Navigating by content* (menu-style docs). That phrase is reserved there.
+
+== Diagrams on this hub
+
+Internet Reliability pages use **build-time** Mermaid and PlantUML (via Kroki → SVG) plus hand-authored SVG mockups.
+See xref:home::publishing/antora-diagram-formats.adoc[Antora diagram formats] on the docs hub.

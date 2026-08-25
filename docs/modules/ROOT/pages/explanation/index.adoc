@@ -14,6 +14,11 @@ Explanation pages teach **why**. Start with architecture if you are building a p
 * xref:explanation/languages/index.adoc[Language recommendations] — a small set that culls the ecosystem (D, Rust, TypeScript, Julia, Lisp/Haskell)
 * xref:explanation/languages/c-and-d.adoc[C and D] · xref:explanation/languages/cpp-and-d.adoc[C++ and D] · xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java] · xref:explanation/languages/d-and-rust.adoc[D and Rust]
 
+== Internet Architecture
+
+* xref:explanation/internet-architecture/index.adoc[Internet Architecture] — systems altitude for public reference identity
+* xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] — usability + reference durability (not packet uptime alone); peer to product SPE Architecture on the docs hub
+
 == Architecture
 
 * xref:explanation/architecture/index.adoc[Architecture overview]

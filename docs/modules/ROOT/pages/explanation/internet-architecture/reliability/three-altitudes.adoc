@@ -1,0 +1,47 @@
+= Three altitudes
+:navtitle: Three altitudes
+:description: Machine reliability, developer-ecosystem reliability, and internet reliability as nested altitudes of the same concern.
+
+Reliability analysts already know machine reliability.
+Developer tooling taught a second altitude: **ecosystem / DevX reliability** — can dependents keep working when symbols and packages move?
+The public web forces a third: **internet reliability** — can shared references stay usable when labels, hosts, and paths churn?
+
+[source,mermaid]
+----
+flowchart TB
+  subgraph internet [Internet reliability]
+    direction TB
+    subgraph eco [Developer-ecosystem / DevX reliability]
+      direction TB
+      subgraph machine [Machine reliability]
+        M[Process · disk · host uptime]
+      end
+      E[Packages · docs xrefs · agent trees]
+    end
+    I[Cool URIs · citations · shared memory]
+  end
+  machine --> eco --> internet
+----
+
+== Nested, not rivals
+
+| Altitude | Failure people feel | Typical fix plane |
+|---|---|---|
+| Machine | Crash, disk full, node down | Ops, HA, backups |
+| Developer ecosystem | Broken import, wrong docs tree, agent archaeology | Graphs, `CONSUMERS.md`, package reverse-deps |
+| Internet | Link rot, rename cascades, “half the org’s bookmarks died” | Identity stack + absorb layer + durable citation norms |
+
+A site can have five-nines uptime and still be **unreliable as a reference** if every rename orphans consumers.
+
+image::internet-architecture/three-altitudes.svg[Nested altitudes diagram as a static orientation figure,width=720]
+
+== Branding note
+
+DevCentr names the practitioner surface inside broader system / digital architecture.
+UI/UX (HCI Nerdz) is architecture instantiated in spatial and sensory modalities — essential, not the sole umbrella for internet-scale reference identity.
+Keep product SPE xref:explanation/architecture/index.adoc[Software Architecture] for ship checklists; keep this altitude for the public reference plane.
+
+== Next
+
+* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability] — the URL-rot slice
+* xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack] — how the altitudes share one treatment stack

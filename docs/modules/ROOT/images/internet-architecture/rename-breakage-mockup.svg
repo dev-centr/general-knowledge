@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">Felt rename breakage</title>
+  <desc id="desc">Producer renames a docs path; three consumer tabs still hold the old label and show broken cites.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .chrome { fill: #e8e4dc; stroke: #2c2c2c; stroke-width: 1.5; }
+      .tab { fill: #fff; stroke: #2c2c2c; stroke-width: 1.25; }
+      .tab-bad { fill: #f6e4e0; stroke: #8a3a2a; stroke-width: 1.5; }
+      .ok { fill: #e4efe6; stroke: #1f3a2e; stroke-width: 1.5; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 12px; }
+      .mono { font-family: Consolas, "Courier New", monospace; fill: #1a1a1a; font-size: 12px; }
+      .bad { font-family: "Segoe UI", system-ui, sans-serif; fill: #8a3a2a; font-size: 12px; font-weight: 600; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .arrow { stroke: #8a3a2a; stroke-width: 1.75; fill: none; marker-end: url(#m); stroke-dasharray: 4 3; }
+    </style>
+    <marker id="m" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#8a3a2a"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="760" height="420"/>
+  <text class="label" x="28" y="28">SYMPTOM MOCK</text>
+  <text class="t" x="28" y="56" font-size="20">Rename looks fine on the producer</text>
+  <text class="s" x="28" y="78">Consumers still wired on the old path string</text>
+
+  <rect class="ok" x="28" y="100" width="300" height="120" rx="4"/>
+  <text class="t" x="44" y="128" font-size="15">Producer docs</text>
+  <text class="mono" x="44" y="156">/docs/api/v2/auth</text>
+  <text class="s" x="44" y="182">200 OK · content unchanged</text>
+  <text class="s" x="44" y="202">Human path updated</text>
+
+  <path class="arrow" d="M340,160 H390"/>
+
+  <g transform="translate(400,96)">
+    <rect class="chrome" x="0" y="0" width="332" height="280" rx="6"/>
+    <rect class="tab-bad" x="12" y="14" width="96" height="28" rx="3"/>
+    <text class="bad" x="20" y="33">README</text>
+    <rect class="tab-bad" x="116" y="14" width="96" height="28" rx="3"/>
+    <text class="bad" x="124" y="33">Sibling nav</text>
+    <rect class="tab-bad" x="220" y="14" width="96" height="28" rx="3"/>
+    <text class="bad" x="236" y="33">Blog cite</text>
+    <rect class="tab" x="12" y="56" width="308" height="200" rx="3"/>
+    <text class="mono" x="28" y="88">https://&/docs/api/v1/auth</text>
+    <text class="bad" x="28" y="120">404 · string break</text>
+    <text class="s" x="28" y="152">Label moved. Wire was the label.</text>
+    <text class="s" x="28" y="176">Same bytes. Wrong identity binding.</text>
+    <text class="s" x="28" y="216">See HCI: Labels versus wires</text>
+  </g>
+</svg>

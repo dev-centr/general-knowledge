@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-25 -- Internet Reliability
+
+* New systems-altitude section xref:explanation/internet-architecture/index.adoc[Internet Architecture] / xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] (peer to product SPE Architecture on the docs hub).
+* Pages: three altitudes, reference reliability, identity stack, near-term absorb, NDN and friends — thin framing + local Mermaid/PlantUML/SVG; deep-link HCI *Labels versus wires* and connectome-fs.
+* See xref:changelog-details/2026-08-25 - internet-reliability.adoc[Detailed changelog].
+
 == 2026-08-19 -- Graphics rendering engines
 
 * Explanation xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stack comparison, large-document architecture, Skia successors (Graphite, Impeller, Vello, Rive, Blend2D).

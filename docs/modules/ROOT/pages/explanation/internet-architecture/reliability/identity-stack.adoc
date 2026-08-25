@@ -1,0 +1,78 @@
+= Identity stack
+:navtitle: Identity stack
+:description: CAS, mutable pointers, and reverse consumers—orientation on DevCentr with deep links to HCI and connectome-fs.
+
+Internet Reliability’s treatment stack is the same claim HCI Nerdz and connectome-fs already teach.
+DevCentr’s job here is **orientation at systems altitude**, not a second full treatise.
+
+[source,mermaid]
+----
+flowchart TB
+  Consumer[Consumer · docs · agent]
+  Hash["Content hash / node id\n(immutable identity)"]
+  Pointer["Mutable human pointer\n(label → current hash)"]
+  Absorb["Absorb layer\n(redirects · aliases)"]
+  Consumers["Reverse consumers\n(CONSUMERS.md / graph)"]
+
+  Consumer -->|"prefer"| Hash
+  Consumer -->|"or resolve"| Pointer
+  Pointer --> Hash
+  Absorb -.->|buys time on IP web| Consumer
+  Consumers -->|"when labels must move"| Consumer
+----
+
+== Four layers (one stack)
+
+. *Content-addressed identity (CAS)* — same bytes (or same semantic unit) keep a stable id when the label moves.
+. *Mutable pointer* — human name resolves to the current edition when content updates.
+. *Reverse consumers* — who still holds a label (`CONSUMERS.md` today; graph reverse edges tomorrow).
+. *Absorb layer* — redirects and aliases on today’s classical web (see xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]).
+
+[plantuml]
+----
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Segoe UI
+skinparam componentStyle rectangle
+skinparam ArrowColor #2c2c2c
+
+package "Application / DevX plane" {
+  [CAS / node id] as CAS
+  [Mutable pointer] as PTR
+  [Reverse consumers] as REV
+}
+
+package "Classical web absorb" {
+  [Redirects / aliases] as ABS
+}
+
+package "Delivery plane (orthogonal)" {
+  [Host URL / NDN name] as DEL
+}
+
+PTR --> CAS
+REV ..> PTR : label moves
+ABS ..> PTR : Cool URI bridge
+DEL ..> CAS : fetch by opaque name
+note bottom of DEL : NDN helps delivery;\nnot semantic life cycle
+@enduml
+----
+
+== Where the deep pages live
+
+[cols="1,2"]
+|===
+| Concern | Canonical face
+
+| Symptom ↔ diagnosis/treatment dialectic
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[HCI — Labels versus wires]
+
+| Path as navigation; node as truth
+| link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs]
+
+| Delivery-name vs application-label
+| xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends]
+|===
+
+Math sketch (same as HCI): if bytes are unchanged under rename, stem:[Hash(Bytes_{old}) = Hash(Bytes_{new})].
+Edits yield a new hash; a mutable pointer must advance, or consumers freeze on an old edition.

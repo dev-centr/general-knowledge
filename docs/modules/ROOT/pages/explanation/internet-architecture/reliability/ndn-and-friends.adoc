@@ -1,0 +1,48 @@
+= NDN and friends
+:navtitle: NDN and friends
+:description: Delivery-name versus application-label—Named Data Networking complements Internet Reliability without replacing DevX graphs.
+
+Named Data Networking (NDN) and related ICN designs improve **delivery**: fetch named data without depending on a host IP.
+That is valuable and still **orthogonal** to application / DevX label life cycle.
+
+[plantuml]
+----
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Segoe UI
+skinparam ArrowColor #2c2c2c
+
+rectangle "Application labels\n(docs path, package name, slug)" as APP
+rectangle "Delivery names\n(URL host path, NDN hierarchical name)" as DEL
+rectangle "Content / node identity\n(CAS, GUID, graph node)" as ID
+
+APP --> ID : must not be the only wire
+DEL --> ID : fetch plane
+APP -[hidden]-> DEL
+note bottom of APP : Rename breaks dependents\neven if NDN is perfect
+note bottom of DEL : Decouples location;\ndoes not rewrite Markdown cites
+@enduml
+----
+
+== Two naming failures (do not conflate)
+
+[cols="1,2,2"]
+|===
+| Layer | What it names | Representative work
+
+| Network / delivery
+| How to fetch named data without host-IP coupling
+| NDN / ICN (e.g. NSF Future Internet lines of work)
+
+| Application / DevX
+| How dependents stay correct when symbols, paths, or docs change
+| Kythe / Sourcegraph; OpenRewrite; Unison CAS; `CONSUMERS.md`; connectome-fs
+|===
+
+A perfect delivery plane still treats `/docs/v1` and `/docs/v2` as unrelated names unless the **application** plane carries identity, pointers, and reverse consumers.
+
+== Deep links
+
+* link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[HCI — Labels versus wires] (Two naming failures)
+* link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs] (Where NDN fits)
+* xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]

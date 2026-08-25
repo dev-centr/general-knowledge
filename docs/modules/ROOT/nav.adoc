@@ -58,6 +58,15 @@
 *** xref:explanation/languages/cpp-and-d.adoc[C++ and D]
 *** xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java]
 *** xref:explanation/languages/d-and-rust.adoc[D and Rust]
+** Internet Architecture
+*** xref:explanation/internet-architecture/index.adoc[Overview]
+**** Internet Reliability
+***** xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability]
+***** xref:explanation/internet-architecture/reliability/three-altitudes.adoc[Three altitudes]
+***** xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability]
+***** xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]
+***** xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]
+***** xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends]
 ** Architecture
 *** xref:explanation/architecture/index.adoc[Architecture overview]
 *** xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]

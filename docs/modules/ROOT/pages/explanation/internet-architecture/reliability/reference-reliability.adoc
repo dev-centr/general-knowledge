@@ -1,0 +1,54 @@
+= Reference reliability
+:navtitle: Reference reliability
+:description: URL rot as the familiar slice of Internet Reliability—deep link to HCI Labels versus wires for diagnosis and treatment.
+
+Reference reliability asks: when someone (or an agent) follows a cite, do they still reach the *same intended thing*?
+
+URL rot is the slice everyone recognizes.
+The same failure mode shows up in package names, Antora slugs, file paths, and secret names — any place a **pretty label** was used as the only **wire**.
+
+image::internet-architecture/rename-breakage-mockup.svg["Mock browser chrome: rename breaks three consumer tabs while the producer path looks fine",width=760]
+
+== Symptom → diagnosis (HCI owns the dialectic)
+
+[cols="1,2"]
+|===
+| Face | Surface
+
+| Symptom
+| link:https://hci-nerdz.github.io/blog/when-renaming-a-page-breaks-half-your-docs/[When renaming a page breaks half your docs] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
+
+| Diagnosis / treatment
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[Labels versus wires] — pretty names for humans; systems wire on content identity, mutable pointers, and reverse consumers
+|===
+
+DevCentr does not re-host that Mermaid treatise.
+This page frames the **systems altitude**: reference durability is Internet Reliability, not a docs-site quirk.
+
+[plantuml]
+----
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Segoe UI
+skinparam ArrowColor #2c2c2c
+skinparam sequenceMessageAlign center
+
+actor Consumer
+participant "Label\n(/docs/v1)" as Label
+participant "Intended\nresource" as Thing
+
+Consumer -> Label : follow cite
+Label -> Thing : resolve (today: often identity)
+== Producer renames path ==
+Consumer -> Label : follow cite
+Label ->x Thing : string break / 404
+note right of Label : Label changed;\nwire was the label
+@enduml
+----
+
+== What to read next
+
+* Deep diagnosis: link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[HCI — Labels versus wires]
+* Substrate: link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs]
+* xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack] on this hub (orientation only)
+* xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb] — redirects and `CONSUMERS.md` while the world still wires on strings
