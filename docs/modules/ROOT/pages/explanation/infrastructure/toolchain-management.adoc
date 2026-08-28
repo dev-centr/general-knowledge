@@ -37,7 +37,7 @@ Single binaries with no multi-version story; pure SaaS account surfaces; librari
 | Metaphor for the **product** you ship: the official entrypoint (or thin official shim) that owns install, pin, health, repair, and upgrade. **TCoP** disambiguates from Transmission Control Protocol when needed. See xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane].
 
 | **Toolchain Framework (TCF)**
-| Planned kit that helps maintainers generate and validate a compliant control plane. Lead name is **TCF**, not “Toolchain Management Framework” (TMF)—TMF sounds like “only if I’m building a management app.” See xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)].
+| Kit that helps maintainers generate and validate a compliant control plane. Lead name is **TCF**, not “Toolchain Management Framework” (TMF)—TMF sounds like “only if I’m building a management app.” See xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)] and xref:toolchain-framework::index.adoc[the TCF practice kit].
 |===
 
 == Pattern: how you think
@@ -150,6 +150,7 @@ DevCentr’s **Ecosystem Management** vision treats shells, toolchains, and infr
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
 * xref:devcentr:specifications:components/toolchain-management.adoc[DevCentr TCM component]
 * xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
+* xref:toolchain-framework::index.adoc[TCF practice kit]
 * link:https://github.com/dev-centr/toolchain-framework[dev-centr/toolchain-framework]
 * xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency] — when agents race host package installs during bootstrap
 * xref:reference/recommended-tools.adoc[Recommended Tools]

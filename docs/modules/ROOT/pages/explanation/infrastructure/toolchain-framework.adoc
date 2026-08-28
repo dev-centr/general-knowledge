@@ -2,7 +2,7 @@
 :navtitle: Toolchain Framework (TCF)
 :description: A framework that helps ecosystem maintainers generate and validate Toolchain Control Plane implementations under the Toolchain Management Pattern.
 
-The **Toolchain Framework (TCF)** is Dev-Centr’s planned *framework* for producing xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane] implementations.
+The **Toolchain Framework (TCF)** is Dev-Centr’s *framework* for producing xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane] implementations.
 
 It is **not** the pattern. The pattern is xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]. TCF helps maintainers **generate, wire, and validate** systems that comply with that pattern’s protocol and ship a control plane.
 
@@ -52,12 +52,15 @@ Ecosystems can still comply with the pattern by growing their own entrypoint and
 
 Default repo: `https://github.com/dev-centr/toolchain-framework.git`
 
+Practice kit on this hub: xref:toolchain-framework::index.adoc[Toolchain Framework component].
+
 CI builds TypeScript validators and validates schemas + example adapters on every push/PR to `main`.
 
 == Related
 
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane (TCP / TCoP)]
+* xref:toolchain-framework::index.adoc[TCF practice kit]
 * xref:devcentr:specifications:components/toolchain-management.adoc[Toolchain Management (TCM)]
 * xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]
 * xref:devcentr:ROOT:project-vision.adoc[DevCentr Project Vision]
