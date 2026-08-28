@@ -6,6 +6,7 @@ Timeline of notable documentation changes in this repository.
 
 * Explanation xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal list; first entry is Sophontic’s geometric-reasoning interview (Michels).
 * Index convention: grow via topical pages under `explanation/ai/`; other docs link to topical pages; personal profile keeps its own stable pick list and deep-links for blurbs.
+* Figures: linkage SVG + Mermaid, YouTube still under `images/ai/`; page-context attrs.
 * See xref:changelog-details/2026-08-28 - curated-ai-watching.adoc[Detailed changelog].
 
 == 2026-08-25 -- Internet Reliability

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" role="img" aria-labelledby="title desc">
+  <title id="title">Curated watching linkage</title>
+  <desc id="desc">Personal curated-learning list keeps durable picks. Dev-Centr curated-watching is an index that may split into topical pages. Other docs and the personal list deep-link for blurbs.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f3f1ec; }
+      .box { fill: #fff; stroke: #2c3e5a; stroke-width: 2; }
+      .box2 { fill: #e8eef6; stroke: #2c3e5a; stroke-width: 2; }
+      .box3 { fill: #e4efe6; stroke: #1f3a2e; stroke-width: 2; }
+      .t { font-family: Georgia, "Times New Roman", serif; fill: #1a1a1a; }
+      .s { font-family: "Segoe UI", system-ui, sans-serif; fill: #333; font-size: 13px; }
+      .label { font-family: "Segoe UI", system-ui, sans-serif; fill: #5a5a5a; font-size: 12px; letter-spacing: 0.04em; }
+      .arr { stroke: #2c3e5a; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#2c3e5a"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="720" height="320"/>
+  <text class="label" x="28" y="28">CURATED WATCHING</text>
+  <text class="t" x="28" y="56" font-size="22">Personal picks stay stable; org blurbs may move</text>
+
+  <rect class="box" x="40" y="90" width="200" height="90" rx="6"/>
+  <text class="t" x="56" y="122" font-size="15">Personal index</text>
+  <text class="s" x="56" y="144">curated-learning.md</text>
+  <text class="s" x="56" y="164">title · URL · short note</text>
+
+  <rect class="box2" x="280" y="90" width="200" height="90" rx="6"/>
+  <text class="t" x="296" y="122" font-size="15">Org index</text>
+  <text class="s" x="296" y="144">curated-watching.adoc</text>
+  <text class="s" x="296" y="164">Mandatory · high-signal</text>
+
+  <rect class="box3" x="520" y="70" width="160" height="56" rx="6"/>
+  <text class="t" x="536" y="102" font-size="14">Topical page</text>
+  <text class="s" x="536" y="120">when the set grows</text>
+
+  <rect class="box3" x="520" y="140" width="160" height="56" rx="6"/>
+  <text class="t" x="536" y="172" font-size="14">Other docs</text>
+  <text class="s" x="536" y="190">xref the topical page</text>
+
+  <path class="arr" d="M240 135 H275"/>
+  <path class="arr" d="M480 120 H515"/>
+  <path class="arr" d="M480 155 H515"/>
+
+  <text class="s" x="40" y="230">Deep-link for blurbs/credits. Do not treat the org index URL as the only personal bookmark.</text>
+  <text class="s" x="40" y="252">Drive / local archival copies hang off the personal pick when YouTube retention is a concern.</text>
+  <text class="s" x="40" y="290">Dev-Centr · general-knowledge · Explanation / AI literacy</text>
+</svg>

@@ -1,8 +1,29 @@
 = Curated watching (AI)
 :navtitle: Curated watching (AI)
 :description: Mandatory and high-signal AI watching for people who use or build with AI—credits, blurbs, and durable links.
+:page-audience: Anyone who uses or builds with AI and wants a short mandatory-watch list with durable credits
+:page-usage-context: Hub explanation page — index for AI watching; other docs and personal profiles deep-link here or to topical children
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-08-28
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
 
 Short list of **high-signal** videos worth watching before (or while) using AI day to day. Prefer this over stuffing profile READMEs; add entries when something is fundamental enough to share across Dev-Centr.
+
+image::ai/curated-watching-linkage.svg[alt="Personal curated-learning keeps durable picks; Dev-Centr curated-watching is an index that may split into topical pages; other docs deep-link for blurbs",width=720]
 
 == How this list grows
 
@@ -10,9 +31,24 @@ Short list of **high-signal** videos worth watching before (or while) using AI d
 * **Other docs link to topical pages** (or a single resource page), not to this index, when the link is about that topic.
 * **Personal profile indexes stay separate.** A GitHub profile curated list should keep its own stable video entries (title, URL, short note) and deep-link into Dev-Centr for blurbs/credits—those Dev-Centr URLs may move when topics split. Do not treat this index URL as the only durable personal bookmark.
 
+[source,mermaid]
+----
+flowchart LR
+  P[Personal curated-learning.md]
+  I[Org curated-watching index]
+  T[Topical page]
+  D[Other docs]
+  P -->|deep-link blurbs| I
+  I --> T
+  D --> T
+  P -->|title URL note Drive| YT[YouTube / Drive]
+----
+
 == Mandatory
 
 === AI Data Centers Will Be Obsolete (Geometric Reasoning Explained)
+
+image::ai/sophontic-geometric-reasoning-thumb.jpg[alt="YouTube thumbnail for AI Data Centers Will Be Obsolete Geometric Reasoning Explained",width=480,link=https://www.youtube.com/watch?v=4S8I22ybG2c]
 
 [cols="1,3", options="header"]
 |===

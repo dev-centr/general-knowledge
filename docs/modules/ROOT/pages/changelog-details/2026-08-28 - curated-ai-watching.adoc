@@ -3,4 +3,5 @@
 * New page xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] under Explanation → AI literacy.
 * First mandatory entry: *AI Data Centers Will Be Obsolete (Geometric Reasoning Explained)* — Sophontic AI channel; Julian D. Michels, PhD; YouTube `4S8I22ybG2c`; project https://sophontic.ai/[sophontic.ai].
 * Growth rule: this page is an **index**; later entries split into topical pages; other docs xref the topical page; personal GitHub curated list keeps durable picks and deep-links for blurbs (org URLs may move).
-* Profile README stays thin: personal curated list lives in `AMDphreak/AMDphreak` subdocument.
+* Figures: `images/ai/curated-watching-linkage.svg`, Mermaid flowchart, `images/ai/sophontic-geometric-reasoning-thumb.jpg` (linked to YouTube).
+* Profile README stays thin: personal curated list lives in `AMDphreak/AMDphreak` subdocument (thumbnail on that Markdown page too).
