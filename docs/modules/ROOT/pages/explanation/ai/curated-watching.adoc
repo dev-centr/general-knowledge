@@ -1,0 +1,55 @@
+= Curated watching (AI)
+:navtitle: Curated watching (AI)
+:description: Mandatory and high-signal AI watching for people who use or build with AI—credits, blurbs, and durable links.
+
+Short list of **high-signal** videos worth watching before (or while) using AI day to day. Prefer this page over stuffing profile READMEs; add entries here when something is fundamental enough to share across Dev-Centr.
+
+== Mandatory
+
+=== AI Data Centers Will Be Obsolete (Geometric Reasoning Explained)
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **Title**
+| AI Data Centers Will Be Obsolete (Geometric Reasoning Explained)
+
+| **Channel / publisher**
+| https://www.youtube.com/@SophonticAI[Sophontic AI]
+
+| **Featured speaker**
+| Julian D. Michels, PhD (founder, Sophontic)
+
+| **Published**
+| 6 August 2026
+
+| **Runtime**
+| ~53 minutes
+
+| **YouTube**
+| https://www.youtube.com/watch?v=4S8I22ybG2c
+
+| **Project site**
+| https://sophontic.ai/[sophontic.ai]
+
+| **Local / Drive backup**
+| https://drive.google.com/file/d/1mv4HW10Gb7qbtsts3-I0NYaFT1KTuvsR/view[Google Drive copy] (`Documents/Curated Learning/AI Videos/`, yt-dlp archival MP4 + metadata; not a substitute for the canonical YouTube / sophontic.ai publish)
+|===
+
+Blurb::
+Sophontic argues that **reasoning is geometry in latent space**, not an inevitable side-effect of brute-force scale. Michels contrasts statistical “paradigm of scale” training with empirically studying and cultivating internal geometries (neuro-symbolic lineage, perturbation / flip-rate evals, trainable compact reasoners). The interview frames why frozen frontier generalists and hyperscale data centers are a brittle monopoly path—and what changes if real reasoners can train and adapt on laptop-class hardware. **Watch this if you use AI** and want a clear counter-story to “just add GPUs.”
+
+Credits (as published)::
+Interview published on the Sophontic AI YouTube channel; featured interviewee Julian D. Michels, PhD. Primary source page embeds the same video: https://sophontic.ai/[sophontic.ai].
+
+[NOTE]
+====
+Claims about magnitude gains (tens to ~10³× vs larger models under their perturbation tests) are **the lab’s reported measurements**, not independent Dev-Centr benchmarks. The value of the piece for practitioners is the mental model: structure vs scale, frozen giants vs continual local learning, and why evals that only score memorized tests are weak.
+====
+
+== Related
+
+* xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] — what to install in the studio
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] — how inference stacks are arranged
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] — using agents without drowning in always-on rules

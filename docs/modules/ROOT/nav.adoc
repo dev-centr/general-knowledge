@@ -120,6 +120,8 @@
 *** xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics]
 *** xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]
 *** xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL Distro Comparison]
+** AI literacy
+*** xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]

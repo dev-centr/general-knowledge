@@ -40,6 +40,10 @@ Featured agent / studio topics:
 * xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] (reference master list)
 
+== AI literacy
+
+* xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal videos (Sophontic geometric reasoning interview and later entries)
+
 == Documentation
 
 Literate programming, brand motion, and writing guidance live under Explanation → Documentation in the nav.

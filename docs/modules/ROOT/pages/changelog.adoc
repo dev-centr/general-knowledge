@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-28 -- Curated AI watching (Sophontic)
+
+* Explanation xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal list; first entry is Sophontic’s geometric-reasoning interview (Michels).
+* See xref:changelog-details/2026-08-28 - curated-ai-watching.adoc[Detailed changelog].
+
 == 2026-08-25 -- Internet Reliability
 
 * New systems-altitude section xref:explanation/internet-architecture/index.adoc[Internet Architecture] / xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] (peer to product SPE Architecture on the docs hub).

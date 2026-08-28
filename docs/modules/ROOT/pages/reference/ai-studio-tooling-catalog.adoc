@@ -77,8 +77,9 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 | xref:home::tools/rules-manager.adoc[Hub]
 |===
 
-== Essays
+== Essays and watching
 
+* xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal interviews (starts with Sophontic geometric reasoning)
 * link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[When the inbox is the CI pager] — Composio + email-as-CI-pager in practice
 
 == DevCentr product surfaces
