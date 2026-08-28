@@ -109,3 +109,4 @@ When you want Gmail (or Calendar, …) on the **same** Composio trust platform:
 * xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP setup]
 * xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
+* Workstation `gcloud` for agents (SDK login, not OAuth Client ID): xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI for agentic workflows]

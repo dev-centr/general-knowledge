@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-28 -- Agent CLI auth cross-links
+
+* How-to index + secrets / Google Cloud OAuth pages link to agent-rules xref:agent-rules::bitwarden-cli-agents.adoc[Bitwarden CLI (agents)] and xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI (agents)].
+
 == 2026-08-28 -- Curated AI watching (Sophontic)
 
 * Explanation xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal list; first entry is Sophontic’s geometric-reasoning interview (Michels).
