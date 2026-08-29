@@ -1,9 +1,12 @@
 = Polyglot CI matrix
 :navtitle: Polyglot CI
-:description: GitHub Actions matrix for Windows, macOS arm64, Linux, and BSD — x64 and arm — packing one download.
+:description: GitHub Actions matrix for Windows, macOS arm64, Linux, and BSD — expand named release-target patterns.
 
 Skill:: `polyglot-ci` in https://github.com/dev-centr/agent-rules[agent-rules] (`skills/polyglot-ci/`).
+Patterns:: xref:explanation/architecture/release-target-patterns.adoc[Release target patterns] (`common`, `desktop`, `lab`, …) · skill `release-targets` · `patterns.sdl`.
 Why:: xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] · xref:explanation/architecture/build-pipeline.adoc[Build pipeline].
+
+House default for new workflows is pattern **`desktop`** (GUI) or **`common`** (no Mac): Windows + Linux × x64/arm64, plus macOS arm64 when shipping a Mac UI.
 
 == Hosted runners we use
 

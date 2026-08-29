@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-29 -- Release target patterns
+
+* Explanation xref:explanation/architecture/release-target-patterns.adoc[Release target patterns] — named `common` / `desktop` / `lab` / `omnibus` sets with year freezes (`common/2026`) and cited ISA usage statistics.
+* See xref:changelog-details/2026-08-29 - release-target-patterns.adoc[Detailed changelog].
+
 == 2026-08-29 -- Marketing for engineers
 
 * Explanation xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers] — matter-of-fact, low-stimulation pricing and signup surfaces for technical buyers; linked from the Web delivery-class page.

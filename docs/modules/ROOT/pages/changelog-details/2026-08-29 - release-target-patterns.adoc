@@ -1,0 +1,11 @@
+= 2026-08-29 - release target patterns
+
+== Summary
+
+Named, year-dated release architecture sets (`common`, `desktop`, `lab`, `omnibus`) with a cited usage-statistics section for shipping decisions.
+
+== Details
+
+* New explanation page documents Gentoo-like dating (`common/2026` vs living `common`).
+* House floor for 2026: Windows + Linux × x64/arm64; GUI adds macOS arm64.
+* Statistics cite Steam, StatCounter, Mercury Research (via trade press), TOP500/CNCF with links.

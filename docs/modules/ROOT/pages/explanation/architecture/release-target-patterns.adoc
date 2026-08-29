@@ -1,0 +1,207 @@
+= Release target patterns
+:navtitle: Release target patterns
+:description: Named, year-dated OS×CPU release sets (common, desktop, lab, omnibus) with architecture usage statistics and sources.
+:page-audience: Maintainers and agents choosing which binaries to ship; readers comparing ISA reach
+:page-usage-context: Hub explanation — nomenclature plus cited usage statistics (not a CI copy-paste alone)
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-08-29
+:page-diataxis: explanation
+:page-keywords: release targets, common, desktop, lab, omnibus, arm64, x86_64, polyglot CI
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Dev-Centr names **sets** of release triplets (OS × CPU) the way Gentoo names Portage profiles: a short word for intent, plus an optional **year** when the set must not drift.
+Agents expand these names from https://github.com/dev-centr/agent-rules/blob/main/skills/release-targets/patterns.sdl[`patterns.sdl`] (skill `release-targets`).
+CI wiring: xref:how-to/polyglot-ci.adoc[Polyglot CI matrix].
+
+[mermaid]
+....
+flowchart TB
+  subgraph living["Living names → current_year"]
+    common["common / default"]
+    desktop["desktop"]
+    cloud["cloud"]
+    lab["lab / hpc"]
+    edge["edge"]
+    omnibus["omnibus / all"]
+  end
+  common --> winlin["win+lin × x64+arm64"]
+  desktop --> common
+  desktop --> mac["macos-arm64"]
+  cloud --> lin["linux × x64+arm64"]
+  lab --> lin
+  lab --> hpcisa["ppc64le + riscv64 + s390x"]
+  edge --> armrv["linux-arm64 + riscv64"]
+  omnibus --> everything["entire catalog"]
+  dated["common/2026"] -.->|"freeze"| common
+....
+
+== Why name the sets
+
+Without names, every repo invents a matrix.
+With names, “ship **common**” means the same four Windows/Linux slices house-wide, and “ship **common/2025**” reconstructs what “default” meant in an older publication after the living default moves.
+
+== Nomenclature
+
+=== Pattern tokens
+
+[cols="1,1,3"]
+|===
+| Pattern | Alias | Intent (2026)
+
+| `common`
+| `default`
+| Mass-market floor: Windows + Linux, **x64 and arm64** (four triplets).
+
+| `desktop`
+| —
+| Gentoo-style desktop overlay: `common` plus **macOS arm64** (Apple Silicon). Prefer for GUI apps.
+
+| `cloud`
+| —
+| Linux x64 + Linux arm64 only (containers / VMs).
+
+| `lab`
+| `hpc`
+| Research / HPC: Linux x64 + arm64 + **ppc64le** + **riscv64** + **s390x**.
+
+| `edge`
+| —
+| SBC / edge: Linux arm64 + Linux riscv64.
+
+| `heritage`
+| —
+| Museum / long-tail (32-bit x86, armv7). Document; do not build unless asked.
+
+| `omnibus`
+| `all`
+| Every triplet in the living catalog. Unusual — confirm before enabling.
+|===
+
+Etymology is deliberate: Gentoo’s `default/…/desktop` hierarchy, the Victorian **omnibus** (“carries everyone”), and plain **lab** / **edge** for audience.
+
+=== Dating and drift
+
+[cols="1,2"]
+|===
+| Form | Meaning
+
+| Bare name (`common`)
+| **Latest** definition under `current_year` in `patterns.sdl`.
+
+| `common/2026` or “common 2026”
+| Frozen 2026 set — safe to cite from old READMEs and archaeology.
+
+| Reconstructing “default” on a 2025-era project
+| Treat as `common/2025` (or ask), never silently upgrade to living `common`.
+|===
+
+When a new ISA becomes house-default (for example POWER in a later year), bump `current_year`, keep the previous year block immutable, and teach agents to prefer dated citations in archaeology.
+
+== What to ship in 2026
+
+=== Most consumers → `common` (GUI → `desktop`)
+
+Suggestion for **2026 compatibility with most desktop/server consumers**:
+
+* **Required floor (`common/2026`):** `windows-x64`, `windows-arm64`, `linux-x64`, `linux-arm64`.
+* **GUI apps (`desktop/2026`):** add `macos-arm64`. Do **not** schedule GitHub-hosted Intel Mac runners.
+
+That matches dual-ISA Windows (Snapdragon / Windows on Arm), dual-ISA Linux (cloud Ampere/Graviton + classic x86_64), and Apple’s arm64-only Mac fleet.
+
+=== High-performance researchers → `lab`
+
+Add Linux **ppc64le** (IBM POWER), **riscv64**, and **s390x** (IBM Z) beside the Linux dual-ISA pair.
+Keep Windows/macOS slices only if the researchers also run those hosts for tooling — they are not part of `lab` itself.
+
+Use **`omnibus`** only when you truly need heritage + BSD + everything in one release train.
+
+== Architecture usage statistics (cited)
+
+Figures below are **order-of-magnitude orientation**, not a substitute for your product’s telemetry.
+Always prefer the primary survey page when making a go/no-go call; secondary articles paraphrase market firms that often paywall full tables.
+
+=== Client CPU: x86 vs Arm (shipments)
+
+Mercury Research’s Q2 2026 client estimates (reported by trade press) put **Arm-based client CPUs around 15%** of the client CPU market versus x86, with Apple and Windows-on-Arm among the drivers.
+AMD’s **x86** share within the x86 segment reached record highs the same quarter (desktop x86 share reported near **35%** for AMD vs Intel).
+
+Sources::
+
+* https://www.heise.de/en/news/Desktop-CPU-shipments-can-best-be-described-as-dismal-11424318.html[heise online summary of Mercury Research Q2 2026] (Arm client share ≈ 15.3%; AMD desktop x86 share 34.9%).
+* https://gigazine.net/gsc_news/en/20260825-amd-client-cpu-share/[GIGAZINE / Tom’s Hardware / The Register coverage] of the same Mercury figures.
+* Primary research firm: https://www.mercuryresearch.com/[Mercury Research] (detailed tables typically commercial).
+
+Implication for `common/2026`:: Shipping **both** x64 and arm64 on Windows and Linux covers the dominant x86 install base **and** the growing Arm client minority without waiting for Arm to “win” gaming.
+
+=== Gaming / Steam panel (architecture mix)
+
+Valve’s opt-in https://store.steampowered.com/hwsurvey/[Steam Hardware & Software Survey] remains overwhelmingly **64-bit x86** for gaming PCs.
+Secondary reporting of the December 2025 survey wave cited roughly **97% x64** vs about **0.45% Arm** among surveyed systems — useful as a lower bound for **game** reach, not for general productivity PCs or Macs.
+
+Sources::
+
+* https://store.steampowered.com/hwsurvey/[Steam Hardware & Software Survey] (primary; monthly).
+* https://windowsnews.ai/article/windows-11-hits-70-on-steam-as-32gb-ram-becomes-gaming-standard.395524[Windows News write-up] citing December 2025 Steam architecture split (x64 vs Arm).
+
+Steam OS share (July 2026 reporting):: Windows ≈ 93.7%, Linux ≈ 4.0%, macOS ≈ 2.3% on the Steam panel
+(https://commandlinux.com/statistics/pc-gaming-operating-system-market-share/[Command Linux summary] of Valve’s July 2026 survey).
+
+=== General desktop OS sessions
+
+StatCounter’s public desktop OS tracker (July 2026 reporting) shows Windows still majority, with macOS and Linux as meaningful minorities — a reminder that **Mac arm64** matters for GUI `desktop` even when Steam under-represents Mac.
+
+Sources::
+
+* https://gs.statcounter.com/os-market-share/desktop/worldwide[StatCounter Desktop OS market share] (primary).
+* https://sqmagazine.co.uk/linux-statistics/[SQ Magazine Linux statistics 2026] (secondary aggregation citing StatCounter / Steam / CNCF).
+
+=== Servers, cloud, and HPC
+
+* Cloud Linux **arm64** (Graviton, Ampere, Cobalt, etc.) is first-class for `common` / `cloud` — treat Linux arm64 as required, not experimental.
+* https://www.top500.org/[TOP500] supercomputers are effectively **all Linux**; CPU mixes include x86_64 and other server ISAs over time — motivating `lab`’s ppc64le / s390x / riscv64 extras for research audiences rather than for Steam-like consumers.
+* CNCF cloud-native surveys consistently show Linux dominating production Kubernetes clusters (see CNCF annual survey publications; SQ Magazine summarizes recent waves).
+
+=== How to read the table for shipping
+
+[cols="2,1,2"]
+|===
+| Audience | Pattern | Stats takeaway
+
+| General desktop + server consumers
+| `common` / `desktop`
+| x86_64 still majority; Arm client ~mid-teens% and rising; Mac = arm64; Steam Arm still niche for **games**.
+
+| Cloud-native services
+| `cloud`
+| Dual-ISA Linux covers the hosts you actually deploy.
+
+| HPC / academic labs
+| `lab`
+| Add POWER, RISC-V, Z — low Steam share, high cluster relevance.
+
+| Exhaustive / compliance theater
+| `omnibus`
+| Stats do **not** justify this for most products — use sparingly.
+|===
+
+== Related
+
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution]
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
+* xref:how-to/binary-tailor.adoc[Binary Tailor]
+* Skill `release-targets` · skill `polyglot-ci` in https://github.com/dev-centr/agent-rules[agent-rules]
