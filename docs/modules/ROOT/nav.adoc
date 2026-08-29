@@ -78,6 +78,7 @@
 ***** xref:explanation/architecture/classes/desktop.adoc[Desktop]
 ***** xref:explanation/architecture/classes/web.adoc[Web]
 ***** xref:explanation/architecture/classes/mobile.adoc[Mobile]
+*** xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers]
 *** xref:explanation/architecture/about-and-build-info.adoc[About and Build Info]
 *** xref:explanation/architecture/automatic-updates.adoc[Automatic Updates]
 *** xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and Packaging]

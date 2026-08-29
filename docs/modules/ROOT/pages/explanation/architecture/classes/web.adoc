@@ -13,6 +13,7 @@ Dense UI architecture notes: xref:home::architecture/ui-heavy-web-apps.adoc[UI-h
 * **PWAs / service workers** need an explicit “new version available — Reload” UX; silent swap mid-session causes mysterious bugs.
 * **Account and privacy** surfaces are first-class (cookies, consent, deletion) under common regulations and store-adjacent policies.
 * Marketing sites and logged-in apps share a brand but **not** the same Band A list—don't burden a brochure page with a debug dump.
+* Pricing and signup chrome aimed at technical buyers: xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers].
 
 == Auxiliary feature matrix
 

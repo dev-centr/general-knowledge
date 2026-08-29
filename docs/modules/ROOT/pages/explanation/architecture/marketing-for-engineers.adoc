@@ -1,0 +1,34 @@
+= Marketing and pricing pages for engineers
+:navtitle: Marketing for engineers
+:description: Low-stimulation, matter-of-fact styling for marketing, pricing, and signup surfaces aimed at technical buyers.
+:page-audience: maintainers
+:page-usage-context: product design
+:page-orig-author: Ryan Johnson
+:page-last-author: Composer on behalf of Ryan Johnson
+
+Use this when designing **brochure, pricing, and subscription signup** pages for Dev-Centr (and sibling) products.
+Parent vocabulary: xref:explanation/architecture/classes/web.adoc[Web apps] (marketing Band A is lighter than the logged-in app).
+
+== Philosophy
+
+Market to engineers, not to an imagined lowest-common-denominator audience.
+Less salesmanship, more **specification**. Real decisions, real thinking, not hype.
+
+== Pricing and signup surfaces
+
+* Old-school matter-of-fact styling.
+* No sensory attentional hooks (bright saturated “urgency” colors).
+* **Low stimulation.** Neutral tones; low-contrast deltas between adjacent boundaries and elements (overall tonal range may still be high).
+* Details-focused copy and layout. Concrete explanations; diagrams when they clarify a real choice.
+* No emojis—or cast them into the neutral range with filters if unavoidable.
+* Limited curves. Slight curves are fine for orientation; lines support detailed comparison.
+* Rounded edges where the user must choose between **large concepts**; prefer sharper structure for fine-grained options.
+
+== Perceptual stance
+
+Approximate the user’s perceptual process from cognitive and UX research: orientation first (curves, grouping), then detailed evaluation (lines, tables, specs). Do not invert that with hype chrome on the decision surface.
+
+== Related
+
+* xref:explanation/architecture/classes/web.adoc[Web apps — auxiliary features]
+* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]

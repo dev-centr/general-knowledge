@@ -1,0 +1,4 @@
+= 2026-08-29 — Marketing for engineers
+
+* New explanation xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers] — low-stimulation pricing/signup guidance for technical buyers.
+* Linked from xref:explanation/architecture/classes/web.adoc[Web apps] and the architecture nav.

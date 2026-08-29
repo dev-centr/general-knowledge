@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-29 -- Marketing for engineers
+
+* Explanation xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers] — matter-of-fact, low-stimulation pricing and signup surfaces for technical buyers; linked from the Web delivery-class page.
+* See xref:changelog-details/2026-08-29 - marketing-for-engineers.adoc[Detailed changelog].
+
 == 2026-08-28 -- Agent CLI auth cross-links
 
 * How-to index + secrets / Google Cloud OAuth pages link to agent-rules xref:agent-rules::bitwarden-cli-agents.adoc[Bitwarden CLI (agents)] and xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI (agents)].
