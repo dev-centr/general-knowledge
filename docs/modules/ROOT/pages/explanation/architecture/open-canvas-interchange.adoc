@@ -1,0 +1,93 @@
+= Open Canvas Interchange Format (OCIF)
+:navtitle: Open Canvas (OCIF)
+:description: Dev-Centr endorsement of OCIF for infinite-canvas edit and interchange; SVG as export; relationship to CentrMark and plain text.
+:page-audience: Maintainers and agents choosing canvas document formats; readers comparing SVG vs scene-graph interchange
+:page-usage-context: Hub explanation — endorse OCIF, clarify SVG’s role, point at implementation posture for D apps
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-08-30
+:page-diataxis: explanation
+:page-keywords: OCIF, OCWG, infinite canvas, SVG, Excalidraw, tldraw, CentrMark, sticky notes
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Dev-Centr **endorses** the https://canvasprotocol.org/[Open Canvas Interchange Format (OCIF)] from the https://github.com/ocwg/ocif-spec[Open Canvas Working Group] as the preferred **edit + interchange** format for infinite-canvas and sticky-board documents.
+
+Status (as of endorsement):: Candidate Recommendation (implementation feedback). Spec site: https://spec.canvasprotocol.org/[spec.canvasprotocol.org]. MIME type commonly `application/vnd.ocif+json`; extension often `.ocif.json` / `.ocif`.
+
+== Why not SVG as the live document?
+
+SVG is an excellent **render and export** target (browsers, Inkscape, print pipelines). It is a poor **primary app document** for sticky notes and freeform boards:
+
+* Coordinate framing (`viewBox`, units, CSS) fights infinite-canvas mental models.
+* Text is not a first-class editable note object; sticky / group / arrow semantics are app inventions layered on paths and groups.
+* Editors that stay productive on SVG usually keep **non-standard editor state** in namespaces (Inkscape SVG) or abandon SVG as the native store entirely (Affinity `.afdesign`, Illustrator `.ai`).
+
+**Inkscape is not replacing SVG.** Native save remains SVG-with-Inkscape extensions; Plain SVG is the stripped interchange export. Historical chatter about a proprietary `.ink` was rejected because Inkscape’s identity is “standards-compliant SVG editor.” If you heard “move away from SVG for the live document,” that is the *category* of problem Affinity/Illustrator solve with proprietary natives — not an Inkscape press plan to dump SVG.
+
+== What OCIF is for
+
+OCIF is a JSON scene graph aimed at **canvas apps talking to each other**:
+
+* **Nodes** — placed visual items (position, size, optional parent/scale).
+* **Relations** — edges, groups, hyperedges.
+* **Resources** — text, SVG snippets, rasters, other blobs referenced by nodes.
+
+Coordinate system matches common 2D APIs (origin top-left, +y down). Extensions (namespaced) carry product-specific shapes (e.g. sticky notes) without forking the core file.
+
+Reference implementations include https://github.com/tldraw/ocif[tldraw’s OCIF plugin] (v0.7.0 at endorsement time). Prefer OCIF over copying any one product’s private JSON (Excalidraw/tldraw store dumps) as a long-term house format.
+
+== Dev-Centr document kind mapping
+
+Keep **prose**, **plain buffers**, and **canvas scenes** as distinct kinds — do not force one encoding to fake the others.
+
+[cols="1,1,2"]
+|===
+| Kind | Preferred on-disk | Notes
+
+| **Plain** (raw text / code)
+| `.txt` or extensionless UTF-8
+| User-visible encoding and EOL. Default for “just a note.” Markup assist optional; not silent rich promotion.
+
+| **Doc** (flow rich text)
+| CentrMark (`.cmk`)
+| Human-authored structured prose. See CentrMark docs; do not confuse with structured *data* formats (xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]).
+
+| **Canvas** (board / sticky / diagram)
+| **OCIF**
+| Edit + interchange. Export **SVG** (and raster) for picture pipelines. Do not treat SVG as the only store.
+|===
+
+Optional composition:: a CentrMark doc may *embed* or *link* an OCIF resource (diagram-as-attachment). Prefer a standalone `.ocif` when the note *is* the board.
+
+== Implementation posture (D and owned apps)
+
+* **No maintained OCIF package on DUB** at endorsement time (`dub search ocif` empty). Prefer a **first-party D reimplementation** of a pinned OCIF version (start at v0.7.0) over wrapping Node/JS runtimes into desktop processes.
+* Pin the spec version in the library; bump deliberately when OCWG ships breaking revisions (CR still gathers implementer feedback — expect churn at the edges, not weekly rewrite of core nodes).
+* Publish the D library to **code.dlang.org** when it parses/serializes a useful subset (rect, oval, path, text resource, arrow) so Notorious and other Dev-Centr tools share one codec.
+* Product apps (e.g. Notorious) map UI tools ↔ OCIF nodes; keep an in-memory **editor model** for hit-testing and undo — that model is not “in-memory JSON as source of truth.” On disk, OCIF (or Plain / CentrMark) is authoritative.
+
+== Export and guides
+
+* Canvas chrome should expose export to **OCIF**, pretty **JSON** (same model), and **SVG** without burying them only in Save As.
+* Authoritative syntax / format guides for Plain encodings, CentrMark, and OCIF live in **Dev-Centr docs** (online). Apps may ship offline copies; online remains canonical for availability and updates.
+
+== Related
+
+* xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — how canvases get pixels.
+* xref:explanation/documentation/structured-data-formats.adoc[Structured data formats] — config/data trees (not canvas scenes).
+* xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup] — CentrMark among prose formats.
+* https://canvasprotocol.org/[OCWG / canvasprotocol.org]
+* https://github.com/ocwg/ocif-spec[ocwg/ocif-spec]

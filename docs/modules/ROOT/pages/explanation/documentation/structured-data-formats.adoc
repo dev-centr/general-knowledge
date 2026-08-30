@@ -8,6 +8,8 @@ JSON is the default interchange shape. Human-edited config, programmable constra
 
 **CentrMark / Markdown / AsciiDoc** model document trees (paragraphs, headings, directives). **SDLang / KDL / JSON** model data trees (nodes, arguments, properties). Comparing KDL to CentrMark as peers is a category error—pick documentation markup or structured data first.
 
+**OCIF** (Open Canvas Interchange) is a third category: a **canvas scene graph** (placed nodes, relations, resources), not prose and not app config. Prefer it for infinite-canvas / sticky-board interchange; see xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas (OCIF)]. Do not treat SVG as that live document.
+
 == Human-edited config
 
 [cols="1,2"]

@@ -1,0 +1,12 @@
+= 2026-08-30 - Open Canvas Interchange (OCIF)
+
+== Summary
+
+Endorse OCIF as Dev-Centr’s preferred infinite-canvas edit and interchange format; clarify SVG as export; map Plain / Doc (CentrMark) / Canvas kinds.
+
+== Details
+
+* New explanation: xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas Interchange Format (OCIF)].
+* Notes Inkscape is not abandoning SVG; proprietary natives elsewhere address the same “awkward live SVG document” pain.
+* Implementation note: no DUB OCIF package at endorsement — prefer first-party D codec pinned to OCIF v0.7.0.
+* Cross-links from architecture index, nav, and structured-data-formats category boundary.

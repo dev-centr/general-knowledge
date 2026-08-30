@@ -83,6 +83,7 @@
 *** xref:explanation/architecture/automatic-updates.adoc[Automatic Updates]
 *** xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and Packaging]
 *** xref:explanation/architecture/release-target-patterns.adoc[Release target patterns]
+*** xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas (OCIF)]
 *** xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 *** xref:explanation/architecture/build-pipeline.adoc[Build Pipeline]
 *** xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and Support]
