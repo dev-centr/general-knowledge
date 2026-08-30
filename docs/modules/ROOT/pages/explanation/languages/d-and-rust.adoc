@@ -1,5 +1,4 @@
 = D and Rust
-:navtitle: D and Rust
 :description: How D and Rust split the systems pole—optional GC versus affine types—and why TypeScript still owns the browser.
 
 D and Rust are the two systems poles in xref:index.adoc[language recommendations].

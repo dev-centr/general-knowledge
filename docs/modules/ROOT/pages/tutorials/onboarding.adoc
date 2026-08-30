@@ -1,5 +1,4 @@
 = Developer onboarding
-:navtitle: Developer Onboarding
 :description: Entry point for workstation and docs onboarding; prefer How-to guides for concrete tasks.
 
 Welcome. Use the How-to section for concrete setup; use Tutorials when you want a guided path.

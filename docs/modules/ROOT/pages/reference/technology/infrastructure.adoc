@@ -1,6 +1,5 @@
-= Infrastructure (reference)
+= Infrastructure
 :description: Short infrastructure lookup — IaC, shells, secrets, member-hostname Access, and links to org email DNS patterns.
-:navtitle: Infrastructure
 
 == Prefer
 

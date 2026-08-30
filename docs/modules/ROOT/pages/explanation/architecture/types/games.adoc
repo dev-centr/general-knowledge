@@ -1,5 +1,4 @@
 = Games
-:navtitle: Games
 :description: Essentials for games—launcher/store updates, build identity, crash dumps, and content pipelines alongside the client binary.
 
 Games often outsource distribution to **stores and launchers**, but identity and diagnostics remain your job. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

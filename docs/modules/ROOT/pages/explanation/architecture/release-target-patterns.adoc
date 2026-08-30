@@ -1,5 +1,4 @@
 = Release target patterns
-:navtitle: Release target patterns
 :description: Named, year-dated OS×CPU release sets (common, desktop, lab, omnibus) with architecture usage statistics and sources.
 :page-audience: Maintainers and agents choosing which binaries to ship; readers comparing ISA reach
 :page-usage-context: Hub explanation — nomenclature plus cited usage statistics (not a CI copy-paste alone)

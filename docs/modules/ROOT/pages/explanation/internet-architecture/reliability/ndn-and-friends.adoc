@@ -1,5 +1,4 @@
 = NDN and friends
-:navtitle: NDN and friends
 :description: Delivery-name versus application-label—Named Data Networking complements Internet Reliability without replacing DevX graphs.
 
 Named Data Networking (NDN) and related ICN designs improve **delivery**: fetch named data without depending on a host IP.

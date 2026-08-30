@@ -1,5 +1,4 @@
-= Attach Product Essentials Checklists
-:navtitle: Product Essentials Checklists
+= Product Essentials Checklists
 :description: How to attach CentrMark product-essentials checklists and record progress in `.cmk.checks` sidecars without rewriting the document.
 
 Goal:: Give each project a CentrMark checklist **document** plus a **progress sidecar** so humans and agents can check items off while a viewer weaves the two.

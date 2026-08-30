@@ -1,5 +1,4 @@
 = API key vs token
-:navtitle: API key vs token
 :description: What an API key identifies versus what an access token authorizes—and why vendors keep labeling scoped keys as tokens.
 
 The industry keeps calling long-lived secrets "tokens" when they are still **keys**.

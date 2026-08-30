@@ -1,5 +1,4 @@
-= Set up and manage WSL
-:navtitle: WSL Setup
+= WSL Setup
 :description: Enable WSL, install distros, set a default, open WSL Settings, and choose Ubuntu LTS vs rolling specialists.
 
 Task guide for getting Windows Subsystem for Linux working and choosing a default distro. For the full comparison and “why,” see xref:explanation/infrastructure/wsl-distro-comparison.adoc[Choosing a WSL Linux Distro].

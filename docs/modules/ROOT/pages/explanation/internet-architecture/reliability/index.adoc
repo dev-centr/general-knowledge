@@ -1,5 +1,4 @@
 = Internet Reliability
-:navtitle: Internet Reliability
 :description: Usability of the internet and reference durability—machine, developer-ecosystem, and internet altitudes under Internet Architecture.
 
 **Internet Reliability** is a slice of xref:explanation/internet-architecture/index.adoc[Internet Architecture].

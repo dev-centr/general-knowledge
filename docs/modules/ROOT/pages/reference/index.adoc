@@ -1,5 +1,4 @@
 = Reference
-:navtitle: Reference
 :description: Facts, checklists, and lookup material for day-to-day development.
 
 Reference pages are for **retrieval**—checklists, layouts, tool lists, and registries.

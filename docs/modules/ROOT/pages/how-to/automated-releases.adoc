@@ -1,5 +1,4 @@
 = Automated Releases
-:navtitle: Automated Releases
 :description: Build and attach versioned binaries with CI (GitHub Actions and kin)—stamping, signing, and publishing on tags.
 
 Goal:: Every Git tag produces trustworthy artifacts without a maintainer laptop build.

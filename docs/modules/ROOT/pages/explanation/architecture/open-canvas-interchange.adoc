@@ -1,5 +1,4 @@
-= Open Canvas Interchange Format (OCIF)
-:navtitle: Open Canvas (OCIF)
+= Open Canvas (OCIF)
 :description: Dev-Centr endorsement of OCIF for infinite-canvas edit and interchange; SVG as export; relationship to CentrMark and plain text.
 :page-audience: Maintainers and agents choosing canvas document formats; readers comparing SVG vs scene-graph interchange
 :page-usage-context: Hub explanation — endorse OCIF, clarify SVG’s role, point at implementation posture for D apps

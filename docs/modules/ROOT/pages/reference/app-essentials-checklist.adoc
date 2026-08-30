@@ -1,5 +1,4 @@
 = App Essentials Checklist
-:navtitle: App Essentials Checklist
 :description: Printable checklist of software product essentials—identity, updates, packaging, pipeline, diagnostics—by artifact type.
 
 Use with xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]. Mark items that apply to your artifact type.

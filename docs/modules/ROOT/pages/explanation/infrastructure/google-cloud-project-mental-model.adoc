@@ -1,5 +1,4 @@
-= Google Cloud projects as OAuth boundaries
-:navtitle: Google Cloud project mental model
+= Google Cloud project mental model
 :description: Why people think in apps and personal trust, how Google Cloud forces that into Projects, and how to map the ideal model onto the console without lying to yourself.
 
 People arrive at Google Cloud Console with a simple picture: *my Google account*, *the apps I trust*, and *what each app may do with my Drive / Gmail / Calendar*.

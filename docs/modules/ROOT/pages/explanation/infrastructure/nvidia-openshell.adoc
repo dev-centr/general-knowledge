@@ -1,5 +1,4 @@
-= NVIDIA OpenShell (overview)
-:navtitle: NVIDIA OpenShell
+= NVIDIA OpenShell
 :description: What NVIDIA OpenShell is, what problem it solves, and how it differs from OpenShellOrg and Nushell.
 
 [IMPORTANT]

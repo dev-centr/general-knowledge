@@ -1,5 +1,4 @@
-= Why We Recommend Nushell
-:navtitle: Nushell
+= Nushell (recommended shell)
 :description: Why Dev-Centr recommends Nushell as the default cross-platform shell for structured pipelines and display decoupling.
 
 Dev-Centr recommends link:https://www.nushell.sh/[Nushell] (`nu`) as the **default interactive and scripting shell** on Windows, macOS, and Linux.

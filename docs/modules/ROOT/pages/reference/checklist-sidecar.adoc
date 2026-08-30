@@ -1,5 +1,4 @@
-= Product Essentials checklist sidecar
-:navtitle: Checklist sidecar
+= Checklist Sidecar
 :description: Progress state for Product Essentials CentrMark checklists lives beside the document in `.cmk.checks/state.json5` — never by rewriting checklist markers in the `.cmk`.
 
 Checkoff progress is stored in a **sidecar**, parallel to Scriptbook’s `.cmk.runs/` idea: authors and templates edit the narrative/ids in the `.cmk`; tools write progress next to it; UIs **weave** for display.

@@ -1,5 +1,4 @@
-= Auxiliary Features Catalog
-:navtitle: Auxiliary Features
+= Auxiliary Features
 :description: Cross-cutting catalog of non-domain product surfaces—Help, About, updates, diagnostics, connectivity, and maintainability features that every app class should plan deliberately.
 
 **Auxiliary features** are the product surfaces that are not your core domain job, but that keep the app **identifiable**, **current**, **supportable**, and **trustworthy**. Shipping without them creates permanent support debt.

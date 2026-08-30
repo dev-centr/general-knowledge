@@ -1,5 +1,4 @@
-= Install and set up Nushell
-:navtitle: Nushell Setup
+= Nushell Setup
 :description: Install Nushell on Windows, macOS, and Linux and use it as the default Dev-Centr shell.
 
 Install link:https://www.nushell.sh/[Nushell] on every development machine. Prefer the same shell across OSes so scripts, docs, and agent instructions stay consistent.

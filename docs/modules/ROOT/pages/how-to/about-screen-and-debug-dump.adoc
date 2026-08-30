@@ -1,5 +1,4 @@
-= Add an About Screen and Debug Dump
-:navtitle: About and Debug Dump
+= About Screen and Debug Dump
 :description: Task guide for adding version/build identity and a privacy-aware debug dump to an application.
 
 Goal:: Ship a discoverable About surface and a one-action redacted diagnostics dump.

@@ -1,5 +1,4 @@
 = ClearType
-:navtitle: ClearType
 :description: How Windows ClearType subpixel font smoothing works—RGB/BGR geometry, GDI vs DirectWrite/WPF setting planes, the inbox tuner, and where multi-monitor layouts break down.
 
 ClearType is Microsoft’s subpixel font-smoothing technology for LCD (and LCD-like) displays. Instead of painting antialiased edges only in gray, it shades the individual red, green, and blue *stripes* inside each pixel so stems and curves align to a finer horizontal grid than the pixel pitch alone allows.

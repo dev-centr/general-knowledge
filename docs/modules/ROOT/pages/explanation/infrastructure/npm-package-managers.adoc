@@ -1,5 +1,4 @@
-= npm package managers and alternatives
-:navtitle: npm package managers
+= npm package managers
 :description: pnpm as shop default, Bun as practical OSS speed path, Orogene as once-and-future inspiration if it re-open-sources.
 
 The npm registry is the package **marketplace**. What you run for **installs** is a separate choice. DevCentr’s Node ecosystem SDL lists the managers we care about; this page is the advisory copy.

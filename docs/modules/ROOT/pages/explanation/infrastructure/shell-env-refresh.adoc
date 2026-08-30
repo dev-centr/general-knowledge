@@ -1,5 +1,4 @@
 = Shell Environment Refresh
-:navtitle: Shell Environment Refresh
 :description: Why PATH and other env vars go stale in terminals and IDEs, why Chocolatey refreshenv fails, and how DevCentr and OpenShellOrg plan to fix it.
 
 After you install a tool or change system/user environment variables, interactive shells and IDE terminals often keep the **old** environment. Users are told to "open a new terminal" or restart the editor. That advice is incomplete, and the usual Windows workaround (`refreshenv`) is unreliable.

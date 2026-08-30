@@ -1,5 +1,4 @@
 = pnpm Mechanics
-:navtitle: pnpm Mechanics
 :description: Why pnpm’s content-addressable store and strict node_modules matter—and how it sits among npm alternatives.
 
 **pnpm** is the preferred Node package manager in Dev-Centr shops. It stores packages in a content-addressable store and links them into project `node_modules/` with a stricter layout than classic npm hoisting, which cuts disk waste and makes phantom dependencies harder to rely on by accident.

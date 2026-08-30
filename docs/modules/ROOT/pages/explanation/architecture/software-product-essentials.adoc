@@ -1,5 +1,4 @@
 = Software Product Essentials
-:navtitle: Software Product Essentials
 :description: Architectural framework for shippable software—shared essentials (About/build info, updates, packaging, pipelines, diagnostics), auxiliary feature templates for desktop/web/mobile, and mappings by artifact type.
 
 **Software Product Essentials** is the checklist every shippable artifact should satisfy before you call it “done.” Domain features are not enough. Users and maintainers need identity, provenance, update path, install story, Help/support, and a way to dump state when something breaks.

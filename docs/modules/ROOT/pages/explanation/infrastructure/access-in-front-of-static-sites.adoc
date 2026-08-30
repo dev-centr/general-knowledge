@@ -1,5 +1,4 @@
 = Access in front of static sites
-:navtitle: Access in front of static sites
 :description: Why member-only docs stay static (Antora, MkDocs, Docusaurus) and put Cloudflare Access on the hostname instead of rewriting the site as an app. How Access learns GitHub org membership at login.
 
 Static documentation generators do not log people in. They emit HTML, CSS, and a search index. **Privacy is a hosting job:** put an identity-aware reverse proxy on the hostname so unauthenticated requests never see those files.

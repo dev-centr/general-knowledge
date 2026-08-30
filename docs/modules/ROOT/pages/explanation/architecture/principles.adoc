@@ -1,5 +1,4 @@
-= Core Architecture Principles
-:navtitle: Core Principles
+= Core Principles
 :description: Cross-cutting principles for building maintainable, shippable software in the Dev-Centr general-knowledge set.
 
 These principles sit under xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]. They are intentional constraints, not slogans.

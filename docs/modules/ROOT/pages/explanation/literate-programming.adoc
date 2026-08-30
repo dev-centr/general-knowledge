@@ -1,5 +1,4 @@
-= Literate Programming (LP)
-:navtitle: Literate Programming
+= Literate Programming
 
 Literate programming is the practice of structured documentation where the primary narrative is human-oriented, and the source code is embedded within it (tangled).
 

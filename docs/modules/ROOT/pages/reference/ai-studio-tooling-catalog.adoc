@@ -1,5 +1,4 @@
 = AI studio tooling catalog
-:navtitle: AI studio tooling catalog
 :description: Master list of documented options for MCP, skills, connectors, and agent-adjacent tooling in AI studios—linked to how-tos and explanations.
 
 Lookup list for **shipping or adopting** tooling that agents use inside AI studios (Cursor and peers). Prefer this page when you need the map; open the linked how-to or explanation for the full argument.

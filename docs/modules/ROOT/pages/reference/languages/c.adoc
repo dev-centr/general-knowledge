@@ -1,5 +1,4 @@
-= C (C99/C11/C17) Reference
-:navtitle: C
+= C Language
 
 The **C programming language** provides a low-level, high-performance toolkit for systems programming. It is widely used in the Dev-Centr ecosystem for firmware, drivers, and performance-critical core libraries.
 

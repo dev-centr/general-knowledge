@@ -1,5 +1,4 @@
-= Software Architecture
-:navtitle: Architecture
+= Architecture overview
 :description: Shared product architecture guidance—essentials every shippable artifact should cover, auxiliary feature templates for desktop/web/mobile, plus type-specific notes for libraries, GUI, CLI, TUI, games, and services.
 
 This section is the **general guide for building and shipping software**: what every product needs before “feature complete,” how **auxiliary** surfaces (Help, updates, diagnostics, …) look by delivery class, and how needs change by artifact type.

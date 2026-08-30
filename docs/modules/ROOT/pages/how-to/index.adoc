@@ -1,5 +1,4 @@
 = How-to Guides
-:navtitle: How-to
 :description: Task-oriented guides for common developer setup and workflow problems.
 
 Task-oriented guides. Pick a guide when you already know what you want to do.

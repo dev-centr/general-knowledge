@@ -1,5 +1,4 @@
-= Agent control planes and compute topologies
-:navtitle: Agent control planes
+= Agent control planes
 :description: How standalone agent shells differ from IDE agents and inference hosts; arrangement diagrams for local, network-local, remote-env, and three-tier setups; DevCentr’s always-on env-aware shell.
 
 Coding agents split across **layers**. Mixing them up is how teams accidentally build a second Cursor inside a DOS—or burn a 16 GB laptop hosting a 70B model under an Electron fleet UI.

@@ -1,5 +1,4 @@
 = Reference reliability
-:navtitle: Reference reliability
 :description: URL rot as the familiar slice of Internet Reliability—deep link to HCI Labels versus wires for diagnosis and treatment.
 
 Reference reliability asks: when someone (or an agent) follows a cite, do they still reach the *same intended thing*?

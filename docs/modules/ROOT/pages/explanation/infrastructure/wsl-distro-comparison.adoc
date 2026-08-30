@@ -1,5 +1,4 @@
-= Choosing a WSL Linux Distro
-:navtitle: WSL Distro Comparison
+= WSL Distro Comparison
 :description: Full comparison of Ubuntu LTS, openSUSE Tumbleweed, Arch, and AlmaLinux as WSL defaults—workflows, use cases, and how LTS differs from “frozen.”
 
 Windows Subsystem for Linux (WSL) lets you run a real Linux userspace on Windows. The first lasting decision is **which distribution becomes your default**—the one bare `wsl`, many terminals, and tools open when you do not name a distro.

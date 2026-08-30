@@ -1,5 +1,4 @@
 = Three altitudes
-:navtitle: Three altitudes
 :description: Machine reliability, developer-ecosystem reliability, and internet reliability as nested altitudes of the same concern.
 
 Reliability analysts already know machine reliability.

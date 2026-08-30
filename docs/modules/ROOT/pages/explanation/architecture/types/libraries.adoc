@@ -1,5 +1,4 @@
-= Libraries and SDKs
-:navtitle: Libraries
+= Libraries
 :description: Product essentials adapted for libraries and SDKs—versioning, registries, compatibility, and diagnostics hooks without a GUI About dialog.
 
 Libraries do not ship an About dialog, but they still need **identity, distribution, pipeline, and a support story**. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

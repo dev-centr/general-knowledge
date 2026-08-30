@@ -1,5 +1,4 @@
-= Dev-Centr and Open Shell Organization
-:navtitle: Dev-Centr and OpenShellOrg
+= Dev-Centr and OpenShellOrg
 :description: How Dev-Centr product goals relate to Open Shell Organization standards and tooling.
 
 Dev-Centr and link:https://github.com/openshellorg[Open Shell Organization (OpenShellOrg)] share overlapping interests in better shells and CLIs. They should stay **aligned**, not **merged**.

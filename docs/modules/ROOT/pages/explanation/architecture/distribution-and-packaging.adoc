@@ -1,5 +1,4 @@
-= Distribution, Packaging, and Installers
-:navtitle: Distribution and Packaging
+= Distribution and Packaging
 :description: How software reaches users—installers, package managers, language registries, and uninstall—tied to update and release pipelines.
 
 **Distribution** is how bits arrive on a machine and how they leave again (uninstall/upgrade). It is inseparable from xref:explanation/architecture/automatic-updates.adoc[updates] and the xref:explanation/architecture/build-pipeline.adoc[build pipeline].

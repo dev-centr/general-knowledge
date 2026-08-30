@@ -1,5 +1,4 @@
 = Vibe coding bootstrap
-:navtitle: Vibe coding bootstrap
 :description: Where AI-studio setup (Cursor skills, MCP, agent rules) lives versus Business Bootstrap—and the two on-ramps: configure yourself or drop instructions into a permissive agent.
 
 **Vibe coding bootstrap** means getting an AI studio ready to ship code and prose with you: Cursor (or peer) skills, MCP connectors, agent rules, and thin pointers—not founder ops tooling.

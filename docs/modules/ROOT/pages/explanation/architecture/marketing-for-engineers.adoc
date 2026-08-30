@@ -1,5 +1,4 @@
-= Marketing and pricing pages for engineers
-:navtitle: Marketing for engineers
+= Marketing for engineers
 :description: Low-stimulation, matter-of-fact styling for marketing, pricing, and signup surfaces aimed at technical buyers.
 :page-audience: maintainers
 :page-usage-context: product design

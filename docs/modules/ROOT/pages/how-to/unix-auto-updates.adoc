@@ -1,5 +1,4 @@
-= Automatic Updates on macOS and Linux
-:navtitle: Unix/macOS Auto-Updates
+= Unix/macOS Auto-Updates
 :description: How to update desktop apps on macOS and Linux safely—package managers, Sparkle-class flows, AppImage replace, process shutdown, and scheduled upgrades.
 
 Goal:: Users on macOS and Linux reach newer builds without manual zip hunts, without corrupting a running install.

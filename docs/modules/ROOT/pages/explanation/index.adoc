@@ -1,5 +1,4 @@
 = Explanation
-:navtitle: Explanation
 :description: Concept-oriented pages—the why behind architecture, infrastructure, and documentation practices.
 
 Explanation pages teach **why**. Start with architecture if you are building a product; infrastructure if you are shaping the environment.

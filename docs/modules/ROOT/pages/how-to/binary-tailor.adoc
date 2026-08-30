@@ -1,5 +1,4 @@
 = Binary Tailor
-:navtitle: Binary Tailor
 :description: Turn one polyglot pack into a host PE, ELF, or Mach-O after download.
 
 Why:: xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)].

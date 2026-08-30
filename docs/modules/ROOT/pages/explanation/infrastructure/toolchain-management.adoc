@@ -1,5 +1,4 @@
 = Toolchain Management Pattern
-:navtitle: Toolchain Management Pattern
 :description: How software ecosystems should own install, version pinning, health, repair, and upgrade in the official entrypoint—pattern, protocol, control plane, and framework.
 
 **Toolchain Management** is the problem space: keeping a multi-part official toolkit installable, pinable, healthy, repairable, and upgradable without forcing newcomers into tribal side tools.

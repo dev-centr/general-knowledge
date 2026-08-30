@@ -1,5 +1,4 @@
 = Writing clear docs with AI
-:navtitle: Writing Clear Docs with AI
 :description: How to use agents for documentation without dumping always-on rules or shipping telegraphic AI prose.
 
 Agents are useful for docs when the **curriculum is on demand** and the **house voice** stays thin and durable.

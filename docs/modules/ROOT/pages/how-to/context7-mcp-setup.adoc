@@ -1,5 +1,4 @@
 = Context7 MCP and Skills setup
-:navtitle: Context7 MCP and Skills Setup
 :description: Connect Context7 so agents can pull current library and API docs instead of stale training data.
 
 Use link:https://context7.com/[Context7] when code depends on a library or framework whose APIs may have moved since the model’s training cutoff. Prefer it over guessing from memory for version-sensitive work.

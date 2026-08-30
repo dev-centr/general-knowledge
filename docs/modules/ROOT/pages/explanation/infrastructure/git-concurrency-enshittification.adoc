@@ -1,5 +1,4 @@
 = Git concurrency enshittification
-:navtitle: Git concurrency enshittification
 :description: Why worktrees and virtual branches only partially fix concurrent Git work, the Phase A four-tier bridge, and how connectome-fs editions collapse the stack.
 :toc:
 

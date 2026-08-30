@@ -1,5 +1,4 @@
-= Desktop Apps — Auxiliary Feature Template
-:navtitle: Desktop Apps
+= Desktop
 :description: Template of auxiliary features common to desktop applications—Help, About, updates (Windows/macOS/Linux), tray, diagnostics, and maintainability surfaces.
 
 Use this page as a **copyable checklist** when scaffolding or redressing a desktop app (native, Electron/Tauri, hybrid GUI+CLI).

@@ -1,5 +1,4 @@
 = Delivery Classes
-:navtitle: Delivery Classes
 :description: Desktop, web, and mobile delivery-class templates—auxiliary feature sets for how users run and update the product.
 
 **Delivery class** answers: *where does the end user run this, and how do updates and Help arrive?*

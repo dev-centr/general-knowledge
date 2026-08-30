@@ -1,5 +1,4 @@
 = Automatic Updates
-:navtitle: Automatic Updates
 :description: Why shippable apps need a deliberate update path—especially on Windows—covering channels, package managers, in-app updaters, and safety.
 
 Stale installs are the default failure mode of desktop software. **Automatic updates** (or reliable package-manager updates) are essential for security fixes, compatibility, and supportability—above all on Windows, where users often never revisit your download page.

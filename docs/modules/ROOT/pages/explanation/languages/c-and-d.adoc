@@ -1,5 +1,4 @@
 = C and D
-:navtitle: C and D
 :description: Why new systems work should start in D (or Rust), not C—modules, safety, and headers versus a global namespace.
 
 This page reconstructs the old “C vs D” note.

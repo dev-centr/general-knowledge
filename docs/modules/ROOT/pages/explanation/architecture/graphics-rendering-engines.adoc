@@ -1,5 +1,4 @@
-= Graphics rendering engines
-:navtitle: Rendering engines
+= Rendering engines
 :description: How desktop and cross-platform UI stacks compare on memory, latency, and large-document behavior—and what comes after Skia (Graphite, Impeller, Vello, Rive, Blend2D).
 
 When you pick a **desktop** or **dense client** stack, you are not only choosing a language.

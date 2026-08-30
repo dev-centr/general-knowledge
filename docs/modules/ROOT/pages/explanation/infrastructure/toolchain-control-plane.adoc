@@ -1,5 +1,4 @@
 = Toolchain Control Plane
-:navtitle: Toolchain Control Plane
 :description: Product metaphor for the official toolchain lifecycle surface (TCP / TCoP)—install, pin, health, repair, upgrade.
 
 A **Toolchain Control Plane (TCP)**—also **TCoP** when disambiguating from Transmission Control Protocol—is the **product** an ecosystem ships when it follows the xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern].

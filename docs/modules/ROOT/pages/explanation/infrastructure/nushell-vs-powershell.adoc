@@ -1,5 +1,4 @@
-= Nushell vs PowerShell (short)
-:navtitle: Nushell vs PowerShell
+= Nushell vs PowerShell
 :description: Direct comparison for Dev-Centr: same structured-pipe idea, different philosophies.
 
 Both ditch “pipe only text blobs.” That is the important part. The rest is taste, ecosystem, and gravity.

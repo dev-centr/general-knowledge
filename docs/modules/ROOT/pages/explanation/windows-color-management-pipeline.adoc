@@ -1,5 +1,4 @@
 = Windows color management pipeline
-:navtitle: Windows color management pipeline
 :description: Why Windows color settings are hard to reason about—ICM, WCS, VCGT gamma ramps, MHC2, ACM/Advanced Color—and how calibration vendors work with or around the stack.
 
 Windows does not have one color management system. It has several overlapping eras that still ship together: Image Color Management (ICM), Windows Color System (WCS), a GPU *gamma ramp* calibration path, a newer hardware matrix+1DLUT path (MHC2), and Advanced Color / Auto Color Management (ACM). The Control Panel GUI (`colorcpl.exe`), the Display Color Calibration wizard (`dccw.exe`), and modern Settings toggles each touch different slices of that stack. That is why reliable end-to-end documentation has always been scarce, and why companies such as X-Rite ship products that partly *use* Windows APIs and partly *replace* Windows behavior.

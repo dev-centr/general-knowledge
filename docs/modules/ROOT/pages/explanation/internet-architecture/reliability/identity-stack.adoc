@@ -1,5 +1,4 @@
 = Identity stack
-:navtitle: Identity stack
 :description: CAS, mutable pointers, and reverse consumers—orientation on DevCentr with deep links to HCI and connectome-fs.
 
 Internet Reliability’s treatment stack is the same claim HCI Nerdz and connectome-fs already teach.

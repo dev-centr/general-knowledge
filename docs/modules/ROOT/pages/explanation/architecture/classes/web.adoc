@@ -1,5 +1,4 @@
-= Web Apps — Auxiliary Feature Template
-:navtitle: Web Apps
+= Web
 :description: Template of auxiliary features common to web applications and PWAs—Help, version identity, updates via deploy/service worker, diagnostics, account, and connectivity surfaces.
 
 Use this page when scaffolding or redressing a **browser-delivered** product (SPA, MPA, SSR app, PWA, admin console).

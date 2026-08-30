@@ -1,5 +1,4 @@
-= TUI Applications
-:navtitle: TUI
+= TUI
 :description: Essentials for terminal UI apps—combining CLI identity with in-app About/help panes and careful update UX.
 
 TUIs are **CLIs with an interactive surface**. Inherit xref:explanation/architecture/types/cli.adoc[CLI] essentials, then add discoverable in-app help. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

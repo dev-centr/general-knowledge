@@ -1,5 +1,4 @@
 = Nushell
-:navtitle: Nushell
 :description: Facts and pointers for Nushell as the Dev-Centr recommended shell.
 
 == Summary

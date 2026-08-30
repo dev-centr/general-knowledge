@@ -1,5 +1,4 @@
 = Language recommendations
-:navtitle: Language recommendations
 :description: A small set of languages that culls the ecosystem to a few essential ways of thinking—systems, apps, the browser, numerical work, and mathematical style.
 
 These are **suggestions for what to pick**, not a taste list and not a claim that one language wins every job.

@@ -1,5 +1,4 @@
 = Internet Architecture
-:navtitle: Internet Architecture
 :description: Systems-altitude framing for how the public internet and multi-repo webs stay usable—starting with Internet Reliability.
 
 **Internet Architecture** on DevCentr is the systems altitude: how references, identity, and delivery behave at internet and org scale.

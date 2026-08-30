@@ -1,5 +1,4 @@
-= Finding Windows internals documentation
-:navtitle: Finding Windows internals docs
+= Finding Windows Internals Docs
 :description: How Microsoft’s Windows docs are structured (Learn, Win32 API, conceptual trees, GitHub mirrors) and how to find sources when search wording does not match.
 
 Microsoft’s Windows documentation is accurate more often than it is *findable*. The same fact may live under a technology portal (“DirectWrite”), a header reference (`dwrite.h`), a conceptual how-to, a .NET/WPF article that mirrors Win32 registry layout, or an old MSDN URL that now redirects. This page is a map of those layers and a search playbook when your wording and theirs disagree.

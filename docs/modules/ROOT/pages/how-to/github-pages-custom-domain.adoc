@@ -1,5 +1,4 @@
-= Set up GitHub Pages custom domain with Cloudflare HTTPS
-:navtitle: GitHub Pages Custom Domain
+= GitHub Pages Custom Domain
 :description: Configure a custom domain on GitHub Pages when DNS is at Cloudflare, including the orange-cloud vs Let's Encrypt trap and how cert issuance actually works.
 
 Task guide for attaching a custom hostname to a GitHub Pages site when the zone is on Cloudflare. Covers DNS shape, why HTTPS can "work" while GitHub still complains, and how to wait for GitHub's certificate without a "request cert" button.

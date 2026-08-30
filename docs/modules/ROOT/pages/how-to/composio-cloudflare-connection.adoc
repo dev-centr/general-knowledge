@@ -1,5 +1,4 @@
-= Connect Cloudflare in Composio
-:navtitle: Composio Cloudflare connection
+= Composio Cloudflare Connection
 :description: Match Composio's two Cloudflare apps to the actual connect forms--Global API Key + email vs key-only--so agents can list zones without 9109 errors.
 
 Use this when an agent needs **Cloudflare DNS, zones, or Access** through Composio (custom domains, `team.docs` hostnames, email MX, orange-cloud vs grey-cloud). MCP install is separate: xref:how-to/composio-mcp-setup.adoc[Composio MCP setup].

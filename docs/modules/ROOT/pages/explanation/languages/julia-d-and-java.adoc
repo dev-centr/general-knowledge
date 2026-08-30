@@ -1,5 +1,4 @@
 = Julia, D, and Java
-:navtitle: Julia, D, and Java
 :description: Why numerical and ML work you control should default to Julia, and why Java is a weak default in that space.
 
 This page reconstructs the old “Julia and D vs Java” note.

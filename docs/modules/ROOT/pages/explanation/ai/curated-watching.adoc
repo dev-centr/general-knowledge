@@ -1,5 +1,4 @@
 = Curated watching (AI)
-:navtitle: Curated watching (AI)
 :description: Mandatory and high-signal AI watching for people who use or build with AI—credits, blurbs, and durable links.
 :page-audience: Anyone who uses or builds with AI and wants a short mandatory-watch list with durable credits
 :page-usage-context: Hub explanation page — index for AI watching; other docs and personal profiles deep-link here or to topical children

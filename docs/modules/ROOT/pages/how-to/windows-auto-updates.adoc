@@ -1,5 +1,4 @@
-= Automatic Updates on Windows
-:navtitle: Windows Auto-Updates
+= Windows Auto-Updates
 :description: How to give Windows apps a reliable update path via Store, winget, or a signed in-app updater.
 
 Goal:: Windows users receive newer builds without manually hunting installers.

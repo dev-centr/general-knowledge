@@ -1,5 +1,4 @@
-= Structured data formats beyond JSON
-:navtitle: Structured data formats
+= Structured data formats
 :description: Separate prose from data, then pick SDLang, KDL, JSON5, programmable config, LLM encodings, or zero-copy binary by job.
 
 JSON is the default interchange shape. Human-edited config, programmable constraints, LLM token budgets, and zero-copy wire formats pull in different successors. This page mirrors the **Configuration** classification and lineage graph in DevCentr’s Create… catalog.

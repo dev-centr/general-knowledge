@@ -1,5 +1,4 @@
-= Services and Daemons
-:navtitle: Services
+= Services
 :description: Essentials for long-running services—health endpoints, version identity, rolling updates, structured logs, and operator diagnostics.
 
 Services replace About dialogs with **operator surfaces**. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

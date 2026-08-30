@@ -1,5 +1,4 @@
 = Composio MCP setup
-:navtitle: Composio MCP Setup
 :description: Connect Composio so Cursor (or another MCP client) can use Gmail, GitHub, Vercel, and other apps through one authenticated MCP server.
 
 Connect link:https://composio.dev/[Composio] so an AI client can call tools against apps you already use—Gmail, GitHub, Vercel, Slack, and many more—without hand-rolling OAuth for each one.

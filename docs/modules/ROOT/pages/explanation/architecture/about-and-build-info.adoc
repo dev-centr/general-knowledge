@@ -1,5 +1,4 @@
-= About, Build Info, and Debug Dumps
-:navtitle: About and Build Info
+= About and Build Info
 :description: Why every product needs a discoverable About/version surface, stamped build metadata, and a privacy-aware debug dump for support.
 
 Users and support cannot fix what they cannot identify. An **About** surface (dialog, pane, `--version`, or `/version`) plus a **debug dump** are core product features—not nice-to-haves.

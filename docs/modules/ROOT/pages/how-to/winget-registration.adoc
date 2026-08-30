@@ -1,5 +1,4 @@
 = Winget Registration
-:navtitle: Winget Registration
 :description: Register Windows apps with winget—first submission, PAT setup, portable zips, and CI updates via winget-releaser.
 
 Goal:: Users can `winget install` / `winget upgrade` your app.

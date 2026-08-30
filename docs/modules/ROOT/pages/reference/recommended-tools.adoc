@@ -1,5 +1,4 @@
-= Recommended Development Tools
-:navtitle: Recommended Tools
+= Recommended Tools
 :description: Recommended platform, shell, package, and workflow tools for Dev-Centr developers.
 
 We recommend these tools for a consistent, cross-platform developer workflow.

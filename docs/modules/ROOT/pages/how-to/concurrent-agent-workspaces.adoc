@@ -1,5 +1,4 @@
 = Concurrent agent workspaces
-:navtitle: Concurrent agent workspaces
 :description: Stub how-to — near-term tradeoffs among worktrees, jj-like workflows, and GitButler until FS editions exist.
 :toc:
 

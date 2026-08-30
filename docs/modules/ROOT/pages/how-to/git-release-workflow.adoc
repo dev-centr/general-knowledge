@@ -1,5 +1,4 @@
 = Git Release Workflow
-:navtitle: Git Release Workflow
 :description: When and how to treat work as a release—tags, changelogs, channels, and promotion from main to stable.
 
 Goal:: Define a repeatable “this commit is a release” practice.

@@ -1,5 +1,4 @@
 = Auxiliary Features Checklist
-:navtitle: Auxiliary Features Checklist
 :description: Printable Band A/B/C checklist of auxiliary features for desktop, web, and mobile delivery classes.
 
 Use with xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features catalog] and the class templates under xref:explanation/architecture/classes/index.adoc[Delivery classes].

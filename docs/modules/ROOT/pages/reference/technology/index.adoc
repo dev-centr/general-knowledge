@@ -1,6 +1,5 @@
-= Technology (reference)
+= Technology
 :description: Lookup entry for technology topics — prefer short facts here; long rationale stays in Explanation.
-:navtitle: Technology
 
 Technology Reference is for **quick retrieval**. Deep rationale lives under Explanation.
 

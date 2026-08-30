@@ -1,5 +1,4 @@
-= Google Cloud OAuth concept map
-:navtitle: Google Cloud OAuth map
+= Google Cloud OAuth map
 :description: Ideal app-shaped concepts mapped to Google Cloud Console objects—for lookup while setting up personal OAuth clients.
 
 Quick map while you work in the Console. Narrative and diagrams: xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]. Steps: xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Set up Google Cloud OAuth for personal tools].

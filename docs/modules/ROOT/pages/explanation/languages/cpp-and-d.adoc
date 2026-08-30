@@ -1,5 +1,4 @@
 = C++ and D
-:navtitle: C++ and D
 :description: Why application and systems-adjacent code should default to D rather than C++.
 
 This page reconstructs the old “C++ vs D” note.

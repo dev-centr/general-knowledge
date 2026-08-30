@@ -1,5 +1,4 @@
-= Mobile Apps — Auxiliary Feature Template
-:navtitle: Mobile Apps
+= Mobile
 :description: Template of auxiliary features common to iOS and Android apps—store updates, Help, diagnostics export, permissions, push consent, and policy-required account surfaces.
 
 Use this page when scaffolding or redressing **store-distributed** (or sideloaded) mobile clients.

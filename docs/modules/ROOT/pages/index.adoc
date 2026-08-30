@@ -1,4 +1,4 @@
-= General Developer Knowledge
+= General Knowledge
 
 Timeless, product-agnostic reference material for developers. Organized by the Diátaxis framework (tutorials, how-to, reference, explanation).
 

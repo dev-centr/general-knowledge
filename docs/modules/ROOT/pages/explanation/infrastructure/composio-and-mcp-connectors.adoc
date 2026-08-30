@@ -1,5 +1,4 @@
 = Composio and MCP connectors
-:navtitle: Composio and MCP connectors
 :description: Where Composio sits among agent runtimes, IDE agents, and own-your-inbox tooling—and when to use it for CI mail triage.
 
 MCP (Model Context Protocol) is how many agent runtimes attach *tools* without baking every SaaS SDK into the agent. **Composio** is a hosted MCP connector plane: one OAuth to Composio, then managed connections and tool routing into Gmail, GitHub, Vercel, Slack, and hundreds of other apps.

@@ -1,5 +1,4 @@
 = OS install concurrency
-:navtitle: OS install concurrency
 :description: Why parallel agent installs bounce on Windows MSI 1618 and Linux package locks, and why orchestration still needs a host-wide install mutex.
 :toc:
 

@@ -1,4 +1,4 @@
-= Git Performance Optimization
+= Git Performance
 :description: Enabling the built-in filesystem monitor for faster Git operations.
 
 Enabling the built-in filesystem monitor (`core.fsmonitor`) significantly improves Git performance on Windows and macOS, especially in large repositories or those with many files. It offloads the work of tracking file changes to a background daemon, drastically reducing the time required for `git status` and other common operations.

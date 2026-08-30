@@ -1,5 +1,4 @@
-= Brand and UI Motion Formats
-:navtitle: Brand Motion
+= Brand Motion
 :description: Tradeoffs among animated SVG, Lottie, and Rive for Dev-Centr — openness, runtime weight, agentic workflows — and why no single format wins.
 
 Dev-Centr does **not** hard-advocate a single motion format. Brand and UI motion sit on several axes at once (openness, player weight, interactivity, designer pipeline, **agentic editability**). Pick by job.

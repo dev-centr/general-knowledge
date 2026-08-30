@@ -1,5 +1,4 @@
-= GUI Applications
-:navtitle: GUI Apps
+= GUI Apps
 :description: Essentials for desktop and mobile GUI apps—About dialog, debug dump, updates/installers, and pointers to full auxiliary feature templates.
 
 GUI apps are where **About**, **Help**, **debug dump**, **installer**, and **auto-update** show up as visible product features. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

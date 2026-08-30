@@ -1,5 +1,4 @@
-= Polyglot CI matrix
-:navtitle: Polyglot CI
+= Polyglot CI
 :description: GitHub Actions matrix for Windows, macOS arm64, Linux, and BSD — expand named release-target patterns.
 
 Skill:: `polyglot-ci` in https://github.com/dev-centr/agent-rules[agent-rules] (`skills/polyglot-ci/`).

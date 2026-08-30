@@ -1,5 +1,4 @@
-= Set up Flutter tooling
-:navtitle: Flutter Setup
+= Flutter Setup
 :description: Bootstrap Flutter on a development machine and use community version managers as a bridge until an official Toolchain Control Plane exists.
 
 This how-to gets you running with Flutter. For why version management should live in the official entrypoint—not only in FVM/Puro—see xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern].

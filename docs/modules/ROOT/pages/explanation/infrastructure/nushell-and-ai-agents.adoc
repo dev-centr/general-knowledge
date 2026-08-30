@@ -1,5 +1,4 @@
 = Nushell and AI agents
-:navtitle: Nushell and AI agents
 :description: How Nushell helps agent/CLI automation, how that differs from NVIDIA OpenShell, and what is still missing for DevX.
 
 Agents live in terminals. They pipe commands, parse output, and chain tools. That means the **shell and CLI data model** matter as much as the model weights—and as much as sandbox policy.

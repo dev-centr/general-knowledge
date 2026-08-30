@@ -1,5 +1,4 @@
-= Documentation markup when writing
-:navtitle: Documentation markup
+= Documentation markup
 :description: Pick among Markdown, AsciiDoc, MDX, and CentrMark by job—interop, Antora publishing, React pipelines, or directive-rich prose.
 
 Do not treat documentation markup as interchangeable skins over the same document. Each format encodes a different tradeoff among portability, publishing tooling, and structured extensions. Dev-Centr’s Create… flow lists these under **Documentation**; this page is the advisory path outside the app.

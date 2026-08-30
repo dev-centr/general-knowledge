@@ -1,5 +1,4 @@
-= VCS over filesystem editions
-:navtitle: VCS over FS editions
+= VCS over FS editions
 :description: Stub — what remains of Git and jj-like tools once connectome-fs editions own working trees.
 :toc:
 

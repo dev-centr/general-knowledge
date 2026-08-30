@@ -1,5 +1,4 @@
 = Near-term absorb
-:navtitle: Near-term absorb
 :description: Redirects, aliases, Cool URIs, and CONSUMERS.md—pragmatic absorb while labels still wire the web.
 
 Until the world stops wiring on strings, Internet Reliability needs an **absorb layer**.

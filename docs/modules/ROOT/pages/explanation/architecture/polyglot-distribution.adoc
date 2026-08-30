@@ -1,5 +1,4 @@
-= Polyglot distribution
-:navtitle: Polyglot distribution
+= Polyglot distribution (experimental)
 :description: Experimental single-artifact binary distribution — APE packs, Binary Tailor, native-compiler graft, and debugger chords.
 
 **Status:** experimental. Not a replacement for MSI, winget, or language registries. A research path for *one download link* while still shipping **system-optimized native code**.

@@ -1,5 +1,4 @@
 = Abstract playbooks
-:navtitle: Abstract playbooks
 :description: Write what you want. PlayTime binds how on this computer. Equivalence Engine is a catalog, not a bash-to-PowerShell translator.
 
 Write this so someone with no background can follow.

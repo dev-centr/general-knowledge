@@ -1,5 +1,4 @@
-= Diagnostics, Logging, and Support
-:navtitle: Diagnostics and Support
+= Diagnostics and Support
 :description: Logging, config layout, crash breadcrumbs, and privacy-aware diagnostics so users and maintainers can solve problems.
 
 Shipping without a diagnostics story guarantees unanswerable bug reports. Pair this with xref:explanation/architecture/about-and-build-info.adoc[About and build info].

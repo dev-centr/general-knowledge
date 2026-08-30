@@ -1,5 +1,4 @@
-= CLI Tools
-:navtitle: CLI
+= CLI
 :description: Essentials for command-line tools—version flags, doctor/dump commands, package distribution, and self-update policies.
 
 CLIs express product essentials through **flags, subcommands, and package managers** rather than dialogs. Parent: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].

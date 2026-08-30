@@ -1,5 +1,4 @@
 = Package Registries
-:navtitle: Package Registries
 :description: Where to publish software—language registries, OS package managers, container registries, and GitHub Releases—and how to choose.
 
 Choosing **where** to publish is part of xref:explanation/architecture/distribution-and-packaging.adoc[distribution]. Most products use more than one channel.

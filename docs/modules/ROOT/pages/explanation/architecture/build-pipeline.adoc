@@ -1,5 +1,4 @@
-= Build Pipeline and Release Engineering
-:navtitle: Build Pipeline
+= Build Pipeline
 :description: CI as the source of truth for shippable artifacts—version stamps, tests, signing, release tags, and promotion across channels.
 
 A **build pipeline** turns commits into trustworthy artifacts. Laptop builds are for development; **CI builds** are what users install.

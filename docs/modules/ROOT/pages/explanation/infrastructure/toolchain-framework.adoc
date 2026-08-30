@@ -1,5 +1,4 @@
 = Toolchain Framework (TCF)
-:navtitle: Toolchain Framework (TCF)
 :description: A framework that helps ecosystem maintainers generate and validate Toolchain Control Plane implementations under the Toolchain Management Pattern.
 
 The **Toolchain Framework (TCF)** is Dev-Centr’s *framework* for producing xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane] implementations.

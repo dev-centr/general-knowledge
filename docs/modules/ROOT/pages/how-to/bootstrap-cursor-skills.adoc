@@ -1,5 +1,4 @@
 = Bootstrap Cursor skills
-:navtitle: Bootstrap Cursor skills
 :description: Install personal Cursor Agent Skills without clogging always-on User Rules—operator path or drop-the-recipe-into-a-permissive-agent path, with writing-news and writing-blog worked examples.
 
 Add a **Cursor Agent Skill** so agents load specialized instructions only when the task matches—not on every chat.

@@ -1,5 +1,4 @@
 = Studio MCP install strategies
-:navtitle: Studio MCP install strategies
 :description: Options for shipping MCP tooling into AI studios (Cursor and peers)—marketplace plugins, install deeplinks, mcp.json, skills, and thin-client / fat-server patterns illustrated by Composio.
 
 AI studios (Cursor, Copilot-shaped VS Code, terminal agent harnesses) already have **install surfaces**. Tooling that fights those surfaces loses. Tooling that rides them—especially MCP—gets adopted without a second setup novel.

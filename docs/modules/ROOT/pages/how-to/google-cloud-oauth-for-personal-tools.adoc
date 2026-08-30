@@ -1,5 +1,4 @@
-= Set up Google Cloud OAuth for personal tools
-:navtitle: Google Cloud OAuth (personal tools)
+= Google Cloud OAuth (personal tools)
 :description: Create a Google Cloud project, consent screen, and OAuth client for tools like Composio—without stuffing every personal CLI into one tangled project.
 
 Use this when a tool asks for a **Google Client ID** and **Client Secret** (Composio custom auth, rclone, personal scripts). For *why* Google couples consent and quotas to a Project, and how to map “app” thinking onto the Console, see xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries].

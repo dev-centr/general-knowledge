@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-30 -- Page title = nav label
+
+* Aligned document H1s with `nav.adoc` labels and dropped divergent `:navtitle:` attrs (one canonical title; section `Overview` landings kept).
+* House rule: agent-rules `general/documentation.md`.
+
 == 2026-08-30 -- Open Canvas Interchange (OCIF)
 
 * Explanation xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas Interchange Format (OCIF)] — endorse OCIF for canvas edit/interchange; SVG as export; Plain / CentrMark / OCIF kind map; D implementation posture.

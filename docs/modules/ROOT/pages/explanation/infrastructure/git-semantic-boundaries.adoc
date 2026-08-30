@@ -1,5 +1,4 @@
 = Git's file-shaped change model
-:navtitle: Git's file-shaped change model
 :description: Why committing features feels hard in Git—unrelated work inside one file, missing inter-file dependencies, stash/pull collisions, Unison, and connectome-fs semantic units.
 :toc:
 

@@ -1,5 +1,4 @@
 = pnpm run routing
-:navtitle: pnpm run routing
 :description: Where each token in `pnpm run …` comes from, how package.json scripts map to commands, and how to run workspace packages from the repo root without cd.
 
 Most tutorials show a command like `pnpm run dev` and move on. This page is the missing grammar: **what each word means**, **where the script name is defined**, and **how to stay at the repo root** in a monorepo.

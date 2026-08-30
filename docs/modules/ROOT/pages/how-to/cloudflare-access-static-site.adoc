@@ -1,5 +1,4 @@
-= Protect a static site with Cloudflare Access
-:navtitle: Cloudflare Access for static sites
+= Cloudflare Access for static sites
 :description: Put Cloudflare Access in front of a static member site, choose an identity provider, and add people without creating Cloudflare dashboard users. Includes simplified mocks, setup order, and which Cloudflare credentials can actually write Access.
 
 Use this when a **static** site (Antora, MkDocs, Docusaurus, a Pages Direct Upload) must be member-only. Why the lock belongs at the edge, and how GitHub org membership is checked: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
