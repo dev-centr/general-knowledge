@@ -1,4 +1,3 @@
-* xref:index.adoc[General Knowledge]
 * xref:changelog.adoc[Changelog]
 
 .🎓 Tutorials

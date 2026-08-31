@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-30 -- Drop component start-page nav duplicate
+
+* Removed leading `* xref:index.adoc[General Knowledge]` under site-nav-tree (component root already covers the start page).
+
 == 2026-08-30 -- Linked parent section landings
 
 * Replaced `.How-to Guides` / `.Reference` / `.Explanation` + Overview with linked parents (link text = H1); nested Overview labels under Internet Architecture / Delivery Classes now match those H1s.
