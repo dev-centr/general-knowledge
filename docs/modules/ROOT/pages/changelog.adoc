@@ -2,9 +2,14 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-30 -- Linked parent section landings
+
+* Replaced `.How-to Guides` / `.Reference` / `.Explanation` + Overview with linked parents (link text = H1); nested Overview labels under Internet Architecture / Delivery Classes now match those H1s.
+* House rule: agent-rules `general/documentation.md`.
+
 == 2026-08-30 -- Page title = nav label
 
-* Aligned document H1s with `nav.adoc` labels and dropped divergent `:navtitle:` attrs (one canonical title; section `Overview` landings kept).
+* Aligned document H1s with `nav.adoc` labels and dropped divergent `:navtitle:` attrs (one canonical title).
 * House rule: agent-rules `general/documentation.md`.
 
 == 2026-08-30 -- Open Canvas Interchange (OCIF)
