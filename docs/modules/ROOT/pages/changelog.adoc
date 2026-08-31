@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-30 -- Diátaxis nav emojis + Tutorials landing
+
+* Restored 🎓 / 🛠️ / 📚 / 🧠 emojis on all four linked-parent nav labels; H1s on bucket index pages match.
+* Added xref:tutorials/index.adoc[🎓 Tutorials index] (How-to / Reference / Explanation already had landing pages).
+* Component start page links Tutorials to the new index.
+
 == 2026-08-30 -- Restore Diátaxis siblings in nav
 
 * Converted `.🎓 Tutorials` to an unlinked parent (`* 🎓 Tutorials` + `**` children) so How-to / Reference / Explanation stay sibling top-level trees under the component root (a lone Antora `.Title` had absorbed the later linked parents).

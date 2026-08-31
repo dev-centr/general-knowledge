@@ -1,0 +1,13 @@
+= 🎓 Tutorials
+:description: Learning-oriented paths that build basic competence step by step.
+
+Tutorials are **learning** paths. Use them when you want guided practice—not a single task lookup.
+
+== Featured
+
+* xref:tutorials/onboarding.adoc[Developer onboarding] — workstation and docs entry point; links into How-to and Explanation for concrete setup
+* xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy] — vault custom fields → local env → hosting matrix; pairs with xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
+
+== Index
+
+Browse the Tutorials section in the left navigation for the full list.

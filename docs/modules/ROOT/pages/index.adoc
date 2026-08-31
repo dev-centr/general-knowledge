@@ -13,7 +13,7 @@ Choose the path that matches your current goal:
 **Intent: Learning**
 Step-by-step guides to build basic competence.
 
-xref:tutorials/onboarding.adoc[🚀 Start Onboarding]
+xref:tutorials/index.adoc[🚀 Browse Tutorials]
 
 | [.text-center]
 === 🛠️ How-to Guides

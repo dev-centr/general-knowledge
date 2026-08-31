@@ -1,10 +1,10 @@
 * xref:changelog.adoc[Changelog]
 
-* 🎓 Tutorials
+* xref:tutorials/index.adoc[🎓 Tutorials]
 ** xref:tutorials/onboarding.adoc[Developer Onboarding]
 ** xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy]
 
-* xref:how-to/index.adoc[How-to Guides]
+* xref:how-to/index.adoc[🛠️ How-to Guides]
 ** xref:how-to/nushell-setup.adoc[Nushell Setup]
 ** xref:how-to/flutter-setup.adoc[Flutter Setup]
 ** xref:how-to/github-pages-custom-domain.adoc[GitHub Pages Custom Domain]
@@ -31,7 +31,7 @@
 ** xref:agent-rules::bitwarden-cli-agents.adoc[Bitwarden CLI (agents)]
 ** xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI (agents)]
 
-* xref:reference/index.adoc[Reference]
+* xref:reference/index.adoc[📚 Reference]
 ** xref:reference/recommended-tools.adoc[Recommended Tools]
 ** xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
@@ -46,7 +46,7 @@
 ** xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]
 ** xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
 
-* xref:explanation/index.adoc[Explanation]
+* xref:explanation/index.adoc[🧠 Explanation]
 ** Windows
 *** xref:explanation/cleartype.adoc[ClearType]
 *** xref:explanation/windows-color-management-pipeline.adoc[Windows color management pipeline]
