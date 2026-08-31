@@ -1,8 +1,8 @@
 * xref:changelog.adoc[Changelog]
 
-.🎓 Tutorials
-* xref:tutorials/onboarding.adoc[Developer Onboarding]
-* xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy]
+* 🎓 Tutorials
+** xref:tutorials/onboarding.adoc[Developer Onboarding]
+** xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy]
 
 * xref:how-to/index.adoc[How-to Guides]
 ** xref:how-to/nushell-setup.adoc[Nushell Setup]

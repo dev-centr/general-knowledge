@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-08-30 -- Restore Diátaxis siblings in nav
+
+* Converted `.🎓 Tutorials` to an unlinked parent (`* 🎓 Tutorials` + `**` children) so How-to / Reference / Explanation stay sibling top-level trees under the component root (a lone Antora `.Title` had absorbed the later linked parents).
+
 == 2026-08-30 -- Drop component start-page nav duplicate
 
 * Removed leading `* xref:index.adoc[General Knowledge]` under site-nav-tree (component root already covers the start page).
