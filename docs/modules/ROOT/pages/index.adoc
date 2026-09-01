@@ -8,28 +8,28 @@ Choose the path that matches your current goal:
 
 [cols="1,1", frame=none, grid=none]
 |===
-| [.text-center]
+a|[.text-center]
 === 🎓 Tutorials
 **Intent: Learning**
 Step-by-step guides to build basic competence.
 
 xref:tutorials/index.adoc[🚀 Browse Tutorials]
 
-| [.text-center]
+a|[.text-center]
 === 🛠️ How-to Guides
 **Intent: Execution**
 Task-oriented guides for real-world problems.
 
 xref:how-to/index.adoc[📂 Browse How-tos]
 
-| [.text-center]
+a|[.text-center]
 === 📚 Reference
 **Intent: Retrieval**
 Technical specifications, checklists, and facts.
 
 xref:reference/index.adoc[📋 View Reference]
 
-| [.text-center]
+a|[.text-center]
 === 🧠 Explanation
 **Intent: Comprehension**
 Discursive content that explains the "Why."

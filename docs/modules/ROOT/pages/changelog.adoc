@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-01 -- Diátaxis start-page table parsing
+
+* Fixed component xref:index.adoc[start page] Diátaxis grid: use AsciiDoc table cells (`a|`) so `[.text-center]` roles and `===` headings render instead of printing literally.
+
 == 2026-09-01 -- Aspect-Oriented Programming
 
 * Explanation xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming (AOP)] — moved from DevCentr; product-agnostic primer on cross-cutting concerns.
