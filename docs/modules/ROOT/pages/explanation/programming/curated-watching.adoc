@@ -1,0 +1,84 @@
+= Curated watching (programming)
+:description: High-signal talks and philosophy for programmers—credits, blurbs, and durable links.
+:page-audience: Developers who want a short mandatory-watch list for software craft and industry posture
+:page-usage-context: Hub explanation page — programming / CS learning library; personal inspirations deep-link here for blurbs
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-01
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Short list of **high-signal** talks on programming philosophy, complexity, and the industry mess we inherited. Sister to xref:explanation/ai/curated-watching.adoc[Curated watching (AI)].
+
+Personal posture and longer quote collections live on link:https://ryanjohnson.dev/inspirations/[ryanjohnson.dev — Inspirations] (including Cosette / DevCentr naming notes when added there). This page is the **Dev-Centr canonical catalog** for cross-linking from docs and tooling.
+
+== How this list grows
+
+* Add entries when a talk is fundamental enough to recommend across the org—not every good conference video.
+* Prefer **YouTube (or publisher) canonical URL** + optional **Drive backup** for archival resilience.
+* Quote blocks include **event and date** so attribution survives lazy auto-transcripts.
+
+== Mandatory
+
+=== The Mess We're In
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **Title**
+| The Mess We're In
+
+| **Speaker**
+| Joe Armstrong (co-creator of Erlang)
+
+| **Event / date**
+| Strange Loop, September 2014
+
+| **Runtime**
+| ~46 minutes
+
+| **YouTube**
+| https://www.youtube.com/watch?v=lKXe3HUG2l4
+
+| **Timestamp (medals / employment riff)**
+| https://youtu.be/lKXe3HUG2l4?t=494
+
+| **Drive backup**
+| https://drive.google.com/file/d/16ZKlSFbi1SKPWbPkzvjqwNb34smaGo3p/view[Google Drive copy] (`inspirations/` on Ryan's Drive; not a substitute for the canonical publish)
+
+| **Personal inspirations**
+| link:https://ryanjohnson.dev/inspirations/[ryanjohnson.dev/inspirations]
+|===
+
+Blurb::
+One of the best core **programming philosophy** videos worth recommending. Armstrong argues software entropy keeps rising: we no longer read broken programs—we Google them—and the state space of a laptop dwarfs intuition. The talk mixes polemic, physics limits, distributed-systems realism, and constructive ideas (content-addressed storage, condensing duplicate code). Watch before debating “why is everything so complicated?”
+
+[quote, Joe Armstrong, The Mess We're In, Strange Loop, September 2014]
+____
+I think we should get big medals. My generation of programmers should get the Congressional Medal for creating employment—because in the last forty years we have written billions of lines of code that will keep programmers employed for trillions of man-hours in the next few thousand years to clean up this mess we've made. We are the job creators of the future; all that stuff we wrote years ago, these poor sods will be scratching their heads and going, what the hell does this stuff do?
+____
+
+[NOTE]
+====
+Auto-generated YouTube captions garble the spoken line (*by generational programmers*). The abstract and Armstrong's own published summaries use the **billions of lines / thousands of years** framing; the **medals / Congressional Medal / my generation** lines are from the live talk (~8:14). Prefer this block over raw captions.
+====
+
+== Related
+
+* xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* xref:explanation/architecture/principles.adoc[Core principles]
+* link:https://ryanjohnson.dev/inspirations/[Inspirations (personal site)]

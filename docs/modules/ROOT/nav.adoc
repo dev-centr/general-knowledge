@@ -123,6 +123,8 @@
 *** xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL Distro Comparison]
 ** AI literacy
 *** xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
+** Programming
+*** xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]

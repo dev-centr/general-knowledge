@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-01 -- Curated watching (programming)
+
+* Explanation xref:explanation/programming/curated-watching.adoc[Curated watching (programming)] — programming learning library; first entry: Joe Armstrong, *The Mess We're In* (Strange Loop, September 2014) with combined medals + billions-of-lines quote, YouTube, timestamp, and Drive backup links.
+
 == 2026-09-01 -- Diátaxis start-page table parsing
 
 * Fixed component xref:index.adoc[start page] Diátaxis grid: use AsciiDoc table cells (`a|`) so `[.text-center]` roles and `===` headings render instead of printing literally.
