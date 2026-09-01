@@ -1,0 +1,11 @@
+= 2026-09-01 - Aspect-Oriented Programming
+
+== Summary
+
+Moved the AOP primer from the DevCentr component into general-knowledge Architecture (Explanation).
+
+== Details
+
+* New page: xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming (AOP)].
+* Content is product-agnostic (cross-cutting concerns, logging, security, error handling).
+* DevCentr keeps a redirect stub at the old URL for bookmarks.

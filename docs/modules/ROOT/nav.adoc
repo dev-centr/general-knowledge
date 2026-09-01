@@ -83,6 +83,7 @@
 *** xref:explanation/architecture/build-pipeline.adoc[Build Pipeline]
 *** xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and Support]
 *** xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines]
+*** xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming]
 *** xref:explanation/architecture/principles.adoc[Core Principles]
 **** By type
 ***** xref:explanation/architecture/types/libraries.adoc[Libraries]

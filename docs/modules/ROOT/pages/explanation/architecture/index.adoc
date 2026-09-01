@@ -22,6 +22,7 @@ Deep dives (shared)::
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
 * xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stacks, large-document behavior, post-Skia pipelines
 * xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas Interchange (OCIF)] — endorsed canvas edit/interchange; SVG as export
+* xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming (AOP)] — separate cross-cutting chores from core algorithms
 * xref:explanation/architecture/principles.adoc[Core principles]
 
 By software type::

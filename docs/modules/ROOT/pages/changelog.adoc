@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-01 -- Aspect-Oriented Programming
+
+* Explanation xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming (AOP)] — moved from DevCentr; product-agnostic primer on cross-cutting concerns.
+* See xref:changelog-details/2026-09-01 - aspect-oriented-programming.adoc[Detailed changelog].
+
 == 2026-08-30 -- Diátaxis nav emojis + Tutorials landing
 
 * Restored 🎓 / 🛠️ / 📚 / 🧠 emojis on all four linked-parent nav labels; H1s on bucket index pages match.
