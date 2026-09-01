@@ -1,4 +1,4 @@
-= 🎓 Tutorials
+= Tutorials
 :description: Learning-oriented paths that build basic competence step by step.
 
 Tutorials are **learning** paths. Use them when you want guided practice—not a single task lookup.

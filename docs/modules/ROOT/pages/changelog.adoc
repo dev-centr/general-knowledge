@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-01 -- Nav typology icons (SVG, not emoji)
+
+* Diátaxis nav labels and bucket H1s use plain text; sidebar icons come from `@antora-supplemental/nav-typology` + `nav-typology-diataxis` on the docs hub.
+* Start-page grid headings match (expressive emoji kept on Browse/Explore CTAs only).
+
 == 2026-09-01 -- Curated watching (programming)
 
 * Explanation xref:explanation/programming/curated-watching.adoc[Curated watching (programming)] — programming learning library; first entry: Joe Armstrong, *The Mess We're In* (Strange Loop, September 2014) with combined medals + billions-of-lines quote, YouTube, timestamp, and Drive backup links.

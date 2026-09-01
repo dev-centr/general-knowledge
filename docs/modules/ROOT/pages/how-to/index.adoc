@@ -1,4 +1,4 @@
-= 🛠️ How-to Guides
+= How-to Guides
 :description: Task-oriented guides for common developer setup and workflow problems.
 
 Task-oriented guides. Pick a guide when you already know what you want to do.
