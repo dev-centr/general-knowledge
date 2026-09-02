@@ -1,0 +1,112 @@
+= Decentralized video platforms
+:description: Index of non-YouTube video hosts for archival resilience—prefer PeerTube / Odysee / LBRY-class links when a durable copy exists.
+:page-audience: Docs authors, maintainers, and users who need unsquelchable or multi-homed video links
+:page-usage-context: Reference index — pair with curated-watching Drive backups and open-source history discourse
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+YouTube is convenient and fragile: accounts get limited, videos get age-gated or removed, and entire channels can vanish overnight. Dev-Centr curated watching therefore prefers:
+
+. **Decentralized or federated host** (when a real mirror of the *same* work exists)
+. **Publisher / project canonical page**
+. **YouTube** (discovery)
+. **Google Drive (or other org backup)** archival MP4 — not a substitute for a public host
+
+Agents today can **web-search** Odysee / PeerTube / archive.org; there is **no first-class PeerTube or Odysee MCP** on this harness yet. If you need API-level search/upload, say so—we should add tooling rather than pretend YouTube is durable.
+
+== External overview (with Archive)
+
+Finn Miller’s DailyCoin roundup is a useful popular survey of blockchain / P2P video options:
+
+* Live: https://dailycoin.com/decentralized-video-streaming-platforms-best-alternatives-to-youtube/[Decentralized YouTube Alternatives…] (DailyCoin; updated copy observed 2025-12)
+* Wayback (clean URL, HTTP 200): https://web.archive.org/web/20250624111419/https://dailycoin.com/decentralized-video-streaming-platforms-best-alternatives-to-youtube/[2025-06-24 snapshot]
+* CDX index (more timestamps): https://web.archive.org/web/*/https://dailycoin.com/decentralized-video-streaming-platforms-best-alternatives-to-youtube/
+
+We **do not** paste that article verbatim (copyright). This page is Dev-Centr’s own index, informed by that survey and by platform primary docs.
+
+== Platform index (Dev-Centr notes)
+
+[cols="1,1,2,2", options="header"]
+|===
+| Platform | Model | Good for | Caveats
+
+| **https://joinpeertube.org/[PeerTube]**
+| Federated (ActivityPub) + optional P2P playback; anyone can run an instance
+| True self-host / community instances; Fediverse follow/comment
+| Discovery is fragmented across instances; pick a reputable instance or self-host
+
+| **https://odysee.com/[Odysee]**
+| Consumer front-end historically tied to LBRY protocol / blockchain metadata
+| YouTube-like UX with stronger “won’t delete my channel overnight” posture for some creators
+| Corporate/product and protocol layers have shifted over time—verify current decentralization claims
+
+| **https://lbry.com/[LBRY]** (protocol / apps)
+| Blockchain metadata + P2P content addressing
+| Protocol-level publishing; apps beyond one website
+| UX and commercial wrappers changed; treat “LBRY” vs “Odysee” carefully in docs
+
+| **https://d.tube/[DTube]**
+| Steem/Hive-era crypto + IPFS-style distribution (evolving stack)
+| Censorship-resistant upload narrative in the DailyCoin survey
+| Ecosystem churn; verify liveness before linking as primary
+
+| **https://www.thetatoken.org/[Theta]**
+| Bandwidth-sharing / edge delivery network with tokens
+| Delivery cost / gaming-adjacent streaming experiments
+| More CDN-economics than “post a talk forever”
+
+| **https://dlive.tv/[DLive]**
+| Live-first, token tipping (Lino lineage)
+| Live streams more than evergreen docs talks
+| Not a default archival host for curated watching
+
+| **https://3speak.tv/[3Speak]**
+| Hive-network creator platform
+| Long-form + citizen-journalist niches
+| Smaller audience; confirm embed/permalink stability
+
+| **https://livepeer.org/[Livepeer]**
+| Ethereum-based transcoding / streaming network
+| Infra for apps that need affordable live/VOD pipelines
+| Protocol for builders; not a drop-in YouTube replacement UI
+
+| **https://www.flixxo.com/[Flixxo]**
+| BitTorrent + token economy (Netflix-shaped pitch in survey pieces)
+| Distribution experiments
+| Adoption unclear; verify before recommending
+
+| **https://archive.org/[Internet Archive]**
+| Centralized non-profit archive (not blockchain), but *durable* and citeable
+| Snapshots of articles; sometimes video copies
+| Not decentralized; still invaluable as a second shelf
+|===
+
+== How we cite videos in docs
+
+Match the curated-watching table shape:
+
+* Prefer a **decentralized URL in the primary “Watch” row** when it is the same work (same creator edit), not a reaction video.
+* Always keep **YouTube** if that is where discovery happened.
+* Always keep **Drive backup** for Dev-Centr-critical teachings (`inspirations/` on Ryan’s Drive today).
+* If only YouTube exists, say so explicitly (as on xref:explanation/open-source/ecosystem-failures-and-successes.adoc[ecosystem failures and successes]) so the next editor knows to re-check Odysee/PeerTube later.
+
+== Related
+
+* xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
+* xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
+* xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Open-source ecosystems: failures and successes]

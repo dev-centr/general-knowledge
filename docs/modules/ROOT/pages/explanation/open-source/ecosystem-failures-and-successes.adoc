@@ -1,0 +1,173 @@
+= Open-source ecosystems: failures, successes, and why Dev-Centr is not “perfectly OSS”
+:description: History-book discourse on extraction without contribution, brittle maintainership, license/governance traps—and what Dev-Centr’s source-available posture is trying to avoid.
+:page-audience: Maintainers, founders, and contributors who need the industrial history behind Dev-Centr’s licensing posture
+:page-usage-context: Hub explanation / history book — link from Licensing docs, curated watching, and stack-browser learning hooks
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Dev-Centr’s flagship license is **source-available**, not OSI “Open Source.” That is intentional. This page is the **discourse and history book** behind that choice: repeated industry patterns where a commons grows, wealth concentrates elsewhere, and the parent ecosystem is left underfunded, captured, or torn apart by governance fights.
+
+It does not replace legal texts. Pair it with xref:devcentr:publishing:licensing.adoc[Licensing (CSL / ANL)].
+
+== The pattern we keep seeing
+
+A project becomes load-bearing. Companies build billion-dollar products on top. Then one or more of these happen:
+
+* **Extraction without return** — use the code, brand gravity, and update pipes; contribute little maintenance, little cash, little people-time.
+* **Capture** — one company becomes the de-facto steward of “the project,” trademark, plugin directory, or release narrative.
+* **License whiplash** — permissive license → cloud providers productize it → maintainers relicense → community forks → years of trust debt (Redis / Elastic / MongoDB loop).
+* **Maintainer burnout** — critical infrastructure rests on one volunteer or a tiny unpaid core (the comic everyone already knows).
+
+Dev-Centr’s CSL ladder (branding / competing use / incorporation limits) is an attempt to **price some of those failure modes in at the license layer**, instead of discovering them after market power exists and the only remaining tools are scorched-earth blogs and courtroom theater.
+
+== Comic: the whole industry on one unpaid maintainer
+
+https://xkcd.com/2347/[xkcd 2347 — Dependency] is the meme that stuck because it was already true.
+
+image::https://imgs.xkcd.com/comics/dependency.png[alt="xkcd comic Dependency: a tower of blocks labeled with modern tech stacks resting on a tiny project maintained by one person since 2003",width=480,link=https://xkcd.com/2347/]
+
+License note::
+xkcd comics are https://xkcd.com/license.html[CC BY-NC 2.5]. Keep attribution when reuse goes beyond linking.
+
+=== Real cases that match the comic
+
+[cols="1,3", options="header"]
+|===
+| Case | Why it belongs in the history book
+
+| **OpenSSL / Heartbleed (2014)**
+| A cryptography library under almost the entire web was maintained by a tiny team on scraps of funding. Heartbleed forced the industry to admit the comic was literal. The Linux Foundation’s Core Infrastructure Initiative was a direct response—corporate money arriving **after** the crisis.
+
+| **left-pad (2016)**
+| An 11-line npm package vanished when its author unpublished packages after a naming dispute. Build pipelines across the industry broke. Dependency depth + micro-packages + single-maintainer publish rights = systemic risk.
+
+| **xz-utils / liblzma (2024)**
+| Not “underfunded volunteer,” but the same fragile surface: a critical compression library with a thin maintainer graph became a social-engineering target. Trust in “tiny crucial deps” works both ways—burnout **and** capture.
+
+| **curl and other “quiet” critical tools**
+| Daniel Stenberg and peers have spent years explaining that industry-scale reliance does not automatically fund the people who answer security mail. The comic is a lifestyle for many C library maintainers.
+|===
+
+== Failure study: WordPress governance vs parasitic extraction (2024–2026)
+
+Primary watch (mandatory for this discourse)::
+xref:explanation/programming/curated-watching.adoc#wordpress-is-eating-itself-alive[*WordPress Is Eating Itself Alive*] (Coding with Lewis, ~35 min).
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **YouTube**
+| https://www.youtube.com/watch?v=AC8zIESRyVs
+
+| **Drive backup**
+| https://drive.google.com/file/d/18ZJcDLguZ60v5mV6q7KfHKvawdf76j53/view[Google Drive copy] (`inspirations/wordpress-lost-trust-90-days.mp4`)
+
+| **Decentralized host**
+| No PeerTube / Odysee / LBRY mirror of *this* upload found as of 2026-09-02. Prefer those hosts when a durable copy appears — see xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]. Related Odysee discussion of the same conflict exists (different creators), e.g. https://odysee.com/@destinationlinux:9/full-court-wordpress-on-wp-engine:5[Destination Linux] and https://odysee.com/@BrodieRobertson:5/the-wordpress-situation-is-crazy:a[Brodie Robertson].
+|===
+
+Blurb::
+WordPress became ~40% of the web under a GPL commons, then layered a for-profit company, a foundation trademark, and a `.org` update pipe that half the industry treats as oxygen. When Automattic / Matt Mullenweg escalated against WP Engine (private-equity-backed host accused of under-contributing while living on WordPress gravity), the fight used **project infrastructure as a weapon**: directory access, plugin forks, login oaths. Builders who never asked for a morality play discovered their update button had a landlord. Parallel storylines the video names: Redis → Valkey, Terraform → OpenTofu, Elasticsearch → OpenSearch—the **same loop**, different logos.
+
+Lessons Dev-Centr wants on the wall::
+
+* Do not let “the movement,” “the trademark,” and “the company” share one throat without written separation that still works under stress.
+* Do not wait until private equity owns the largest commercial satellite to invent contribution expectations.
+* Source-available / competing-use tools are imperfect; **unconditional GPL + monopoly update pipes** are also imperfect—just differently.
+* Trust is a product dependency. Once agencies stop assuming steward ≡ commons, market share and contributor hours both leak.
+
+== Success / contrast study: PostgreSQL’s volunteer track
+
+Primary watch::
+xref:explanation/programming/curated-watching.adoc#the-database-that-should-be-dead-but-runs-the-internet[*The Database That Should Be Dead but Runs the Internet*] (Coding with Lewis, ~23 min). Stack browser hook: PostgreSQL interaction layout → this discourse + watching entry.
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **YouTube**
+| https://www.youtube.com/watch?v=_CB_Aa2ODeM
+
+| **Drive backup**
+| https://drive.google.com/file/d/1Hoqg7vY9JqiotDUG9deeVmcvkyXOPZ1x/view[Google Drive copy] (`inspirations/postgres-history-nobody-owns-it.mp4`)
+
+| **Decentralized host**
+| No PeerTube / Odysee mirror of *this* upload found as of 2026-09-02 (same search note as above).
+|===
+
+Blurb::
+Ingres → Postgres research → commercial Illustra path vs an FTP/volunteer path that almost died and then outlived its corporate cousins. SQL port by students who left; donated Canadian hosting; Tom Lane on the optimizer; MVCC from Vadim Mikheev; EU antitrust naming Postgres as a credible Oracle constraint; JSON/JSONB without abandoning relational roots; cloud providers shipping managed Postgres **without** a license flip—and fragmented sponsor hiring that (so far) has not fully captured the mailing list. The video’s thesis: **nobody owns it**, and that is why hospitals and banks still run it.
+
+Why it belongs next to CSL discourse::
+Permissive survival is not magic. It is a **governance + multi-sponsor** accident that kept working. Dev-Centr still chooses stronger commercial boundaries for flagship apps because not every project gets thirty years of Tom Lanes. Postgres is the control sample: what “contribute back” looks like when it works.
+
+== License-architecture failures to avoid (short catalog)
+
+[cols="1,2,2", options="header"]
+|===
+| Pattern | Example | Avoidance sketch
+
+| Permissive commons → hyperscaler SaaS → angry relicense → community fork
+| Redis / Elastic / MongoDB
+| Decide *before* you are load-bearing whether Competing Use / Incorporation limits belong in the license; expect forks anyway if you flip late.
+
+| Project pipe = company weapon
+| wordpress.org vs WP Engine
+| Separate update/CDN/directory governance from any one commercial entity; document contribution expectations early.
+
+| Trademark + foundation theater without operational independence
+| WordPress Foundation exclusive commercial license back to Automattic
+| Nonprofit deed ≠ independence if the same person still holds every lever.
+
+| Micro-deps + single publisher
+| left-pad
+| Prefer fewer deeper deps; mirror critical packages; treat publish rights as blast radius.
+
+| Underfunded crypto / parsers / compressors
+| OpenSSL, xz
+| Budget for Core Infrastructure–class funding *before* the CVE; diversify maintainers.
+|===
+
+== Where this lives in the Dev-Centr stack
+
+[cols="1,2", options="header"]
+|===
+| Surface | Role
+
+| **This page (wiki / Antora explanation)**
+| History, argument, links, memes—text-first discourse.
+
+| **xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]**
+| Durable video catalog entries (YouTube + Drive + decentralized when known).
+
+| **xref:devcentr:publishing:licensing.adoc[Licensing]**
+| Normative CSL / ANL facts; FAQ. Deep-links here for “why not OSI.”
+
+| **Stack browser / Project Visualizer**
+| Structure-first discovery: when someone is staring at PostgreSQL (or another stack node), surface learning hooks (`docRef` / future `learnRef`) into watching + this discourse—not a second wiki dump inside the canvas.
+|===
+
+== Related
+
+* xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
+* xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
+* xref:devcentr:publishing:licensing.adoc[Licensing (CSL / ANL)]
+* xref:devcentr:publishing:licensing-strategy-templates.adoc[Licensing strategy templates]
+* https://xkcd.com/2347/[xkcd 2347 — Dependency]
+* https://www.coreinfrastructure.org/[Core Infrastructure Initiative / OpenSSF lineage]

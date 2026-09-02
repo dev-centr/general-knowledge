@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-02 -- Open-source ecosystem discourse + decentralized video index
+
+* Explanation xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Open-source ecosystems: failures and successes] — history book for CSL posture (xkcd 2347, Heartbleed, left-pad, xz, WordPress governance video, Postgres contrast).
+* Reference xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms] — PeerTube / Odysee / LBRY-class index; DailyCoin survey + Wayback snapshot.
+* xref:explanation/programming/curated-watching.adoc[Curated watching (programming)] — Coding with Lewis WordPress + Postgres entries (YouTube + Drive backups; no same-work PeerTube/Odysee mirrors found yet).
+* Nav + explanation/reference indexes updated.
+
 == 2026-09-02 -- Tool-run embedding for agents
 
 * Explanation xref:explanation/infrastructure/tool-run-embedding.adoc[Tool-run embedding for agents] — consume OpenShellOrg Tool Runs (`embed` / daemon / no popup spam).

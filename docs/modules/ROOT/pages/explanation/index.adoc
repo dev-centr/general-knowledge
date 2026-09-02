@@ -43,6 +43,14 @@ Featured agent / studio topics:
 
 * xref:explanation/ai/curated-watching.adoc[Curated watching (AI)] — mandatory / high-signal videos (Sophontic geometric reasoning interview and later entries)
 
+== Programming
+
+* xref:explanation/programming/curated-watching.adoc[Curated watching (programming)] — Armstrong, WordPress governance study, Postgres history, …
+
+== Open source / licensing posture
+
+* xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Ecosystem failures and successes] — history book for CSL (xkcd Dependency, Heartbleed, left-pad, WordPress, Postgres)
+
 == Documentation
 
 Literate programming, brand motion, and writing guidance live under Explanation → Documentation in the nav.

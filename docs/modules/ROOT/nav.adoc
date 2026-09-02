@@ -34,6 +34,7 @@
 * xref:reference/index.adoc[Reference]
 ** xref:reference/recommended-tools.adoc[Recommended Tools]
 ** xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
+** xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
 ** xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 *** Shells
 **** xref:reference/shells/nushell.adoc[Nushell]
@@ -126,6 +127,8 @@
 *** xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
 ** Programming
 *** xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
+** Open source / licensing posture
+*** xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Ecosystem failures and successes]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]

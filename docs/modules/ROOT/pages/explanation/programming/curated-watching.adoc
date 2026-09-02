@@ -4,7 +4,7 @@
 :page-usage-context: Hub explanation page — programming / CS learning library; personal inspirations deep-link here for blurbs
 :page-orig-author: Ryan Johnson
 :page-last-author: Cursor agent on behalf of Ryan Johnson
-:page-last-edited: 2026-09-01
+:page-last-edited: 2026-09-02
 
 ifndef::page-context-active[]
 [.page-context.page-context-lead]
@@ -27,7 +27,7 @@ Personal posture and longer quote collections live on link:https://ryanjohnson.d
 == How this list grows
 
 * Add entries when a talk is fundamental enough to recommend across the org—not every good conference video.
-* Prefer **YouTube (or publisher) canonical URL** + optional **Drive backup** for archival resilience.
+* Prefer **decentralized host** (when a same-work mirror exists) → publisher page → **YouTube** → **Drive backup**. See xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms].
 * Quote blocks include **event and date** so attribution survives lazy auto-transcripts.
 
 == Mandatory
@@ -76,8 +76,79 @@ ____
 Auto-generated YouTube captions garble the spoken line (*by generational programmers*). The abstract and Armstrong's own published summaries use the **billions of lines / thousands of years** framing; the **medals / Congressional Medal / my generation** lines are from the live talk (~8:14). Prefer this block over raw captions.
 ====
 
+== Mandatory — industry posture / ecosystems
+
+[#wordpress-is-eating-itself-alive]
+=== WordPress Is Eating Itself Alive
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **Title**
+| WordPress Is Eating Itself Alive
+
+| **Channel**
+| https://www.youtube.com/@CodingWithLewis[Coding with Lewis]
+
+| **Published**
+| 1 September 2026
+
+| **Runtime**
+| ~35 minutes
+
+| **YouTube**
+| https://www.youtube.com/watch?v=AC8zIESRyVs
+
+| **Drive backup**
+| https://drive.google.com/file/d/18ZJcDLguZ60v5mV6q7KfHKvawdf76j53/view[Google Drive copy] (`inspirations/wordpress-lost-trust-90-days.mp4`)
+
+| **Decentralized host**
+| None found for this upload (2026-09-02). Re-check PeerTube / Odysee before linking only YouTube. Related Odysee coverage of the same conflict (different creators): https://odysee.com/@destinationlinux:9/full-court-wordpress-on-wp-engine:5[Destination Linux], https://odysee.com/@BrodieRobertson:5/the-wordpress-situation-is-crazy:a[Brodie Robertson].
+|===
+
+Blurb::
+How a GPL commons that powered ~40% of the web lost trust when company, foundation, and `.org` pipes collided with a private-equity host—and why Redis / Terraform / Elastic show the same extraction loop. Required context for xref:explanation/open-source/ecosystem-failures-and-successes.adoc[open-source ecosystem failures and successes] and Dev-Centr’s source-available licensing posture.
+
+[#the-database-that-should-be-dead-but-runs-the-internet]
+=== The Database That Should Be Dead but Runs the Internet
+
+[cols="1,3", options="header"]
+|===
+| Field | Value
+
+| **Title**
+| The Database That Should Be Dead but Runs the Internet
+
+| **Channel**
+| https://www.youtube.com/@CodingWithLewis[Coding with Lewis]
+
+| **Published**
+| 23 June 2026
+
+| **Runtime**
+| ~23 minutes
+
+| **YouTube**
+| https://www.youtube.com/watch?v=_CB_Aa2ODeM
+
+| **Drive backup**
+| https://drive.google.com/file/d/1Hoqg7vY9JqiotDUG9deeVmcvkyXOPZ1x/view[Google Drive copy] (`inspirations/postgres-history-nobody-owns-it.mp4`)
+
+| **Decentralized host**
+| None found for this upload (2026-09-02). Prefer PeerTube / Odysee if a same-work mirror appears.
+
+| **Stack browser**
+| PostgreSQL interaction layout `docRef` → xref:explanation/open-source/ecosystem-failures-and-successes.adoc[ecosystem discourse] (links back here)
+|===
+
+Blurb::
+Ingres → Postgres research → commercial dead-ends vs the volunteer track that outlived them: SQL port, donated hosting, optimizer/MVCC lore, EU antitrust naming Postgres as an Oracle constraint, JSON without abandoning relational roots, and cloud managed Postgres **without** a license flip. Fundamental teaching video for why Postgres sits at the bottom of many Dev-Centr database recommendations—and a contrast case next to WordPress/Redis license drama.
+
 == Related
 
+* xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Open-source ecosystems: failures and successes]
+* xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
 * xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/architecture/principles.adoc[Core principles]
