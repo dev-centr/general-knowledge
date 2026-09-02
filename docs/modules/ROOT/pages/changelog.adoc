@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-02 -- Tool-run embedding for agents
+
+* Explanation xref:explanation/infrastructure/tool-run-embedding.adoc[Tool-run embedding for agents] — consume OpenShellOrg Tool Runs (`embed` / daemon / no popup spam).
+* xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]: table + practical-rule rows for Tool Runs; nav link.
+
 == 2026-09-01 -- Nav typology icons (SVG, not emoji)
 
 * Diátaxis nav labels and bucket H1s use plain text; sidebar icons come from `@antora-supplemental/nav-typology` + `nav-typology-diataxis` on the docs hub.

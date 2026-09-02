@@ -1,0 +1,38 @@
+= Tool-run embedding for agents
+:description: How Dev-Centr agent harnesses should consume OpenShellOrg Tool Runs — embed widgets, talk to the daemon, suppress popup spam.
+:page-audience: practitioners
+:page-usage-context: explanation
+:page-orig-author: agent on behalf of AMDphreak
+:page-last-author: agent on behalf of AMDphreak
+
+== Practitioner rule
+
+When an agent compiles (or runs any long tool), **do not** treat stderr scrollback as the UX, and **do not** open one OS window per run.
+
+OpenShellOrg defines a **Tool Run** bus: structured diagnostics in, short CLI stub + magic link out, shared daemon for history, embeddable library for host chrome.
+
+Canon: link:https://opensh.org/docs/shell-architecture/tool-run-diagnostics.html[Tool runs and diagnostics] · link:https://opensh.org/docs/shell-architecture/command-channels.html[Command channels].
+
+== What Dev-Centr should do
+
+| Mode | When |
+|---|---|
+| **`embed`** (preferred in harnesses) | Mount run chips / diagnostic panels on the agent timeline; suppress standalone popup |
+| **`auto`** | If the harness registers as an embedding host, same as embed; else allow GUI |
+| **`headless`** | CI / pure automation — bus + log only |
+| **`gui`** | Rare — force standalone window |
+
+Always still talk to the **daemon** when the user wants a second index of past compiles outside the chat scroll.
+
+== What Dev-Centr should not do
+
+* Invent a second diagnostics protocol
+* Merge stdout and stderr in harness capture by default (keep channels; optional explicit `merged`)
+* Own programmer-POV wording (HCI Nerdz) or OS tray/flash helpers (Desktop Tooling) as if they were the bus
+
+== Related
+
+* xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
+* xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh]
+* HCI face: link:https://hci-nerdz.github.io/docs/hci-nerdz/programmer-pov-diagnostics.html[Programmer-POV diagnostics]
