@@ -44,7 +44,7 @@ image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine
 | Face | Where
 
 | Symptom essay + demo
-| link:https://hci-nerdz.github.io/blog/when-renaming-a-page-breaks-half-your-docs/[When renaming a page breaks half your docs] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
+| link:https://hci-nerdz.github.io/blog/path-renames-that-break-dependents/[Path renames that break dependents] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
 
 | Diagnosis / treatment (HCI)
 | link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[Labels versus wires] (slug kept)

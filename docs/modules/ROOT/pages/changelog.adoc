@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-02 -- HCI symptom essay URL retitle
+
+* Internet Reliability faces: symptom essay link → *Path renames that break dependents* (`/blog/path-renames-that-break-dependents/`) in `reliability/index.adoc` and `reference-reliability.adoc`.
+
 == 2026-09-02 -- Open-source ecosystem discourse + decentralized video index
 
 * Explanation xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Open-source ecosystems: failures and successes] — history book for CSL posture (xkcd 2347, Heartbleed, left-pad, xz, WordPress governance video, Postgres contrast).
