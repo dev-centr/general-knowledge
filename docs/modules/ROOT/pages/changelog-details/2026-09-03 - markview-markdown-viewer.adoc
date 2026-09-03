@@ -1,0 +1,7 @@
+= 2026-09-03 — MarkView Markdown viewer
+:description: Added MarkView as a recommended local Markdown viewer (no edit); DevCentr keeps in-product rendering.
+
+* Added MarkView (https://markview.io/) to xref:../reference/recommended-tools.adoc[Recommended tools] — free native **viewer only** (no editing) for macOS / Windows / Linux.
+* Extended xref:../explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] with MarkView section, screenshot (`markview-biome-readme.png`), and explicit **not a DevCentr product viewer** note (keep Antora / in-app component rendering).
+* Clarified SoloMD as the **edit** recommendation; MarkView for **read-only** OS-level open/share workflows.
+* Cross-link touch in documentation markup comparison and AI studio tooling catalog.

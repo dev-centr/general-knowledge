@@ -41,7 +41,7 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 | xref:explanation/infrastructure/uniprovider.adoc[Explanation] · https://github.com/dev-centr/uniprovider[repo] · https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md[OPR spec]
 
 | **Recommended tools**
-| Day-to-day shop list (Cursor, Composio, Nushell, `gh`, SoloMD, …)
+| Day-to-day shop list (Cursor, Composio, Nushell, `gh`, SoloMD, MarkView, …)
 | xref:reference/recommended-tools.adoc[Reference]
 
 | **Nushell and AI agents**

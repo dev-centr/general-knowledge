@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- MarkView Markdown viewer
+
+* Recommended link:https://markview.io/[MarkView] alongside SoloMD in xref:reference/recommended-tools.adoc[Recommended tools] (viewer-only vs editor; not an in-product DevCentr viewer).
+* xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] — MarkView section + screenshot (`markview-biome-readme.png`); house stack keeps Antora / in-app rendering.
+* See xref:changelog-details/2026-09-03 - markview-markdown-viewer.adoc[Detailed changelog].
+
 == 2026-09-02 -- Provider search and mirror backups
 
 * Explanation xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups] — provider-native fuzzy/vector search APIs; opt-in API-compatible mirrors; `.issues` + Issues Browser as near-term wedge.

@@ -53,7 +53,7 @@ Do not treat documentation markup as interchangeable skins over the same documen
 
 Markdown remains the portable baseline. **MDX** specializes it for React. **CentrMark** evolves the Markdown feel toward a directive AST without embedding JS. **AsciiDoc** stays the Antora authoring format; CentrMark can evolve *from* AsciiDoc as publishing backends catch up—keep Antora output during migration.
 
-For day-to-day authoring of Markdown *on disk* (READMEs, project docs, vaults), see xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] (SoloMD).
+For day-to-day authoring of Markdown *on disk* (READMEs, project docs, vaults), see xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] (SoloMD to edit, MarkView to view).
 
 [source,mermaid]
 ----

@@ -1,10 +1,10 @@
 = Markdown editors on local disk
-:description: Local-first Markdown editors for README and project docs workflows — SoloMD live edit and split view, with OPR for multi-runner AI.
-:page-audience: Developers editing Markdown on disk (READMEs, project docs, notes vaults)
+:description: Local-first Markdown tools for README and project docs — SoloMD for editing, MarkView for reading, with OPR for multi-runner AI.
+:page-audience: Developers editing or sharing Markdown on disk (READMEs, project docs, notes vaults)
 :page-usage-context: Explanation in general-knowledge
 :page-orig-author: Ryan Johnson
 :page-last-author: Cursor agent on behalf of Ryan Johnson
-:page-last-edited: 2026-09-02
+:page-last-edited: 2026-09-03
 
 ifndef::page-context-active[]
 [.page-context.page-context-lead]
@@ -15,11 +15,16 @@ endif::[]
 
 Dev-Centr publishes in AsciiDoc + Antora.
 Many of the developers who use Dev-Centr tooling still live in **Markdown** for READMEs, contributor guides, and vault-style notes.
-They need a fast local editor that writes plain `.md` to a folder — not a cloud-only doc suite.
+They need local tools that open plain `.md` on disk — not a cloud-only doc suite.
 
-== Recommendation: SoloMD
+Two jobs dominate:
 
-link:https://solomd.app/[SoloMD] is a local-first Markdown editor (Tauri 2, MIT, ~15 MB class installer) with Typora-style **live edit**, classic **split** source/preview, outline, vault agent, and BYOK AI.
+* **Edit** — write and revise the same files the forge renders.
+* **View** — open a shared README or AI-exported `.md` without Notepad, VS Code, or an upload-to-preview site.
+
+== Recommendation: SoloMD (edit)
+
+link:https://solomd.app/[SoloMD] is a local-first Markdown **editor** (Tauri 2, MIT, ~15 MB class installer) with Typora-style **live edit**, classic **split** source/preview, outline, vault agent, and BYOK AI.
 Source: link:https://github.com/zhitongblog/solomd[zhitongblog/solomd].
 
 .SoloMD live edit (WYSIWYG-style)
@@ -35,7 +40,34 @@ Fit for Dev-Centr audiences:
 * **Offline-first** — notes and keys stay on the machine by default.
 
 Dev-Centr shop docs stay AsciiDoc.
-Recommend SoloMD when the *user's* project is Markdown.
+Recommend SoloMD when the *user's* project is Markdown and they need to **author**.
+
+== Recommendation: MarkView (view only)
+
+link:https://markview.io/[MarkView] is a free native Markdown **viewer** for macOS, Windows, and Linux — “Acrobat Reader for `.md`”: open, render, zoom, done.
+**It has no editing ability** — you cannot change the file in MarkView.
+No account, no upload, drag-and-drop or double-click.
+(Do not confuse it with browser extensions or other products that reuse the MarkView name.)
+
+.MarkView reading a project README (Biome Extension)
+image::markview-biome-readme.png[alt="MarkView dark-theme window rendering Biome Extension for VS Code README.md with badges and Installation section",width=720]
+
+Use MarkView when:
+
+* Someone shared a `.md` and you only need to **read** it cleanly.
+* You want a default OS association for Markdown without launching an IDE or vault app.
+* Privacy matters — files stay on disk.
+
+Pair with SoloMD (or your forge editor) when you need to change the file.
+
+=== Not a DevCentr product viewer
+
+MarkView is a fine **third-party OS tool** for opening Markdown outside our apps.
+It is **not** how DevCentr products should render docs or Markdown in-product.
+
+Dev-Centr already opted to keep viewing inside its own surfaces — Antora / AsciiDoc for published docs, and each app’s own rendering components and module provisions for in-app Markdown or help.
+Do not shell out to MarkView (or any external viewer) as the primary DevCentr reading experience; that would split chrome, theming, navigation, and component behavior away from the house stack.
+MarkView stays on the recommended-tools list for *people’s machines*, not as an embedded or default DevCentr viewer dependency.
 
 == AI and local model runners
 
@@ -44,6 +76,8 @@ That still leaves a familiar gap: every editor special-cases a favorite local ru
 
 The durable fix is not “add five more hard-coded ports.”
 It is a shared **Open Provider Registry (OPR)** so runners register once and every app can discover them — including SoloMD via its existing OpenAI-compatible path or a future OPR consumer.
+
+MarkView stays out of that layer: it is read-only rendering.
 
 See:
 
