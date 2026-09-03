@@ -6,3 +6,5 @@ Pairs with HCI Nerdz *On-disk game conversion* and DevCentr `project-plans` seed
 Points at `equivalence-engine` / `binary-tailor` as related substrate.
 
 Later same day: **binary weaving** section (coarse cuts help; fine thunks / dual runtimes hurt); local lemonade framing; DRM/anti-cheat deferred for early wedges.
+
+Later again: **Near-term proof (toy spike)** — self-authored tiny PE pipeline, not commercial before/after.

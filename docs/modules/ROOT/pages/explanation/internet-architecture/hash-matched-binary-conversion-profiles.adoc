@@ -107,6 +107,21 @@ Heuristic:: weave at the **coarsest cut that removes most ABI tax** (DLL/module 
 
 DRM / kernel anti-cheat remain out of scope for early wedges; they already constrain live-translation stacks. This page does not claim to solve them.
 
+== Near-term proof (toy spike)
+
+A **spike** here means a short, throwaway-friendly experiment to prove the *pipeline*, not a polished port of a commercial game.
+
+**Toy title** = a tiny Windows PE you (or the project) authored — e.g. console “hello” or a MessageBox — whose hash you control. It is *not* “pick an AAA game and show before/after screenshots.”
+
+Minimum bar:
+
+. Build or obtain the toy PE (Windows).
+. Author a hash-matched profile that performs coarse weaving (leave compute; rewrite load/imports/glue as needed).
+. Apply → write an on-disk host-shaped cache → run that cache on Linux.
+. Keep the original PE for verify/rollback; the **profile** is what you version in git, not a redistributed game tree.
+
+Optional docs face: a short “original PE → profile → cache → run” walkthrough. The learning goal is machinery confidence, not marketing before/after art.
+
 == Hard walls (systems honesty)
 
 * Full automated decompile → perfect native recompile is not a general algorithm; titles need **profile authorship** (human + AI + tooling), not a universal shredder.
