@@ -22,3 +22,4 @@ This section orients the altitudes and points at those faces without duplicating
 * xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]
 * xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]
 * xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends]
+* xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups] — fuzzy/vector search APIs + API-compatible consumer mirrors; `.issues` / Issues Browser wedge

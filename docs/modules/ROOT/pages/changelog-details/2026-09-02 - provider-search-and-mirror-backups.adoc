@@ -1,0 +1,17 @@
+= Provider search and mirror backups (docs + filing workflow)
+:description: Encyclopedia vision for provider search/mirrors; gh --attach workflow; stakeholder faces.
+:page-audience: Maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+== Summary
+
+Documented the architectural vision for provider-native fuzzy/vector search and API-compatible consumer mirror backups. Updated issue-filing skills for GitHub CLI `--attach` while keeping `.issues/images/` as durable backup.
+
+== Changes
+
+* New explanation: `explanation/internet-architecture/provider-search-and-mirror-backups.adoc`
+* Nav + Internet Architecture index + Reliability map links
+* Cross-links from Issues Browser, DevCentr vision, HCI *Host-held history*, connectome-fs, idea catalog

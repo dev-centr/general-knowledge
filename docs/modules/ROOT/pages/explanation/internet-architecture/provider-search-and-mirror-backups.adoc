@@ -1,0 +1,141 @@
+= Provider search and mirror backups
+:description: Why data providers need first-class fuzzy/vector search APIs, and why consumers should be able to opt into API-compatible mirror backups—near-term wedge via .issues and issues-browser.
+:page-audience: Architects, product stakeholders, and agents designing forge/AI data access
+:page-usage-context: Encyclopedia explanation under Internet Architecture; pairs with Issues Browser and HCI host-held history
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Agent and human workflows increasingly need to **find prior work** inside large, structured remote collections (issues, PRs, comments, tickets, docs corpora) without keeping a full local replica just to run vector or graph RAG.
+
+That pressure points at two product surfaces every serious data provider will eventually need:
+
+. **Provider-native search** — fuzzy today; vector / hybrid / graph-RAG-shaped APIs tomorrow — as a first-class library capability, not a bolt-on scrape.
+. **Opt-in mirror backups** — redundant stores that **mimic the provider’s data shape and API surface**, so consumers can leave, audit, or RAG against *their* copy without inventing a second schema.
+
+DevCentr treats this as Internet Architecture (systems altitude): shared-memory durability for correspondence and structured collections, not only packet uptime. HCI Nerdz owns the human symptom (*host-held history*). connectome-fs owns substrate instincts (portable identity of content). Issues Browser + personal `.issues` are the **near-term demonstration wedge**.
+
+== Why local copies proliferate today
+
+Agents and power users keep private archives because:
+
+* Remote UIs expose weak or non-exportable search.
+* Media and bodies live on host CDNs that the consumer does not control.
+* Offline and “what did I file last year?” questions are expensive against rate-limited GraphQL.
+* Leaving a host should not mean losing the ability to *query* your own history in the same shapes you used while subscribed.
+
+Heuristic fuzzy search on some hosts is a start. As collections grow, **vector and hybrid retrieval become the default AI I/O** against provider data. Maintaining a second full-disk corpus per agent becomes the wrong long-term answer — unless the mirror is intentional, API-compatible, and opt-in.
+
+== Provider search as an essential surface
+
+A provider that wants AI clients (and fair competition) should expose:
+
+[cols="1,2"]
+|===
+| Capability | Intent
+
+| Structured collection search
+| Issues, PRs, comments, wiki, packages — queryable by the same entities the UI shows
+
+| Fuzzy → vector/hybrid path
+| Start with good heuristics; graduate to embeddings / hybrid without changing client identity of “search this corpus”
+
+| Authz-aware results
+| Same ACLs as the product; no “dump everything into a public index”
+
+| Stable result identity
+| Hits resolve to durable objects (see xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability]), not ephemeral result-page URLs
+|===
+
+This belongs next to OpenAPI/GraphQL as a **standard lib expectation** for data providers — analogous to how pagination and webhooks became table stakes.
+
+== Mirror backups (API-compatible redundancy)
+
+Consumers will want to opt into a **backup provider** (third party or self-hosted) that:
+
+* Stores the same logical entities (or a documented subset).
+* Speaks a **compatible API** (or a versioned mirror dialect with a clear mapping).
+* Can be pointed at by the same client libraries with a base-URL / profile swap.
+* Remains under consumer control for export, deletion, and local RAG.
+
+Privacy and proprietary challenges are real. Directionally, privacy law and consumer portability pressure providers toward **giving people their data in usable form** — not locked screenshots of HTML. Building demos that show the benefits of that path (searchable, portable, redundant) is advocacy by architecture: the closed “business owns your data and hides the API” path is worse legally, culturally, *and* for AI tooling.
+
+[source,mermaid]
+----
+flowchart LR
+  Provider[Source provider API]
+  Search[Provider search surface]
+  Mirror[Opt-in mirror backup]
+  Agent[AI / CLI client]
+  Provider --> Search
+  Provider --> Mirror
+  Search --> Agent
+  Mirror --> Agent
+----
+
+== Near-term wedge at DevCentr
+
+Demonstration does not require boiling the ocean:
+
+[cols="1,2"]
+|===
+| Piece | Role today
+
+| Personal `.issues` submissions + `images/`
+| Consumer-owned filing archive: bodies and media you submitted, even when the forge hosts the public copy via `gh --attach`
+
+| xref:issues-browser::index.adoc[Issues Browser]
+| Opt-in forge metadata / body backup into SQLite; offline browse and search — early mirror of forge correspondence
+
+| `gh --attach` (GitHub CLI ≥ 2.99)
+| Forge-native media for issues/PRs/comments — replaces the old “push to `.issues` then paste `raw.githubusercontent.com`” CDN hack for GitHub
+
+| Agent skills `issue-reports` / `issues-repo-record`
+| Encode: attach for the forge; **always** keep local media + submission markdown as backup
+|===
+
+The wedge shows stakeholders: (1) live forge UX can improve without abandoning consumer backups; (2) offline archives are the seed of API-compatible mirrors; (3) search quality against those archives is the next product step.
+
+== Stakeholder faces
+
+[cols="1,2"]
+|===
+| Face | Surface
+
+| Systems altitude (this page)
+| DevCentr general-knowledge / Internet Architecture
+
+| Human symptom ↔ treatment
+| HCI Nerdz — *Host-held history* (companion to *Labels versus wires*)
+
+| Substrate
+| connectome-fs — portable content identity for correspondence blobs
+
+| Product vision
+| DevCentr DOS vision — forge correspondence and provider data access
+
+| Catalog idea
+| link:https://devcentr.org/ideas/provider-mirror-backups[provider-mirror-backups]
+|===
+
+== Related
+
+* xref:explanation/internet-architecture/index.adoc[Internet Architecture]
+* xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability]
+* xref:explanation/infrastructure/uniprovider.adoc[UniProvider / OPR] — discovery of *runners*; this page is about *data* providers’ search and backup surfaces
+* xref:issues-browser::backup.adoc[Issues Browser — forge metadata backup]
+* link:https://docs.github.com/en/github-cli/github-cli/attaching-files-with-github-cli[GitHub CLI — attaching files]

@@ -65,6 +65,7 @@
 **** xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]
 **** xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]
 **** xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends]
+*** xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups]
 ** Architecture
 *** xref:explanation/architecture/index.adoc[Architecture overview]
 *** xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]

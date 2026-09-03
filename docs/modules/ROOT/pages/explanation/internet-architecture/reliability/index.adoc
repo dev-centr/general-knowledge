@@ -36,6 +36,7 @@ image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine
 * xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack] — CAS, mutable pointers, reverse consumers → HCI + connectome-fs
 * xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb] — redirects, aliases, Cool URI, `CONSUMERS.md`
 * xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends] — delivery-name vs application-label
+* xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups] — search APIs + API-compatible consumer mirrors (sibling under Internet Architecture)
 
 == Sibling faces (do not collapse)
 

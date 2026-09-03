@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-02 -- Provider search and mirror backups
+
+* Explanation xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups] — provider-native fuzzy/vector search APIs; opt-in API-compatible mirrors; `.issues` + Issues Browser as near-term wedge.
+* Nav, Internet Architecture index, and Reliability map updated.
+* See xref:changelog-details/2026-09-02 - provider-search-and-mirror-backups.adoc[Detailed changelog].
+
 == 2026-09-02 -- SoloMD + Open Provider Registry
 
 * Recommended link:https://solomd.app/[SoloMD] for local-disk Markdown workflows in xref:reference/recommended-tools.adoc[Recommended tools].
