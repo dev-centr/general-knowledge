@@ -24,12 +24,12 @@
   <rect class="box" x="40" y="90" width="200" height="90" rx="6"/>
   <text class="t" x="56" y="122" font-size="15">Personal index</text>
   <text class="s" x="56" y="144">curated-learning.md</text>
-  <text class="s" x="56" y="164">title · URL · short note</text>
+  <text class="s" x="56" y="164">title / URL / short note</text>
 
   <rect class="box2" x="280" y="90" width="200" height="90" rx="6"/>
   <text class="t" x="296" y="122" font-size="15">Org index</text>
   <text class="s" x="296" y="144">curated-watching.adoc</text>
-  <text class="s" x="296" y="164">Mandatory · high-signal</text>
+  <text class="s" x="296" y="164">Mandatory / high-signal</text>
 
   <rect class="box3" x="520" y="70" width="160" height="56" rx="6"/>
   <text class="t" x="536" y="102" font-size="14">Topical page</text>
@@ -45,5 +45,5 @@
 
   <text class="s" x="40" y="230">Deep-link for blurbs/credits. Do not treat the org index URL as the only personal bookmark.</text>
   <text class="s" x="40" y="252">Drive / local archival copies hang off the personal pick when YouTube retention is a concern.</text>
-  <text class="s" x="40" y="290">Dev-Centr · general-knowledge · Explanation / AI literacy</text>
+  <text class="s" x="40" y="290">Dev-Centr / general-knowledge / Explanation / AI literacy</text>
 </svg>

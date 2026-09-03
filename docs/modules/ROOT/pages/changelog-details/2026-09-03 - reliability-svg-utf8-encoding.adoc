@@ -1,0 +1,28 @@
+= 2026-09-03 -- Reliability SVG UTF-8 encoding
+
+Live diagnosis on https://docs.devcentr.org/general-knowledge/explanation/internet-architecture/reliability/:
+
+* Page HTML already had a correct image tag after the alt-quoting fix:
+  `src="../../../_images/internet-architecture/three-altitudes.svg"` with
+  `alt="Three nested altitudes: machine, developer ecosystem, internet"` and
+  `width="720"` (no bogus `height=`).
+* The SVG URL returned **200** `image/svg+xml`, but the file declared
+  `encoding="UTF-8"` while label separators were single-byte latin-1
+  MIDDLE DOT (`0xB7`). XML parsers reject that as *Invalid character in the
+  given encoding* — Chrome/Firefox show a broken image, not a diagram.
+
+Same class of bug as the 2026-08-12 Access/GCP SVG *Encoding error* notes.
+The prior alt-quoting fix was real but incomplete: commas were not the
+remaining failure mode.
+
+== Fix
+
+* Rewrite middots to ASCII ` / ` in
+  `images/internet-architecture/three-altitudes.svg` and
+  `rename-breakage-mockup.svg`.
+* Escape bare `&` in the rename mockup URL label (`&amp;`).
+* Same middot repair for `images/ai/curated-watching-linkage.svg`.
+* Org skill `fix-docs-encoding` `--fix` now latin-1-rescues non-UTF-8
+  SVGs (middot → ` / `, bare `&` → `&amp;`) instead of only reporting FAIL.
+
+Hub redeploy required so docs.devcentr.org refreshes component `_images/`.

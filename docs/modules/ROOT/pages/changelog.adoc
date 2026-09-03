@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- Fix Reliability SVG encoding (Encoding error)
+
+* `three-altitudes.svg` (and sibling `rename-breakage-mockup.svg`) declared UTF-8 but contained latin-1 MIDDLE DOT `0xB7` bytes. Browsers refuse the XML (`Invalid character in the given encoding`); the live `<img>` looked broken even though `_images/` returned 200 and the alt was already quoted.
+* Rewrote labels to ASCII separators (` / `); escaped bare `&` in the rename mockup. Also repaired `ai/curated-watching-linkage.svg` the same way.
+* See xref:changelog-details/2026-09-03 - reliability-svg-utf8-encoding.adoc[Detailed changelog].
+
 == 2026-09-03 -- Quote three-altitudes image alt
 
 * Internet Reliability index: quote the `three-altitudes.svg` alt so commas are not parsed as AsciiDoc `width`/`height` (live HTML had `height="internet"` while `_images/` returned 200).
@@ -14,7 +20,7 @@ Timeline of notable documentation changes in this repository.
 * xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] links agent-rules xref:agent-rules::case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice].
 == 2026-09-03 -- HCI docs slug an-alternative-to-urls
 
-* Reliability deep links use `…/an-alternative-to-urls.html` (wiki slug matches public title).
+* Reliability deep links use `.../an-alternative-to-urls.html` (wiki slug matches public title).
 == 2026-09-03 -- An alternative to URLs + editorial titles
 
 * Internet Reliability sibling faces: symptom *Broken links after a URL rename*; diagnosis/docs *An alternative to URLs*.

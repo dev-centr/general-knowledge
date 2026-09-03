@@ -28,7 +28,7 @@
   <rect class="ok" x="28" y="100" width="300" height="120" rx="4"/>
   <text class="t" x="44" y="128" font-size="15">Producer docs</text>
   <text class="mono" x="44" y="156">/docs/api/v2/auth</text>
-  <text class="s" x="44" y="182">200 OK · content unchanged</text>
+  <text class="s" x="44" y="182">200 OK / content unchanged</text>
   <text class="s" x="44" y="202">Human path updated</text>
 
   <path class="arrow" d="M340,160 H390"/>
@@ -42,8 +42,8 @@
     <rect class="tab-bad" x="220" y="14" width="96" height="28" rx="3"/>
     <text class="bad" x="236" y="33">Blog cite</text>
     <rect class="tab" x="12" y="56" width="308" height="200" rx="3"/>
-    <text class="mono" x="28" y="88">https://&/docs/api/v1/auth</text>
-    <text class="bad" x="28" y="120">404 · string break</text>
+    <text class="mono" x="28" y="88">https://&amp;/docs/api/v1/auth</text>
+    <text class="bad" x="28" y="120">404 / string break</text>
     <text class="s" x="28" y="152">Label moved. Wire was the label.</text>
     <text class="s" x="28" y="176">Same bytes. Wrong identity binding.</text>
     <text class="s" x="28" y="216">See HCI: Labels versus wires</text>
