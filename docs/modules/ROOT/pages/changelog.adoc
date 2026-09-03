@@ -2,6 +2,9 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- Case study link from writing docs
+
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] links agent-rules xref:agent-rules::case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice].
 == 2026-09-03 -- HCI docs slug an-alternative-to-urls
 
 * Reliability deep links use `…/an-alternative-to-urls.html` (wiki slug matches public title).
