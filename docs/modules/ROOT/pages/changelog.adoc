@@ -2,6 +2,9 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- HCI docs slug an-alternative-to-urls
+
+* Reliability deep links use `…/an-alternative-to-urls.html` (wiki slug matches public title).
 == 2026-09-03 -- An alternative to URLs + editorial titles
 
 * Internet Reliability sibling faces: symptom *Broken links after a URL rename*; diagnosis/docs *An alternative to URLs*.

@@ -64,7 +64,7 @@ note bottom of DEL : NDN helps delivery;\nnot semantic life cycle
 | Concern | Canonical face
 
 | Symptom ↔ diagnosis/treatment dialectic
-| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[HCI — Labels versus wires]
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alternative-to-urls.html[HCI — Labels versus wires]
 
 | Path as navigation; node as truth
 | link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs]

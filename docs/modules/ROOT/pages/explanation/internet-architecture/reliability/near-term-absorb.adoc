@@ -42,7 +42,7 @@ flowchart LR
 
 Own the list on the *producer*. Record coupling type (package import vs URL vs Antora component). Prefer aliases over renames. Teach agents: read consumers → search those trees → open PRs.
 
-Full rules and examples: link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[HCI — Labels versus wires] (Treatment section).
+Full rules and examples: link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alternative-to-urls.html[HCI — Labels versus wires] (Treatment section).
 
 == Related
 
