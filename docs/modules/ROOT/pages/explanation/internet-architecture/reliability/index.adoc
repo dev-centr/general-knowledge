@@ -8,7 +8,7 @@ People usually arrive with a rename that broke half their docs, or a URL that we
 HCI Nerdz writes that pain and the diagnosis in ordinary language — start with link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename].
 This hub zooms out: how the same mistake scales from a single machine to a developer ecosystem to the public internet.
 
-image::internet-architecture/three-altitudes.svg["Three nested altitudes: machine, developer ecosystem, internet",width=720]
+image::internet-architecture/three-altitudes-diagram.svg["Three nested altitudes: machine, developer ecosystem, internet",width=720]
 
 == What counts as reliability here
 

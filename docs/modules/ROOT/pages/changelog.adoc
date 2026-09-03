@@ -6,6 +6,7 @@ Timeline of notable documentation changes in this repository.
 
 * `three-altitudes.svg` (and sibling `rename-breakage-mockup.svg`) declared UTF-8 but contained latin-1 MIDDLE DOT `0xB7` bytes. Browsers refuse the XML (`Invalid character in the given encoding`); the live `<img>` looked broken even though `_images/` returned 200 and the alt was already quoted.
 * Rewrote labels to ASCII separators (` / `); escaped bare `&` in the rename mockup. Also repaired `ai/curated-watching-linkage.svg` the same way.
+* Renamed asset to 	hree-altitudes-diagram.svg so the live page points at a new _images/ URL (CDN still held the broken bytes at the old path for up to 4h).
 * See xref:changelog-details/2026-09-03 - reliability-svg-utf8-encoding.adoc[Detailed changelog].
 
 == 2026-09-03 -- Quote three-altitudes image alt

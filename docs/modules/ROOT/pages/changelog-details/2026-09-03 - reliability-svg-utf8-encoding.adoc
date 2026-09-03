@@ -3,7 +3,7 @@
 Live diagnosis on https://docs.devcentr.org/general-knowledge/explanation/internet-architecture/reliability/:
 
 * Page HTML already had a correct image tag after the alt-quoting fix:
-  `src="../../../_images/internet-architecture/three-altitudes.svg"` with
+  `src="../../../_images/internet-architecture/three-altitudes-diagram.svg"` with
   `alt="Three nested altitudes: machine, developer ecosystem, internet"` and
   `width="720"` (no bogus `height=`).
 * The SVG URL returned **200** `image/svg+xml`, but the file declared
@@ -18,7 +18,7 @@ remaining failure mode.
 == Fix
 
 * Rewrite middots to ASCII ` / ` in
-  `images/internet-architecture/three-altitudes.svg` and
+  `images/internet-architecture/three-altitudes-diagram.svg` and
   `rename-breakage-mockup.svg`.
 * Escape bare `&` in the rename mockup URL label (`&amp;`).
 * Same middot repair for `images/ai/curated-watching-linkage.svg`.
@@ -26,3 +26,5 @@ remaining failure mode.
   SVGs (middot → ` / `, bare `&` → `&amp;`) instead of only reporting FAIL.
 
 Hub redeploy required so docs.devcentr.org refreshes component `_images/`.
+
+Renamed published file to `three-altitudes-diagram.svg` so the page `img` src is a new URL (CDN `max-age=14400` still served the broken bytes at the old path).

@@ -32,7 +32,7 @@ flowchart TB
 
 A site can have five-nines uptime and still be **unreliable as a reference** if every rename orphans consumers.
 
-image::internet-architecture/three-altitudes.svg[Nested altitudes diagram as a static orientation figure,width=720]
+image::internet-architecture/three-altitudes-diagram.svg[Nested altitudes diagram as a static orientation figure,width=720]
 
 == Branding note
 
