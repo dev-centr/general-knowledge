@@ -4,9 +4,9 @@
 **Internet Reliability** is a slice of xref:explanation/internet-architecture/index.adoc[Internet Architecture].
 It is broader than network uptime: it includes whether people and tools can still *find and use* the thing they meant after names, hosts, and paths move.
 
-People usually arrive with a **symptom** — a rename that broke half their docs, a Cool URI that went cold.
-The HCI Nerdz face names that feeling and the diagnosis (*labels used as wires*).
-DevCentr hosts the **systems altitude**: how the same mistake scales from a machine to a developer ecosystem to the public internet.
+People usually arrive with a rename that broke half their docs, or a URL that went cold.
+HCI Nerdz writes that pain and the diagnosis in ordinary language — start with link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename].
+This hub zooms out: how the same mistake scales from a single machine to a developer ecosystem to the public internet.
 
 image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine, developer ecosystem, internet,width=720]
 
@@ -32,32 +32,29 @@ image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine
 == Map
 
 * xref:explanation/internet-architecture/reliability/three-altitudes.adoc[Three altitudes] — machine ↔ DevX/ecosystem ↔ internet
-* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability] — URL rot as the familiar slice → HCI *Labels versus wires*
+* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability] — URL rot as the familiar slice → HCI *An alternative to URLs*
 * xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack] — CAS, mutable pointers, reverse consumers → HCI + connectome-fs
 * xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb] — redirects, aliases, Cool URI, `CONSUMERS.md`
 * xref:explanation/internet-architecture/reliability/ndn-and-friends.adoc[NDN and friends] — delivery-name vs application-label
 * xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups] — search APIs + API-compatible consumer mirrors (sibling under Internet Architecture)
 
-== Sibling faces (do not collapse)
+== Related reading
 
 [cols="1,2"]
 |===
-| Face | Where
+| Piece | Where
 
-| Symptom essay + demo
+| Feeling the breakage
 | link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename] · link:https://hci-nerdz.github.io/demos/broken-links-after-a-url-rename/[demo]
 
-| Diagnosis / treatment (HCI)
+| Diagnosis and treatment (HCI)
 | link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alternative-to-urls.html[An alternative to URLs]
 
-| Substrate
-| link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs — Labels versus wires]
-
-| Symptom ↔ diagnosis dialectic
-| HCI STYLE — either face can revise without retitling the other
+| Filesystem / graph substrate
+| link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs]
 |===
 
-Do **not** confuse with instruction-flows *Navigating by content* (menu-style docs). That phrase is reserved there.
+(If you came looking for menu-style install guides titled *Navigating by content*, that is a different HCI essay — not this reliability topic.)
 
 == Diagrams on this hub
 
