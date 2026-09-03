@@ -107,20 +107,36 @@ Heuristic:: weave at the **coarsest cut that removes most ABI tax** (DLL/module 
 
 DRM / kernel anti-cheat remain out of scope for early wedges; they already constrain live-translation stacks. This page does not claim to solve them.
 
-== Near-term proof (toy spike)
+== Near-term proof
 
-A **spike** here means a short, throwaway-friendly experiment to prove the *pipeline*, not a polished port of a commercial game.
+Two complementary proofs — do not conflate them.
 
-**Toy title** = a tiny Windows PE you (or the project) authored — e.g. console “hello” or a MessageBox — whose hash you control. It is *not* “pick an AAA game and show before/after screenshots.”
+=== Toy spike (machinery)
+
+A **spike** = short, throwaway-friendly experiment to prove the *pipeline*, not a polished commercial port.
+
+**Toy title** = a tiny Windows PE you (or the project) authored — e.g. console “hello” or a MessageBox — whose hash you control.
 
 Minimum bar:
 
-. Build or obtain the toy PE (Windows).
-. Author a hash-matched profile that performs coarse weaving (leave compute; rewrite load/imports/glue as needed).
-. Apply → write an on-disk host-shaped cache → run that cache on Linux.
-. Keep the original PE for verify/rollback; the **profile** is what you version in git, not a redistributed game tree.
+. Build the toy PE (Windows).
+. Author a hash-matched profile (coarse weaving: leave compute; rewrite load/imports/glue).
+. Apply → on-disk host-shaped cache → run on Linux.
+. Version the **profile** in git; keep the original PE for verify/rollback.
 
-Optional docs face: a short “original PE → profile → cache → run” walkthrough. The learning goal is machinery confidence, not marketing before/after art.
+=== Oracle title (quality)
+
+After the pipeline works, use a game the publisher already ships on **Windows and Linux** (Valve/Steam first-party titles are the obvious candidates when you own both depots).
+
+* **Input:** the Windows build you lawfully hold.
+* **Oracle:** the official Linux build of the same title (ideally same app/depot generation).
+* **Goal:** behavioral and structural comparison — does the converted cache play/load like the native Linux build? Which modules stayed leave-alone? Where did Valve’s port diverge from a mechanical PE→host weave?
+
+This is **not** expecting bit-identical binaries. Official Linux builds use different toolchains, packaging, and sometimes different code paths. The oracle answers “are we in the right ballpark?” and “what did a real port change that a weaver must learn?” — not “diff -r must be empty.”
+
+Keep both depots **local** (lemonade bottle). Do not redistribute converted trees or Steam depots as the test artifact; publish profiles and methodology notes only.
+
+Optional docs face: short walkthrough of toy spike and/or oracle comparison. Learning goal is machinery + quality confidence, not marketing before/after art.
 
 == Hard walls (systems honesty)
 

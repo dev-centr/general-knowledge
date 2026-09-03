@@ -13,6 +13,10 @@ Timeline of notable documentation changes in this repository.
 * Internet Reliability sibling faces: symptom *Broken links after a URL rename*; diagnosis/docs *An alternative to URLs*.
 * xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] points at agent-rules xref:agent-rules::editorial-titles.adoc[Editorial titles] (enthymeme + self-test).
 
+== 2026-09-03 -- Oracle titles for conversion quality
+
+* xref:explanation/internet-architecture/hash-matched-binary-conversion-profiles.adoc[Hash-matched binary conversion profiles] ? near-term proof now has toy spike (machinery) plus oracle title (dual-shipped Win/Linux depots as behavioral ground truth).
+
 == 2026-09-03 -- Toy spike as near-term proof
 
 * xref:explanation/internet-architecture/hash-matched-binary-conversion-profiles.adoc[Hash-matched binary conversion profiles] ? *Near-term proof (toy spike)*: self-authored tiny PE ? profile ? Linux cache ? run; not a commercial before/after gallery.
