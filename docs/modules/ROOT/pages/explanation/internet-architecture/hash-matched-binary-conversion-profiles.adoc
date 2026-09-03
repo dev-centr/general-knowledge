@@ -1,0 +1,128 @@
+= Hash-matched binary conversion profiles
+:description: Systems framing for convert-on-disk compatibility—hash-keyed recipes instead of eternal live ABI translation; store priority; legal-minded local apply; equivalence-engine substrate.
+:page-audience: Architects, platform builders, and agents designing Linux gaming hubs and binary adaptation pipelines
+:page-usage-context: Encyclopedia explanation under Internet Architecture; pairs with HCI on-disk game conversion and equivalence-engine
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-03
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Live compatibility layers (Wine, Proton, and similar) **reinterpret foreign ABIs at runtime**.
+That is a powerful compatibility strategy. It is not the only one.
+
+A complementary systems strategy: treat a lawfully held foreign binary as **input** to a **hash-matched conversion profile**, write a **host-native (or host-shaped) cache on disk**, and run the cache. Distribute the **recipe**, not the converted game — unless the rights holder ships the converted artifact.
+
+HCI Nerdz owns the human symptom (*on-disk game conversion*).
+DevCentr owns the systems altitude and points at adaptation substrate (`equivalence-engine`, `binary-tailor`).
+
+== Why live translation is not the only wire
+
+[cols="1,2"]
+|===
+| Mode | Characteristic
+
+| Live translation
+| Foreign binary remains the object; every launch pays ABI/API translation; shared runtime improves many titles at once
+
+| On-disk conversion
+| Foreign binary is feedstock; profile keyed by content hash; converted tree is a cache; per-title analysis cost amortized across launches and users
+
+| Publisher native / port
+| Best wire when available — no community reverse-engineering required
+|===
+
+Hubs should encode a **vendor source priority list**:
+
+. Native Linux (or host) builds from the vendor.
+. Publisher-authorized ported binaries.
+. Original build + applicable conversion profile (local apply or vendor-hosted cache).
+
+== Profile as the distributable unit
+
+A conversion profile should:
+
+* Bind to **content hashes** (and explicit version metadata) of candidate files.
+* Describe transforms at a chosen altitude: relocation/import rewrite, block patches, IR-level recompile plans, asset endian/path fixes — whatever the title needs.
+* Prefer **metadata and mapping** over embedding large slices of the original binary (reduces “we shipped the game” failure mode; does not magically clear all IP questions).
+* Support verify → apply → cache → run, with rollback to the original tree.
+
+[source,mermaid]
+----
+flowchart TD
+  Store[Store / hub priority]
+  Native[Native host build]
+  Port[Authorized port]
+  Orig[Original foreign build]
+  Prof[Hash-matched profile]
+  Cache[On-disk converted cache]
+  Run[Launch cache]
+
+  Store --> Native
+  Store --> Port
+  Store --> Orig
+  Orig --> Prof
+  Prof --> Cache
+  Native --> Run
+  Port --> Run
+  Cache --> Run
+----
+
+== Relationship to existing DevCentr substrate
+
+* **equivalence-engine** — natural home for *rulesets* and shortest-path mappings across implementations; a game conversion profile is a specialized rules / DAG artifact keyed by hash.
+* **binary-tailor** — different job (polyglot pack → host PE/ELF/Mach-O after delivery), same *reshape bytes on disk after you already have them* instinct.
+* **PackageHub / install coordinators** — candidates to wrap recognized installers so post-install conversion is a delivery step, not a forum ritual.
+
+== Hard walls (systems honesty)
+
+* Full automated decompile → perfect native recompile is not a general algorithm; titles need **profile authorship** (human + AI + tooling), not a universal shredder.
+* DRM and anti-cheat that require Windows kernel trust will reject or ban converted stacks regardless of elegance.
+* Installer porting is a separate, harder problem than converting the post-install game tree.
+
+== Legal posture (systems face — not counsel)
+
+This page is architecture literature, not legal advice.
+
+Clean ladder (preferred → contested):
+
+. Publisher ships native, port, or authorized profile/cache.
+. User applies a community or hub profile **locally** to copies they may already run; hub does not redistribute game binaries.
+. Redistributing converted games, or profiles that primarily smuggle copyrighted payload / defeat DRM, lands in familiar copyright and anti-circumvention territory.
+
+“I should be allowed to decorate my own binary” is a strong **personal-use** intuition.
+Contract (EULA), copyright, and anti-circumvention regimes still apply and vary by jurisdiction — design for the clean ladder; document gray zones without pretending they are green.
+
+== Sibling faces
+
+[cols="1,2"]
+|===
+| Face | Where
+
+| HCI symptom / treatment
+| link:https://hci-nerdz.github.io/[HCI Nerdz] concept *On-disk game conversion* (docs topic `on-disk-game-conversion`)
+
+| Product seed
+| `dev-centr/project-plans` — `seeds/2026-09-03 - on-disk-game-conversion.md`
+
+| Related delivery instinct
+| xref:how-to/binary-tailor.adoc[Binary Tailor]
+|===
+
+== Related
+
+* xref:explanation/internet-architecture/index.adoc[Internet Architecture]
+* xref:explanation/internet-architecture/provider-search-and-mirror-backups.adoc[Provider search and mirror backups]
+* xref:explanation/internet-architecture/reliability/reference-reliability.adoc[Reference reliability]

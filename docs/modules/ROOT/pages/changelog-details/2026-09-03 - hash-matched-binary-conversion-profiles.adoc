@@ -1,0 +1,6 @@
+= 2026-09-03 — Hash-matched binary conversion profiles
+
+New Internet Architecture explanation: convert-on-disk compatibility via hash-keyed recipes, store source priority, and local apply of profiles without redistributing game binaries.
+
+Pairs with HCI Nerdz *On-disk game conversion* and DevCentr `project-plans` seed `2026-09-03 - on-disk-game-conversion`.
+Points at `equivalence-engine` / `binary-tailor` as related substrate.
