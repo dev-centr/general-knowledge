@@ -65,12 +65,12 @@ None of those replace a neutral on-disk registration protocol runners write once
 Detail table: link:https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md#prior-art-why-opr-still-exists[OPR prior art].
 **Verdict:** not invalidated — prefer OPR feeding existing proxies rather than replacing them.
 
-== Online directory (not today)
+== Online directory (implemented)
 
-Trivial *global* self-registration (“new niche provider appears; every app polls it”) needs a hosted directory.
-That cannot be solved inside a local desktop app alone.
-Skeleton only: link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory] (tentative `providers.devcentr.org`).
-**Out of scope** until STATUS leaves tentative.
+Trivial *global* self-registration needs a hosted directory.
+That is **OPR Directory** — SolidStart on Netlify/Vercel (not Cloudflare Workers): link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory].
+Planned hostname `providers.devcentr.org` once DNS is pointed.
+Local runners still use UniProvider on disk; the online directory rejects localhost `base_url` values.
 
 == Consuming from Tauri / JavaScript
 
@@ -83,5 +83,5 @@ Markdown editor context: xref:explanation/documentation/markdown-editors-on-disk
 
 * Product docs: link:https://docs.devcentr.org/uniprovider/[UniProvider]
 * Repo: link:https://github.com/dev-centr/uniprovider[dev-centr/uniprovider]
-* Online directory skeleton (tentative): link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory]
+* Online directory: link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory]
 * Recommended tools: xref:reference/recommended-tools.adoc[Recommended tools]
