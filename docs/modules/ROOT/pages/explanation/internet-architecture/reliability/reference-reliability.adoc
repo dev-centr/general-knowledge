@@ -15,10 +15,10 @@ image::internet-architecture/rename-breakage-mockup.svg["Mock browser chrome: re
 | Face | Surface
 
 | Symptom
-| link:https://hci-nerdz.github.io/blog/path-renames-that-break-dependents/[Path renames that break dependents] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
+| link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename] · link:https://hci-nerdz.github.io/demos/broken-links-after-a-url-rename/[demo]
 
 | Diagnosis / treatment
-| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[Labels versus wires] — pretty names for humans; systems wire on content identity, mutable pointers, and reverse consumers
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[An alternative to URLs] — pretty names for humans; systems wire on content identity, mutable pointers, and reverse consumers
 |===
 
 DevCentr does not re-host that Mermaid treatise.

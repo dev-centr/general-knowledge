@@ -45,10 +45,10 @@ image::internet-architecture/three-altitudes.svg[Three nested altitudes: machine
 | Face | Where
 
 | Symptom essay + demo
-| link:https://hci-nerdz.github.io/blog/path-renames-that-break-dependents/[Path renames that break dependents] · link:https://hci-nerdz.github.io/demos/navigating-by-content/[demo]
+| link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename] · link:https://hci-nerdz.github.io/demos/broken-links-after-a-url-rename/[demo]
 
 | Diagnosis / treatment (HCI)
-| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[Labels versus wires] (slug kept)
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/navigating-by-content.html[An alternative to URLs] (slug kept)
 
 | Substrate
 | link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs — Labels versus wires]

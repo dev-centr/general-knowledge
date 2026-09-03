@@ -11,10 +11,10 @@ Agents are useful for docs when the **curriculum is on demand** and the **house 
 
 | Put in Cursor skills / optional layers
 
-| Titles stance, Diátaxis shape, AsciiDoc checklists, Nieman anti-terse tips
+| Titles stance (cold-reader + enthymeme), Diátaxis shape, AsciiDoc checklists, Nieman anti-terse tips
 | Mode-split body packs (news vs blog), long anti-slop rubrics, connector loops
 
-| Site `STYLE.adoc` / `AGENTS.md`
+| Site `STYLE.adoc` / `AGENTS.md` · xref:agent-rules::editorial-titles.adoc[Editorial titles]
 | `skills/<name>/` via xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
 |===
 
