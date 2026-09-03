@@ -1,0 +1,58 @@
+= Markdown editors on local disk
+:description: Local-first Markdown editors for README and project docs workflows — SoloMD live edit and split view, with OPR for multi-runner AI.
+:page-audience: Developers editing Markdown on disk (READMEs, project docs, notes vaults)
+:page-usage-context: Explanation in general-knowledge
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+Dev-Centr publishes in AsciiDoc + Antora.
+Many of the developers who use Dev-Centr tooling still live in **Markdown** for READMEs, contributor guides, and vault-style notes.
+They need a fast local editor that writes plain `.md` to a folder — not a cloud-only doc suite.
+
+== Recommendation: SoloMD
+
+link:https://solomd.app/[SoloMD] is a local-first Markdown editor (Tauri 2, MIT, ~15 MB class installer) with Typora-style **live edit**, classic **split** source/preview, outline, vault agent, and BYOK AI.
+Source: link:https://github.com/zhitongblog/solomd[zhitongblog/solomd].
+
+.SoloMD live edit (WYSIWYG-style)
+image::solomd-live-edit.png[alt="SoloMD Welcome.md in live edit mode with outline and agent panel",width=720]
+
+.SoloMD split view (source + preview)
+image::solomd-split-view.png[alt="SoloMD split view showing Markdown source beside rendered preview",width=720]
+
+Fit for Dev-Centr audiences:
+
+* **README / project docs** — edit the same files the forge renders; no export round-trip.
+* **Vault-shaped folders** — open a directory; outline + agent chat against local notes.
+* **Offline-first** — notes and keys stay on the machine by default.
+
+Dev-Centr shop docs stay AsciiDoc.
+Recommend SoloMD when the *user's* project is Markdown.
+
+== AI and local model runners
+
+SoloMD ships many cloud BYOK providers and first-class **Ollama** auto-detect, plus a generic **OpenAI-compatible** slot for llama.cpp, LM Studio, vLLM, and similar.
+That still leaves a familiar gap: every editor special-cases a favorite local runner, then asks everyone else to paste a base URL.
+
+The durable fix is not “add five more hard-coded ports.”
+It is a shared **Open Provider Registry (OPR)** so runners register once and every app can discover them — including SoloMD via its existing OpenAI-compatible path or a future OPR consumer.
+
+See:
+
+* xref:explanation/infrastructure/uniprovider.adoc[UniProvider and Open Provider Registry]
+* link:https://github.com/dev-centr/uniprovider[dev-centr/uniprovider] (reference implementation)
+* link:https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md[OPR draft spec]
+
+== Related
+
+* xref:reference/recommended-tools.adoc[Recommended tools]
+* xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
+* xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]

@@ -100,6 +100,7 @@
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 *** xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 *** xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+*** xref:explanation/infrastructure/uniprovider.adoc[UniProvider / Open Provider Registry]
 *** xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 *** xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 *** xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud project mental model]
@@ -134,4 +135,5 @@
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]
 *** xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]
 *** xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
+*** xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk]
 *** xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]

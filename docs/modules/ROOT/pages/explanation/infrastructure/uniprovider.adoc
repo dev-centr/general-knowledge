@@ -1,0 +1,87 @@
+= UniProvider and Open Provider Registry
+:description: Why local model discovery needs one open registration protocol (OPR), and how UniProvider implements it without owning the only unilayer.
+:page-audience: Engineers wiring local/cloud inference into editors, agents, or desktop tools
+:page-usage-context: Explanation in general-knowledge
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-02
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+== The annoying future (unless we stop it)
+
+Someone ships a unilayer that auto-detects Ollama.
+Someone else ships a unilayer that prefers LM Studio.
+A third app invents a private JSON registration scheme for “any runner.”
+Offline model developers then spend their lives complying with three formats that all mean “here is my `base_url`.”
+
+That is the failure mode.
+**Open Provider Registry (OPR)** exists so registration and exposure are a *shared protocol*, not a product brand war.
+
+== Division of labor
+
+[cols="1,2"]
+|===
+| Layer | Job
+
+| **OPR**
+| Discover and describe endpoints (online + offline). On-disk manifests + optional `/opr/v1/*` HTTP.
+
+| **UniProvider**
+| Dev-Centr reference implementation: library, CLI, transitional well-known probes, localhost aggregator.
+
+| **Mixr / app routers**
+| Pick *which* model for *which* job (cost, latency, policy). Consumes discovered endpoints; does not own registration.
+
+| **Editors (e.g. SoloMD)**
+| UX for writing; may keep BYOK cloud lists; should consume OPR instead of hard-coding every local runner.
+|===
+
+Vocabulary for where weights run: xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes].
+Mixr detail: xref:agent-rules::mixr-routing-and-cost.adoc[Mixr routing and cost].
+
+== Protocol stance
+
+* **Open source, versioned** — draft in link:https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md[`spec/opr.md`].
+* **Neutral paths** — `%LOCALAPPDATA%\opr\providers\` / `~/.config/opr/providers/` (not a single vendor folder as the only root).
+* **Competing aggregators OK** — another “unilayer” that reads OPR is conformant.
+* **Competing registration formats not OK** — extend `opr_version`; do not invent a sibling schema for the same job.
+
+PoC behavior in UniProvider: recognize a few well-known runners by port **until** they emit OPR manifests on install.
+Long-term, runners maintain their own registration (file drop and/or library helper on first-run).
+
+== Prior art (honest)
+
+OpenAI-compat is the common **wire** format — not a registration service.
+OpenRouter is a curated **online marketplace**.
+LiteLLM and link:https://thushan.github.io/olla/[Olla] are strong **self-hosted proxies** with operator config / profiles.
+UPP is a **client call** abstraction.
+None of those replace a neutral on-disk registration protocol runners write once for every consumer.
+Detail table: link:https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md#prior-art-why-opr-still-exists[OPR prior art].
+**Verdict:** not invalidated — prefer OPR feeding existing proxies rather than replacing them.
+
+== Online directory (not today)
+
+Trivial *global* self-registration (“new niche provider appears; every app polls it”) needs a hosted directory.
+That cannot be solved inside a local desktop app alone.
+Skeleton only: link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory] (tentative `providers.devcentr.org`).
+**Out of scope** until STATUS leaves tentative.
+
+== Consuming from Tauri / JavaScript
+
+Prefer localhost HTTP or reading manifests from disk.
+FFI/WASM bridges to the D library are optional and only justified by measured cost — see the UniProvider bridge note.
+
+Markdown editor context: xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk].
+
+== Links
+
+* Product docs: link:https://docs.devcentr.org/uniprovider/[UniProvider]
+* Repo: link:https://github.com/dev-centr/uniprovider[dev-centr/uniprovider]
+* Online directory skeleton (tentative): link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory]
+* Recommended tools: xref:reference/recommended-tools.adoc[Recommended tools]

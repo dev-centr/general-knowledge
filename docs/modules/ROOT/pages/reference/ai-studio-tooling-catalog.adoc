@@ -36,8 +36,12 @@ Lookup list for **shipping or adopting** tooling that agents use inside AI studi
 | Inference / env / runtime / UI topologies; AI Workflow Arrangement
 | xref:explanation/infrastructure/agent-control-planes.adoc[Explanation]
 
+| **Open Provider Registry / UniProvider**
+| Shared discovery protocol for online + offline model runners (stop inventing per-app unilayer formats)
+| xref:explanation/infrastructure/uniprovider.adoc[Explanation] · https://github.com/dev-centr/uniprovider[repo] · https://github.com/dev-centr/uniprovider/blob/main/spec/opr.md[OPR spec]
+
 | **Recommended tools**
-| Day-to-day shop list (Cursor, Composio, Nushell, `gh`, …)
+| Day-to-day shop list (Cursor, Composio, Nushell, `gh`, SoloMD, …)
 | xref:reference/recommended-tools.adoc[Reference]
 
 | **Nushell and AI agents**

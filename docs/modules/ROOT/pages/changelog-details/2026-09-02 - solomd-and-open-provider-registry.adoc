@@ -1,0 +1,7 @@
+= 2026-09-02 — SoloMD + Open Provider Registry
+:description: Recommended SoloMD for Markdown-on-disk; OPR/UniProvider as shared provider discovery.
+
+* Added SoloMD to xref:../reference/recommended-tools.adoc[Recommended tools] Documentation section.
+* New xref:../explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] with live-edit and split-view screenshots.
+* New xref:../explanation/infrastructure/uniprovider.adoc[UniProvider / OPR] explaining protocol-first registration vs competing unilayer formats.
+* Wired nav, explanation index, agent-control-planes Related, and AI studio tooling catalog.

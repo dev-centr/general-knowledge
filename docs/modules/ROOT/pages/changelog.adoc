@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-02 -- SoloMD + Open Provider Registry
+
+* Recommended link:https://solomd.app/[SoloMD] for local-disk Markdown workflows in xref:reference/recommended-tools.adoc[Recommended tools].
+* Explanation xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] (live edit + split screenshots; AI/OPR cross-link).
+* Explanation xref:explanation/infrastructure/uniprovider.adoc[UniProvider and Open Provider Registry] — protocol-first discovery so runners are not taxed by competing unilayer formats; prior art (OpenAI-compat / OpenRouter / LiteLLM / Olla / UPP); online directory deferred to tentative link:https://github.com/dev-centr/opr-directory[opr-directory].
+* Cross-links from agent control planes, AI studio tooling catalog, nav, and explanation indexes.
+
 == 2026-09-02 -- HCI symptom essay URL retitle
 
 * Internet Reliability faces: symptom essay link → *Path renames that break dependents* (`/blog/path-renames-that-break-dependents/`) in `reliability/index.adoc` and `reference-reliability.adoc`.

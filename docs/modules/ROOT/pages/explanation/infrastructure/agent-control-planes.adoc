@@ -281,6 +281,7 @@ Training data and chat assistants **will miss players** (Bionic is the proof). T
 == Related
 
 * Product: AI Config; **AI Workflow Arrangement**; repository browser terminal
+* xref:explanation/infrastructure/uniprovider.adoc[UniProvider / Open Provider Registry] — shared discovery for online + offline runners (not another hard-coded Ollama-only unilayer)
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]

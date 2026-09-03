@@ -32,6 +32,7 @@ Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:expl
 Featured agent / studio topics:
 
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:explanation/infrastructure/uniprovider.adoc[UniProvider / Open Provider Registry]
 * xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]
 * xref:explanation/infrastructure/composio-and-mcp-connectors.adoc[Composio and MCP connectors]
@@ -54,3 +55,9 @@ Featured agent / studio topics:
 == Documentation
 
 Literate programming, brand motion, and writing guidance live under Explanation → Documentation in the nav.
+
+* xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
+* xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk]
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
+* xref:explanation/literate-programming.adoc[Literate Programming (LP)]
+* xref:explanation/brand-motion.adoc[Brand and UI Motion Formats]
