@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- Quote three-altitudes image alt
+
+* Internet Reliability index: quote the `three-altitudes.svg` alt so commas are not parsed as AsciiDoc `width`/`height` (live HTML had `height="internet"` while `_images/` returned 200).
+
 == 2026-09-03 -- Reader voice on Reliability and provider mirrors
 
 * Internet Reliability index and Provider search openings: human umbrella wording; drop dialectic/ownership briefing lines.
