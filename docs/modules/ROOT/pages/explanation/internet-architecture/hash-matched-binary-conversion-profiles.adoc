@@ -86,10 +86,31 @@ flowchart TD
 * **binary-tailor** — different job (polyglot pack → host PE/ELF/Mach-O after delivery), same *reshape bytes on disk after you already have them* instinct.
 * **PackageHub / install coordinators** — candidates to wrap recognized installers so post-install conversion is a delivery step, not a forum ritual.
 
+== Binary weaving (partial conversion)
+
+Do not assume every byte must be decompiled and re-emitted.
+A conversion profile can **weave** a runnable image from:
+
+* **Leave-alone segments** — same-ISA machine code and data that never touch a foreign ABI (pure compute, many game loops, assets already portable).
+* **Rewritten boundaries** — imports, loaders, TLS/SEH glue, path/endian fixes, calling-convention edges.
+* **Replaced modules** — whole subsystems swapped for host-native equivalents (the DXVK / native-audio pattern), with thinner shims at the cut.
+
+Prior art at coarser altitudes: Proton-style **component replacement**; at finer altitudes: hybrid ABIs such as Arm64EC (foreign and host code in one process with thunks at crossings).
+
+When weaving helps::
+Same-ISA Win→Linux is mostly **link/load/import surgery**, not a full ISA rewrite. Leaving compute intact is *less* work and *less* runtime cost than universal IR recompile. Module-level native replacements remove whole call-volume from the foreign ABI.
+
+When weaving hurts::
+Thunks at every tiny boundary add overhead and complexity. Dual runtimes (half Wine, half converted) without a clear cut plane are usually worse than one coherent strategy. Cross-ISA titles need real translation for leave-alone code anyway.
+
+Heuristic:: weave at the **coarsest cut that removes most ABI tax** (DLL/module first, function second, basic-block last). Full recompile is a last resort for hostile or ISA-mismatched regions — not the default architecture.
+
+DRM / kernel anti-cheat remain out of scope for early wedges; they already constrain live-translation stacks. This page does not claim to solve them.
+
 == Hard walls (systems honesty)
 
 * Full automated decompile → perfect native recompile is not a general algorithm; titles need **profile authorship** (human + AI + tooling), not a universal shredder.
-* DRM and anti-cheat that require Windows kernel trust will reject or ban converted stacks regardless of elegance.
+* DRM and anti-cheat that require Windows kernel trust will reject or ban converted stacks regardless of elegance — defer rather than center the roadmap.
 * Installer porting is a separate, harder problem than converting the post-install game tree.
 
 == Legal posture (systems face — not counsel)
@@ -102,7 +123,7 @@ Clean ladder (preferred → contested):
 . User applies a community or hub profile **locally** to copies they may already run; hub does not redistribute game binaries.
 . Redistributing converted games, or profiles that primarily smuggle copyrighted payload / defeat DRM, lands in familiar copyright and anti-circumvention territory.
 
-“I should be allowed to decorate my own binary” is a strong **personal-use** intuition.
+Local “lemonade bottle” framing: the user owns the **copy instance** on their machine and may transform it locally; that is not an argument for store-scale redistribution of converted trees.
 Contract (EULA), copyright, and anti-circumvention regimes still apply and vary by jurisdiction — design for the clean ladder; document gray zones without pretending they are green.
 
 == Sibling faces

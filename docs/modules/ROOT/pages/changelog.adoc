@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-03 -- Binary weaving + local lemonade framing
+
+* xref:explanation/internet-architecture/hash-matched-binary-conversion-profiles.adoc[Hash-matched binary conversion profiles] — add **binary weaving** (leave-alone vs rewritten boundaries vs replaced modules); local-only lemonade framing; defer DRM/anti-cheat as early-wedge scope.
+
 == 2026-09-03 -- Hash-matched binary conversion profiles
 
 * Explanation xref:explanation/internet-architecture/hash-matched-binary-conversion-profiles.adoc[Hash-matched binary conversion profiles] — convert-on-disk recipes keyed by hash; store source priority; local apply vs live ABI translation; pairs with HCI *On-disk game conversion*.
