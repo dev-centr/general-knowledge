@@ -77,13 +77,24 @@ You need both:
 Stub for “what remains of Git after editions”:
 xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions].
 
+== Onboarding: pathogenesis and composition
+
+File-shaped history also fails *teaching*.
+A one-shot or heavily iterated tree does not expose the naive entrypoint a newcomer needs.
+connectome-fs names two projections over GUID identity — evolutionary walks (pathogenesis) and compositional aspect graphs — with a userspace sidecar that can live beside any git repo until the VFS carries those associations natively:
+
+link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/pathogenesis-and-composition.html[connectome-fs: Pathogenesis and composition].
+
+Pilot: link:https://github.com/dlang-supplemental/tgc/tree/main/pathogenesis[dlang-supplemental/tgc pathogenesis].
+
 == Related
 
 * xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
+* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/pathogenesis-and-composition.html[connectome-fs: Pathogenesis and composition]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
-* link:https://github.com/connectome-fs/connectome-fs[github.com/dev-centr/connectome-fs]
+* link:https://github.com/connectome-fs/connectome-fs[github.com/connectome-fs/connectome-fs]
 * link:https://www.unison-lang.org/[Unison language]
