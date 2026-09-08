@@ -1,0 +1,17 @@
+---
+title: "Mock: GitHub consent for Cloudflare Access"
+---
+flowchart TB
+  accTitle: Mock: GitHub consent for Cloudflare Access
+  accDescr: GitHub asks the operator and each reader to grant Cloudflare Access read-only organizations and teams plus read-only email addresses.
+  app["Authorize Team docs (Access)<br/>Cloudflare Access wants GitHub account access"] --> orgs["Organizations and teams<br/>read-only<br/>list memberships"]
+  app --> email["Email addresses<br/>read-only<br/>identity for Access JWT"]
+  orgs --> authorize["Authorize"]
+  email --> authorize
+  authorize --> question["Access can later ask GitHub<br/>which orgs is this person in?"]
+  class app primary
+  class orgs,email secondary
+  class authorize,question success
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px

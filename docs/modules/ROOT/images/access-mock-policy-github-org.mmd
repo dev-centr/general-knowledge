@@ -1,0 +1,19 @@
+---
+title: "Mock: Access Allow policy using GitHub organization"
+---
+flowchart TB
+  accTitle: Mock: Access Allow policy using GitHub organization
+  accDescr: Allow when login method is GitHub and GitHub organization equals your-org. Optional Require repeats the org to constrain a broad Include.
+  policy["Allow org members<br/>decision: Allow<br/>session duration: 24 hours"] --> login["Include / match any<br/>Login method is GitHub"]
+  policy --> org["Include / match any<br/>GitHub organization is your-org<br/>optional: also a GitHub team"]
+  login --> require["Require / optional, all must match<br/>GitHub organization is your-org"]
+  org --> require
+  require --> reuse["Save and reuse policy<br/>custom domain and pages.dev"]
+  class policy primary
+  class login,org secondary
+  class require warning
+  class reuse success
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px

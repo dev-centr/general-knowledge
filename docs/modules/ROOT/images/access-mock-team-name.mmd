@@ -1,0 +1,14 @@
+---
+title: "Mock: Zero Trust team name is the OAuth Homepage and callback host"
+---
+flowchart TB
+  accTitle: Mock: Zero Trust team name is the OAuth Homepage and callback host
+  accDescr: Zero Trust Settings shows Team name. Homepage URL uses team-name.cloudflareaccess.com and the callback adds /cdn-cgi/access/callback. This is not the docs hostname.
+  team["Zero Trust / Settings<br/>Team name: team-name"] --> home["OAuth Homepage URL<br/>https://team-name.cloudflareaccess.com"] --> callback["GitHub callback URL<br/>team-name.cloudflareaccess.com/<br/>cdn-cgi/access/callback"]
+  team -. "do not use" .-> wrong["Not the docs host<br/>team.docs.example.org<br/>wrong Homepage URL"]
+  class team primary
+  class home,callback success
+  class wrong danger
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

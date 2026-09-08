@@ -1,0 +1,13 @@
+---
+title: "Mock: Add GitHub as a Zero Trust identity provider"
+---
+flowchart TB
+  accTitle: Mock: Add GitHub as a Zero Trust identity provider
+  accDescr: Zero Trust Integrations to Identity providers to GitHub. App ID and Client secret come from the GitHub OAuth App. Secrets are redacted.
+  route["Zero Trust / Integrations<br/>Identity providers / Add / GitHub"] --> name["Name<br/>GitHub"] --> app["App ID / GitHub Client ID<br/>Iv1.redacted"] --> secret["Client secret<br/>redacted"] --> save["Save"] --> finish["Then Finish setup<br/>GitHub Authorize<br/>orgs + email"]
+  class route,name primary
+  class app,secret warning
+  class save,finish success
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px

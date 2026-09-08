@@ -1,0 +1,20 @@
+---
+title: "Mock: GitHub Authorize lists every org you belong to"
+---
+flowchart TB
+  accTitle: Mock: GitHub Authorize lists every org you belong to
+  accDescr: Consent controls which orgs the OAuth App may see. An unrelated org may be visible, but the Access Allow policy still gates on one organization slug.
+  consent["GitHub Authorize<br/>Organization access"] --> owner["your-org<br/>owns the OAuth App<br/>granted: expected"] --> policy["Access Allow policy<br/>GitHub organization = your-org"]
+  consent --> other["other-org<br/>you are a member<br/>already granted when restrictions are off"]
+  other -.-> note["Consent visibility is not the Access Allow list<br/>other-org members are not admitted"]
+  policy --> note
+  class consent primary
+  class owner success
+  class other warning
+  class policy secondary
+  class note danger
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

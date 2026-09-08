@@ -1,0 +1,17 @@
+---
+title: "API create GitHub IdP returns a one-time enterprise-setup URL that can 500"
+---
+flowchart LR
+  accTitle: API create GitHub IdP returns a one-time enterprise-setup URL that can 500
+  accDescr: POST identity_providers type github succeeds and may include a one-time enterprise-setup URL. It can return Cloudflare error 500; use Zero Trust Finish setup instead.
+  create["POST identity_providers<br/>type = github<br/>200"] --> message["messages[0]<br/>enterprise-setup / redacted-token<br/>one-shot; later GET does not return it"] --> error["Cloudflare error 500<br/>Internal server error / Ray ID<br/>not a bad Client ID"]
+  error --> dashboard["Durable fallback<br/>dashboard Finish setup<br/>then Test"]
+  error --> login["Alternative<br/>first GitHub login on the app"]
+  class create success
+  class message warning
+  class error danger
+  class dashboard,login secondary
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

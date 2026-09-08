@@ -1,0 +1,13 @@
+---
+title: "Mock: Register a GitHub OAuth App for Cloudflare Access"
+---
+flowchart TB
+  accTitle: Mock: Register a GitHub OAuth App for Cloudflare Access
+  accDescr: Simplified GitHub form. Homepage URL is the Zero Trust team domain. Authorization callback ends with /cdn-cgi/access/callback. Client secret is redacted.
+  owner["GitHub organization-owned OAuth App<br/>the organization controls the secret"] --> name["Application name<br/>Team docs (Access)"] --> home["Homepage URL<br/>https://team-name.cloudflareaccess.com<br/>not the docs hostname"] --> callback["Authorization callback URL<br/>team-name.cloudflareaccess.com/<br/>cdn-cgi/access/callback"] --> credentials["After registration<br/>Client ID: Iv1.xxxxxxxxxxxx<br/>Client secret: redacted; store in vault"]
+  class owner success
+  class name,home,callback primary
+  class credentials warning
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px

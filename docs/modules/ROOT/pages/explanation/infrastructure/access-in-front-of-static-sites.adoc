@@ -128,9 +128,11 @@ Do not attach Access applications to live hostnames until the GitHub IdP and All
 Creating the GitHub IdP via API is still not the last human step. `POST .../identity_providers` can succeed (`200`) and return `messages`: "Finish enterprise enablement by going to `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/enterprise-setup/<opaque>`." That URL is one-shot and can return Cloudflare **error 500** (Internal server error, a Ray ID). A later `GET` on the IdP does not reissue it. The durable path is the **Cloudflare** dashboard (**Finish setup**, then **Test**), with **GitHub** already unlocked in the same browser so 2FA does not break the return. Official wording: link:https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/github/[GitHub identity provider] (step "Finish setup").
 
 .API enterprise-setup can 500
+[.themed-svg]
 image::access-api-enterprise-setup.svg[alt="Redacted API enterprise-setup message and 500 fallback"]
 
 .Dashboard Finish setup / Test
+[.themed-svg]
 image::access-mock-finish-setup.svg[alt="Identity providers list with Finish setup and Test"]
 
 Task order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] · xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].

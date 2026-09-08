@@ -1,0 +1,16 @@
+---
+title: "Mock: Finish GitHub IdP setup in Zero Trust, not the API one-time URL"
+---
+flowchart TB
+  accTitle: Mock: Finish GitHub IdP setup in Zero Trust, not the API one-time URL
+  accDescr: After saving GitHub as an identity provider, click Finish setup then Test. That launches read-only GitHub consent. Do not depend on the API enterprise-setup URL.
+  pin["One-time PIN<br/>often already present<br/>not GitHub org membership"] -. "not sufficient" .-> github["GitHub IdP<br/>App ID saved<br/>waiting on GitHub consent"] --> finish["Finish setup<br/>opens GitHub Authorize<br/>orgs / teams + email, read-only"] --> test["Test<br/>if 2FA is on, sign into GitHub first"]
+  api["API enterprise-setup URL<br/>optional, one-shot, can 500"] -. "use durable path" .-> finish
+  class pin warning
+  class github primary
+  class finish,test success
+  class api danger
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

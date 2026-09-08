@@ -7,6 +7,7 @@ const root = resolve(import.meta.dirname, '..');
 const images = join(root, 'docs', 'modules', 'ROOT', 'images');
 const sources = [
   'internet-architecture/three-altitudes-diagram',
+  'internet-architecture/rename-breakage-mockup',
   'ai/curated-watching-linkage',
   'gcp-oauth-ideal-model',
   'gcp-oauth-actual-project',
@@ -14,7 +15,16 @@ const sources = [
   'access-setup-order',
   'access-github-membership-flow',
   'access-github-oauth-no-api',
+  'access-api-enterprise-setup',
   'access-api-token-vs-key',
+  'access-mock-team-name',
+  'access-mock-github-oauth-app',
+  'access-mock-github-consent',
+  'access-mock-github-consent-orgs',
+  'access-mock-zero-trust-github-idp',
+  'access-mock-finish-setup',
+  'access-mock-policy-github-org',
+  'access-mock-login',
   'playtime-bind-flow',
   'playtime-bootstrap',
   'playtime-growth-ratchet',
@@ -26,6 +36,9 @@ const sources = [
   'playtime-attic-basement',
   'playtime-argv',
 ];
+const selectedSources = process.argv.includes('--non-playtime')
+  ? sources.filter((source) => !basename(source).startsWith('playtime-'))
+  : sources;
 const hostDark = {
   'color-canvas': '#071015',
   'color-surface-primary': '#12242c',
@@ -47,7 +60,7 @@ function hash(buffer) {
 }
 
 try {
-  for (const source of sources) {
+  for (const source of selectedSources) {
     const stem = basename(source);
     const directory = dirname(join(images, source));
     const adaptive = readFileSync(join(directory, `${stem}.svg`));
@@ -84,4 +97,4 @@ try {
   await browser.close();
 }
 
-console.log(`Rendered ${sources.length} adaptive light/dark pairs and ${sources.length} host palette pairs.`);
+console.log(`Rendered ${selectedSources.length} adaptive light/dark pairs and ${selectedSources.length} host palette pairs.`);

@@ -1,0 +1,17 @@
+---
+title: "Mock: Cloudflare Access login with Continue with GitHub"
+---
+flowchart TB
+  accTitle: Mock: Cloudflare Access login with Continue with GitHub
+  accDescr: A logged-out visitor sees one primary Continue with GitHub action on the member hostname. An account outside the organization is denied after OAuth.
+  visit["Incognito visit<br/>https://team.docs.example.org"] --> sign["Sign in<br/>use the GitHub account in the org"] --> github["Continue with GitHub"]
+  github --> allow["Org member<br/>continue to static site"]
+  github --> deny["Not in org<br/>denied after OAuth"]
+  class visit,sign primary
+  class github success
+  class allow secondary
+  class deny danger
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

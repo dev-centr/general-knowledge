@@ -1,7 +1,12 @@
 = Canonical themed diagrams
 
-The ten PlayTime figures and nine additional architecture diagrams now use Mermaid as their editable source and an explicit Themed SVG manifest as the semantic color contract.
+All 19 current non-PlayTime figures now use Mermaid as their editable source and an explicit Themed SVG manifest as the semantic color contract.
+Together with the separately maintained PlayTime set, the repository contains 29 canonical themed diagrams.
+
+The non-PlayTime migration covers curated watching, Internet Reliability, Cloudflare Access setup and structured mockups, and Google Cloud OAuth mental models.
 
 Each source renders once with Mermaid 11 and root-level `htmlLabels: false`. `@dev-centr/mermaid-svg-css-vars` 0.1.2 then emits a standalone adaptive `name.svg` and host-controlled `name.host.svg` through `@dev-centr/themed-svg` 0.1.1.
 
-The original fixed-color SVG for every migrated figure remains beside it as `name.fixed.svg`. The PlayTime wrong-translator and two-doors illustrations remain unchanged.
+The original fixed-color SVG for every migrated figure remains beside it as `name.fixed.svg`.
+The build and check commands regenerate deterministically and detect stale artifacts; validation parses XML and rejects missing accessibility metadata, unsafe content, external resources, or incomplete theme output.
+AsciiDoc pages mark eligible image blocks with the `themed-svg` role so the portable image remains the no-JavaScript fallback.

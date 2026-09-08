@@ -4,8 +4,9 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-09-08 -- Canonical themed diagram sources
 
-* Nineteen diagrams now keep Mermaid source, explicit Themed SVG manifests, standalone adaptive SVGs, host-controlled SVGs, and preserved fixed originals.
+* All 19 current non-PlayTime diagrams now keep Mermaid source, explicit Themed SVG manifests, standalone adaptive SVGs, host-controlled SVGs, and preserved fixed originals (29 canonical diagrams total).
 * Mermaid 11 renders text as SVG text, while the versioned theme bindings provide complete light and dark palettes without `foreignObject`.
+* AsciiDoc image blocks carry the `themed-svg` role so sites can progressively upgrade the portable image without passthrough HTML.
 * See xref:changelog-details/2026-09-08 - canonical-themed-diagrams.adoc[Detailed changelog].
 
 == 2026-09-07 -- Pathogenesis / composition pointer

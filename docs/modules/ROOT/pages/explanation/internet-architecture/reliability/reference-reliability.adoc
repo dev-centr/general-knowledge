@@ -6,6 +6,7 @@ Reference reliability asks: when someone (or an agent) follows a cite, do they s
 URL rot is the slice everyone recognizes.
 The same failure mode shows up in package names, Antora slugs, file paths, and secret names — any place a **pretty label** was used as the only **wire**.
 
+[.themed-svg]
 image::internet-architecture/rename-breakage-mockup.svg["Mock browser chrome: rename breaks three consumer tabs while the producer path looks fine",width=760]
 
 == Symptom → diagnosis (HCI owns the dialectic)

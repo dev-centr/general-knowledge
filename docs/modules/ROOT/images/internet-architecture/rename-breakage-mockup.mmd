@@ -1,0 +1,21 @@
+---
+title: "Felt rename breakage"
+---
+flowchart LR
+  accTitle: Felt rename breakage
+  accDescr: Producer renames a docs path; three consumer tabs still hold the old label and show broken cites.
+  producer["Producer docs<br/>/docs/api/v2/auth<br/>200 OK / content unchanged<br/>human path updated"]
+  old["Old path string<br/>/docs/api/v1/auth"]
+  readme["README<br/>404 / string break"]
+  nav["Sibling nav<br/>404 / string break"]
+  blog["Blog cite<br/>404 / string break"]
+  producer -. "rename changed the label" .-> old
+  old --> readme
+  old --> nav
+  old --> blog
+  class producer success
+  class old warning
+  class readme,nav,blog danger
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px
