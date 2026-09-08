@@ -1,0 +1,25 @@
+---
+title: "Curated watching linkage"
+---
+flowchart LR
+  personal["Personal index<br/>curated-learning.md<br/>title / URL / short note"]
+  org["Org index<br/>curated-watching.adoc<br/>mandatory / high-signal"]
+  topical["Topical page<br/>when the set grows"]
+  docs["Other docs<br/>xref the topical page"]
+  archive["Drive / local archival copies<br/>hang off the personal pick"]
+  personal -->|"deep-link for blurbs and credits"| org
+  org --> topical
+  org --> docs
+  personal -->|"when retention is a concern"| archive
+  class personal primary
+  class org secondary
+  class topical,docs success
+  class archive warning
+  accTitle: Curated watching linkage
+  accDescr: Personal curated-learning list keeps durable picks. Dev-Centr curated-watching is an index that may split into topical pages. Other docs and the personal list deep-link for blurbs.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

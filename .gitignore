@@ -1,0 +1,9 @@
+*
+!.gitignore
+!package.json
+!pnpm-lock.yaml
+!mermaid-config.json
+!scripts/
+!scripts/*.mjs
+!docs/
+!docs/**

@@ -47,6 +47,7 @@ Access is a **different permission set**. A Pages-scoped token (typical `wrangle
 Use the **Cloudflare** toolkit (Global API Key + email) for Access writes, or mint a token that includes **Access: Apps and Policies** and **Access: Organizations / Identity Providers**. Do not create Access applications until a GitHub identity provider exists (GitHub OAuth Apps have **no create API** -- an operator pastes Client ID/secret). Order and mocks: xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Protect a static site with Cloudflare Access] · xref:how-to/cloudflare-access-static-site.adoc#access-api-credentials[Agents and API credentials].
 
 .Pages-scoped token vs Global API Key (redacted)
+[.themed-svg]
 image::access-api-token-vs-key.svg[alt="Pages API token 403s on Access IdPs; Global API Key can write Access"]
 
 == ACTIVE is not a smoke test

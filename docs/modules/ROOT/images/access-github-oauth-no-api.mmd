@@ -1,0 +1,25 @@
+---
+title: "GitHub OAuth Apps are registered in the UI; there is no create API"
+---
+flowchart LR
+  agent["Agent<br/>Composio / gh / GitHub Apps APIs"]
+  missing["POST /orgs/org/oauth/apps<br/>does not exist"]
+  failure["Cloudflare IdP create<br/>missing_client_id_or_client_secret"]
+  operator["Operator in GitHub UI<br/>Org Settings / Developer settings<br/>OAuth Apps / New<br/>prefer organization-owned"]
+  secrets["Client ID + secret<br/>paste into Zero Trust IdP"]
+  finish["Agent can finish Access"]
+  agent --> missing --> failure
+  operator --> secrets --> finish
+  class agent primary
+  class missing,failure danger
+  class operator success
+  class secrets warning
+  class finish secondary
+  accTitle: GitHub OAuth Apps are registered in the UI; there is no create API
+  accDescr: Agents can list org members and call Cloudflare Access APIs. They cannot POST a GitHub OAuth App. An operator registers it under the GitHub organization Developer settings, then pastes Client ID and secret into Zero Trust.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

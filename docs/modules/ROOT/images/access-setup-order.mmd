@@ -1,0 +1,23 @@
+---
+title: "Access setup order: GitHub OAuth App, then IdP, then policy, then Access apps"
+---
+flowchart LR
+  github["1. GitHub UI<br/>Register OAuth App<br/>no REST create"]
+  idp["2. Zero Trust IdP<br/>paste Client ID + secret<br/>authorize orgs + email"]
+  policy["3. Allow policy<br/>GitHub org = your-org<br/>reuse on both hosts"]
+  apps["4. Access apps<br/>custom domain<br/>and pages.dev"]
+  warning["Do not start at step 4<br/>Access applications deny by default<br/>without an IdP and Allow policy"]
+  github --> idp --> policy --> apps
+  warning -.-> apps
+  class github success
+  class idp,policy primary
+  class apps secondary
+  class warning danger
+  accTitle: Access setup order: GitHub OAuth App, then IdP, then policy, then Access apps
+  accDescr: Do not create Access applications first. They deny by default. Register the GitHub OAuth App in GitHub's UI (no API), add it as a Zero Trust identity provider, write the Allow policy, then attach Access apps to both hostnames.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

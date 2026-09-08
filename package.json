@@ -1,0 +1,24 @@
+{
+  "name": "@dev-centr/general-knowledge-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "diagrams:build": "node scripts/build-diagrams.mjs",
+    "diagrams:check": "node scripts/build-diagrams.mjs --check",
+    "diagrams:validate": "node scripts/validate-themed-diagrams.mjs",
+    "diagrams:render-test": "node scripts/test-themed-diagram-rendering.mjs"
+  },
+  "devDependencies": {
+    "@dev-centr/mermaid-svg-css-vars": "0.1.2",
+    "@dev-centr/themed-svg": "0.1.1",
+    "@mermaid-js/mermaid-cli": "11.17.0",
+    "@xmldom/xmldom": "^0.8.11",
+    "puppeteer": "25.10.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "puppeteer"
+    ]
+  },
+  "packageManager": "pnpm@10.15.1"
+}

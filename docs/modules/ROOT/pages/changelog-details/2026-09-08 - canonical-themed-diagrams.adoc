@@ -1,0 +1,7 @@
+= Canonical themed diagrams
+
+The ten PlayTime figures and nine additional architecture diagrams now use Mermaid as their editable source and an explicit Themed SVG manifest as the semantic color contract.
+
+Each source renders once with Mermaid 11 and root-level `htmlLabels: false`. `@dev-centr/mermaid-svg-css-vars` 0.1.2 then emits a standalone adaptive `name.svg` and host-controlled `name.host.svg` through `@dev-centr/themed-svg` 0.1.1.
+
+The original fixed-color SVG for every migrated figure remains beside it as `name.fixed.svg`. The PlayTime wrong-translator and two-doors illustrations remain unchanged.

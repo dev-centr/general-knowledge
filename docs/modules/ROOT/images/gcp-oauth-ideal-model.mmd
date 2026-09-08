@@ -1,0 +1,25 @@
+---
+title: "Ideal mental model: account, apps, credentials"
+---
+flowchart LR
+  you["You<br/>Google account<br/>Drive / Gmail / Calendar<br/>personal trust and data"]
+  composio["App: Composio<br/>own consent / scopes"]
+  rclone["App: rclone<br/>own consent / scopes"]
+  script["App: personal script<br/>own consent / scopes"]
+  cc["Client ID + secret<br/>redirect URIs"]
+  rc["Client ID + secret<br/>redirect URIs"]
+  sc["Client ID + secret<br/>redirect URIs"]
+  you --> composio --> cc
+  you --> rclone --> rc
+  you --> script --> sc
+  class you success
+  class composio,rclone,script secondary
+  class cc,rc,sc warning
+  accTitle: Ideal mental model: account, apps, credentials
+  accDescr: You authorize separate apps; each app owns its own consent and client credentials.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

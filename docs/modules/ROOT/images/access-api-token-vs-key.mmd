@@ -1,0 +1,20 @@
+---
+title: "Pages-scoped API token vs Global API Key for Access APIs"
+---
+flowchart LR
+  pages["Pages / DNS API token<br/>GET apps: [] 200<br/>GET identity providers: 403<br/>GET organizations: 403<br/>GET policies: 403<br/>10000 Authentication error<br/>fine for wrangler pages deploy"]
+  key["Global API Key + email<br/>GET Access resources: 200<br/>POST GitHub IdP: 200<br/>Access reads and writes succeed"]
+  scoped["Alternative token<br/>Access Apps and Policies<br/>Access Organizations / Identity Providers"]
+  pages -. "same account; insufficient scope" .-> key
+  scoped --> key
+  class pages danger
+  class key success
+  class scoped secondary
+  accTitle: Pages-scoped API token vs Global API Key for Access APIs
+  accDescr: A Cloudflare API token scoped to Pages can list Access apps as empty and still 403 on identity providers, organizations, and policies. Access writes need a Global API Key or a token with Access: Apps and Policies plus Access: Organizations / Identity Providers.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

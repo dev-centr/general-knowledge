@@ -1,0 +1,23 @@
+---
+title: "How Cloudflare Access learns GitHub org membership"
+---
+sequenceDiagram
+  accTitle: How Cloudflare Access learns GitHub org membership
+  accDescr: Visitor hits Access. With no session, Access sends them to GitHub OAuth. GitHub returns a token. Access lists the user's orgs and matches the Allow policy. Allow sets a JWT cookie and the static HTML is served. Deny never reaches the origin.
+  participant V as Visitor
+  participant A as Cloudflare Access
+  participant G as GitHub
+  participant O as Static origin
+  V->>A: GET team.docs - no JWT
+  A-->>V: Access login
+  V->>G: OAuth - orgs, teams, email
+  G-->>A: short-lived token
+  A->>G: GET /user/orgs
+  G-->>A: [your-org, ...]
+  alt org matches Allow policy
+    A-->>V: set Access JWT cookie
+    V->>O: GET with cookie
+    O-->>V: static HTML and search index
+  else not in org or app cannot see org
+    A-->>V: deny - origin never runs
+  end

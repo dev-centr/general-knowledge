@@ -24,6 +24,7 @@ Zero Trust may already exist on the account (a team domain like `https://<team-n
 Access applications **deny by default**. Create the GitHub (or PIN) identity provider and the Allow policy **before** you attach applications to live hostnames. Otherwise the origin goes dark for everyone, including you, until a policy exists.
 
 .IdP first, lock last
+[.themed-svg]
 image::access-setup-order.svg[alt="Setup order: GitHub UI OAuth App, Zero Trust IdP, Allow policy, then Access apps on both hostnames"]
 
 . Register a **GitHub OAuth App** in GitHub's **UI**. GitHub has no REST route to create OAuth Apps. Agents (Composio, `gh`, GitHub Apps APIs) cannot mint the Client ID and secret.
@@ -33,6 +34,7 @@ image::access-setup-order.svg[alt="Setup order: GitHub UI OAuth App, Zero Trust 
 . Then create Access applications on the **custom domain and** `*.pages.dev`.
 
 .GitHub OAuth Apps are a human step
+[.themed-svg]
 image::access-github-oauth-no-api.svg[alt="GitHub has no create-OAuth-App API; Cloudflare then answers missing_client_id_or_client_secret"]
 
 == Protect every public hostname
@@ -236,6 +238,7 @@ If they **joined** the org after a failed Access login, have them revoke the OAu
 Composio (and `wrangler`) can list zones and deploy Pages with a **Pages-scoped API token**. That token is not enough to set up Access.
 
 .Pages-scoped token vs Global API Key (redacted statuses)
+[.themed-svg]
 image::access-api-token-vs-key.svg[alt="Pages API token: GET access/apps 200 empty, identity_providers and policies 403. Global API Key: Access reads and writes succeed"]
 
 Typical split:

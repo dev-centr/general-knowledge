@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-08 -- Canonical themed diagram sources
+
+* Nineteen diagrams now keep Mermaid source, explicit Themed SVG manifests, standalone adaptive SVGs, host-controlled SVGs, and preserved fixed originals.
+* Mermaid 11 renders text as SVG text, while the versioned theme bindings provide complete light and dark palettes without `foreignObject`.
+* See xref:changelog-details/2026-09-08 - canonical-themed-diagrams.adoc[Detailed changelog].
+
 == 2026-09-07 -- Pathogenesis / composition pointer
 
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]: onboarding section linking connectome-fs pathogenesis + composition essay and the tgc sidecar pilot.

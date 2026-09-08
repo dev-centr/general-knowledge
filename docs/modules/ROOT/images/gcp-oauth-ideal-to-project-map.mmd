@@ -1,0 +1,23 @@
+---
+title: "Mapping ideal apps onto Google Cloud projects"
+---
+flowchart LR
+  composio["Ideal app: Composio<br/>one trust platform"]
+  rclone["Ideal app: rclone<br/>separate product"]
+  cp["Project: composio-integrations<br/>one Client ID<br/>grow scopes for Google toolkits"]
+  rp["Project: rclone-personal<br/>isolated consent / quotas / revoke"]
+  warning["A second Client ID inside one Project<br/>is only another credential string<br/>not a separate app"]
+  composio -. "stand-in" .-> cp
+  rclone -. "stand-in" .-> rp
+  cp --> warning
+  class composio,rclone secondary
+  class cp,rp primary
+  class warning danger
+  accTitle: Mapping ideal apps onto Google Cloud projects
+  accDescr: Composio maps to one project used as a trust platform; rclone maps to a separate project.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

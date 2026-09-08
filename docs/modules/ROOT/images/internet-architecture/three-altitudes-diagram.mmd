@@ -1,0 +1,27 @@
+---
+title: "Three altitudes of reliability"
+---
+flowchart TB
+  subgraph internet["Internet reliability"]
+    internetNote["Cool URIs / citations / shared memory / reference durability"]
+    subgraph ecosystem["Developer-ecosystem / DevX reliability"]
+      ecosystemNote["Packages / docs xrefs / agent trees / reverse consumers"]
+      subgraph machine["Machine reliability"]
+        machineNote["Process / disk / host uptime"]
+      end
+    end
+  end
+  class internet secondary
+  class ecosystem success
+  class machine warning
+  class internetNote secondary
+  class ecosystemNote success
+  class machineNote warning
+  accTitle: Three altitudes of reliability
+  accDescr: Nested bands: machine reliability inside developer-ecosystem reliability inside internet reliability.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

@@ -22,6 +22,7 @@ endif::[]
 
 Short list of **high-signal** videos worth watching before (or while) using AI day to day. Prefer this over stuffing profile READMEs; add entries when something is fundamental enough to share across Dev-Centr.
 
+[.themed-svg]
 image::ai/curated-watching-linkage.svg[alt="Personal curated-learning keeps durable picks; Dev-Centr curated-watching is an index that may split into topical pages; other docs deep-link for blurbs",width=720]
 
 == How this list grows

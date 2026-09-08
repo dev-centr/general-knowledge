@@ -32,6 +32,7 @@ A **playbook** is a recipe written as a document. Each step says what you want: 
 **Scriptbook** is the waiter. Today that is the `scriptbook` CLI. Later it is also a DevCentr screen. It opens the book and talks to you.
 
 .Cookbook, kitchen, waiter
+[.themed-svg]
 image::playtime-layers.svg[alt="Three layers: CentrMark the book, PlayTime the stage, Scriptbook the app"]
 
 Keep the word **playbook** for the document (`::: playbook`). PlayTime is the moment it runs.
@@ -39,6 +40,7 @@ Keep the word **playbook** for the document (`::: playbook`). PlayTime is the mo
 Do **not** split PlayTime into a new GitHub repo yet. It is the library in `dev-centr/scriptbook`. The binary stays `scriptbook`. OpenShellOrg may be a better long-term home for a document runner that spawns **argv** (program + args, no shell). That move waits. The kitchen is mid-service.
 
 .PlayTime stays in the Dev-Centr workshop
+[.themed-svg]
 image::playtime-sibling-home.svg[alt="PlayTime lives in Dev-Centr; a dotted maybe-later path points at OpenShellOrg"]
 
 == The wrong default: hot-replace
@@ -65,6 +67,7 @@ At **play time** (when PlayTime runs the book):
 . Run. Write the sidecar. Leave the `.cmk` alone.
 
 .Detect, filter, maybe ask, bind, run
+[.themed-svg]
 image::playtime-bind-flow.svg[alt="Five boxes: snapshot, filter, ask, bind, run"]
 
 Two layers that look similar but are not:
@@ -109,6 +112,7 @@ Do not put every Linux package format in the playbook language. The catalog owns
 Show the user: **this tool's methods ∩ this host's capabilities**. Ask only if that set has more than one member.
 
 .Ask only the overlap
+[.themed-svg]
 image::playtime-venn.svg[alt="Two circles: catalog methods for gh, and formats this computer can run; ask only in the overlap"]
 
 == Koan: MSI or bash?
@@ -125,6 +129,7 @@ Format is which installer (msi, deb, flatpak, winget, …).
 image::playtime-two-doors.svg[alt="Two doors labeled MSI and bash; that is not a questionnaire"]
 
 .One suitcase, no costumes
+[.themed-svg]
 image::playtime-argv.svg[alt="argv box for winget install; dashed bash, pwsh, and nu coats are not needed"]
 
 == Format x shell is not a graph
@@ -147,6 +152,7 @@ Equivalence Engine already has two machines. People mix them up.
 CLI install was never "migrate this bash to pwsh." It is intent + host → a catalog row. Putting `shell` in `--to` (`windows/pwsh/msi`) would explode into a lattice. That *would* break the engine. So we do not.
 
 .Columns, not a cube
+[.themed-svg]
 image::playtime-facets-not-lattice.svg[alt="A catalog table of os, format, runtime versus a forbidden path-segment lattice"]
 
 If we later want `ls` ↔ `Get-ChildItem`, that is a **separate** `shell`/`cmd` domain. Installing a `.deb` does not change what `ls` means.
@@ -175,6 +181,7 @@ PlayTime must know the computer **before** it asks the engine for commands. Usin
 There is no world `get_os()` API. Close cousins already exist: POSIX `uname`, Freedesktop `/etc/os-release`, Windows `RtlGetVersion`, Darwin `sw_vers`. We sit on those.
 
 .Snapshot, then dereference
+[.themed-svg]
 image::playtime-bootstrap.svg[alt="Deadlock cycle crossed out; snapshot then Equivalence Engine bind"]
 
 **Probe kinds** are code in PlayTime (`compileTime`, `uname`, `osReleaseFile`, `ntVersion`, `pathHas`, and `command` as escape hatch). A table cannot invent a new kernel ABI.
@@ -186,6 +193,7 @@ PowerShell-on-Linux does not save bootstrap. `$IsLinux` only works if you are al
 WSL is Linux plus overlay `wsl`. Cygwin is Windows plus a POSIX hat. Containers are an overlay on whatever family. Not new planets.
 
 .Overlays are stickers
+[.themed-svg]
 image::playtime-overlays.svg[alt="linux, windows, and any family circles with wsl, cygwin, container stickers"]
 
 == The growth loop (wanted) vs the deadlock (forbidden)
@@ -195,11 +203,13 @@ Forbidden: PlayTime calls the engine to learn `family` so that it can call the e
 Wanted: catalogs get richer → CI bakes a better cascade → PlayTime wakes up on more machines → people write more playbooks → they register more intents and probes → the next bake is richer. Each release is a ratchet.
 
 .Ratchet at build time
+[.themed-svg]
 image::playtime-growth-ratchet.svg[alt="Rules to CI bake to shipped PlayTime to more playbooks back to new catalog rows"]
 
 Humans live at the intent layer. When winget flags change, you rewrite **one basement row**. Every book above it dereferences better. You stop maintaining a Windows script and a Linux script.
 
 .Attic intents, basement argv
+[.themed-svg]
 image::playtime-attic-basement.svg[alt="House cross-section: intents in the attic, PlayTime stairs, catalog in the basement"]
 
 A new Unix-like distro that speaks `os-release` is data (next bake). A kernel that is neither NT nor POSIX needs a new probe *kind* in PlayTime, then a table row. That is "register with us": fill the record, not an `os.family` intent.

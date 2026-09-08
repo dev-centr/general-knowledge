@@ -54,6 +54,7 @@ Orange-cloud (proxied) DNS is required so Access can intercept the request. Grey
 Cloudflare does not scrape the GitHub org, and it does not keep a member roster of its own. **GitHub answers at login.** Access then stores that answer in a session cookie until the cookie expires.
 
 .GitHub answers "are they in the org?" at login
+[.themed-svg]
 image::access-github-membership-flow.svg[alt="How Cloudflare Access learns GitHub org membership: OAuth, GET /user/orgs, Allow or Deny"]
 
 === Handshake
@@ -109,14 +110,17 @@ Authorize is not "pick the Access Allow org." Cloudflare requested `read:org`, s
 The GitHub OAuth App is a **dashboard** object. GitHub's REST API has no "create OAuth App" route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
 
 .Human step, then API
+[.themed-svg]
 image::access-setup-order.svg[alt="IdP first, lock last: GitHub UI OAuth App, then Zero Trust IdP, policy, Access apps"]
 
 .GitHub OAuth Apps have no create API
+[.themed-svg]
 image::access-github-oauth-no-api.svg[alt="POST OAuth App does not exist; Cloudflare IdP create needs client_id and client_secret"]
 
 A **Pages-scoped API token** (typical CI secret for `wrangler pages deploy`) is a second trap. It may list Access applications as an empty array (`200`) and still return **`403 Authentication error`** on identity providers, organizations, and policies. Access writes need the **Global API Key** (plus account email) or a token that includes Access Apps/Policies and Identity Providers. In Composio those are two different toolkits: xref:how-to/composio-cloudflare-connection.adoc[Connect Cloudflare in Composio].
 
 .Same account, two secrets (redacted statuses)
+[.themed-svg]
 image::access-api-token-vs-key.svg[alt="Pages token 403s on identity providers; Global API Key can write Access"]
 
 Do not attach Access applications to live hostnames until the GitHub IdP and Allow policy exist. Applications deny by default.

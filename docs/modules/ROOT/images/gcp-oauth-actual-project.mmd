@@ -1,0 +1,28 @@
+---
+title: "Actual Google Cloud model: project owns consent and quotas"
+---
+flowchart LR
+  you["You<br/>authorize against<br/>the project's app name"]
+  project["Google Cloud Project<br/>shared boundary"]
+  bundle["Shared bundle<br/>OAuth consent screen<br/>enabled APIs<br/>API quotas<br/>scope union<br/>one branding / revoke story"]
+  a["Client ID A: rclone<br/>does not isolate consent"]
+  b["Client ID B: Composio<br/>shares the same screen"]
+  note["Use separate Projects for real isolation<br/>lump only for one trust platform"]
+  you --> project
+  project --> bundle
+  project --> a
+  project --> b
+  bundle --> note
+  class you success
+  class project primary
+  class bundle danger
+  class a,b warning
+  class note secondary
+  accTitle: Actual Google Cloud model: project owns consent and quotas
+  accDescr: One project shares consent screen, APIs, and quotas across multiple OAuth client IDs.
+
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

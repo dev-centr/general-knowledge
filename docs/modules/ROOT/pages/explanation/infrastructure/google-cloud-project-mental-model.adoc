@@ -57,6 +57,7 @@ flowchart TB
 In this world you would **not** invent a new "Personal 2.0" project every time you add a sync tool. Apps would be first-class. Infrastructure projects (VMs, BigQuery, Cloud Run) would be optional and separate.
 
 .Ideal: account, apps, credentials
+[.themed-svg]
 image::gcp-oauth-ideal-model.svg[alt="Ideal mental model: You authorize separate apps; each app owns consent and client credentials"]
 
 == What Google Cloud actually couples
@@ -113,6 +114,7 @@ Consequences people feel in the UI:
 * Pure consumer workflows (NotebookLM context via Drive) still require a Project, consent screen, and Client ID--there is no personal API sandbox.
 
 .Actual: Project owns the shared bundle
+[.themed-svg]
 image::gcp-oauth-actual-project.svg[alt="Actual model: one Project shares consent screen, APIs, and quotas across Client IDs"]
 
 == Mapping ideal -> Console (without self-deception)
@@ -120,6 +122,7 @@ image::gcp-oauth-actual-project.svg[alt="Actual model: one Project shares consen
 Keep the ideal nouns in your head. Label Projects as **stand-ins for apps** (or for *trust platforms*), not as "folders for personal stuff."
 
 .Map ideal apps onto Projects
+[.themed-svg]
 image::gcp-oauth-ideal-to-project-map.svg[alt="Mapping: Composio and rclone each get their own Project used as a trust platform"]
 
 [source,mermaid]
