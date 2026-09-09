@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-09 -- SEO explanation and Next.js listing tutorial
+
+* Added xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website], covering discoverability, crawlable HTML, metadata, internal links, sitemap and robots rules, structured data, performance, Search Console, and the limits of automated Google sitelinks.
+* Added xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site], a complete App Router path from canonical listing records through production raw-HTML checks.
+* Added a reusable themed diagram of the discovery and improvement loop, and wired both pages into the Diátaxis navigation and landing pages.
+* See xref:changelog-details/2026-09-09 - seo-explanation-and-nextjs-listing-tutorial.adoc[Detailed changelog].
+
 == 2026-09-08 -- Canonical themed diagram sources
 
 * All 19 current non-PlayTime diagrams now keep Mermaid source, explicit Themed SVG manifests, standalone adaptive SVGs, host-controlled SVGs, and preserved fixed originals (29 canonical diagrams total).

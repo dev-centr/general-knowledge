@@ -1,0 +1,44 @@
+= SEO explanation and Next.js listing tutorial
+:description: Detailed changelog for the SEO explanation, practical Next.js listing tutorial, navigation wiring, and themed discovery diagram.
+:page-audience: Maintainers and readers tracking documentation changes
+:page-usage-context: Detailed entry subordinate to the General Developer Knowledge changelog
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-09
+:page-created: 2026-09-09
+:page-diataxis: reference
+:page-doc-type: changelog-detail
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+== Added
+
+* xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website] explains SEO as a discoverability and usefulness system rather than a ranking trick.
+* The explanation connects server-rendered content, metadata, internal links, sitemap and robots rules, structured data, performance, and Search Console.
+* It records that ordinary Google sitelinks are automated and cannot be manually configured, and that the separate sitelinks search box was retired beginning November 21, 2024.
+* xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site] walks through canonical records, Server Components, `generateStaticParams`, `generateMetadata`, JSON-LD, `sitemap.ts`, `robots.ts`, raw-response checks, and Search Console.
+
+== Navigation and illustration
+
+* Both pages are linked from the component navigation and their Diátaxis landing pages.
+* `seo-discovery-system.mmd` preserves the editable Mermaid source for the shared orientation figure.
+* The diagram build emits a fixed original, host-controlled SVG, standalone adaptive SVG, and Themed SVG manifest.
+
+== Verification intent
+
+The examples favor canonical, indexable, meaningful HTML and explicitly reject keyword stuffing, doorway pages, false structured data, and guaranteed-ranking claims.
+Production checks inspect the raw response rather than relying on a hydrated browser DOM.
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]

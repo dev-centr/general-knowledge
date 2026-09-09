@@ -1,0 +1,24 @@
+---
+title: SEO discovery and improvement system
+---
+flowchart LR
+  accTitle: SEO discovery and improvement system
+  accDescr: A useful public page becomes readable HTML, is discovered and understood by a search engine, may appear for a relevant search, serves a visitor, and sends observations back through Search Console.
+  page["Useful public page\naccurate text and stable URL"]
+  html["Rendered HTML\nmetadata and internal links"]
+  discover["Discovery and crawl\nlinks, sitemap, robots rules"]
+  understand["Understanding\ncontent, structure, JSON-LD"]
+  result["Search presentation\nquery-dependent result"]
+  visit["Useful visit\nfast and task-complete"]
+  console["Search Console\nindexing and performance evidence"]
+  page --> html --> discover --> understand --> result --> visit
+  result -. observations .-> console
+  console -. improve .-> page
+  class page success
+  class html,discover,understand secondary
+  class result,visit primary
+  class console warning
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px

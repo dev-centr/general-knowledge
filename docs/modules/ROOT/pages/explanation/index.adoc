@@ -52,6 +52,10 @@ Featured agent / studio topics:
 
 * xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Ecosystem failures and successes] — history book for CSL (xkcd Dependency, Heartbleed, left-pad, WordPress, Postgres)
 
+== Web publishing
+
+* xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website] — how rendered content, metadata, links, sitemap and robots rules, structured data, performance, sitelinks, and Search Console support discoverability
+
 == Documentation
 
 Literate programming, brand motion, and writing guidance live under Explanation → Documentation in the nav.

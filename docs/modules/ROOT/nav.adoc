@@ -3,6 +3,7 @@
 * xref:tutorials/index.adoc[Tutorials]
 ** xref:tutorials/onboarding.adoc[Developer Onboarding]
 ** xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy]
+** xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site]
 
 * xref:how-to/index.adoc[How-to Guides]
 ** xref:how-to/nushell-setup.adoc[Nushell Setup]
@@ -132,6 +133,8 @@
 *** xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
 ** Open source / licensing posture
 *** xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Ecosystem failures and successes]
+** Web publishing
+*** xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]

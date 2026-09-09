@@ -46,6 +46,7 @@ const sources = [
   'playtime-facets-not-lattice',
   'playtime-attic-basement',
   'playtime-argv',
+  'seo-discovery-system',
 ];
 
 const diagramOption = process.argv.indexOf('--diagram');

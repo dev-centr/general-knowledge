@@ -1,0 +1,174 @@
+= What SEO does for a public website
+:description: SEO makes public pages easier for search engines to discover, understand, and present, but it cannot guarantee rankings or manually configure Google sitelinks.
+:page-audience: Developers, editors, and product owners responsible for public content or listing websites
+:page-usage-context: Concept-oriented explanation of search discoverability and the systems that support it
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-09
+:page-created: 2026-09-09
+:page-published: 2026-09-09
+:page-diataxis: explanation
+:page-doc-type: explanation
+:page-keywords: SEO, search engine optimization, discoverability, server rendering, metadata, internal links, sitemap, robots.txt, structured data, Search Console, sitelinks
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+A useful public page can still be nearly invisible if a search engine cannot find its URL, read its main content, or understand what the page represents.
+Search engine optimization (SEO) is the work of removing those barriers and making the page a strong answer for the people who need it.
+
+[.themed-svg]
+image::seo-discovery-system.svg[alt="A public page moves through rendered HTML, discovery, understanding, search presentation, and useful visits while Search Console feeds observations back to the publisher",width=760]
+
+The diagram is a system, not a ranking recipe.
+Each stage can prevent the next one, and no single tag can compensate for weak or inaccessible content.
+
+== SEO is discoverability plus usefulness
+
+SEO helps search systems:
+
+* **Discover** canonical public URLs through links and sitemaps.
+* **Crawl** those URLs without authentication, accidental blocking, or a JavaScript-only shell.
+* **Understand** the page from its visible text, headings, metadata, links, and supported structured data.
+* **Select and present** the page when it is relevant to a search.
+* **Send useful visitors** to a page that answers their question quickly and accurately.
+
+The last point matters most.
+Traffic that lands on an empty listing, a stale location, or a misleading title is not success.
+For a directory, marketplace, events calendar, or local listing site, good SEO connects a specific need -- such as a service, place, date, or location -- to a stable page that resolves it.
+
+== Why discoverability matters
+
+Search is often the first navigation system a new visitor uses.
+They do not know the brand's menu, internal vocabulary, or app shortcuts.
+A well-structured site lets them arrive directly at a useful category, article, or listing detail page.
+
+That creates compounding benefits:
+
+* Evergreen pages can keep serving readers after a launch campaign ends.
+* Specific listing pages can match specific intent better than one generic home page.
+* Clear internal links help both people and crawlers discover related pages.
+* Search reports reveal the language people actually use, which can improve the product's information architecture.
+
+SEO does not replace distribution, reputation, links from other sites, or a product worth recommending.
+It makes those signals easier for search engines to connect to the right public URL.
+
+== The parts work together
+
+=== Server-rendered content is the evidence
+
+Content-first routes should return meaningful HTML from the server or from a static build.
+The response should already contain the page title, primary heading, summary, main facts, and crawlable links.
+Hydration can add maps, filters, saved items, and transitions afterward.
+
+A crawler may execute JavaScript, but relying on client execution adds delay and failure modes.
+A sitemap that points to an empty `<div id="app">` has discovered a URL, not its content.
+
+=== Metadata describes a result
+
+A unique HTML `<title>` and concise meta description help a search engine and a reader distinguish one page from another.
+Canonical links identify the preferred URL when tracking parameters, aliases, or filter combinations can expose the same content more than once.
+Open Graph images and descriptions improve link sharing, though they are not a substitute for page content.
+
+Metadata is descriptive, not a hidden persuasion channel.
+Search engines may rewrite titles or snippets to fit a query, and repeating keywords does not make a page more relevant.
+
+=== Internal links express structure
+
+Ordinary `<a href>` links connect home, category, location, and detail pages.
+Descriptive anchor text such as “Food trucks in Madison” tells more than “View more.”
+Breadcrumbs, related listings, and category pages show which pages are important and how they relate.
+
+Internal search forms and client-only filter controls are not enough.
+Important indexable pages need stable URLs and links that a crawler can follow.
+
+=== Sitemaps and robots.txt guide crawling
+
+`/sitemap.xml` lists canonical, indexable URLs the publisher wants discovered.
+It is especially helpful for a large or frequently changing listing inventory, but inclusion does not guarantee crawling or indexing.
+
+`/robots.txt` tells cooperative crawlers where they may crawl and should point to the production sitemap.
+It is not access control and is not a reliable way to remove a URL from search.
+Private content needs authentication; an indexable page that should disappear needs an appropriate `noindex` response while the crawler can still access it.
+
+=== Structured data clarifies entities
+
+JSON-LD can identify an article, event, product, organization, breadcrumb trail, or local business using supported Schema.org vocabulary.
+It can make a page eligible for a richer search presentation.
+It does not create facts that are absent from the visible page, and eligibility does not guarantee that a rich result will appear.
+
+Markup should match the page's primary, visible content.
+Do not label a directory entry as a `Product`, `Event`, or `LocalBusiness` unless the entry actually represents that type and includes the required facts.
+
+=== Performance protects the visit
+
+Fast responses, stable layout, responsive interaction, and mobile usability help people use the result they selected.
+Core Web Vitals are useful diagnostics, but a perfect score cannot turn thin, duplicated, or irrelevant content into the best answer.
+Treat performance as part of page quality, not as a points game.
+
+=== Search Console closes the observation loop
+
+Google Search Console shows whether Google can access and index pages, which queries and pages receive impressions and clicks, sitemap processing problems, and structured-data errors.
+Use it to observe and debug.
+It reports Google's view of the site; it does not provide a button that raises rankings.
+
+The useful loop is:
+
+. Publish a crawlable page for a real audience.
+. Inspect the URL and sitemap status.
+. Watch queries, impressions, clicks, indexing, and rich-result reports.
+. Fix technical barriers or improve pages that fail to satisfy their intended query.
+. Measure again after Google recrawls the change.
+
+== Google sitelinks are automated
+
+Google may show extra links from the same domain beneath a search result.
+These ordinary **sitelinks** are selected automatically from the site's structure and the search query.
+A site owner cannot manually choose or order them.
+
+Clear titles and headings, logical navigation, concise internal-link text, and links to important pages can help Google's systems identify useful shortcuts.
+They still do not force sitelinks to appear.
+
+The separate **sitelinks search box** was retired globally beginning November 21, 2024.
+Removing its old structured data is optional; the retired feature does not affect rankings or ordinary sitelinks.
+Do not add `SearchAction` markup expecting Google to restore that box.
+
+== What SEO cannot promise
+
+No responsible implementation promises a first-place result, a rich result, sitelinks, or a fixed indexing date.
+Search systems weigh relevance, quality, context, competition, freshness, reputation, and many signals outside a site's direct control.
+
+Avoid:
+
+* pages generated only to capture keyword variations;
+* copied descriptions across thousands of listings;
+* hidden text or misleading structured data;
+* doorway location pages with no location-specific value;
+* treating search-engine crawlers as a different audience from human readers.
+
+The durable strategy is less dramatic: publish accurate pages, make their relationships clear, keep canonical URLs stable, and verify what crawlers and readers actually receive.
+
+== Put the model into practice
+
+Follow xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site] for a working App Router implementation with server-rendered detail pages, metadata, internal links, JSON-LD, a sitemap, robots rules, and verification.
+
+== Sources
+
+* link:https://developers.google.com/search/docs/fundamentals/seo-starter-guide[Google Search Central: SEO Starter Guide]
+* link:https://developers.google.com/search/docs/appearance/sitelinks[Google Search Central: Sitelinks]
+* link:https://developers.google.com/search/blog/2024/10/sitelinks-search-box[Google Search Central: Farewell, Sitelinks Search Box]
+* link:https://developers.google.com/search/docs/monitor-debug/search-console-start[Google Search Central: Get started with Search Console]
+* link:https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap[Google Search Central: Build and submit a sitemap]
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]

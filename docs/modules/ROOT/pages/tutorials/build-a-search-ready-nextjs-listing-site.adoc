@@ -1,0 +1,416 @@
+= Build a search-ready Next.js listing site
+:description: Build a Next.js App Router listing site with server-rendered pages, canonical metadata, internal links, JSON-LD, sitemap and robots routes, and crawlability checks.
+:page-audience: Web developers building a public directory, marketplace, events calendar, or local listing site with Next.js
+:page-usage-context: Hands-on tutorial that produces a crawlable listing index and detail route
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-09
+:page-created: 2026-09-09
+:page-published: 2026-09-09
+:page-diataxis: tutorial
+:page-doc-type: tutorial
+:page-prerequisites: A Next.js App Router project, TypeScript, and a source of published listing records
+:page-keywords: Next.js SEO, App Router, listing site, generateMetadata, generateStaticParams, sitemap.ts, robots.ts, JSON-LD, server rendering
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+In this tutorial, you will turn a basic Next.js listing route into a public surface that search engines can discover, read, and understand without running client JavaScript.
+The finished site has a crawlable index, one canonical URL per listing, descriptive metadata, supported structured data, a generated sitemap, and verification commands.
+
+[.themed-svg]
+image::seo-discovery-system.svg[alt="A public page moves through rendered HTML, discovery, understanding, search presentation, and useful visits while Search Console feeds observations back to the publisher",width=760]
+
+The goal is to make every stage observable.
+A search-friendly tag is not useful if the server response has no listing content, and a perfect page is hard to discover if nothing links to it.
+
+This tutorial uses the current Next.js App Router API shape, where dynamic `params` are asynchronous.
+Adapt the data-access functions to your database or content system.
+
+== 1. Define canonical records
+
+Start with one stable slug and one truthful update date for every published listing.
+Keep drafts and private records out of public queries.
+
+[source,typescript]
+----
+// lib/listings.ts
+export type Listing = {
+  slug: string
+  name: string
+  summary: string
+  city: string
+  region: string
+  updatedAt: string
+}
+
+export async function getPublishedListings(): Promise<Listing[]> {
+  // Replace with a database or CMS query.
+  return []
+}
+
+export async function getListing(slug: string): Promise<Listing | null> {
+  const listings = await getPublishedListings()
+  return listings.find((listing) => listing.slug === slug) ?? null
+}
+----
+
+Choose a production origin once:
+
+[source,typescript]
+----
+// lib/site.ts
+export const SITE_URL = 'https://listings.example'
+----
+
+Use that origin as the metadata base in the root layout so relative canonical and Open Graph URLs resolve consistently:
+
+[source,tsx]
+----
+// app/layout.tsx
+import type { Metadata } from 'next'
+import { SITE_URL } from '@/lib/site'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+----
+
+Do not derive canonical URLs from an untrusted request host.
+Production metadata and sitemaps should use the production HTTPS origin.
+
+== 2. Render a crawlable index
+
+Build the index as a Server Component.
+Use ordinary links for listing detail pages; client-side filtering may enhance this HTML later.
+
+[source,tsx]
+----
+// app/listings/page.tsx
+import Link from 'next/link'
+import { getPublishedListings } from '@/lib/listings'
+
+export const metadata = {
+  title: 'Local listings',
+  description: 'Browse current local listings by name and location.',
+  alternates: { canonical: '/listings' },
+}
+
+export default async function ListingsPage() {
+  const listings = await getPublishedListings()
+
+  return (
+    <main>
+      <h1>Local listings</h1>
+      <p>Find current listings and open a page for complete details.</p>
+      <ul>
+        {listings.map((listing) => (
+          <li key={listing.slug}>
+            <Link href={`/listings/${listing.slug}`}>
+              {listing.name} in {listing.city}, {listing.region}
+            </Link>
+            <p>{listing.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </main>
+  )
+}
+----
+
+View the raw response, not only the hydrated browser DOM:
+
+[source,powershell]
+----
+$html = (Invoke-WebRequest http://localhost:3000/listings).Content
+$html | Select-String '<h1>Local listings</h1>'
+$html | Select-String 'href="/listings/'
+----
+
+Both checks should match.
+If the response contains only a loading shell, move the primary data read and markup back to the server-rendered route.
+
+== 3. Build canonical detail pages
+
+Generate known paths and render the useful facts in HTML.
+
+[source,tsx]
+----
+// app/listings/[slug]/page.tsx
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getListing, getPublishedListings } from '@/lib/listings'
+import { SITE_URL } from '@/lib/site'
+
+type Props = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateStaticParams() {
+  const listings = await getPublishedListings()
+  return listings.map(({ slug }) => ({ slug }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const listing = await getListing(slug)
+  if (!listing) return {}
+
+  const path = `/listings/${listing.slug}`
+  return {
+    title: `${listing.name} in ${listing.city}, ${listing.region}`,
+    description: listing.summary,
+    alternates: { canonical: path },
+    openGraph: {
+      type: 'website',
+      url: path,
+      title: listing.name,
+      description: listing.summary,
+    },
+  }
+}
+
+export default async function ListingPage({ params }: Props) {
+  const { slug } = await params
+  const listing = await getListing(slug)
+  if (!listing) notFound()
+
+  const canonical = `${SITE_URL}/listings/${listing.slug}`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    name: listing.name,
+    description: listing.summary,
+    url: canonical,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: listing.city,
+      addressRegion: listing.region,
+    },
+  }
+
+  return (
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+        }}
+      />
+      <nav aria-label="Breadcrumb">
+        <a href="/listings">Listings</a>
+      </nav>
+      <h1>{listing.name}</h1>
+      <p>{listing.summary}</p>
+      <p>{listing.city}, {listing.region}</p>
+    </main>
+  )
+}
+----
+
+Replace `Place` with the most specific supported type that truthfully describes the visible record, such as `Event`, `Product`, or `LocalBusiness`.
+Include required properties for any Google search feature you target.
+Structured data makes a page eligible for supported presentations; it does not guarantee one.
+
+The `replace` call prevents a listing value containing `<` from breaking out of the JSON-LD script.
+Apply normal validation and output encoding to all user-supplied content as well.
+
+== 4. Connect pages with internal links
+
+Make important routes reachable from ordinary links:
+
+* Link the home page to `/listings`.
+* Link category and location pages to their matching listings.
+* Link every detail page back to its category or index.
+* Use concise anchor text that describes the destination.
+* Add related listings only when the relationship helps a visitor.
+
+Do not make a search form the only way to reach a detail page.
+A crawler should be able to start at a public landing page and follow `<a href>` links through the useful hierarchy.
+
+For filtered URLs, decide explicitly which combinations deserve durable pages.
+Canonicalize tracking parameters.
+Use `noindex` for thin or unbounded filter combinations, and do not include those URLs in the sitemap.
+
+== 5. Generate the sitemap
+
+Next.js serves `app/sitemap.ts` as `/sitemap.xml`.
+Generate it from the same published records that render the site.
+
+[source,typescript]
+----
+// app/sitemap.ts
+import type { MetadataRoute } from 'next'
+import { getPublishedListings } from '@/lib/listings'
+import { SITE_URL } from '@/lib/site'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const listings = await getPublishedListings()
+
+  return [
+    { url: SITE_URL },
+    { url: `${SITE_URL}/listings` },
+    ...listings.map((listing) => ({
+      url: `${SITE_URL}/listings/${listing.slug}`,
+      lastModified: listing.updatedAt,
+    })),
+  ]
+}
+----
+
+Use `lastModified` only when it comes from a real content change.
+Do not stamp every URL with the build time.
+Split the sitemap before it exceeds 50,000 URLs or 50 MB uncompressed.
+
+== 6. Publish robots.txt
+
+Next.js serves `app/robots.ts` as `/robots.txt`.
+
+[source,typescript]
+----
+// app/robots.ts
+import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site'
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/account/', '/api/'],
+    },
+    sitemap: `${SITE_URL}/sitemap.xml`,
+  }
+}
+----
+
+Do not list private URLs as a security measure.
+Protect them with authentication.
+Avoid blocking CSS, JavaScript, or image assets needed to understand public pages.
+
+== 7. Add image and performance basics
+
+For listing images:
+
+* give the main image dimensions so layout does not jump;
+* write alt text for the image's purpose, not a pile of search phrases;
+* serve appropriately sized, compressed files;
+* do not lazy-load the page's likely largest above-the-fold image;
+* keep text facts in HTML rather than baking them into an image.
+
+Measure real routes on mobile.
+Prioritize server response time, Largest Contentful Paint, Interaction to Next Paint, and Cumulative Layout Shift.
+Do not delete useful content merely to improve a synthetic score.
+
+== 8. Verify the production build
+
+Build and serve the production output:
+
+[source,powershell]
+----
+pnpm build
+pnpm start
+----
+
+Then check artifacts and representative raw HTML:
+
+[source,powershell]
+----
+$origin = 'http://localhost:3000'
+$slug = 'example-listing'
+
+$robots = Invoke-WebRequest "$origin/robots.txt"
+$sitemap = Invoke-WebRequest "$origin/sitemap.xml"
+$detail = Invoke-WebRequest "$origin/listings/$slug"
+
+if ($robots.StatusCode -ne 200 -or $robots.Content -notmatch 'Sitemap:') {
+  throw 'robots.txt is missing its sitemap directive'
+}
+if ($sitemap.StatusCode -ne 200 -or $sitemap.Content -notmatch '<urlset') {
+  throw 'sitemap.xml is missing or invalid'
+}
+if ($detail.StatusCode -ne 200 -or $detail.Content -notmatch '<h1') {
+  throw 'listing detail HTML is not meaningful'
+}
+if ($detail.Content -notmatch 'application/ld\+json') {
+  throw 'listing JSON-LD is missing'
+}
+----
+
+Also verify:
+
+* one indexable canonical URL per listing;
+* unique titles, descriptions, and headings;
+* no drafts, redirects, error pages, or `noindex` URLs in the sitemap;
+* working internal links without redirect chains;
+* valid JSON-LD in Google's Rich Results Test when targeting a supported result;
+* useful content and navigation with JavaScript disabled.
+
+Automate these checks in CI against the built site.
+
+== 9. Connect Search Console
+
+. Verify the production site in link:https://search.google.com/search-console/about[Google Search Console].
+. Submit the production `/sitemap.xml`.
+. Inspect the listing index and a representative detail URL.
+. Watch the Pages, Sitemaps, Performance, Core Web Vitals, and relevant rich-result reports.
+. Fix crawl, canonical, or markup errors, then request validation where the report supports it.
+
+Search Console data arrives after Google processes the site.
+It is evidence for debugging and prioritization, not a ranking control panel.
+
+Google chooses ordinary sitelinks automatically.
+You cannot configure their labels or order.
+The separate sitelinks search box was retired in November 2024, so do not add `SearchAction` markup expecting that feature.
+
+== 10. Maintain the contract
+
+When a listing is added, renamed, unpublished, or moved:
+
+* update internal links and the sitemap in the same deployment;
+* redirect a replaced canonical URL with a permanent redirect;
+* return a real `404` or `410` for a removed page with no replacement;
+* keep visible content, metadata, and structured data consistent;
+* preserve truthful modification dates;
+* re-run raw-HTML and link checks.
+
+Do not create near-duplicate city or keyword pages unless each page has distinct, useful content for that audience.
+Strong SEO is the maintained result of a coherent public site, not a one-time metadata pass.
+
+== Understand the reasoning
+
+Read xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website] for the model behind rendering, discovery, interpretation, search presentation, sitelinks, and measurement.
+
+== Sources
+
+* link:https://nextjs.org/docs/app/getting-started/metadata-and-og-images[Next.js: Metadata and Open Graph images]
+* link:https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap[Next.js: sitemap.xml]
+* link:https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots[Next.js: robots.txt]
+* link:https://nextjs.org/docs/app/guides/json-ld[Next.js: JSON-LD]
+* link:https://developers.google.com/search/docs/fundamentals/seo-starter-guide[Google Search Central: SEO Starter Guide]
+* link:https://developers.google.com/search/docs/appearance/structured-data/sd-policies[Google Search Central: Structured data policies]
+* link:https://developers.google.com/search/docs/appearance/sitelinks[Google Search Central: Sitelinks]
+* link:https://developers.google.com/search/blog/2024/10/sitelinks-search-box[Google Search Central: Farewell, Sitelinks Search Box]
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]

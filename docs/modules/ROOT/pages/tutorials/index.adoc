@@ -5,6 +5,7 @@ Tutorials are **learning** paths. Use them when you want guided practice—not a
 
 == Featured
 
+* xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site] — render useful listing HTML, describe canonical pages, publish sitemap and robots routes, add JSON-LD, and verify the production response
 * xref:tutorials/onboarding.adoc[Developer onboarding] — workstation and docs entry point; links into How-to and Explanation for concrete setup
 * xref:tutorials/secrets-from-vendor-to-deploy.adoc[Secrets from vendor to deploy] — vault custom fields → local env → hosting matrix; pairs with xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
 
