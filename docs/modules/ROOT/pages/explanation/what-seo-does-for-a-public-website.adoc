@@ -2,19 +2,24 @@
 :description: SEO makes public pages easier for search engines to discover, understand, and present, but it cannot guarantee rankings or manually configure Google sitelinks.
 :page-audience: Developers, editors, and product owners responsible for public content or listing websites
 :page-usage-context: Concept-oriented explanation of search discoverability and the systems that support it
-:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-orig-author: Ryan Johnson
 :page-last-author: Cursor agent on behalf of Ryan Johnson
-:page-last-edited: 2026-09-09
+:page-last-edited: 2026-09-10
 :page-created: 2026-09-09
 :page-published: 2026-09-09
 :page-diataxis: explanation
 :page-doc-type: explanation
+:page-status: published
 :page-keywords: SEO, search engine optimization, discoverability, server rendering, metadata, internal links, sitemap, robots.txt, structured data, Search Console, sitelinks
+:page-lang: en
 
 ifndef::page-context-active[]
 [.page-context.page-context-lead]
 ****
 Audience:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
 ****
 endif::[]
 
