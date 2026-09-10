@@ -23,11 +23,9 @@ Mermaid 11 writes node colors as inline `fill:… !important` / `stroke:… !imp
 
 == Change
 
-* Pointed the diagram toolchain at local `@dev-centr/themed-svg` 0.2.2 (`file:../themed-svg`) with a pnpm override so `@dev-centr/mermaid-svg-css-vars` 0.1.2 resolves the same transform.
+* Pointed the diagram toolchain at `@dev-centr/themed-svg` 0.2.2 and `@dev-centr/mermaid-svg-css-vars` 0.1.3 from the registry.
 * Regenerated all canonical diagram adaptive and host SVGs via `pnpm run diagrams:build`.
 * Host node rects now use `fill:var(--themed-svg-diagram-…, …) !important` instead of bare light hex with `!important`.
-
-Registry pins can replace the local `file:` dependency after `@dev-centr/themed-svg` 0.2.2 is published.
 
 ifndef::page-context-active[]
 [.page-context.page-context-footer]
