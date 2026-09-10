@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-10 -- Themed SVG 0.2.2 inline style variables
+
+* Regenerated Mermaid adaptive and host SVGs with `@dev-centr/themed-svg` 0.2.2 so node `fill`/`stroke` `!important` values become `var(--themed-svg-diagram-…)` custom properties.
+* Diagram toolchain uses a local `file:../themed-svg` pin (and pnpm override) until the registry publish lands.
+* See xref:changelog-details/2026-09-10 - themed-svg-0.2.2-inline-vars.adoc[Detailed changelog].
+
 == 2026-09-09 -- SEO explanation and Next.js listing tutorial
 
 * Added xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website], covering discoverability, crawlable HTML, metadata, internal links, sitemap and robots rules, structured data, performance, Search Console, and the limits of automated Google sitelinks.

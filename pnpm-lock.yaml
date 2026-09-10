@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@dev-centr/themed-svg': file:../themed-svg
+
 importers:
 
   .:
@@ -12,8 +15,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@dev-centr/themed-svg':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: file:../themed-svg
+        version: file:../themed-svg
       '@mermaid-js/mermaid-cli':
         specifier: 11.17.0
         version: 11.17.0(puppeteer@25.10.0)(tailwindcss@4.3.3)
@@ -40,8 +43,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@dev-centr/themed-svg@0.1.1':
-    resolution: {integrity: sha512-hBZH3BKQErb3HRHOVUGL5mxPy6IHZ3EHMH0w4LoHtN+zmlj+wXC5ErVm5r0eTc8+IHN7OTjvaUMF+ZPhoNIMZA==}
+  '@dev-centr/themed-svg@file:../themed-svg':
+    resolution: {directory: ../themed-svg, type: directory}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -881,9 +884,9 @@ snapshots:
 
   '@dev-centr/mermaid-svg-css-vars@0.1.2':
     dependencies:
-      '@dev-centr/themed-svg': 0.1.1
+      '@dev-centr/themed-svg': file:../themed-svg
 
-  '@dev-centr/themed-svg@0.1.1':
+  '@dev-centr/themed-svg@file:../themed-svg':
     dependencies:
       '@xmldom/xmldom': 0.8.15
       color-name: 2.1.1
