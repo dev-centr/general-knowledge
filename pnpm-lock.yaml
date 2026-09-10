@@ -4,19 +4,16 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@dev-centr/themed-svg': file:../themed-svg
-
 importers:
 
   .:
     devDependencies:
       '@dev-centr/mermaid-svg-css-vars':
-        specifier: 0.1.2
-        version: 0.1.2
+        specifier: 0.1.3
+        version: 0.1.3
       '@dev-centr/themed-svg':
-        specifier: file:../themed-svg
-        version: file:../themed-svg
+        specifier: 0.2.2
+        version: 0.2.2
       '@mermaid-js/mermaid-cli':
         specifier: 11.17.0
         version: 11.17.0(puppeteer@25.10.0)(tailwindcss@4.3.3)
@@ -38,13 +35,13 @@ packages:
   '@chevrotain/types@11.1.2':
     resolution: {integrity: sha512-U+HFai5+zmJCkK86QsaJtoITlboZHBqrVketcO2ROv865xfCMSFpELQoz1GkX5GzME8pTa+3kbKrZHQtI0gdbw==}
 
-  '@dev-centr/mermaid-svg-css-vars@0.1.2':
-    resolution: {integrity: sha512-XRpbCIGhcWTfAovb0I7JlV2EsJOEn/dJd3RVQSiVFVGbsweMmj1qOZ8ozmmQSNVo+y2eSJFDQEynjUUQgkofOg==}
+  '@dev-centr/mermaid-svg-css-vars@0.1.3':
+    resolution: {integrity: sha512-3M5VF6AOmdLmFkzq6HRsCQ73vY5FKfCKKYDInBUwPT/cQd/r+R8r5kjivmBU2BH4tAFkmoYjkGHpIauFZDdQTA==}
     engines: {node: '>=20'}
     hasBin: true
 
-  '@dev-centr/themed-svg@file:../themed-svg':
-    resolution: {directory: ../themed-svg, type: directory}
+  '@dev-centr/themed-svg@0.2.2':
+    resolution: {integrity: sha512-X8TVtKPtgOIR8idQdB74s0TH/OSFISRnbphECOGWErrX3Qq3Pn0pvlCv+xwtljdlG6xBBE+D/46sboOYZuoWqQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -882,11 +879,11 @@ snapshots:
 
   '@chevrotain/types@11.1.2': {}
 
-  '@dev-centr/mermaid-svg-css-vars@0.1.2':
+  '@dev-centr/mermaid-svg-css-vars@0.1.3':
     dependencies:
-      '@dev-centr/themed-svg': file:../themed-svg
+      '@dev-centr/themed-svg': 0.2.2
 
-  '@dev-centr/themed-svg@file:../themed-svg':
+  '@dev-centr/themed-svg@0.2.2':
     dependencies:
       '@xmldom/xmldom': 0.8.15
       color-name: 2.1.1

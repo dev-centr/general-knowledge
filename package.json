@@ -9,8 +9,8 @@
     "diagrams:render-test": "node scripts/test-themed-diagram-rendering.mjs"
   },
   "devDependencies": {
-    "@dev-centr/mermaid-svg-css-vars": "0.1.2",
-    "@dev-centr/themed-svg": "file:../themed-svg",
+    "@dev-centr/mermaid-svg-css-vars": "0.1.3",
+    "@dev-centr/themed-svg": "0.2.2",
     "@mermaid-js/mermaid-cli": "11.17.0",
     "@xmldom/xmldom": "^0.8.11",
     "puppeteer": "25.10.0"
@@ -18,10 +18,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "puppeteer"
-    ],
-    "overrides": {
-      "@dev-centr/themed-svg": "file:../themed-svg"
-    }
+    ]
   },
   "packageManager": "pnpm@10.15.1"
 }
