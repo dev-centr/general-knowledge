@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@dev-centr/themed-svg@0.1.1/schema/themed-svg-manifest-v1.schema.json",
+  "$schema": "https://unpkg.com/@dev-centr/themed-svg@0.2.3/schema/themed-svg-manifest-v1.schema.json",
   "schemaVersion": 1,
   "namespace": "diagram",
   "source": {
@@ -170,6 +170,13 @@
     },
     {
       "kind": "stylesheet",
+      "selector": "#my-svg .primary tspan",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.text.primary"
+    },
+    {
+      "kind": "stylesheet",
       "selector": ".themed-svg-root .success .label-container",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
@@ -198,6 +205,13 @@
     },
     {
       "kind": "stylesheet",
+      "selector": "#my-svg .success tspan",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.accent.on-primary"
+    },
+    {
+      "kind": "stylesheet",
       "selector": ".themed-svg-root .danger .label-container",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
@@ -220,6 +234,13 @@
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .danger text",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.text.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg .danger tspan",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.text.primary"

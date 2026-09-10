@@ -12,8 +12,8 @@ importers:
         specifier: 0.1.3
         version: 0.1.3
       '@dev-centr/themed-svg':
-        specifier: 0.2.2
-        version: 0.2.2
+        specifier: 0.2.3
+        version: 0.2.3
       '@mermaid-js/mermaid-cli':
         specifier: 11.17.0
         version: 11.17.0(puppeteer@25.10.0)(tailwindcss@4.3.3)
@@ -40,8 +40,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@dev-centr/themed-svg@0.2.2':
-    resolution: {integrity: sha512-X8TVtKPtgOIR8idQdB74s0TH/OSFISRnbphECOGWErrX3Qq3Pn0pvlCv+xwtljdlG6xBBE+D/46sboOYZuoWqQ==}
+  '@dev-centr/themed-svg@0.2.3':
+    resolution: {integrity: sha512-mEd90oVCPTj3Bj8wSQ9gKgJdHiM6JDbGYlVyM5sm0RZJYkwStDk8bM0RQ/fq0P4263nN96qHxlk0zPYrMs0E3Q==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -881,9 +881,9 @@ snapshots:
 
   '@dev-centr/mermaid-svg-css-vars@0.1.3':
     dependencies:
-      '@dev-centr/themed-svg': 0.2.2
+      '@dev-centr/themed-svg': 0.2.3
 
-  '@dev-centr/themed-svg@0.2.2':
+  '@dev-centr/themed-svg@0.2.3':
     dependencies:
       '@xmldom/xmldom': 0.8.15
       color-name: 2.1.1

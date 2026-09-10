@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@dev-centr/themed-svg@0.1.1/schema/themed-svg-manifest-v1.schema.json",
+  "$schema": "https://unpkg.com/@dev-centr/themed-svg@0.2.3/schema/themed-svg-manifest-v1.schema.json",
   "schemaVersion": 1,
   "namespace": "diagram",
   "source": {

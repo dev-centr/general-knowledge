@@ -143,6 +143,9 @@ function stylesheetTokens(sourceText) {
         [`.themed-svg-root .${name} .label-container`, 'stroke', stroke],
         [`.themed-svg-root .${name} .label`, 'color', text],
         [`.themed-svg-root .${name} text`, 'fill', text],
+        // Beat Mermaid `#my-svg .<class> tspan{fill:rgb(...)!important}` (same
+        // specificity, later stylesheet wins once seeded into bindings).
+        [`#my-svg .${name} tspan`, 'fill', text],
       );
     }
   }
@@ -158,7 +161,7 @@ function manifestFor(stem, sourceText) {
     token,
   }));
   return {
-    $schema: 'https://unpkg.com/@dev-centr/themed-svg@0.1.1/schema/themed-svg-manifest-v1.schema.json',
+    $schema: 'https://unpkg.com/@dev-centr/themed-svg@0.2.3/schema/themed-svg-manifest-v1.schema.json',
     schemaVersion: 1,
     namespace: 'diagram',
     source: {

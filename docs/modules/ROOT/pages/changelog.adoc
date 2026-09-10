@@ -2,11 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
-== 2026-09-10 -- Themed SVG 0.2.2 inline style variables
+== 2026-09-10 -- Themed SVG 0.2.3 dark-mode box fills
 
-* Regenerated Mermaid adaptive and host SVGs with `@dev-centr/themed-svg` 0.2.2 so node `fill`/`stroke` `!important` values become `var(--themed-svg-diagram-…)` custom properties.
-* Diagram toolchain pins `@dev-centr/themed-svg` 0.2.2 and `@dev-centr/mermaid-svg-css-vars` 0.1.3 from the registry.
-* See xref:changelog-details/2026-09-10 - themed-svg-0.2.2-inline-vars.adoc[Detailed changelog].
+* Regenerated Mermaid adaptive and host SVGs with `@dev-centr/themed-svg` **0.2.3** so node `fill`/`stroke` `!important` values become `var(--themed-svg-diagram-…)` custom properties (and sibling Mermaid classDef rules stay intact).
+* Diagram toolchain pins `@dev-centr/themed-svg` 0.2.3 and `@dev-centr/mermaid-svg-css-vars` 0.1.3 from the registry.
+* See xref:changelog-details/2026-09-10 - themed-svg-0.2.3-dark-mode-fills.adoc[Detailed changelog].
 
 == 2026-09-09 -- SEO explanation and Next.js listing tutorial
 

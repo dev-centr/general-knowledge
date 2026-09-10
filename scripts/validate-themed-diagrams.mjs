@@ -34,6 +34,7 @@ const sources = [
   'playtime-facets-not-lattice',
   'playtime-attic-basement',
   'playtime-argv',
+  'seo-discovery-system',
 ];
 const failures = [];
 
@@ -50,8 +51,8 @@ if (mermaidConfig.htmlLabels !== false) {
 const packagePath = join(root, 'package.json');
 const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
 for (const [dependency, expected] of [
-  ['@dev-centr/themed-svg', '0.1.1'],
-  ['@dev-centr/mermaid-svg-css-vars', '0.1.2'],
+  ['@dev-centr/themed-svg', '0.2.3'],
+  ['@dev-centr/mermaid-svg-css-vars', '0.1.3'],
 ]) {
   if (packageJson.devDependencies?.[dependency] !== expected) {
     fail(packagePath, `${dependency} must be pinned to ${expected}`);
@@ -77,11 +78,14 @@ function validateSvg(path, mode) {
     ['role', 'img'],
     ['preserveAspectRatio', 'xMidYMid meet'],
     ['width', '100%'],
-    ['height', 'auto'],
   ]) {
     if (rootElement.getAttribute(attribute) !== expected) {
       fail(path, `${attribute} must equal ${expected}`);
     }
+  }
+  // themed-svg >=0.2.x omits invalid height="auto"; CSS height:auto comes from the runtime.
+  if (rootElement.hasAttribute('height')) {
+    fail(path, 'height attribute must be omitted (use CSS height:auto via the runtime)');
   }
   if (!rootElement.getAttribute('viewBox')) fail(path, 'missing viewBox');
   if (!rootElement.getElementsByTagName('title')[0]?.textContent?.trim()) fail(path, 'missing title');
@@ -120,6 +124,8 @@ for (const source of sources) {
       const selector = `.themed-svg-root .${match[1]} ${suffix}`;
       if (!selectors.has(selector)) fail(manifestPath, `missing structural binding ${selector}`);
     }
+    const tspanSelector = `#my-svg .${match[1]} tspan`;
+    if (!selectors.has(tspanSelector)) fail(manifestPath, `missing structural binding ${tspanSelector}`);
   }
   validateSvg(adaptive, 'adaptive');
   validateSvg(host, 'host');
