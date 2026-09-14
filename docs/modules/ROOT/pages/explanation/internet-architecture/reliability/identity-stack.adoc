@@ -4,21 +4,8 @@
 Internet Reliability’s treatment stack is the same claim HCI Nerdz and connectome-fs already teach.
 DevCentr’s job here is **orientation at systems altitude**, not a second full treatise.
 
-[source,mermaid]
-----
-flowchart TB
-  Consumer[Consumer · docs · agent]
-  Hash["Content hash / node id\n(immutable identity)"]
-  Pointer["Mutable human pointer\n(label → current hash)"]
-  Absorb["Absorb layer\n(redirects · aliases)"]
-  Consumers["Reverse consumers\n(CONSUMERS.md / graph)"]
-
-  Consumer -->|"prefer"| Hash
-  Consumer -->|"or resolve"| Pointer
-  Pointer --> Hash
-  Absorb -.->|buys time on IP web| Consumer
-  Consumers -->|"when labels must move"| Consumer
-----
+[.themed-svg]
+image::internet-architecture/identity-stack-flowchart.svg["Flow: consumers prefer content hash identity, or resolve a mutable pointer, with absorb and reverse-consumer layers when labels must move",width=760]
 
 == Four layers (one stack)
 
@@ -27,35 +14,8 @@ flowchart TB
 . *Reverse consumers* — who still holds a label (`CONSUMERS.md` today; graph reverse edges tomorrow).
 . *Absorb layer* — redirects and aliases on today’s classical web (see xref:explanation/internet-architecture/reliability/near-term-absorb.adoc[Near-term absorb]).
 
-[plantuml]
-----
-@startuml
-skinparam backgroundColor transparent
-skinparam defaultFontName Segoe UI
-skinparam componentStyle rectangle
-skinparam ArrowColor #2c2c2c
-
-package "Application / DevX plane" {
-  [CAS / node id] as CAS
-  [Mutable pointer] as PTR
-  [Reverse consumers] as REV
-}
-
-package "Classical web absorb" {
-  [Redirects / aliases] as ABS
-}
-
-package "Delivery plane (orthogonal)" {
-  [Host URL / NDN name] as DEL
-}
-
-PTR --> CAS
-REV ..> PTR : label moves
-ABS ..> PTR : Cool URI bridge
-DEL ..> CAS : fetch by opaque name
-note bottom of DEL : NDN helps delivery;\nnot semantic life cycle
-@enduml
-----
+[.themed-svg]
+image::internet-architecture/identity-stack-planes.svg["Three planes: Application/DevX (CAS, pointer, reverse consumers), classical-web absorb, and orthogonal delivery",width=760]
 
 == Where the deep pages live
 

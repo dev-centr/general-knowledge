@@ -19,6 +19,10 @@ const pnpm = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 const sources = [
   'internet-architecture/three-altitudes-diagram',
   'internet-architecture/rename-breakage-mockup',
+  'internet-architecture/label-as-wire-break',
+  'internet-architecture/identity-stack-flowchart',
+  'internet-architecture/identity-stack-planes',
+  'internet-architecture/ndn-delivery-vs-app-labels',
   'ai/curated-watching-linkage',
   'gcp-oauth-ideal-model',
   'gcp-oauth-actual-project',
@@ -205,13 +209,28 @@ function preserveFixed(adaptive) {
   const stem = basename(adaptive, '.svg');
   const fixed = join(dirname(adaptive), `${stem}.fixed.svg`);
   if (existsSync(fixed)) return;
+  if (!existsSync(adaptive)) {
+    // Greenfield diagram: create .fixed.svg from the first Mermaid render.
+    return;
+  }
+  const adaptiveSvg = readFileSync(adaptive, 'utf8');
+  if (/var\(|prefers-color-scheme/i.test(adaptiveSvg)) {
+    // Already themed adaptive output — do not treat it as a fixed original.
+    return;
+  }
   if (check) {
     console.error(`missing fixed original: ${relative(root, fixed)}`);
     process.exitCode = 3;
     return;
   }
-  if (!existsSync(adaptive)) throw new Error(`No original SVG to preserve: ${relative(root, adaptive)}`);
-  writeFileSync(fixed, readFileSync(adaptive));
+  writeFileSync(fixed, adaptiveSvg);
+}
+
+function ensureFixedFromRaw(adaptive, rawSvg) {
+  const stem = basename(adaptive, '.svg');
+  const fixed = join(dirname(adaptive), `${stem}.fixed.svg`);
+  if (existsSync(fixed) || check) return;
+  writeFileSync(fixed, rawSvg, 'utf8');
 }
 
 function filesBelow(directory, extension) {
@@ -262,7 +281,7 @@ try {
       '--backgroundColor', 'transparent',
     ]);
     const tokens = stylesheetTokens(sourceText);
-    const rendered = readFileSync(raw, 'utf8')
+    let rendered = readFileSync(raw, 'utf8')
       .replace(/^<\?xml[^>]*>\s*/i, '')
       .replace(/\srole="[^"]*"/i, ' role="img"')
       .replace(/<svg\b([^>]*)>/i, (_match, attributes) => {
@@ -270,13 +289,14 @@ try {
           ? attributes.replace(/\sclass="([^"]*)"/i, ' class="$1 themed-svg-root"')
           : `${attributes} class="themed-svg-root"`;
         return `<svg${themedAttributes} preserveAspectRatio="xMidYMid meet">`;
-      })
-      .replace(
-        /<\/style>/i,
-        `</style><style id="themed-svg-bindings">${tokens
-          .map(([selector, property, token]) => `${selector}{${property}:${palettes.light[token]} !important}`)
-          .join('')}</style>`,
-      );
+      });
+    ensureFixedFromRaw(adaptive, `<?xml version="1.0" encoding="UTF-8"?>\n${rendered}`);
+    rendered = rendered.replace(
+      /<\/style>/i,
+      `</style><style id="themed-svg-bindings">${tokens
+        .map(([selector, property, token]) => `${selector}{${property}:${palettes.light[token]} !important}`)
+        .join('')}</style>`,
+    );
     writeFileSync(raw, `<?xml version="1.0" encoding="UTF-8"?>\n${rendered}`, 'utf8');
 
     run([

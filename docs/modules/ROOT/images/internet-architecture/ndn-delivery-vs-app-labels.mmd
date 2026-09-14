@@ -1,0 +1,17 @@
+---
+title: "Delivery names vs application labels"
+---
+flowchart LR
+  accTitle: Delivery names versus application labels
+  accDescr: Application labels and delivery names both point at content identity; renaming application labels still breaks dependents even when delivery naming is perfect.
+  APP["Application labels<br/>(docs path, package name, slug)<br/>rename breaks dependents even if NDN is perfect"]
+  DEL["Delivery names<br/>(URL host path, NDN hierarchical name)<br/>decouples location; does not rewrite cites"]
+  ID["Content / node identity<br/>(CAS, GUID, graph node)"]
+  APP -->|"must not be the only wire"| ID
+  DEL -->|"fetch plane"| ID
+  class ID success
+  class APP warning
+  class DEL primary
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:1px

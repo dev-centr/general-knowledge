@@ -4,24 +4,8 @@
 Named Data Networking (NDN) and related ICN designs improve **delivery**: fetch named data without depending on a host IP.
 That is valuable and still **orthogonal** to application / DevX label life cycle.
 
-[plantuml]
-----
-@startuml
-skinparam backgroundColor transparent
-skinparam defaultFontName Segoe UI
-skinparam ArrowColor #2c2c2c
-
-rectangle "Application labels\n(docs path, package name, slug)" as APP
-rectangle "Delivery names\n(URL host path, NDN hierarchical name)" as DEL
-rectangle "Content / node identity\n(CAS, GUID, graph node)" as ID
-
-APP --> ID : must not be the only wire
-DEL --> ID : fetch plane
-APP -[hidden]-> DEL
-note bottom of APP : Rename breaks dependents\neven if NDN is perfect
-note bottom of DEL : Decouples location;\ndoes not rewrite Markdown cites
-@enduml
-----
+[.themed-svg]
+image::internet-architecture/ndn-delivery-vs-app-labels.svg["Application labels and delivery names both point at content identity; renaming labels still breaks dependents when delivery naming is perfect",width=760]
 
 == Two naming failures (do not conflate)
 

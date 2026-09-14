@@ -1,0 +1,20 @@
+---
+title: "Identity stack (prefer hash)"
+---
+flowchart TB
+  accTitle: Identity stack prefer hash
+  accDescr: Consumers prefer content hash identity, or resolve a mutable human pointer to the current hash, while absorb and reverse-consumer layers buy time when labels must move.
+  Consumer["Consumer / docs / agent"]
+  Hash["Content hash / node id<br/>(immutable identity)"]
+  Pointer["Mutable human pointer<br/>(label to current hash)"]
+  Absorb["Absorb layer<br/>(redirects / aliases)"]
+  Consumers["Reverse consumers<br/>(CONSUMERS.md / graph)"]
+  Consumer -->|"prefer"| Hash
+  Consumer -->|"or resolve"| Pointer
+  Pointer --> Hash
+  Absorb -.->|"buys time on IP web"| Consumer
+  Consumers -->|"when labels must move"| Consumer
+  class Consumer,Hash success
+  class Pointer,Absorb,Consumers primary
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:1px

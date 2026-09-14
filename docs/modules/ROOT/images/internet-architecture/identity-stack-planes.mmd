@@ -1,0 +1,25 @@
+---
+title: "Identity planes"
+---
+flowchart TB
+  accTitle: Identity planes
+  accDescr: Application and DevX layers for CAS, mutable pointers, and reverse consumers sit beside classical-web absorb and an orthogonal delivery plane.
+  subgraph app["Application / DevX plane"]
+    CAS["CAS / node id"]
+    PTR["Mutable pointer"]
+    REV["Reverse consumers"]
+  end
+  subgraph absorb["Classical web absorb"]
+    ABS["Redirects / aliases"]
+  end
+  subgraph delivery["Delivery plane (orthogonal)"]
+    DEL["Host URL / NDN name<br/>(delivery, not semantic life cycle)"]
+  end
+  PTR --> CAS
+  REV -.->|"label moves"| PTR
+  ABS -.->|"Cool URI bridge"| PTR
+  DEL -.->|"fetch by opaque name"| CAS
+  class CAS success
+  class PTR,REV,ABS,DEL primary
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:1px

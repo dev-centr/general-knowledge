@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-14 -- Reliability Kroki diagrams → Themed SVG
+
+* Replaced remaining PlantUML/Kroki and one inline Mermaid figure on Internet Reliability pages with canonical Mermaid + Themed SVG adaptive/host outputs so manual dark mode keeps readable fills.
+* New stems: `label-as-wire-break`, `identity-stack-flowchart`, `identity-stack-planes`, `ndn-delivery-vs-app-labels`.
+* See xref:changelog-details/2026-09-14 - reliability-kroki-to-themed-svg.adoc[Detailed changelog].
+
 == 2026-09-10 -- Themed SVG 0.2.3 dark-mode box fills
 
 * Regenerated Mermaid adaptive and host SVGs with `@dev-centr/themed-svg` **0.2.3** so node `fill`/`stroke` `!important` values become `var(--themed-svg-diagram-…)` custom properties (and sibling Mermaid classDef rules stay intact).

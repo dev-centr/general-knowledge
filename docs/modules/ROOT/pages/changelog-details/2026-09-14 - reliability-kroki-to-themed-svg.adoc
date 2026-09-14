@@ -1,0 +1,39 @@
+= Migrate Reliability Kroki diagrams to Themed SVG
+:description: Replaced remaining PlantUML/Kroki and inline Mermaid figures on Internet Reliability pages with canonical themed Mermaid adaptive/host SVGs so manual dark mode works.
+:page-audience: Maintainers and readers tracking documentation changes
+:page-usage-context: Detailed entry subordinate to the General Developer Knowledge changelog
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-14
+:page-created: 2026-09-14
+:page-diataxis: reference
+:page-doc-type: changelog-detail
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+== Why
+
+The earlier Themed SVG migration covered hand Mermaid figures (for example the rename-breakage mockup).
+Build-time Kroki PlantUML blocks and one inline Mermaid listing on Internet Reliability pages still published as fixed-color `<img>` assets, so they stayed light when the site toggle switched to dark mode.
+
+== Change
+
+* Converted Reference reliability's PlantUML sequence to Mermaid source `label-as-wire-break` with adaptive + host Themed SVG outputs.
+* Converted Identity stack's inline Mermaid and PlantUML planes figures to `identity-stack-flowchart` and `identity-stack-planes`.
+* Converted NDN and friends' PlantUML figure to `ndn-delivery-vs-app-labels`.
+* Registered the four stems in the diagram build/validate/render-test scripts; greenfield builds now preserve a true fixed Mermaid original from the pre-adapter render.
+* AsciiDoc pages use `[.themed-svg]` image blocks so the hub runtime can inline the host SVG under the manual theme toggle.
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
