@@ -1,0 +1,37 @@
+= PlantUML sequence dark-mode paint fix
+:description: Rebuild label-as-wire-break after plantuml-svg-css-vars 0.1.1 descendant bindings.
+:page-audience: Maintainers and readers tracking documentation changes
+:page-usage-context: Detailed entry subordinate to the General Developer Knowledge changelog
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+:page-created: 2026-09-15
+:page-diataxis: reference
+:page-doc-type: changelog-detail
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+== Why
+
+The Reference reliability PlantUML sequence still failed in hub dark mode:
+classes sat on parent `<g>` nodes while fills/strokes lived on children, and
+notes/dividers had no semantic classes.
+
+== Change
+
+* Depend on `@dev-centr/plantuml-svg-css-vars` **v0.1.1**.
+* Rebuild `label-as-wire-break` adaptive + host SVGs and theme manifest.
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]

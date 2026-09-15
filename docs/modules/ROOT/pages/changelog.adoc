@@ -2,6 +2,11 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-15 -- PlantUML sequence dark-mode paint fix
+
+* Bumped `@dev-centr/plantuml-svg-css-vars` to **v0.1.1** and rebuilt `label-as-wire-break` so sequence child shapes, notes, and dividers follow host dark mode.
+* See xref:changelog-details/2026-09-15 - plantuml-sequence-dark-mode-paint.adoc[Detailed changelog].
+
 == 2026-09-15 -- PlantUML Themed SVG CI path
 
 * Added `@dev-centr/plantuml-svg-css-vars` and `scripts/build-plantuml-diagrams.mjs` (Kroki → adaptive/host).

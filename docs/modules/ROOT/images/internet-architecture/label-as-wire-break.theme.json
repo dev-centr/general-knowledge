@@ -93,42 +93,35 @@
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant",
+      "selector": ".themed-svg-root .participant rect",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.surface.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant",
+      "selector": ".themed-svg-root .participant rect",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant-head",
+      "selector": ".themed-svg-root .participant ellipse",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.surface.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant-head",
+      "selector": ".themed-svg-root .participant ellipse",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant-tail",
-      "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.surface.primary"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .participant-tail",
+      "selector": ".themed-svg-root .participant path",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
@@ -142,7 +135,21 @@
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .message",
+      "selector": ".themed-svg-root .message line",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .message polygon",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .message polygon",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.edge"
@@ -164,13 +171,27 @@
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .note",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.status.warning"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .note",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.status.warning-border"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .sequence-divider",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.surface.secondary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .note",
+      "selector": ".themed-svg-root .sequence-divider",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
