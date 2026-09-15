@@ -117,14 +117,56 @@
       "selector": ".themed-svg-root .participant ellipse",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
-      "token": "color.border.primary"
+      "token": "color.edge"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .participant path",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
-      "token": "color.border.primary"
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor ellipse",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.surface.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor ellipse",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor path",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor line",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor circle",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.surface.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor circle",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
     },
     {
       "kind": "stylesheet",

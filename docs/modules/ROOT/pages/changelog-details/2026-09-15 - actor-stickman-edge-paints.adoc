@@ -1,0 +1,22 @@
+= Actor stick figures follow edge paints
+:description: Rebuild PlantUML label-as-wire-break and Mermaid sequence actor-man bindings for dark mode.
+:page-audience: general-knowledge readers and maintainers
+:page-usage-context: Understanding why stick-figure actors were invisible in host dark mode
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+== Why
+
+After the v0.1.1 PlantUML paint pass, boxed participants and notes followed host
+dark mode, but `actor` stick figures still vanished: limb strokes were bound to
+`color.border.primary`, which Valentus dark mode sets to a near-invisible
+hairline. Mermaid sequence diagrams had the same gap for `.actor-man` circle
+and line paints (concrete white fill in Mermaid's stylesheet).
+
+== Change
+
+* Depend on `@dev-centr/plantuml-svg-css-vars` **v0.1.2**.
+* Rebuild `label-as-wire-break` adaptive + host SVGs and theme manifest.
+* Sequence Mermaid builds bind `.actor-man` circle/line to surface + edge tokens;
+  rebuild `access-github-membership-flow` so its manifest includes those bindings.

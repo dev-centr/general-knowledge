@@ -107,6 +107,48 @@
     },
     {
       "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor-man circle",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.surface.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor-man circle",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .actor-man line",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg .actor-man circle",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.surface.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg .actor-man circle",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg .actor-man line",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
       "selector": ".themed-svg-root .actor-line",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",

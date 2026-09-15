@@ -118,6 +118,14 @@ function stylesheetTokens(sourceText) {
     bindings.push(
       ['.themed-svg-root .actor', 'fill', 'color.surface.primary'],
       ['.themed-svg-root .actor', 'stroke', 'color.border.primary'],
+      // Stick-figure `actor` participants: Mermaid paints circle/line under
+      // `.actor-man` with concrete fill/stroke (often white), not `.actor`.
+      ['.themed-svg-root .actor-man circle', 'fill', 'color.surface.primary'],
+      ['.themed-svg-root .actor-man circle', 'stroke', 'color.edge'],
+      ['.themed-svg-root .actor-man line', 'stroke', 'color.edge'],
+      ['#my-svg .actor-man circle', 'fill', 'color.surface.primary'],
+      ['#my-svg .actor-man circle', 'stroke', 'color.edge'],
+      ['#my-svg .actor-man line', 'stroke', 'color.edge'],
       ['.themed-svg-root .actor-line', 'stroke', 'color.edge'],
       ['.themed-svg-root .messageLine0', 'stroke', 'color.edge'],
       ['.themed-svg-root .messageLine1', 'stroke', 'color.edge'],
