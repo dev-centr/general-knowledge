@@ -1,0 +1,37 @@
+= PlantUML Themed SVG CI path
+:description: Wire Kroki PlantUML through plantuml-svg-css-vars for theme-aware adaptive and host SVGs.
+:page-audience: Maintainers and readers tracking documentation changes
+:page-usage-context: Detailed entry subordinate to the General Developer Knowledge changelog
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+:page-created: 2026-09-15
+:page-diataxis: reference
+:page-doc-type: changelog-detail
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+== Why
+
+Kroki PlantUML SVG embeds stay fixed-color under the site dark-mode toggle.
+A PlantUML adapter sibling of the Mermaid Themed SVG path was needed in CI.
+
+== Change
+
+* Depend on `@dev-centr/plantuml-svg-css-vars` (`github:dev-centr/plantuml-svg-css-vars#v0.1.0` until npm Trusted Publishing is registered for the new package).
+* Add `scripts/build-plantuml-diagrams.mjs` and `diagrams:build:plantuml`.
+* Rebuild `label-as-wire-break` from `.puml` through Kroki + the adapter.
+
+ifndef::page-context-active[]
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]

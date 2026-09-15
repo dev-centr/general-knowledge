@@ -1,0 +1,17 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontName Segoe UI
+skinparam ArrowColor #2c2c2c
+skinparam sequenceMessageAlign center
+
+actor Consumer
+participant "Label\n(/docs/v1)" as Label
+participant "Intended\nresource" as Thing
+
+Consumer -> Label : follow cite
+Label -> Thing : resolve (today: often identity)
+== Producer renames path ==
+Consumer -> Label : follow cite
+Label ->x Thing : string break / 404
+note right of Label : Label changed;\nwire was the label
+@enduml

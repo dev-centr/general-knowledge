@@ -3,9 +3,9 @@
   "schemaVersion": 1,
   "namespace": "diagram",
   "source": {
-    "kind": "mermaid",
-    "uri": "label-as-wire-break.mmd",
-    "generator": "@mermaid-js/mermaid-cli@11.17.0"
+    "kind": "plantuml",
+    "uri": "label-as-wire-break.puml",
+    "generator": "kroki-plantuml"
   },
   "tokens": [
     {
@@ -93,73 +93,87 @@
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .actor",
+      "selector": ".themed-svg-root .participant",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.surface.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .actor",
+      "selector": ".themed-svg-root .participant",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .actor-line",
-      "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .messageLine0",
-      "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .messageLine1",
-      "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .messageText",
+      "selector": ".themed-svg-root .participant-head",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
-      "token": "color.text.primary"
+      "token": "color.surface.primary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .labelBox",
+      "selector": ".themed-svg-root .participant-head",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.border.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .participant-tail",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.surface.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .participant-tail",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.border.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .participant-lifeline line",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .message",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .message path",
+      "property": "fill",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .message path",
+      "property": "stroke",
+      "styleSelector": "#themed-svg-bindings",
+      "token": "color.edge"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root .note",
       "property": "fill",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.surface.secondary"
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root .labelBox",
+      "selector": ".themed-svg-root .note",
       "property": "stroke",
       "styleSelector": "#themed-svg-bindings",
       "token": "color.border.primary"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .labelText",
-      "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.text.primary"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root .loopLine",
-      "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
     },
     {
       "kind": "stylesheet",

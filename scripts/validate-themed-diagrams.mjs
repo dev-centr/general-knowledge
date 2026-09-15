@@ -40,6 +40,9 @@ const sources = [
   'playtime-argv',
   'seo-discovery-system',
 ];
+
+/** PlantUML stems (Kroki → plantuml-svg-css-vars); keep listed for SVG validation. */
+const plantumlSources = ['internet-architecture/label-as-wire-break'];
 const failures = [];
 
 function fail(path, message) {
@@ -61,6 +64,9 @@ for (const [dependency, expected] of [
   if (packageJson.devDependencies?.[dependency] !== expected) {
     fail(packagePath, `${dependency} must be pinned to ${expected}`);
   }
+}
+if (!packageJson.devDependencies?.['@dev-centr/plantuml-svg-css-vars']) {
+  fail(packagePath, '@dev-centr/plantuml-svg-css-vars must be declared');
 }
 
 function validateSvg(path, mode) {
@@ -109,27 +115,38 @@ function validateSvg(path, mode) {
   }
 }
 
+const plantumlSet = new Set(plantumlSources);
+
 for (const source of sources) {
   const stem = basename(source);
   const directory = dirname(join(images, source));
-  const mermaid = join(directory, `${stem}.mmd`);
+  const isPlantuml = plantumlSet.has(source);
+  const sourcePath = join(directory, `${stem}.${isPlantuml ? 'puml' : 'mmd'}`);
   const manifestPath = join(directory, `${stem}.theme.json`);
   const adaptive = join(directory, `${stem}.svg`);
   const host = join(directory, `${stem}.host.svg`);
   const fixed = join(directory, `${stem}.fixed.svg`);
-  const sourceText = readFileSync(mermaid, 'utf8');
+  const sourceText = readFileSync(sourcePath, 'utf8');
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-  if (manifest.source?.generator !== '@mermaid-js/mermaid-cli@11.17.0') {
+  if (isPlantuml) {
+    if (manifest.source?.generator !== 'kroki-plantuml') {
+      fail(manifestPath, 'PlantUML manifest must identify kroki-plantuml generator');
+    }
+  } else if (manifest.source?.generator !== '@mermaid-js/mermaid-cli@11.17.0') {
     fail(manifestPath, 'manifest must identify the pinned Mermaid 11 generator');
   }
   const selectors = new Set(manifest.bindings?.map((binding) => binding.selector));
-  for (const match of sourceText.matchAll(/^\s*class\s+[^ \r\n]+\s+(primary|secondary|warning|success|danger)\s*$/gm)) {
-    for (const suffix of ['.label-container', '.label', 'text']) {
-      const selector = `.themed-svg-root .${match[1]} ${suffix}`;
-      if (!selectors.has(selector)) fail(manifestPath, `missing structural binding ${selector}`);
+  if (!isPlantuml) {
+    for (const match of sourceText.matchAll(
+      /^\s*class\s+[^ \r\n]+\s+(primary|secondary|warning|success|danger)\s*$/gm,
+    )) {
+      for (const suffix of ['.label-container', '.label', 'text']) {
+        const selector = `.themed-svg-root .${match[1]} ${suffix}`;
+        if (!selectors.has(selector)) fail(manifestPath, `missing structural binding ${selector}`);
+      }
+      const tspanSelector = `#my-svg .${match[1]} tspan`;
+      if (!selectors.has(tspanSelector)) fail(manifestPath, `missing structural binding ${tspanSelector}`);
     }
-    const tspanSelector = `#my-svg .${match[1]} tspan`;
-    if (!selectors.has(tspanSelector)) fail(manifestPath, `missing structural binding ${tspanSelector}`);
   }
   validateSvg(adaptive, 'adaptive');
   validateSvg(host, 'host');
@@ -137,7 +154,12 @@ for (const source of sources) {
   if (/var\(|prefers-color-scheme/i.test(fixedSvg)) {
     fail(fixed, 'preserved original must remain fixed');
   }
-  if (!/<title\b[^>]*>[^<]+<\/title>/i.test(fixedSvg) || !/<desc\b[^>]*>[^<]+<\/desc>/i.test(fixedSvg)) {
+  if (isPlantuml) {
+    if (!/<svg\b/i.test(fixedSvg)) fail(fixed, 'preserved original must be SVG');
+  } else if (
+    !/<title\b[^>]*>[^<]+<\/title>/i.test(fixedSvg) ||
+    !/<desc\b[^>]*>[^<]+<\/desc>/i.test(fixedSvg)
+  ) {
     fail(fixed, 'preserved original must retain title and description');
   }
 }
@@ -147,4 +169,6 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Validated ${sources.length * 2} canonical adaptive/host SVGs and ${sources.length} preserved fixed originals.`);
+console.log(
+  `Validated ${sources.length * 2} canonical adaptive/host SVGs and ${sources.length} preserved fixed originals.`,
+);

@@ -11,6 +11,9 @@ importers:
       '@dev-centr/mermaid-svg-css-vars':
         specifier: 0.1.3
         version: 0.1.3
+      '@dev-centr/plantuml-svg-css-vars':
+        specifier: github:dev-centr/plantuml-svg-css-vars#v0.1.0
+        version: https://codeload.github.com/dev-centr/plantuml-svg-css-vars/tar.gz/dd21b9e6eb37f338a8c760a3d03451f20a291090
       '@dev-centr/themed-svg':
         specifier: 0.2.3
         version: 0.2.3
@@ -37,6 +40,12 @@ packages:
 
   '@dev-centr/mermaid-svg-css-vars@0.1.3':
     resolution: {integrity: sha512-3M5VF6AOmdLmFkzq6HRsCQ73vY5FKfCKKYDInBUwPT/cQd/r+R8r5kjivmBU2BH4tAFkmoYjkGHpIauFZDdQTA==}
+    engines: {node: '>=20'}
+    hasBin: true
+
+  '@dev-centr/plantuml-svg-css-vars@https://codeload.github.com/dev-centr/plantuml-svg-css-vars/tar.gz/dd21b9e6eb37f338a8c760a3d03451f20a291090':
+    resolution: {tarball: https://codeload.github.com/dev-centr/plantuml-svg-css-vars/tar.gz/dd21b9e6eb37f338a8c760a3d03451f20a291090}
+    version: 0.1.0
     engines: {node: '>=20'}
     hasBin: true
 
@@ -880,6 +889,10 @@ snapshots:
   '@chevrotain/types@11.1.2': {}
 
   '@dev-centr/mermaid-svg-css-vars@0.1.3':
+    dependencies:
+      '@dev-centr/themed-svg': 0.2.3
+
+  '@dev-centr/plantuml-svg-css-vars@https://codeload.github.com/dev-centr/plantuml-svg-css-vars/tar.gz/dd21b9e6eb37f338a8c760a3d03451f20a291090':
     dependencies:
       '@dev-centr/themed-svg': 0.2.3
 

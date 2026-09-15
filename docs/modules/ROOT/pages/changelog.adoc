@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-15 -- PlantUML Themed SVG CI path
+
+* Added `@dev-centr/plantuml-svg-css-vars` and `scripts/build-plantuml-diagrams.mjs` (Kroki → adaptive/host).
+* `label-as-wire-break` now builds from `.puml` through that pipeline (Mermaid `.mmd` removed for this stem).
+* See xref:changelog-details/2026-09-15 - plantuml-themed-svg-ci.adoc[Detailed changelog].
+
 == 2026-09-14 -- Reliability Kroki diagrams → Themed SVG
 
 * Replaced remaining PlantUML/Kroki and one inline Mermaid figure on Internet Reliability pages with canonical Mermaid + Themed SVG adaptive/host outputs so manual dark mode keeps readable fills.

@@ -3,13 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "diagrams:build": "node scripts/build-diagrams.mjs",
-    "diagrams:check": "node scripts/build-diagrams.mjs --check",
+    "diagrams:build": "node scripts/build-diagrams.mjs && node scripts/build-plantuml-diagrams.mjs",
+    "diagrams:build:mermaid": "node scripts/build-diagrams.mjs",
+    "diagrams:build:plantuml": "node scripts/build-plantuml-diagrams.mjs",
+    "diagrams:check": "node scripts/build-diagrams.mjs --check && node scripts/build-plantuml-diagrams.mjs --check",
     "diagrams:validate": "node scripts/validate-themed-diagrams.mjs",
     "diagrams:render-test": "node scripts/test-themed-diagram-rendering.mjs"
   },
   "devDependencies": {
     "@dev-centr/mermaid-svg-css-vars": "0.1.3",
+    "@dev-centr/plantuml-svg-css-vars": "github:dev-centr/plantuml-svg-css-vars#v0.1.0",
     "@dev-centr/themed-svg": "0.2.3",
     "@mermaid-js/mermaid-cli": "11.17.0",
     "@xmldom/xmldom": "^0.8.11",

@@ -19,7 +19,6 @@ const pnpm = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 const sources = [
   'internet-architecture/three-altitudes-diagram',
   'internet-architecture/rename-breakage-mockup',
-  'internet-architecture/label-as-wire-break',
   'internet-architecture/identity-stack-flowchart',
   'internet-architecture/identity-stack-planes',
   'internet-architecture/ndn-delivery-vs-app-labels',
