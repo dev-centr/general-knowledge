@@ -6,36 +6,52 @@ Timeless, product-agnostic reference material for developers. Organized by the D
 
 Choose the path that matches your current goal:
 
-[cols="1,1", frame=none, grid=none]
-|===
-a|[.text-center]
-=== Tutorials
+[.cards]
+--
+[.tile]
+====
+[.title]
+🧭 Tutorials
+
 **Intent: Learning**
 Step-by-step guides to build basic competence.
 
-xref:tutorials/index.adoc[🚀 Browse Tutorials]
+xref:tutorials/index.adoc[Browse Tutorials]
+====
 
-a|[.text-center]
-=== How-to Guides
+[.tile]
+====
+[.title]
+🛠️ How-to Guides
+
 **Intent: Execution**
 Task-oriented guides for real-world problems.
 
-xref:how-to/index.adoc[📂 Browse How-tos]
+xref:how-to/index.adoc[Browse How-tos]
+====
 
-a|[.text-center]
-=== Reference
+[.tile]
+====
+[.title]
+📚 Reference
+
 **Intent: Retrieval**
 Technical specifications, checklists, and facts.
 
-xref:reference/index.adoc[📋 View Reference]
+xref:reference/index.adoc[View Reference]
+====
 
-a|[.text-center]
-=== Explanation
+[.tile]
+====
+[.title]
+💡 Explanation
+
 **Intent: Comprehension**
 Discursive content that explains the "Why."
 
-xref:explanation/index.adoc[💡 Explore Concepts]
-|===
+xref:explanation/index.adoc[Explore Concepts]
+====
+--
 
 [TIP]
 ====
