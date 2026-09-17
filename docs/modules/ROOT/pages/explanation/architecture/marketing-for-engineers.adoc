@@ -30,4 +30,4 @@ Approximate the user’s perceptual process from cognitive and UX research: orie
 == Related
 
 * xref:explanation/architecture/classes/web.adoc[Web apps — auxiliary features]
-* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
+* xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]

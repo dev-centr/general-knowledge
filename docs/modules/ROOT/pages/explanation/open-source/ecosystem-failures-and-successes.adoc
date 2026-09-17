@@ -22,7 +22,7 @@ endif::[]
 
 Dev-Centr’s flagship license is **source-available**, not OSI “Open Source.” That is intentional. This page is the **discourse and history book** behind that choice: repeated industry patterns where a commons grows, wealth concentrates elsewhere, and the parent ecosystem is left underfunded, captured, or torn apart by governance fights.
 
-It does not replace legal texts. Pair it with xref:DevCentr:publishing:licensing.adoc[Licensing (CSL / ANL)].
+It does not replace legal texts. Pair it with xref:platforms:publishing:licensing.adoc[Licensing (CSL / ANL)].
 
 == The pattern we keep seeing
 
@@ -156,7 +156,7 @@ Permissive survival is not magic. It is a **governance + multi-sponsor** acciden
 | **xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]**
 | Durable video catalog entries (YouTube + Drive + decentralized when known).
 
-| **xref:DevCentr:publishing:licensing.adoc[Licensing]**
+| **xref:platforms:publishing:licensing.adoc[Licensing]**
 | Normative CSL / ANL facts; FAQ. Deep-links here for “why not OSI.”
 
 | **Stack browser / Project Visualizer**
@@ -167,7 +167,7 @@ Permissive survival is not magic. It is a **governance + multi-sponsor** acciden
 
 * xref:explanation/programming/curated-watching.adoc[Curated watching (programming)]
 * xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
-* xref:DevCentr:publishing:licensing.adoc[Licensing (CSL / ANL)]
-* xref:DevCentr:publishing:licensing-strategy-templates.adoc[Licensing strategy templates]
+* xref:platforms:publishing:licensing.adoc[Licensing (CSL / ANL)]
+* xref:platforms:publishing:licensing-strategy-templates.adoc[Licensing strategy templates]
 * https://xkcd.com/2347/[xkcd 2347 — Dependency]
 * https://www.coreinfrastructure.org/[Core Infrastructure Initiative / OpenSSF lineage]

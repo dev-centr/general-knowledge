@@ -100,7 +100,7 @@ Demonstration does not require boiling the ocean:
 | Personal `.issues` submissions + `images/`
 | Consumer-owned filing archive: bodies and media you submitted, even when the forge hosts the public copy via `gh --attach`
 
-| xref:issues-browser::index.adoc[Issues Browser]
+| xref:tools:issues-browser:index.adoc[Issues Browser]
 | Opt-in forge metadata / body backup into SQLite; offline browse and search — early mirror of forge correspondence
 
 | `gh --attach` (GitHub CLI ≥ 2.99)
@@ -139,5 +139,5 @@ The wedge shows stakeholders: (1) live forge UX can improve without abandoning c
 * xref:explanation/internet-architecture/index.adoc[Internet Architecture]
 * xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability]
 * xref:explanation/infrastructure/uniprovider.adoc[UniProvider / OPR] — discovery of *runners*; this page is about *data* providers’ search and backup surfaces
-* xref:issues-browser::backup.adoc[Issues Browser — forge metadata backup]
+* xref:tools:issues-browser:backup.adoc[Issues Browser — forge metadata backup]
 * link:https://docs.github.com/en/github-cli/github-cli/attaching-files-with-github-cli[GitHub CLI — attaching files]

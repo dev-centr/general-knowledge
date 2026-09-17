@@ -5,7 +5,7 @@ When you pick a **desktop** or **dense client** stack, you are not only choosing
 You are choosing a **rendering pipeline**: how vectors become pixels, how much work happens on the CPU before the GPU sees a frame, and whether a long-lived document can grow without turning every scroll into layout reflow.
 
 This page is a working map for that decision.
-It complements xref:explanation/architecture/types/gui-apps.adoc[GUI applications] and xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (browser-heavy products on the Dev-Centr docs playbook).
+It complements xref:explanation/architecture/types/gui-apps.adoc[GUI applications] and xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (browser-heavy products on the Dev-Centr docs playbook).
 Essay (inward voice): link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed].
 
 == Why rendering choice shows up late—and hurts early
@@ -251,5 +251,5 @@ All engines listed here are open source under permissive licenses:
 
 * xref:explanation/architecture/types/gui-apps.adoc[GUI applications]
 * xref:explanation/architecture/classes/desktop.adoc[Desktop apps — auxiliary template]
-* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
+* xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
 * link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed] (essay)

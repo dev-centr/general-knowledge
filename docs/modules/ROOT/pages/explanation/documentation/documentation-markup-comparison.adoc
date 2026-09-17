@@ -69,6 +69,6 @@ flowchart LR
 
 == Related
 
-* Product Create… dialog: xref:DevCentr:specifications:components/content-create.adoc[Content Create]
+* Product Create… dialog: xref:platforms:specifications:components/content-create.adoc[Content Create]
 * CentrMark overview: link:https://github.com/dev-centr/centrmark[dev-centr/centrmark]
 * Structured *data* formats (not prose): xref:explanation/documentation/structured-data-formats.adoc[Structured data formats]

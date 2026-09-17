@@ -40,6 +40,6 @@ Dev-Centr does **not** push paid closed-source package managers as shop defaults
 == Related
 
 * DevCentr Node SDL: `app/src/modules/languages/node.sdl`
-* Ecosystem management: xref:DevCentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]
+* Ecosystem management: xref:platforms:specifications:components/ecosystem-management.adoc[Ecosystem Management]
 * pnpm store mechanics (detail): xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics]
 * Recommended tools: xref:reference/recommended-tools.adoc[Recommended Tools]

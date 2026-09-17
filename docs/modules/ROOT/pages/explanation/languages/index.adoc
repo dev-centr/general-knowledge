@@ -36,7 +36,7 @@ That habit matters more than which syntax you typed.
 |===
 
 Desktop shells that need a webview still split: TypeScript (or a JS UI) in the webview, D or Rust in the host.
-xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] covers that split for dense browser products.
+xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] covers that split for dense browser products.
 
 == Why cull instead of collecting languages
 

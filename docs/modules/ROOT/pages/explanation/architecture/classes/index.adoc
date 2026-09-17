@@ -47,4 +47,4 @@ Example: a desktop client + marketing site + account portal.
 * xref:explanation/architecture/types/gui-apps.adoc[GUI apps] — About/dump/installer emphasis (desktop + mobile GUI)
 * xref:explanation/architecture/types/cli.adoc[CLI] / xref:explanation/architecture/types/tui.adoc[TUI] — often ship *beside* a desktop class
 * xref:explanation/architecture/types/services.adoc[Services] — backend for web/mobile; health/version still apply
-* xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — browser performance/architecture (portal)
+* xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — browser performance/architecture (portal)

@@ -33,7 +33,7 @@ That is the cull: **D instead of C++** for owned application code, not “never 
 == What this is not
 
 * Not a claim that game engines, Unreal, or Qt shops should rewrite next quarter.
-* Not a claim that D's GUI ecosystem matches those incumbents. Pair D (or Rust) in the host with a webview UI when that is the product; see xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
+* Not a claim that D's GUI ecosystem matches those incumbents. Pair D (or Rust) in the host with a webview UI when that is the product; see xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
 * Not a claim that Rust is the wrong application language. Rust is the no-GC / ecosystem pole. D is the default when you want the high-level surface.
 
 == See also

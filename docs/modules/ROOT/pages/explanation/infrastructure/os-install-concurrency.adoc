@@ -46,7 +46,7 @@ It is the same *class* of problem as xref:explanation/infrastructure/git-concurr
 We do not ship the OS queue.
 We do ship install *entrypoints* and agent-facing toolchain docs:
 
-* xref:ibex:ROOT:index.adoc[Ibex] (Easy Installer) and xref:msi-generator:ROOT:index.adoc[msi-generator] should emit **quiet-capable**, lock-aware setups and never imply that parallel EXE installs are safe without an outer mutex.
+* xref:tools:ibex:index.adoc[Ibex] (Easy Installer) and xref:tools:msi-generator:index.adoc[msi-generator] should emit **quiet-capable**, lock-aware setups and never imply that parallel EXE installs are safe without an outer mutex.
 * Toolchain bootstrap notes (xref:explanation/infrastructure/shell-env-refresh.adoc[Shell Environment Refresh], winget/apt how-tos) assume someone already won admission to install.
 
 If you are designing an agent runner that spans Windows and Linux, keep one orchestration verb (“install with exclusive host admission”) and two platform adapters—not a fantasy that `winget` and `apt` already solved peer agents.

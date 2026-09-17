@@ -213,7 +213,7 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-08-18 -- TCF practice kit on the hub
 
-* xref:explanation/infrastructure/toolchain-framework.adoc[TCF explanation] and the naming table on xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] now point at xref:toolchain-framework::index.adoc[the TCF Antora component] (no longer a "planned" kit).
+* xref:explanation/infrastructure/toolchain-framework.adoc[TCF explanation] and the naming table on xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] now point at xref:tools:toolchain-framework:index.adoc[the TCF Antora component] (no longer a "planned" kit).
 
 == 2026-08-18 -- Polyglot distribution (experimental)
 

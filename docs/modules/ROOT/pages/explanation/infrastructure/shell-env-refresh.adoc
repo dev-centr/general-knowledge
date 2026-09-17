@@ -108,5 +108,5 @@ See xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and
 * xref:how-to/nushell-setup.adoc[How to: Install and set up Nushell]
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (bootstrap includes PATH refresh)
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] (always-on DevCentr shell vs agent-manager PTYs; remote env host)
-* DevCentr spec: xref:DevCentr:specifications:components/repository-browser-terminal.adoc[Repository Browser Terminal]
+* DevCentr spec: xref:platforms:specifications:components/repository-browser-terminal.adoc[Repository Browser Terminal]
 * link:https://github.com/openshellorg/shell-architecture[OpenShellOrg: shell-architecture]

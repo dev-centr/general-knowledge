@@ -4,7 +4,7 @@
 Use this page when scaffolding or redressing a **browser-delivered** product (SPA, MPA, SSR app, PWA, admin console).
 Parent: xref:explanation/architecture/classes/index.adoc[Delivery classes].
 Vocabulary: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary features].
-Dense UI architecture notes: xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
+Dense UI architecture notes: xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
 
 == Must-understand constraints
 

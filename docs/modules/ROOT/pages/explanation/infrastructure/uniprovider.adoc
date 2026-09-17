@@ -81,7 +81,7 @@ Markdown editor context: xref:explanation/documentation/markdown-editors-on-disk
 
 == Links
 
-* Product docs: link:https://docs.devcentr.org/uniprovider/[UniProvider]
+* Product docs: link:https://docs.devcentr.org/tools/uniprovider/[UniProvider]
 * Repo: link:https://github.com/dev-centr/uniprovider[dev-centr/uniprovider]
 * Online directory: link:https://github.com/dev-centr/opr-directory[dev-centr/opr-directory]
 * Recommended tools: xref:reference/recommended-tools.adoc[Recommended tools]

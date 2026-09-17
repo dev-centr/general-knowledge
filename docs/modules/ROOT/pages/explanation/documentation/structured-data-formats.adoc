@@ -16,7 +16,7 @@ JSON is the default interchange shape. Human-edited config, programmable constra
 | Format | Prefer when
 
 | **SDLang (`.sdl`)**
-| DevCentr owns the parser (catalogs, `.devcentr.sdl`, recognizer profiles, CentrMark properties). Comments, native types, low punctuation noise. See xref:DevCentr:specifications:sdl.adoc[SDL Preference].
+| DevCentr owns the parser (catalogs, `.devcentr.sdl`, recognizer profiles, CentrMark properties). Comments, native types, low punctuation noise. See xref:platforms:specifications:sdl.adoc[SDL Preference].
 
 | **KDL (`.kdl`)**
 | Greenfield or cross-language node documents: strict grammar, `/-` comments, `(type)` annotations. Use when the consumer is not DevCentr’s `sdlang-d` stack (DUB: `kdl` / https://github.com/dlang-supplemental/kdl-d[kdl-d]).
@@ -30,7 +30,7 @@ JSON is the default interchange shape. Human-edited config, programmable constra
 
 === SDLang, KDL, and Extended SDL
 
-Both SDLang and KDL are node-based documents. KDL is the clearer modern successor (unambiguous grammar, explicit type annotations, safer node commenting). **Policy:** keep SDLang where DevCentr already parses `.sdl`; prefer KDL for new documents outside that surface. Do **not** adopt Extended SDL/XDL as a compromise—it does not finish SDLang’s gaps and does not inherit KDL’s ecosystem. Full decision table: xref:DevCentr:specifications:sdl.adoc#decision-sdlang-vs-kdl-vs-extended-sdl[SDL Preference — Decision].
+Both SDLang and KDL are node-based documents. KDL is the clearer modern successor (unambiguous grammar, explicit type annotations, safer node commenting). **Policy:** keep SDLang where DevCentr already parses `.sdl`; prefer KDL for new documents outside that surface. Do **not** adopt Extended SDL/XDL as a compromise—it does not finish SDLang’s gaps and does not inherit KDL’s ecosystem. Full decision table: xref:platforms:specifications:sdl.adoc#decision-sdlang-vs-kdl-vs-extended-sdl[SDL Preference — Decision].
 
 == Three extremes beyond JSON text
 
@@ -87,6 +87,6 @@ Use the lineage view in Create… when the job tree (human config vs programmabl
 
 == Related
 
-* Create… catalog and dialog: xref:DevCentr:specifications:components/content-create.adoc[Content Create]
+* Create… catalog and dialog: xref:platforms:specifications:components/content-create.adoc[Content Create]
 * Prose markup: xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
-* SDL policy: xref:DevCentr:specifications:sdl.adoc[SDL Preference]
+* SDL policy: xref:platforms:specifications:sdl.adoc[SDL Preference]

@@ -27,5 +27,5 @@ If you prefer standard Markdown, use:
 
 == Next Steps
 * xref:reference/languages/c.adoc[Example: C Language with LP]
-* xref:DevCentr:ROOT:project-vision.adoc[Dev-Centr Project Vision]
+* xref:platforms:devcentr:project-vision.adoc[Dev-Centr Project Vision]
 * link:https://github.com/dev-centr/scriptbook[Scriptbook] — playable `.cmk` script documents

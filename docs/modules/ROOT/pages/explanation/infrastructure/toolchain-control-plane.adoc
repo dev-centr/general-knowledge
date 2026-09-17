@@ -15,7 +15,7 @@ It is not the name of the pattern itself. Think of it as the concrete management
 | How you think — xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
 
 | **Protocol**
-| How you act — repeatable behaviors in the pattern page and xref:DevCentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[spec]
+| How you act — repeatable behaviors in the pattern page and xref:platforms:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[spec]
 
 | **Control plane (this page)**
 | What you ship — TCP / TCoP
@@ -61,4 +61,4 @@ Any ecosystem with complex internals (platform SDKs, emulators, channel upgrades
 
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
 * xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
-* xref:DevCentr:specifications:components/ecosystem-management.adoc[Ecosystem Management]
+* xref:platforms:specifications:components/ecosystem-management.adoc[Ecosystem Management]

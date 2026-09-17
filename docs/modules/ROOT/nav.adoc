@@ -71,12 +71,19 @@
 ** Architecture
 *** xref:explanation/architecture/index.adoc[Architecture overview]
 *** xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
-*** xref:explanation/architecture/auxiliary-features.adoc[Auxiliary Features]
-**** Delivery classes
-***** xref:explanation/architecture/classes/index.adoc[Delivery Classes]
+**** xref:explanation/architecture/principles.adoc[Core Principles]
+**** By type
+***** xref:explanation/architecture/types/libraries.adoc[Libraries]
+***** xref:explanation/architecture/types/gui-apps.adoc[GUI Apps]
+***** xref:explanation/architecture/types/cli.adoc[CLI]
+***** xref:explanation/architecture/types/tui.adoc[TUI]
+***** xref:explanation/architecture/types/games.adoc[Games]
+***** xref:explanation/architecture/types/services.adoc[Services]
+**** xref:explanation/architecture/classes/index.adoc[Delivery classes]
 ***** xref:explanation/architecture/classes/desktop.adoc[Desktop]
 ***** xref:explanation/architecture/classes/web.adoc[Web]
 ***** xref:explanation/architecture/classes/mobile.adoc[Mobile]
+*** xref:explanation/architecture/auxiliary-features.adoc[Auxiliary Features]
 *** xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers]
 *** xref:explanation/architecture/about-and-build-info.adoc[About and Build Info]
 *** xref:explanation/architecture/automatic-updates.adoc[Automatic Updates]
@@ -88,16 +95,8 @@
 *** xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and Support]
 *** xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines]
 *** xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming]
-*** xref:explanation/architecture/principles.adoc[Core Principles]
-**** By type
-***** xref:explanation/architecture/types/libraries.adoc[Libraries]
-***** xref:explanation/architecture/types/gui-apps.adoc[GUI Apps]
-***** xref:explanation/architecture/types/cli.adoc[CLI]
-***** xref:explanation/architecture/types/tui.adoc[TUI]
-***** xref:explanation/architecture/types/games.adoc[Games]
-***** xref:explanation/architecture/types/services.adoc[Services]
-*** xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
-*** xref:home::architecture/subscription-management-platforms.adoc[Subscription management platforms] (Dev-Centr docs playbook)
+*** xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
+*** xref:home::explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms] (Dev-Centr docs playbook)
 ** Infrastructure
 *** xref:explanation/infrastructure/nushell.adoc[Nushell (recommended shell)]
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
