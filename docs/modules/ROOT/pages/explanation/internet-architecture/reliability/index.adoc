@@ -1,5 +1,25 @@
 = Internet Reliability
 :description: Usability of the internet and reference durability—machine, developer-ecosystem, and internet altitudes under Internet Architecture.
+:page-audience: Developers and agents orienting on reference durability across machine, ecosystem, and internet altitudes
+:page-usage-context: Hub page under Internet Architecture for the Internet Reliability slice; pairs with HCI Labels versus wires
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 **Internet Reliability** is a slice of xref:explanation/internet-architecture/index.adoc[Internet Architecture].
 It is broader than network uptime: it includes whether people and tools can still *find and use* the thing they meant after names, hosts, and paths move.

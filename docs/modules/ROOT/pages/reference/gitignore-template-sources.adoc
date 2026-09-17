@@ -1,0 +1,10 @@
+= Gitignore Template Sources
+:description: Where DevCentr and related tools pull .gitignore templates from.
+
+DevCentr can combine templates from:
+
+* A DevCentr-managed templates repository (schema-defined layout)
+* https://github.com/github/gitignore[GitHub gitignore] (root = languages/core; `Global/` = editors/OS; `community/` = extras)
+* Local overrides in the workspace
+
+Root templates cover languages and core tech. Global templates cover editors, tools, and OS noise.

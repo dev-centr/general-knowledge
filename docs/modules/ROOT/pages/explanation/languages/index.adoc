@@ -16,11 +16,11 @@ That habit matters more than which syntax you typed.
 
 | Systems, firmware-adjacent, OS-talking tools
 | **D**; **Rust** when you cannot afford a GC, need WASM/kernel gravity, or want affine types from day one
-| **C** (no modules, header soup, global namespace). See xref:c-and-d.adoc[C and D].
+| **C** (no modules, header soup, global namespace). See xref:explanation/languages/c-and-d.adoc[C and D].
 
 | Native applications
 | **D**
-| **C++**. See xref:cpp-and-d.adoc[C++ and D].
+| **C++**. See xref:explanation/languages/cpp-and-d.adoc[C++ and D].
 
 | Browser UI (and the webview half of a desktop shell)
 | **TypeScript**
@@ -28,7 +28,7 @@ That habit matters more than which syntax you typed.
 
 | Numerical / ML when you control the stack
 | **Julia**
-| **Python** as the compute language; **Java** as the scientific platform. See xref:julia-d-and-java.adoc[Julia, D, and Java].
+| **Python** as the compute language; **Java** as the scientific platform. See xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java].
 
 | Mathematical / functional *thinking*
 | **Lisp**, then **Haskell**
@@ -46,7 +46,7 @@ It is twelve on-ramps, twelve package managers, and twelve ways to forget how me
 The poles above are different *ideas*:
 
 * **D** — C-family control with modules, `@safe`, and an optional GC. High-level enough to replace a lot of application C++ and “scripting that talks to the OS,” without dragging a huge interpreter.
-* **Rust** — compile-time ownership. No GC in the runtime. The industry's systems/WASM gravity well. Steeper wall; stronger no-GC story. See xref:d-and-rust.adoc[D and Rust].
+* **Rust** — compile-time ownership. No GC in the runtime. The industry's systems/WASM gravity well. Steeper wall; stronger no-GC story. See xref:explanation/languages/d-and-rust.adoc[D and Rust].
 * **TypeScript** — the browser constraint. You do not get to wish this away.
 * **Julia** — a language actually designed for numerical work, instead of a slow host with native kernels glued on.
 * **Lisp / Haskell** — programming as math. Learn the shape; ship in the poles above.
@@ -65,17 +65,17 @@ It is **not** the same question as “what should we teach and default to in cod
 * **Rust** is the stronger *systems pole* when GC pauses are unacceptable, when you need the WASM/kernel/infra ecosystem, or when you want affine types as the language's center rather than a retrofit.
 * They **compete** in systems work. Rust currently has more platform gravity. D covers more of the high-level application surface. Treat them as complementary poles, not as a single winner.
 
-The GC/`@nogc` split, stop-the-world collections, and why “just mix them” is not free are in xref:d-and-rust.adoc[D and Rust].
+The GC/`@nogc` split, stop-the-world collections, and why “just mix them” is not free are in xref:explanation/languages/d-and-rust.adoc[D and Rust].
 
 == Comparisons (reconstructed)
 
 Google deletes Gemini shares after a while.
 The arguments that used to live on those links are here, rewritten as docs rather than chat logs:
 
-* xref:c-and-d.adoc[C and D]
-* xref:cpp-and-d.adoc[C++ and D]
-* xref:julia-d-and-java.adoc[Julia, D, and Java]
-* xref:d-and-rust.adoc[D and Rust] — ownership, GC, and the webview split
+* xref:explanation/languages/c-and-d.adoc[C and D]
+* xref:explanation/languages/cpp-and-d.adoc[C++ and D]
+* xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java]
+* xref:explanation/languages/d-and-rust.adoc[D and Rust] — ownership, GC, and the webview split
 
 == See also
 

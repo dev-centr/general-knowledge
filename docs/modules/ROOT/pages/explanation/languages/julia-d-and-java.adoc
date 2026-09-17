@@ -56,5 +56,5 @@ It *is* a better default than Java for native tools and apps next to that resear
 == See also
 
 * xref:index.adoc[Language recommendations]
-* xref:cpp-and-d.adoc[C++ and D] — same “huge runtime / huge language” instinct, different victim
-* xref:d-and-rust.adoc[D and Rust]
+* xref:explanation/languages/cpp-and-d.adoc[C++ and D] — same “huge runtime / huge language” instinct, different victim
+* xref:explanation/languages/d-and-rust.adoc[D and Rust]

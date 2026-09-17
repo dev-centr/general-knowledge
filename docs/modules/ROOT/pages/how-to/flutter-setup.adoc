@@ -30,5 +30,5 @@ Do not treat discovering FVM/Puro as “the real first step” forever. The long
 
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
-* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (DevCentr)]
+* xref:DevCentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (DevCentr)]
 * xref:reference/recommended-tools.adoc[Recommended Tools]

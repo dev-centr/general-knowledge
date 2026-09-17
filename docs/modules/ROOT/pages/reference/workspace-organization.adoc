@@ -1,0 +1,11 @@
+= Workspace Organization
+:description: Local workspace layout under a CODE_ROOT for multi-host clones.
+
+Organize clones under a stable root (for example `Z:/code` or `~/code`) by host and owner:
+
+----
+$CODE_ROOT/github.com/<owner>/<repo>
+$CODE_ROOT/gitlab.com/<owner>/<repo>
+----
+
+Forks and org membership rules determine where a repo lives and how remotes are named. See also xref:reference/git-management.adoc[Git Management].

@@ -1,0 +1,10 @@
+= Windows Testing on Linux
+:description: Options for exercising Windows builds from a Linux host.
+
+Common approaches:
+
+* CI runners with Windows images (GitHub Actions `windows-latest`)
+* WSL2 for Linux-side tooling while keeping a Windows workspace on the host
+* Nested VMs / cloud Windows agents for full GUI and installer tests
+
+See also xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL distro comparison].

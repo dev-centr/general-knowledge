@@ -1,5 +1,25 @@
 = Identity stack
 :description: CAS, mutable pointers, and reverse consumers—orientation on DevCentr with deep links to HCI and connectome-fs.
+:page-audience: Platform builders and agents working content-addressed identity, mutable pointers, and reverse consumers
+:page-usage-context: Encyclopedia explanation under Internet Reliability; systems altitude for CAS and absorb layers
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 Internet Reliability’s treatment stack is the same claim HCI Nerdz and connectome-fs already teach.
 DevCentr’s job here is **orientation at systems altitude**, not a second full treatise.

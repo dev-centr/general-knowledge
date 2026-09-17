@@ -12,7 +12,7 @@ ifdef::env-github[]
 <a href="https://github.com/dev-centr/general-knowledge/stargazers"><img src="https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Stars"></a>
 <a href="https://github.com/dev-centr/general-knowledge/issues"><img src="https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge" alt="Issues"></a>
 <br />
-<h3 align="center">General Developer Knowledge</h3>
+<h3 align="center">General Knowledge</h3>
 <p align="center">
 General developer knowledge: Diátaxis-organized reference, how-tos, and explanations.<br />
 <a href="https://docs.devcentr.org"><strong>Explore the docs »</strong></a><br /><br />
@@ -30,7 +30,7 @@ image:https://img.shields.io/github/forks/dev-centr/general-knowledge.svg?style=
 image:https://img.shields.io/github/stars/dev-centr/general-knowledge.svg?style=for-the-badge[Stars,link=https://github.com/dev-centr/general-knowledge/stargazers]
 image:https://img.shields.io/github/issues/dev-centr/general-knowledge.svg?style=for-the-badge[Issues,link=https://github.com/dev-centr/general-knowledge/issues]
 
-= General Developer Knowledge
+= General Knowledge
 
 General developer knowledge: Diátaxis-organized reference, how-tos, and explanations.
 

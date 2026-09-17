@@ -1,5 +1,25 @@
 = Internet Architecture
 :description: Systems-altitude framing for how the public internet and multi-repo webs stay usable—starting with Internet Reliability.
+:page-audience: Architects, platform builders, and agents orienting on how references stay usable at internet and org scale
+:page-usage-context: Encyclopedia hub under Explanation; systems altitude for Internet Reliability and related IA pages
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 **Internet Architecture** on DevCentr is the systems altitude: how references, identity, and delivery behave at internet and org scale.
 It is *not* product SPE xref:explanation/architecture/index.adoc[Software Architecture] (ship checklists, auxiliary templates, artifact types).

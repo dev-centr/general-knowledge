@@ -1,0 +1,9 @@
+= Git Management
+:description: Remote naming, autocrlf, and EditorConfig guidance for multi-OS teams.
+
+== Line endings
+
+* `core.autocrlf=input` — convert CRLF to LF on commit (common on Windows when the repo is LF-normalized).
+* `core.autocrlf=false` — no conversion; rely on `.gitattributes` / EditorConfig.
+
+Prefer `.gitattributes` for path-specific rules. See also xref:reference/windows-eol-exceptions.adoc[Windows EOL Exceptions].

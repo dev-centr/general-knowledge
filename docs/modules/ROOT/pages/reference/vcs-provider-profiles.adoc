@@ -1,0 +1,4 @@
+= VCS Provider Profiles
+:description: Per-provider profile repo names and org profile URLs.
+
+Providers (GitHub, GitLab, Gitea, …) expose organization profile pages and conventional profile repositories (for example `.github` on GitHub). DevCentr’s `profiles.json5` maps provider → profile repo names and README paths so the repository browser can deep-link org profiles and highlight local copies.

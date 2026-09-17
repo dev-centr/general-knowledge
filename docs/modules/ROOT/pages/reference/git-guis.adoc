@@ -1,0 +1,4 @@
+= Git GUIs and Visual History Browsers
+:description: Desktop Git clients DevCentr can detect and launch.
+
+Common GUI clients include GitHub Desktop, GitKraken, Sublime Merge, SourceTree, and TortoiseGit. DevCentr can list installed clients and open the current repository in one of them when registered.

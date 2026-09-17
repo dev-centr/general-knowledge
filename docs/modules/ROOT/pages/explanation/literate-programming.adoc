@@ -26,6 +26,6 @@ If you prefer standard Markdown, use:
 * **Entangled**: For bi-directional syncing between Markdown and regular source files.
 
 == Next Steps
-* xref:reference:languages/c.adoc[Example: C Language with LP]
-* xref:dev-center:ROOT:project-vision.adoc[Dev-Centr Project Vision]
+* xref:reference/languages/c.adoc[Example: C Language with LP]
+* xref:DevCentr:ROOT:project-vision.adoc[Dev-Centr Project Vision]
 * link:https://github.com/dev-centr/scriptbook[Scriptbook] — playable `.cmk` script documents

@@ -231,4 +231,4 @@ Principles that keep this sane:
 * xref:reference/package-registries.adoc[Package registries]
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
-* xref:devcentr:publishing:index.adoc[DevCentr Publishing hub]
+* xref:DevCentr:publishing:index.adoc[DevCentr Publishing hub]

@@ -41,4 +41,4 @@ Related (other components)::
 
 Operational siblings::
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] — lifecycle ownership for toolkits
-* xref:devcentr:publishing:index.adoc[Software Publishing] — in-app publishing hub that points back here
+* xref:DevCentr:publishing:index.adoc[Software Publishing] — in-app publishing hub that points back here

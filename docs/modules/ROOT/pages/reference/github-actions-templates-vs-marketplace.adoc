@@ -1,0 +1,4 @@
+= GitHub Actions Templates vs Marketplace
+:description: When to vendor workflow templates versus depending on Marketplace actions.
+
+Vendored templates in your org keep pins and review in-tree. Marketplace actions are convenient but need version pinning and supply-chain review. Prefer org templates for privileged publish/release workflows; Marketplace is fine for commoditized steps when hashed/pinned.

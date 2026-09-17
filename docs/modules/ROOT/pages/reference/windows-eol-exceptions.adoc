@@ -1,0 +1,11 @@
+= Windows EOL Exceptions
+:description: File types that still need CRLF on Windows.
+
+Some Windows-native formats break with LF-only:
+
+* Batch scripts (`.bat`, `.cmd`)
+* Registry export files (`.reg`)
+* Certain PowerShell scenarios
+* Some Visual Studio project/filter files
+
+Override with `.gitattributes` (e.g. `*.bat text eol=crlf`) or EditorConfig `end_of_line = crlf` for those paths.

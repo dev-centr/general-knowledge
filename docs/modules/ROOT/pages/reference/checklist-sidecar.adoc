@@ -15,7 +15,7 @@ foo.cmk.checks/
   state.json5
 ----
 
-**Canonical format is JSON5** (`.json5`) — comments and trailing commas welcome (DevCentr xref:devcentr:json5.adoc[JSON5 endorsement]). Tools also **read** legacy `state.jsonc` / `state.json` if present; new writes always use `state.json5`.
+**Canonical format is JSON5** (`.json5`) — comments and trailing commas welcome (DevCentr xref:DevCentr:specifications:json5.adoc[JSON5 endorsement]). Tools also **read** legacy `state.jsonc` / `state.json` if present; new writes always use `state.json5`.
 
 Commit `.cmk.checks/` when the team wants shared progress. (Scriptbook `*.cmk.runs/` stays gitignored.)
 

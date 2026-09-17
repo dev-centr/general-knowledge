@@ -1,5 +1,25 @@
 = Reference reliability
 :description: URL rot as the familiar slice of Internet Reliability—deep link to HCI Labels versus wires for diagnosis and treatment.
+:page-audience: Developers and agents diagnosing broken cites, URL rot, and label-as-wire failures
+:page-usage-context: Encyclopedia explanation under Internet Reliability; deep-links HCI Labels versus wires for diagnosis and treatment
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 Reference reliability asks: when someone (or an agent) follows a cite, do they still reach the *same intended thing*?
 

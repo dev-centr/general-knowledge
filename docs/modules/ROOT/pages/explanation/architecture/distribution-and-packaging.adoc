@@ -81,4 +81,4 @@ A research path for a **single release artifact** that still contains native, sy
 * xref:how-to/winget-registration.adoc[Winget registration]
 * xref:how-to/app-installer-packaging.adoc[How-to: installers]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
-* xref:devcentr:publishing:index.adoc[Publishing hub]
+* xref:DevCentr:publishing:index.adoc[Publishing hub]

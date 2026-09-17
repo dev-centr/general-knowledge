@@ -96,7 +96,7 @@ flowchart TB
 
 == Protocol: how you act
 
-The **Toolchain Management Protocol** is the set of standard, repeatable behaviors that avoid the onboarding trap. Full behavior list for implementers: xref:devcentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[Ecosystem Management — Protocol].
+The **Toolchain Management Protocol** is the set of standard, repeatable behaviors that avoid the onboarding trap. Full behavior list for implementers: xref:DevCentr:specifications:components/ecosystem-management.adoc#toolchain-management-protocol[Ecosystem Management — Protocol].
 
 At a glance, a compliant ecosystem entrypoint (alone or via TCF) should support:
 
@@ -144,10 +144,10 @@ The right end state is a first-party control plane in the Flutter workflow—not
 
 DevCentr’s **Ecosystem Management** vision treats shells, toolchains, and infrastructure as first-class. Toolchain Management is how we talk about lifecycle integrity; ecosystem modules surface gaps and bridges until an official control plane exists.
 
-* xref:devcentr:ROOT:project-vision.adoc[DevCentr Project Vision]
-* xref:devcentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (spec)]
+* xref:DevCentr:ROOT:project-vision.adoc[DevCentr Project Vision]
+* xref:DevCentr:specifications:components/ecosystem-management.adoc[Ecosystem Management (spec)]
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
-* xref:devcentr:specifications:components/toolchain-management.adoc[DevCentr TCM component]
+* xref:DevCentr:specifications:components/toolchain-management.adoc[DevCentr TCM component]
 * xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
 * xref:toolchain-framework::index.adoc[TCF practice kit]
 * link:https://github.com/dev-centr/toolchain-framework[dev-centr/toolchain-framework]

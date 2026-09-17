@@ -40,7 +40,7 @@ D is trying to be **both** high-level application language **and** systems langu
 That is exactly why it is a good *default for code you own*:
 
 * Readable surface for apps and OS-talking tools (the job C++ and Python both claim).
-* Modules and `@safe` instead of C headers and a global namespace. See xref:c-and-d.adoc[C and D].
+* Modules and `@safe` instead of C headers and a global namespace. See xref:explanation/languages/c-and-d.adoc[C and D].
 * C interop when the world is a `.so` / `.dll`.
 
 It is also why D is **not** the winner of the two-language collapse:
@@ -93,6 +93,6 @@ The language recommendation does not change: do not put the OS half in JavaScrip
 == See also
 
 * xref:index.adoc[Language recommendations]
-* xref:c-and-d.adoc[C and D]
-* xref:cpp-and-d.adoc[C++ and D]
+* xref:explanation/languages/c-and-d.adoc[C and D]
+* xref:explanation/languages/cpp-and-d.adoc[C++ and D]
 * xref:home::architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]

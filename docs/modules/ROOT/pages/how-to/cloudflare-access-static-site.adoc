@@ -28,7 +28,7 @@ Access applications **deny by default**. Create the GitHub (or PIN) identity pro
 image::access-setup-order.svg[alt="Setup order: GitHub UI OAuth App, Zero Trust IdP, Allow policy, then Access apps on both hostnames"]
 
 . Register a **GitHub OAuth App** in GitHub's **UI**. GitHub has no REST route to create OAuth Apps. Agents (Composio, `gh`, GitHub Apps APIs) cannot mint the Client ID and secret.
-. Add GitHub as a Zero Trust identity provider (paste those secrets). Cloudflare rejects `POST /accounts/{account_id}/access/identity_providers` with `type: github` if `client_id` or `client_secret` is missing.
+. Add GitHub as a Zero Trust identity provider (paste those secrets). Cloudflare rejects `POST /accounts/\{account_id}/access/identity_providers` with `type: github` if `client_id` or `client_secret` is missing.
 . **Finish setup** in the dashboard (GitHub Authorize: orgs/teams + email). Do not rely on the API `enterprise-setup` URL -- it can **500**. xref:how-to/cloudflare-access-static-site.adoc#finish-github-setup[Finish GitHub setup].
 . Write the Allow policy (GitHub organization = `your-org`).
 . Then create Access applications on the **custom domain and** `*.pages.dev`.
@@ -125,7 +125,7 @@ Browser order (both accounts)::
 [.themed-svg]
 image::access-mock-finish-setup.svg[alt="Simplified mock of Identity providers list with Finish setup and Test on GitHub"]
 
-API create (`POST /accounts/{account_id}/access/identity_providers`) may also return a `messages` entry:
+API create (`POST /accounts/\{account_id}/access/identity_providers`) may also return a `messages` entry:
 
 ----
 Finish enterprise enablement by going to

@@ -1,5 +1,25 @@
 = NDN and friends
 :description: Delivery-name versus application-label—Named Data Networking complements Internet Reliability without replacing DevX graphs.
+:page-audience: Network and systems readers comparing delivery naming (NDN/ICN) with DevX label life cycle
+:page-usage-context: Encyclopedia explanation under Internet Reliability; keeps delivery and application planes distinct
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 Named Data Networking (NDN) and related ICN designs improve **delivery**: fetch named data without depending on a host IP.
 That is valuable and still **orthogonal** to application / DevX label life cycle.

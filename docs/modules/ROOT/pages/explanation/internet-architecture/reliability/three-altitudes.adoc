@@ -1,5 +1,25 @@
 = Three altitudes
 :description: Machine reliability, developer-ecosystem reliability, and internet reliability as nested altitudes of the same concern.
+:page-audience: Architects and reliability analysts framing machine, DevX, and internet reliability as nested altitudes
+:page-usage-context: Encyclopedia explanation under Internet Reliability; orientation for nested reliability altitudes
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 Reliability analysts already know machine reliability.
 Developer tooling taught a second altitude: **ecosystem / DevX reliability** — can dependents keep working when symbols and packages move?

@@ -11,9 +11,9 @@ For details, see xref:explanation/literate-programming.adoc[Literate Programming
 
 == Core Principles for C in Dev-Centr
 
-0. **Literate First**: Build your C modules as CentrMark (`.cmk`) or Markdown/Tangle documents. Explain the architecture *before* the implementation.
-0. **Explicit Constraints**: Use `const`, `restrict`, and `static` wherever applicable to help the compiler and AI agents understand pointer aliasing and visibility.
-0. **Memory Safety Patterns**: Use established Dev-Centr patterns for safe memory allocation and bounds checking, even in standard C.
+1. **Literate First**: Build your C modules as CentrMark (`.cmk`) or Markdown/Tangle documents. Explain the architecture *before* the implementation.
+2. **Explicit Constraints**: Use `const`, `restrict`, and `static` wherever applicable to help the compiler and AI agents understand pointer aliasing and visibility.
+3. **Memory Safety Patterns**: Use established Dev-Centr patterns for safe memory allocation and bounds checking, even in standard C.
 
 == Recommended Literate Systems for C
 

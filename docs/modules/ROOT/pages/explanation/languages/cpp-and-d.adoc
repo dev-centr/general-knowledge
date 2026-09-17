@@ -25,7 +25,7 @@ D is the suggestion for **application programming** and for **scripting-shaped t
 
 * Syntax that stays readable (the “Python-shaped” pitch) without shipping a massive interpreter.
 * Modules, slices, and a standard library aimed at getting work done.
-* GC when you want to think about the problem; `@nogc` / `-betterC` when you need to think about the heap. See xref:d-and-rust.adoc[D and Rust] for the honest cost of that split.
+* GC when you want to think about the problem; `@nogc` / `-betterC` when you need to think about the heap. See xref:explanation/languages/d-and-rust.adoc[D and Rust] for the honest cost of that split.
 * C interop when you must call into an existing world.
 
 That is the cull: **D instead of C++** for owned application code, not “never call a C++ library.”
@@ -39,5 +39,5 @@ That is the cull: **D instead of C++** for owned application code, not “never 
 == See also
 
 * xref:index.adoc[Language recommendations]
-* xref:c-and-d.adoc[C and D]
-* xref:d-and-rust.adoc[D and Rust]
+* xref:explanation/languages/c-and-d.adoc[C and D]
+* xref:explanation/languages/d-and-rust.adoc[D and Rust]

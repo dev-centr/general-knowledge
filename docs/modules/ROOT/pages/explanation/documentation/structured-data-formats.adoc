@@ -88,5 +88,5 @@ Use the lineage view in Create… when the job tree (human config vs programmabl
 == Related
 
 * Create… catalog and dialog: xref:DevCentr:specifications:components/content-create.adoc[Content Create]
-* Prose markup: xref:documentation/documentation-markup-comparison.adoc[Documentation markup]
+* Prose markup: xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
 * SDL policy: xref:DevCentr:specifications:sdl.adoc[SDL Preference]

@@ -1,5 +1,25 @@
 = Near-term absorb
 :description: Redirects, aliases, Cool URIs, and CONSUMERS.md—pragmatic absorb while labels still wire the web.
+:page-audience: Docs maintainers and platform engineers buying time with redirects, aliases, and Cool URI discipline
+:page-usage-context: Encyclopedia explanation under Internet Reliability; pragmatic absorb while labels still wire the web
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-09-15
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
 
 Until the world stops wiring on strings, Internet Reliability needs an **absorb layer**.
 These practices do not replace identity; they buy time and make renames searchable.

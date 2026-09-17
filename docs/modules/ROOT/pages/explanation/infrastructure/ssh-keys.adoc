@@ -1,0 +1,10 @@
+= SSH Keys
+:description: Key generation, ssh-agent, and WSL bridging.
+
+== Basics
+
+Generate keys with `ssh-keygen`, load them into `ssh-agent`, and configure hosts in `~/.ssh/config`.
+
+== WSL on Windows
+
+WSL does not automatically see the Windows ssh-agent. Use a bridge (for example `npiperelay` + a WSL `SSH_AUTH_SOCK`) so Linux clients can use keys held on the Windows side. DevCentr’s SSH Manager can coordinate multiple agents when you outgrow a single agent.

@@ -62,4 +62,4 @@ Always useful as the **canonical artifact shelf** (installers, checksums, SBOMs)
 
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
-* xref:devcentr:publishing:index.adoc[Publishing hub]
+* xref:DevCentr:publishing:index.adoc[Publishing hub]

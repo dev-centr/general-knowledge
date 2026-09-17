@@ -262,7 +262,7 @@ Concrete script cells stay valid. Mixed books are the sweet spot: Nushell for gl
 | link:https://github.com/dev-centr/scriptbook[scriptbook] `spec/`
 | Directives, sidecars, Host Awareness contract
 
-| xref:dev-center:specifications:features/scriptbook-system-playbooks.adoc[DevCentr Scriptbook spec]
+| xref:DevCentr:specifications:features/scriptbook-system-playbooks.adoc[DevCentr Scriptbook spec]
 | Product pointer (not SLP, not shell translation)
 
 | xref:equivalence-engine::host-awareness.adoc[Equivalence Engine: Host Awareness]
