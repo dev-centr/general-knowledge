@@ -1,0 +1,114 @@
+= Linux installation
+:description: FHS vs usrmerge and reality, deb/rpm, Flatpak/Snap/AppImage, Nix/Guix, containers, systemd, XDG—and distro variance as first-class.
+:toc:
+
+Linux is not one install model—it is a **family of distributions** each with a package database, optional universal formats, and growing use of **immutable `/usr`** and **prefix stores**.
+Treat distro variance as first-class when you ship.
+
+Overview: xref:explanation/architecture/installation/index.adoc[Installation architecture].
+How-to: xref:how-to/app-installer-packaging.adoc[App installer packaging] · xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates].
+
+== FHS vs what distros actually do
+
+The Filesystem Hierarchy Standard still names the mental map:
+
+* `/usr/bin`, `/usr/lib`, `/etc`, `/var/lib`
+* `/opt/<vendor>` for large third-party trees
+
+**Reality checks:**
+
+* **usrmerge** — `/bin` and `/sbin` symlinks into `/usr` on Debian/Fedora-class distros; scripts hard-coding `/bin/bash` still work but packaging assumptions shift.
+* **`/opt`** — common for proprietary IDEs and browsers; some vendors skip distro packages entirely.
+* **`~/.local`** — user installs (`pip install --user`, static binaries, `linuxbrew`) without root.
+* **Read-only or image-based `/usr`** — Fedora Silverblue, Ubuntu Core, immutable variants: you do not “drop files into `/usr/bin`” on the running system; you layer packages or use Flatpak.
+
+SUS/FHS documents the **distro package** contract well; it under-describes Flatpak namespaces, Snap mounts, and Nix store paths.
+
+== deb and rpm ecosystems
+
+[cols="1,2"]
+|===
+| Family | Notes
+
+| **Debian/Ubuntu (.deb)**
+| `dpkg` file lists, maintainer scripts, `alternatives`, `systemd` unit enablement; `apt` lock during transactions.
+
+| **Fedora/RHEL (.rpm)**
+| `rpm` + `dnf`; `%files`, scriptlets, SELinux contexts; similar lock semantics.
+
+| **Arch (pacman)**
+| Simple archive + hooks; rolling release changes ABI assumptions.
+
+| **Alpine (apk)**
+| musl; common in containers; different libc story for prebuilt binaries.
+|===
+
+Targeting “Linux” for a GUI app usually means **pick distros or ship Flatpak/AppImage**, not one `.deb` that silently works everywhere.
+
+== Flatpak, Snap, AppImage
+
+[cols="1,2"]
+|===
+| Format | Tradeoff sketch
+
+| **Flatpak**
+| OSTree refs, runtimes, portals for file access; Flathub distribution; user or system install.
+
+| **Snap**
+| Canonical store/channel model; auto-update daemon; mount namespace.
+
+| **AppImage**
+| Single file, FUSE or extract; weak system integration unless you add desktop files and optional `appimaged`; popular for CI artifacts.
+|===
+
+Universal formats solve **glibc/musl and dependency skew** at the cost of size, startup, and integration (themes, host file pickers, Wayland/X11 edge cases).
+
+== Nix and Guix
+
+**Nix** and **Guix** treat installs as **pure store paths** (`/nix/store/...`) with profiles generating `/usr` symlinks.
+They excel at reproducibility and multi-version toolchains; they break assumptions in apps that hard-code `/usr/lib` or mutate global config.
+Great for dev machines; niche for casual GUI users unless you ship a nix flake.
+
+== Containers
+
+OCI images are the install model for **services**, not a substitute for desktop integration.
+Bind-mounting host `$HOME` into a dev container blurs “installed on host” vs “installed in image”—document which side owns upgrades.
+
+== systemd
+
+Long-running daemons ship **unit files** under `/etc/systemd/system` or `/usr/lib/systemd/system`.
+`systemctl enable --now` is the modern “install service” step; uninstall must `disable` and remove units.
+User services (`systemd --user`) suit per-user agents without root.
+
+== XDG Base Directory
+
+User-writable roles (parallel to macOS Library folders):
+
+* `XDG_CONFIG_HOME` — config
+* `XDG_DATA_HOME` — application data
+* `XDG_CACHE_HOME` — cache
+* `XDG_STATE_HOME` — state (logs, history)
+
+Desktop entries: `~/.local/share/applications/*.desktop` for GUI discovery.
+Respect XDG when you ship tarball or AppImage so uninstall and backup stories stay sane.
+
+== Distro variance as first-class
+
+When planning support, name **concrete targets**:
+
+* LTS deb (e.g. Ubuntu 22.04/24.04) + optional Flatpak
+* Fedora current + Flathub
+* Whether musl/Alpine is in scope for static binaries only
+
+Package maintainers will split your upstream into patches; CI should not assume one `apt install` line covers “Linux.”
+
+== Concurrency
+
+`dpkg`/`apt` locks differ from Flatpak and from `curl | sh` vendor scripts.
+Agent hosts need an outer mutex across managers (xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]).
+
+== Related
+
+* xref:explanation/architecture/installation/bsd.adoc[BSD installation]
+* xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]
+* xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]

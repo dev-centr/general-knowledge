@@ -1,0 +1,91 @@
+= macOS installation
+:description: App bundles, pkg/productbuild, Homebrew, notarization, Gatekeeper, sandbox, Sparkle, and where user data lives.
+:toc:
+
+macOS ships a **bundle-first** GUI model, **pkg** for system-level payloads, and a thriving **third-party package ecosystem** (Homebrew, MacPorts) layered on top of Apple's security story (Gatekeeper, notarization, sandbox).
+
+Overview: xref:explanation/architecture/installation/index.adoc[Installation architecture].
+How-to: xref:how-to/app-installer-packaging.adoc[App installer packaging] · xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates].
+
+== `.app` bundles
+
+A GUI app is a directory `MyApp.app` with `Contents/MacOS`, `Contents/Resources`, `Info.plist`, and optional embedded frameworks.
+Install location:
+
+* `/Applications` (machine-wide, admin for write)
+* `~/Applications` (user)
+
+The bundle is the **payload tree**; user documents and preferences stay outside it (see below).
+
+== pkg and productbuild
+
+`.pkg` installers run as root (or with admin auth) and lay down files with **install receipts** in `/Library/Receipts` (legacy) and BOM records tools can query.
+Use pkg when you need:
+
+* Kernel extensions or system daemons in `/Library/LaunchDaemons`
+* Command-line tools in `/usr/local` with root ownership
+* MDM-friendly distribution alongside a `.app`
+
+`productbuild` composes product archives; keep idempotent scripts and clear uninstall documentation—macOS lacks Windows ARP, but pkg receipts and your own manifest matter.
+
+== Homebrew and MacPorts
+
+* **Homebrew** — prefixes under `/opt/homebrew` (Apple Silicon) or `/usr/local` (Intel); formulae build from source or pour bottles; casks wrap `.app` or `.pkg`.
+* **MacPorts** — `/opt/local` tree; closer to traditional Unix packaging.
+
+Both are **ecosystem package managers**, not substitutes for notarizing *your* direct-download DMG if you ship outside brew.
+
+== Notarization and Gatekeeper
+
+Apple expects distributed binaries to be **signed**, **notarized**, and **stapled** so Gatekeeper can validate offline.
+Failure modes: “app is damaged,” quarantine extended attributes on downloaded zips, revoked certs.
+
+Sparkle and other updaters must ship signed updates; see xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates].
+
+== Application Support, Preferences, Caches
+
+[cols="1,2"]
+|===
+| Location | Typical use
+
+| `~/Library/Application Support/<Bundle ID>`
+| Databases, large user state, caches you do not want in iCloud
+
+| `~/Library/Preferences/<Bundle ID>.plist`
+| Small settings (`defaults` domain)
+
+| `~/Library/Caches/<Bundle ID>`
+| Regenerable cache (safe to delete)
+
+| `~/Library/Containers/` (sandbox)
+| Sandboxed app writes only here + security-scoped bookmarks
+|===
+
+Uninstall must distinguish **bundle removal** from **user data retention** (upgrade-friendly) vs **full wipe** (privacy).
+
+== `/usr/local` vs `/opt`
+
+* Stock macOS does not use FHS `/opt` the way Linux vendors do; Homebrew owns `/opt/homebrew`.
+* CLI tools from pkg or manual install often land in `/usr/local/bin` with root ownership.
+* Prefer bundling CLI inside `.app/Contents/MacOS` or declaring brew cask dependencies when targeting developers.
+
+== Sandbox
+
+Mac App Store and notarized apps may adopt **App Sandbox** with entitlements.
+Sandbox changes install layout (container paths) and which directories file dialogs may access.
+Not every dev tool fits sandbox without losing functionality—direct distribution + notarization remains common.
+
+== Sparkle
+
+link:https://sparkle-project.org/[Sparkle] is the de facto in-app update framework for non-Store apps: feed, signature verification, staged replace, relaunch.
+Pairs with dmg/pkg first install and xref:explanation/architecture/automatic-updates.adoc[Automatic updates] apply-safety (quit before swap).
+
+== Shell-visible installs
+
+macOS does not auto-refresh every terminal's `PATH` when pkg edits `/etc/paths.d`.
+OpenShellOrg link:https://opensh.org/docs/shell-architecture/shell-host-env-refresh.html[env refresh] and Dev-Centr xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] treat post-install discovery as part of the install contract—not an afterthought.
+
+== Related
+
+* xref:explanation/architecture/installation/linux.adoc[Linux installation] — XDG parallels Application Support
+* xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]

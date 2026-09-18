@@ -2,6 +2,13 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-18 -- Installation architecture guide
+
+* Explanation xref:explanation/architecture/installation/index.adoc[Installation architecture] — cross-platform install norms, platform deep dives, and xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)].
+* How-to xref:how-to/authoritative-installations.adoc[Authoritative installations] — checklist and decision tree.
+* Prominent link from xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]; xrefs to xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution], xref:how-to/app-installer-packaging.adoc[App installer packaging].
+* See xref:changelog-details/2026-09-18 - installation-architecture-guide.adoc[Detailed changelog].
+
 == 2026-09-15 -- Actor stick figures follow edge paints
 
 * Bumped `@dev-centr/plantuml-svg-css-vars` to **v0.1.2**, rebuilt `label-as-wire-break`, and extended Mermaid sequence bindings for `.actor-man` so stick figures stay visible in host dark mode.

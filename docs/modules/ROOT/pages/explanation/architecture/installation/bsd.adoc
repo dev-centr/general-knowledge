@@ -1,0 +1,65 @@
+= BSD installation
+:description: FreeBSD, NetBSD, and OpenBSD ports and packages, /usr/local, rc.d, and differences from Linux FHS assumptions.
+:toc:
+
+BSD systems share Unix lineage with Linux but ship **distinct packaging toolchains** and a strong convention: **base system** in `/` and `/usr`, **third-party software** in `/usr/local`.
+
+Overview: xref:explanation/architecture/installation/index.adoc[Installation architecture].
+Linux contrast: xref:explanation/architecture/installation/linux.adoc[Linux installation].
+
+== Family snapshot
+
+[cols="1,2,2"]
+|===
+| System | Ports tree | Binary packages
+
+| **FreeBSD**
+| `ports` (`/usr/ports`) | `pkg` (`pkg install`)
+
+| **NetBSD**
+| `pkgsrc` (portable across OSes) | `pkgin` / `pkg_add`
+
+| **OpenBSD**
+| `ports` integrated with base | `pkg_add` from CDN mirrors
+|===
+
+All emphasize **building from source** with flags vs downloading opaque blobs—though binary packages are normal for servers and laptops.
+
+== `/usr/local` layout
+
+Third-party installs typically land in:
+
+* `/usr/local/bin`, `/usr/local/lib`, `/usr/local/share`
+* `/usr/local/etc` for configuration
+
+This mirrors FHS spirit but **does not** imply Debian-style `alternatives` or systemd everywhere—init and service stories differ.
+
+== rc.d and services
+
+BSD traditionally uses **rc.d scripts** in `/usr/local/etc/rc.d` (or `/etc/rc.d` for base).
+Enable in `rc.conf` (`*_enable="YES"` on FreeBSD).
+Linux-centric install docs that only mention `systemctl` need a BSD adapter for daemons you ship.
+
+== pkg vs ports
+
+* **pkg** — fast, signed packages from project mirrors; good for production servers.
+* **ports** — customize `MAKE_ARGS`, `OPTIONS`, jails, and poudriere bulk builds.
+
+Uninstall is `pkg delete` or deinstall from ports—file lists are tracked; ad-hoc copy into `/usr/local` without registration is as discouraged as on Linux.
+
+== Differences from Linux assumptions
+
+* **libc and kernel** — binaries built on glibc Ubuntu do not run on FreeBSD; ship FreeBSD builds in CI (see xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]).
+* **Linuxulator** — optional Linux binary compatibility on FreeBSD; not a substitute for native packages for performance-sensitive GUI apps.
+* **No apt/dnf** — documentation must name `pkg`/`pkgin` commands.
+* **ZFS root** — common on FreeBSD; snapshot before major package upgrades is operational best practice.
+
+== jails and automation
+
+FreeBSD **jails** and NetBSD **npf** ecosystems treat install as **image + pkg bootstrap** inside the jail.
+Same UIL *roles* apply; paths remain `/usr/local` inside the jail.
+
+== Related
+
+* xref:explanation/architecture/installation/linux.adoc[Linux installation]
+* xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]

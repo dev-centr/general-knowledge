@@ -17,6 +17,7 @@ Deep dives (shared)::
 * xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps]
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
 * xref:explanation/architecture/distribution-and-packaging.adoc[Distribution, packaging, and installers]
+* xref:explanation/architecture/installation/index.adoc[Installation architecture] (xref:explanation/architecture/installation/windows.adoc[Windows] · xref:explanation/architecture/installation/macos.adoc[macOS] · xref:explanation/architecture/installation/linux.adoc[Linux] · xref:explanation/architecture/installation/bsd.adoc[BSD] · xref:explanation/architecture/installation/unified-layout.adoc[UIL])
 * xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline and release engineering]
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
