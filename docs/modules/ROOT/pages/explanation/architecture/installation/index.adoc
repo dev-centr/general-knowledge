@@ -1,0 +1,131 @@
+= Installation architecture
+:description: Cross-platform installation norms—identity, payload, discovery, privileges, transactions, rollback, and why POSIX/FHS is a weak universal contract.
+:toc:
+
+**Installation** is how a product's bits become a durable, discoverable presence on a host: where files live, who may change them, how upgrades and uninstalls stay honest, and how shells and desktops find what you shipped.
+It sits under xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging] and pairs with xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], and the how-to xref:how-to/authoritative-installations.adoc[Authoritative installations].
+
+Platform deep dives::
+xref:explanation/architecture/installation/windows.adoc[Windows] ·
+xref:explanation/architecture/installation/macos.adoc[macOS] ·
+xref:explanation/architecture/installation/linux.adoc[Linux] ·
+xref:explanation/architecture/installation/bsd.adoc[BSD]
+
+Unified contract (research direction)::
+xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]
+
+== What every serious install shares
+
+Regardless of OS, a shippable install story usually needs the same *roles*—even when the concrete paths and APIs differ.
+
+[cols="1,3"]
+|===
+| Role | What it means
+
+| **Package identity**
+| Stable id (name + publisher + channel) that survives version bumps; distinguishes side-by-side editions from in-place upgrades.
+
+| **Payload tree**
+| Versioned directory of immutable release bits (binaries, resources, licenses). User data and caches stay outside this tree.
+
+| **Discovery**
+| Shells, desktops, and package indexes can find binaries, icons, MIME handlers, and services without hard-coded absolute paths from your README.
+
+| **Privileges**
+| Explicit scope: per-user vs machine-wide; elevation only when the claimed resources require it.
+
+| **Transactions**
+| Install/upgrade/uninstall steps that can fail mid-flight without leaving a half-registered product (ARP entry with missing files, broken PATH, dangling service).
+
+| **Rollback / repair**
+| Last-known-good or re-apply manifest when an update fails; optional integrity check against signed manifest.
+
+| **Updates**
+| Channel-aware delivery that respects file locks and running processes (see xref:explanation/architecture/automatic-updates.adoc[Automatic updates]).
+
+| **Uninstall**
+| Reversible claims: files, registry/plist entries, services, associations—not “delete the folder you remember.”
+
+| **Signing**
+| Authenticode, Apple notarization, distro/repository signatures, Flatpak refs—whatever the platform treats as trust input.
+
+| **Concurrency**
+| Host-wide admission when multiple installers or agents mutate the same namespace (xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]).
+|===
+
+None of these roles map 1:1 to a single POSIX path. That gap is the point of the platform essays below and of xref:explanation/architecture/installation/unified-layout.adoc[UIL] as a layout contract *above* path literals.
+
+== POSIX, SUS, and FHS: the weak universal contract
+
+The Single UNIX Specification and the Filesystem Hierarchy Standard describe a *convention* for where distributors and admins expect files:
+
+* `/usr/bin`, `/usr/lib`, `/etc`, `/var`, `/opt/vendor`
+* `man` pages, `init` scripts, shared libraries with sonames
+
+**Why it fails as a portable app contract:**
+
+* **Apple** does not ship a FHS-rooted desktop; GUI apps are `.app` bundles; CLI tools may live in `/usr/local`, Homebrew prefixes, or user paths—not `/usr/bin` on a stock Mac.
+* **Windows** has no FHS; `Program Files`, `%ProgramData%`, `%LocalAppData%`, registry, and services replace `/etc` and `/var`.
+* **Linux distros** nominally follow FHS but diverge on usrmerge (`/bin` → `/usr/bin`), `/opt` vs `/usr`, Snap/Flatpak mount namespaces, and Nix store paths that intentionally break “one global `/usr`.”
+* **BSD** families align on `/usr/local` for third-party builds but use different packaging (ports vs pkgsrc) and rc.d layout details.
+
+SUS/FHS remains **useful documentation** for “what a traditional Unix package manager expects today,” especially on server Linux and BSD.
+It is **not** a promise that copying files into `/usr/local/bin` gives you uninstall, signing, sandbox, or safe concurrent upgrade on every OS.
+
+What still works in practice on Unix-like systems:
+
+* XDG Base Directory for *user-writable* config, data, cache (`~/.config`, `~/.local/share`, …)
+* FHS `/opt/<vendor>/<product>` for self-contained vendor trees on enterprise Linux
+* Distro packages that own file lists and triggers (`deb`, `rpm`) when you target that distro's archive
+
+For a mental model that separates *roles* from *paths*, see xref:explanation/architecture/installation/unified-layout.adoc[UIL].
+
+== Platform comparison (high level)
+
+[cols="1,1,1,1"]
+|===
+| Concern | Windows | macOS | Linux (typical) | BSD (typical)
+
+| Primary GUI unit
+| EXE + optional MSIX package
+| `.app` bundle
+| `.desktop` + package or Flatpak
+| Same as Linux-ish + ports
+
+| System integration DB
+| Registry + ARP
+| LaunchServices, `defaults`, pkg receipts
+| dpkg/rpm DB, alternatives, systemd
+| pkg database + rc.conf
+
+| User-local install
+| `%LocalAppData%`, MSIX per-user
+| `~/Applications`, sandbox containers
+| `~/.local`, Flatpak user install
+| `~/.local`, pkg in `/usr/local`
+
+| Package managers (extra)
+| WinGet, Chocolatey, Scoop
+| Homebrew, MacPorts
+| apt/dnf/pacman + Flatpak/Snap
+| pkg / pkgin / ports
+
+| Signing story
+| Authenticode, SmartScreen
+| Notarization + Gatekeeper
+| Repo signatures, Flatpak OSTree
+| `pkg` HTTPS + fingerprints
+|===
+
+== Diátaxis split
+
+* **Explanation (this section):** norms, history, why tools bypass MSI, distro variance, UIL research.
+* **How-to:** xref:how-to/authoritative-installations.adoc[Authoritative installations] — decision tree and checklist when you ship.
+* **How-to (packaging):** xref:how-to/app-installer-packaging.adoc[App installer packaging] — concrete build/sign/release steps.
+
+== Related
+
+* xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)] — one download; does not replace install contracts
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] — post-install PATH and env visibility
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] — pin, repair, upgrade lifecycle
+* link:https://opensh.org/docs/shell-architecture/entrypoint-dispatch.html[OpenShellOrg: Entrypoint dispatch] — install + re-exec at the shell boundary

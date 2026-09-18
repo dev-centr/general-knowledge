@@ -1,0 +1,122 @@
+= Windows installation
+:description: MSI, MSIX, custom setup EXEs, package managers, registry, services—and why many tools write directly to disk instead of using Windows Installer.
+:toc:
+
+Windows combines **installer technologies** (MSI, MSIX/AppX), **custom setup EXEs** (Inno Setup, NSIS, WiX Burn, Squirrel, Velopack), and **ecosystem package managers** (WinGet, Chocolatey, Scoop) with a **registry-centric integration plane** (ARP, services, drivers, PATH).
+
+Overview: xref:explanation/architecture/installation/index.adoc[Installation architecture].
+Concurrency: xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency].
+How-to: xref:how-to/app-installer-packaging.adoc[App installer packaging] · xref:how-to/winget-registration.adoc[Winget registration].
+
+== Installer families
+
+[cols="1,3"]
+|===
+| Technology | Role
+
+| **MSI**
+| Windows Installer database: transactional install, repair, patch, logging, ARP entry, elevated or per-user tables. Global `_MSIExecute` mutex during execute sequence.
+
+| **MSIX / AppX**
+| Modern packaged app model: identity in manifest, optional Store delivery, sparse package updates, cleaner uninstall via package graph. Stronger isolation; not every Win32 app fits without refactoring.
+
+| **Bundle (Burn)**
+| WiX Burn chains MSIs and EXEs with bootstrapper UI; still often MSI-centric for the main payload.
+
+| **Inno / NSIS**
+| Scriptable EXE setups: fast to ship, full UI control, no MSI mutex unless you nest an MSI. You own rollback and ARP honesty.
+
+| **Squirrel / electron-updater / Velopack**
+| App-local install dir + delta updates; common for Electron and game launchers; may register uninstall loosely or via a stub.
+
+| **Portable / xcopy**
+| No ARP; user manages PATH; fine for CI and power users—not a substitute for enterprise lifecycle.
+|===
+
+== Per-user vs per-machine
+
+[cols="1,2"]
+|===
+| Scope | Typical roots
+
+| **Per-machine**
+| `Program Files`, `Program Files (x86)`, `ProgramData`, machine `PATH`, machine services
+
+| **Per-user**
+| `%LocalAppData%`, `%AppData%`, user Start Menu, user `PATH`, no UAC for many writes
+|===
+
+Choose scope early: it affects upgrade (same user hive?), winget manifest `Scope`, and whether IT can deploy silently to all profiles.
+
+== Registry, ARP, and discovery
+
+* **Add/Remove Programs (ARP)** reads uninstall registry keys (`DisplayName`, `UninstallString`, `QuietUninstallString`, `InstallLocation`).
+* **File associations** and **URL protocols** live under `Classes` hives; MSIX uses manifest declarations instead.
+* **PATH** may be machine or user; installers that only document “add to PATH manually” fail discovery for normal users.
+* **Services** and **drivers** require SCM/co-installer discipline; botched service install survives as a broken ARP + orphaned service.
+
+Post-install, shells need a coherent world: xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] and OpenShellOrg link:https://opensh.org/docs/shell-architecture/shell-host-env-refresh.html[Shell Host / Env Refresh].
+
+== Package managers on Windows
+
+* **WinGet** — manifest-driven; prefers MSI/MSIX/EXE with silent flags; enterprise source policies.
+* **Chocolatey** — NuGet-shaped packages; often wraps EXE/MSI with automation scripts.
+* **Scoop** — user-local, minimal admin; shims in `~/scoop/shims`.
+
+Each serializes *its own* operations; they do not replace a host-wide mutex when agents run parallel installs (xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]).
+Dev-Centr's link:https://github.com/dev-centr/install-coordinator[install-coordinator] is the intended **Windows concurrency plane** for orchestrated toolchains—outer admission around MSI, winget, and custom EXE—not a replacement for ARP.
+
+== Microsoft Store
+
+Store distribution uses MSIX (or packaged Win32) with Store update cadence.
+Tradeoffs: review, revenue share, packaging constraints, slower iteration for some teams.
+Many products ship Store *and* direct MSI/winget for IT and power users.
+
+[[direct-disk]]
+== Why many tools write directly to disk (bypassing MSI)
+
+MSI is the “official” transactional installer, yet a large fraction of desktop software—games, Electron apps, dev tools, runtimes—uses **custom EXE or plain directory drops**.
+That is not always negligence; it is often a rational response to MSI's costs and to product requirements MSI makes expensive.
+
+=== MSI made hard
+
+* **Concurrent updates:** only one MSI execute sequence globally (`1618` / `_MSIExecute`); nested or parallel product updates need careful sequencing. Custom EXE installs often ignore each other unless you add an outer lock.
+* **Custom UI and branding:** MSI UI tables are limited; marketing-heavy flows push vendors to Burn + EXE or pure NSIS/Inno.
+* **Large game payloads:** tens of thousands of files, chunk-based delivery, and launcher-owned repair fit poorly in a single MSI cab without painful build times and patch sizes.
+* **Many small files:** MSI component rules and costing tables explode; incremental dev builds want rsync-style trees, not regenerated `.msi` for every commit.
+* **Portable / side-by-side:** tools that ship versioned folders (`app-1.2.3`, `tools\python39`, `node_modules`-class layouts) want atomic directory swap, not component GUID gymnastics.
+* **Elevation avoidance:** per-user drops under `%LocalAppData%` avoid UAC; MSI per-machine tables often imply admin.
+* **AV false positives on `msiexec`:** enterprise AV sometimes scrutinizes MSI execution and temp extract paths; signed EXE with known hash may see fewer support tickets (not a security win—an operational one).
+* **Bundles:** one download carrying VC++ redist, .NET, browser shell, and game data is easier as a custom bootstrapper than one monolithic MSI feature tree.
+* **Electron / Squirrel auto-update:** delta updates, `Update.exe`, and user-writable install roots are first-class in Squirrel/Velopack; MSI major upgrades fight running `electron.exe` file locks unless you orchestrate quit-and-swap.
+
+=== Requirements any good strategy must still meet
+
+Bypassing MSI does **not** mean bypassing responsibility.
+A direct-disk strategy is acceptable when it still provides:
+
+. **Atomic publish of a versioned tree** — write to staging, then rename/swap so partial failure does not expose half a product.
+. **Journaled claims** — manifest of files, registry keys, shortcuts, services created; uninstall and repair read the same journal.
+. **Side-by-side** — multiple versions or channels without breaking in-use binaries (folder-per-version + shim).
+. **User-writable roots** when scope is per-user — no silent dependence on `Program Files` without elevation.
+. **Non-MSI transaction API** — your own install coordinator, Velopack/Squirrel protocol, or MSIX for apps that fit—plus quiet modes for automation.
+
+xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)] names these roles explicitly so MSI, MSIX, and “folder + journal” setups can be compared fairly.
+
+== Drivers and kernel code
+
+Drivers use co-installers, INF, and WHQL/signing pipelines—orthogonal to app MSI but sharing the same reboot and service constraints.
+Never mix driver install with app xcopy without explicit elevation and rollback planning.
+
+== Signing
+
+Release builds should be **Authenticode-signed**; SmartScreen reputation matters for unsigned EXE.
+MSI and MSIX benefit from the same trust chain.
+WinGet manifests should point at signed artifacts with published hashes.
+
+== Related
+
+* xref:how-to/windows-auto-updates.adoc[Windows auto-updates]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:tools:ibex:index.adoc[Ibex] (Easy Installer) — authoring toward quiet, lock-aware Windows packages
+* link:https://github.com/dev-centr/install-coordinator[install-coordinator] — host-wide install admission on Windows

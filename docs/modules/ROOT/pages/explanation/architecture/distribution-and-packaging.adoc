@@ -6,6 +6,12 @@
 Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
 How-to: xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps].
 
+[IMPORTANT]
+====
+**Installation architecture** — cross-platform norms (identity, payload, transactions, why MSI and FHS diverge), platform essays, and the xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)] contract live under xref:explanation/architecture/installation/index.adoc[Installation architecture].
+Practical checklist: xref:how-to/authoritative-installations.adoc[Authoritative installations].
+====
+
 == Choose the channel by artifact type
 
 [cols="1,2"]
@@ -77,6 +83,11 @@ A research path for a **single release artifact** that still contains native, sy
 
 == Related
 
+* xref:explanation/architecture/installation/index.adoc[Installation architecture]
+* xref:how-to/authoritative-installations.adoc[Authoritative installations]
+* xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 * xref:reference/package-registries.adoc[Package registries]
 * xref:how-to/winget-registration.adoc[Winget registration]
 * xref:how-to/app-installer-packaging.adoc[How-to: installers]

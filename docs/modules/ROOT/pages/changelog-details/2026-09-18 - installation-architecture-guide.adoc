@@ -1,0 +1,6 @@
+= 2026-09-18 — Installation architecture guide
+
+* Added xref:explanation/architecture/installation/index.adoc[Installation architecture] overview and platform essays (xref:explanation/architecture/installation/windows.adoc[Windows], xref:explanation/architecture/installation/macos.adoc[macOS], xref:explanation/architecture/installation/linux.adoc[Linux], xref:explanation/architecture/installation/bsd.adoc[BSD]).
+* Added xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)] — classic adapters and connectome-fs mode; install-coordinator and Ibex in the reference diagram.
+* Added how-to xref:how-to/authoritative-installations.adoc[Authoritative installations].
+* Wired nav, xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging], architecture index, and xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency] cross-links.

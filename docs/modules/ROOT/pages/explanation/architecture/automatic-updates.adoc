@@ -121,6 +121,7 @@ Pin the feed URL in the binary; allow enterprise override via policy/config.
 
 == Related
 
+* xref:explanation/architecture/installation/index.adoc[Installation architecture]
 * xref:explanation/architecture/about-and-build-info.adoc[About and build info]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
 * xref:explanation/architecture/classes/desktop.adoc[Desktop auxiliary template]

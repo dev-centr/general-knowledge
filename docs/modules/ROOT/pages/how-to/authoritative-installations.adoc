@@ -1,0 +1,98 @@
+= Authoritative installations
+:description: Decision tree and checklist for choosing install scope, technology, and discovery on each OS—explanation in the installation architecture section.
+:toc:
+
+Goal:: Ship an install users, IT, and automation can trust, upgrade, and uninstall.
+Why (deep context):: xref:explanation/architecture/installation/index.adoc[Installation architecture] (platform essays + xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]).
+Packaging steps:: xref:how-to/app-installer-packaging.adoc[App installer packaging].
+
+This page is **how-to**: choices and checklists.
+The essays explain *why* MSI is hard, why FHS is weak cross-platform, and what UIL names as roles.
+
+== Decision tree (start here)
+
+. **What are you shipping?**
++
+--
+* Library/SDK → language registry first (xref:reference/package-registries.adoc[Package registries]); OS packages optional.
+* CLI → registry + OS package manager or standalone archive with explicit PATH story.
+* GUI desktop → platform installer or Flatpak/Store; avoid “binary in Downloads” as 1.0.
+* Service → container image or OS unit (systemd/rc.d); not the same checklist as GUI.
+--
+
+. **Which OS scopes are in scope?**
++
+List concrete targets (e.g. Windows 10+, macOS 13+ arm64, Ubuntu 24.04 + Flathub).
+“Linux” is not one answer—see xref:explanation/architecture/installation/linux.adoc[Linux installation].
+
+. **Per-user or per-machine (Windows/macOS)?**
++
+Per-user reduces UAC friction; machine-wide fits MDM and shared servers.
+Decide before paths and winget `Scope`.
+
+. **Pick primary channel per OS**
++
+[cols="1,2"]
+|===
+| OS | Prefer (left first)
+
+| Windows
+| MSIX or MSI → winget manifest → signed EXE with journal (see xref:explanation/architecture/installation/windows.adoc#direct-disk[direct disk section])
+
+| macOS
+| Notarized `.app` + Sparkle or brew cask → pkg only if you need system daemons
+
+| Linux
+| Distro package for named LTS **or** Flathub **or** AppImage with `.desktop` + XDG dirs
+
+| BSD
+| Native `pkg`/`pkgin` build in CI; document `rc.conf` for daemons
+|===
+
+. **Updates**
++
+Follow xref:explanation/architecture/automatic-updates.adoc[Automatic updates] ladder: package manager / store → in-place installer upgrade → in-app updater.
+Wire how-tos: xref:how-to/windows-auto-updates.adoc[Windows] · xref:how-to/unix-auto-updates.adoc[Unix/macOS].
+
+. **Concurrency (agents/CI on same host)**
++
+If multiple workers install tools, use a host-wide install mutex (xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]); on Windows consider link:https://github.com/dev-centr/install-coordinator[install-coordinator].
+
+. **Shell visibility**
++
+Plan PATH/shims and env refresh (xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh]; OpenShellOrg entrypoint dispatch).
+
+== Checklist (release gate)
+
+* [ ] Package **identity** stable across versions (name, publisher, upgrade code / bundle id)
+* [ ] **Payload tree** versioned; user data outside payload
+* [ ] **Signed** artifacts (Authenticode, notarization, repo sigs as applicable)
+* [ ] **Uninstall** removes claims (ARP, desktop file, services) — smoke test N → N+1 → uninstall
+* [ ] **Upgrade** preserves user data; handles file locks (quit-and-swap documented)
+* [ ] **Discovery**: Start Menu / `.desktop` / PATH / winget manifest as promised
+* [ ] **Checksums** and release notes on the Git tag
+* [ ] **SBOM** when feasible (enterprise customers increasingly ask)
+* [ ] **Silent flags** documented for IT and agents (`/quiet`, `DEBIAN_FRONTEND=noninteractive`, etc.)
+* [ ] **Outer install lock** documented if your team runs parallel agents
+
+== When to bypass MSI (Windows)
+
+Acceptable when you still implement UIL roles (xref:explanation/architecture/installation/unified-layout.adoc[UIL]): atomic versioned tree, journaled claims, side-by-side or shim, per-user roots if scoped, quiet automation.
+Read the full rationale: xref:explanation/architecture/installation/windows.adoc#direct-disk[Why tools write directly to disk].
+
+== When one download is not enough
+
+xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] helps CI ship one asset; users still need a host-specific **install** step (Tailor, extractor, or installer).
+Do not skip ARP/desktop integration because the download was polyglot.
+
+== Authoring tools (Dev-Centr)
+
+* xref:tools:ibex:index.adoc[Ibex] — generate UIL-friendly manifests and Windows installers with quiet modes.
+* xref:tools:msi-generator:index.adoc[msi-generator] — MSI-focused generation where MSI remains the channel.
+
+== Related
+
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
+* xref:how-to/winget-registration.adoc[Winget registration]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/git-release-workflow.adoc[Git release workflow]

@@ -1,0 +1,164 @@
+= Unity Install Layout (UIL)
+:description: An idealized install contract above POSIX paths—classic OS adapters and connectome-fs mode—with Dev-Centr coordinator and Ibex authoring.
+:toc:
+
+**Unity Install Layout (UIL)** is a research-grade contract for what an install *means*: identity, immutable payload, claims, journals, side-by-side editions, and shell-visible discovery.
+It does not pretend that `/usr/bin` is a universal API on every OS.
+Instead it names **roles** and maps them through **classic adapters** (today's paths) or **connectome-fs mode** (graph-native substrate).
+
+Overview: xref:explanation/architecture/installation/index.adoc[Installation architecture].
+Practical checklist: xref:how-to/authoritative-installations.adoc[Authoritative installations].
+
+== Why supersede SUS-as-universal
+
+POSIX and FHS describe a distributor-centric Unix tree.
+Desktop Windows, macOS bundles, Flatpak mounts, and Nix stores each broke the fiction that one path string is the global truth.
+UIL keeps the *obligations* (atomic publish, uninstall honesty, discovery) while letting adapters translate roles:
+
+[cols="1,1,1,1"]
+|===
+| UIL role | Windows adapter | macOS adapter | Linux / BSD adapter
+
+| Payload tree
+| `Program Files\Vendor\Product\version` or MSIX package root
+| `MyApp.app/Contents`
+| `/opt/vendor/product/version`, Flatpak ref, `/usr/local`, Nix store path
+
+| User data
+| `%AppData%`, `%LocalAppData%`
+| `~/Library/Application Support`
+| XDG data dirs
+
+| Machine claims
+| Registry, services
+| LaunchDaemons, pkg receipt
+| dpkg/rpm DB, systemd units, `rc.conf`
+
+| Discovery
+| PATH, Start Menu, App Paths
+| `PATH`, Spotlight, `.app` in `/Applications`
+| `PATH`, `.desktop`, `xdg-mime`
+|===
+
+== Dual mode: classic vs connectome-fs
+
+=== Classic adapters
+
+Map UIL nodes onto existing filesystem paths and platform databases.
+This is how shipping products behave in 2026: MSI journal, Inno log, Flatpak manifest, brew formula—all imperfect projections of the same roles.
+
+=== Connectome-fs mode
+
+link:https://github.com/connectome-fs/connectome-fs[connectome-fs] is a **graph-native filesystem substrate**: GUID-addressed nodes, **multi-name tokens**, **hierarchy as a navigation view** (not the sole source of truth), **typed associations**, **editions**, and sharded search.
+Docs hub: link:https://connectome-fs.github.io/docs/connectome-fs/[connectome-fs documentation].
+
+In UIL terms, connectome-fs mode means:
+
+* **Package identity** binds to a stable node id, not only a path string.
+* **Payload** is an edition or content binding reachable under multiple names (`token:basename=…`, version tokens).
+* **Associations** express `provides-binary`, `owns-config`, `depends-on` without encoding everything in directory depth.
+* **Hierarchy** is one projection; agents and search traverse the graph.
+
+UIL does not require connectome-fs to ship today—it specifies what a future adapter would preserve when paths collapse into navigable views.
+Partner context: connectome-fs lists DevCentr and link:https://opensh.org/[OpenShellOrg] as aligned lanes.
+
+== OpenShell and a shell-visible world
+
+Install is incomplete if the operator cannot **find and run** what you installed.
+OpenShellOrg's link:https://opensh.org/docs/shell-architecture/[shell architecture] stresses structured pipelines, **entrypoint dispatch** (auto-install + re-exec at the shell boundary), and **shell host / env refresh** so PATH and orientation update without folklore restarts.
+
+UIL therefore treats **discovery and env refresh** as install outcomes:
+
+* Binaries and shims registered in roles the shell reads
+* Orientation metadata (version, edition channel) available to structured shells
+* Coordination with xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] pins and repair
+
+== Core definitions
+
+=== Package identity
+
+Stable id: publisher + product + channel (and optional hardware/arch slice).
+Version is a release attribute, not a substitute for identity when side-by-side is allowed.
+
+=== Edition
+
+Parallel binding of the same logical product—stable vs beta, LTS vs current, agent sandbox vs human workspace.
+On classic OS this is “install folder per channel”; in connectome-fs, an **edition** is a first-class CoW binding (see link:https://connectome-fs.github.io/docs/connectome-fs/explanation/editions.html[Editions in connectome-fs docs]).
+
+=== Payload tree
+
+Immutable bits for one release: binaries, resources, licenses.
+Writes during normal use go to user data roles, not into the payload tree.
+
+=== Claims
+
+Declarative integration surface: shortcuts, MIME types, URL handlers, services, firewall rules, PATH entries.
+Claims must be enumerable for uninstall and repair.
+
+=== Transaction journal
+
+Ordered log of mutations during install/upgrade/uninstall: files touched, registry/plist keys, services enabled.
+MSI has tables; UIL expects every adapter to emit something inspectable—JSON manifest, SQLite journal, or connectome-fs semantic change units.
+
+=== Side-by-side
+
+Multiple payload trees for the same package identity (or edition) concurrently on disk; default launch via shim or edition context.
+
+=== Tombstones
+
+Marks removed claims or files without rewriting history—useful for delta upgrades and graph-native deletes.
+
+=== Repair
+
+Re-apply payload + claims from signed manifest when disk corruption or partial uninstall is detected.
+
+=== Upgrade
+
+Replace or reparent edition: preserve user data roles; atomic swap of payload tree; respect running processes (xref:explanation/architecture/automatic-updates.adoc[Automatic updates]).
+
+== Reference architecture (Dev-Centr tooling)
+
+[mermaid]
+....
+flowchart LR
+  subgraph author [Authoring]
+    Ibex[Ibex install builder]
+  end
+  subgraph contract [Contract]
+    UIL[Unity Install Layout]
+  end
+  subgraph runtime [Runtime planes]
+    Coord[install-coordinator]
+    OS[Platform adapters MSI / pkg / deb / Flatpak / direct disk]
+    CFS[connectome-fs optional]
+  end
+  subgraph shell [Shell visibility]
+    OSH[OpenShell env refresh / entrypoint dispatch]
+  end
+  Ibex --> UIL
+  UIL --> OS
+  UIL --> CFS
+  Coord --> OS
+  OS --> OSH
+  CFS --> OSH
+....
+
+* **UIL** — layout and transaction *contract* (roles, journal, claims).
+* link:https://github.com/dev-centr/install-coordinator[install-coordinator] — **Windows concurrency plane**: host-wide admission so MSI `1618`, winget, and custom EXE installs do not race agent workflows (see xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]).
+* xref:tools:ibex:index.adoc[Ibex] (ibex-install-builder) — **authoring** that emits UIL manifests plus platform packages (MSI, bundles, silent flags) suitable for CI and winget.
+
+Honest scope: UIL is normative documentation here; connectome-fs and install-coordinator evolve in their own repos.
+Adapters may implement only classic mode for years while still benefiting from shared vocabulary.
+
+== Mapping to experimental distribution
+
+xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution] addresses **one download** with native slices after delivery.
+UIL addresses **what gets laid down on disk** after Tailor or an installer runs.
+The problems compose but do not merge.
+
+== Related
+
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* link:https://connectome-fs.github.io/docs/connectome-fs/explanation/model.html[Connectome model]
+* link:https://opensh.org/docs/shell-architecture/entrypoint-dispatch.html[Entrypoint dispatch]

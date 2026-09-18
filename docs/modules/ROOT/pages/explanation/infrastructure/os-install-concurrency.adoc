@@ -56,4 +56,5 @@ If you are designing an agent runner that spans Windows and Linux, keep one orch
 * News diptych (deep dive): link:https://devcentr.org/news/2026-08-09-windows-install-concurrency[Windows] · link:https://devcentr.org/news/2026-08-09-linux-install-concurrency[Linux]
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
 * xref:how-to/app-installer-packaging.adoc[App Installer Packaging] (shipping installers—not running them concurrently)
+* xref:explanation/architecture/installation/index.adoc[Installation architecture] · xref:explanation/architecture/installation/windows.adoc[Windows installation]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces] (worktree/sandbox how-to; related agent isolation)
