@@ -1,0 +1,117 @@
+= Git worktrees long-range
+:description: Ideal repo-local `.worktrees/<purpose>`, what Git must grow (relative paths, `--local`, exclude), why nesting alone fails, and owner-scoped as the compatibility bridge.
+:toc:
+
+Git worktrees already give you concurrent checkouts sharing one object store.
+What they do **not** give you is a placement model that survives agents, IDE indexes, and a laptop that moves folders.
+
+This page is the long-range design argument.
+Today's agent-compatible how-to stays owner-scoped:
+xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees].
+Concurrency symptoms and Phase A/B framing:
+xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification].
+
+== Ideal: repo-local purpose trees
+
+The mental model people want:
+
+----
+<repo>/
+  .git/
+  .worktrees/
+    docs-pass/
+    tray-fix/
+  src/
+  …
+----
+
+Short leaf names (`docs-pass`, not `agent-rules-docs-pass`).
+Tight association: every purpose checkout sits **under the repo you are thinking about**.
+Less visual mess than a peer forest of `repo-feature-a`, `repo-feature-b` siblings, and less cross-repo clutter than dumping every org checkout into one mega `.worktrees` folder without the repo prefix discipline.
+
+That layout is the **target**, not today's default for hive agents.
+
+== Stronger form (optional, Git-owned only)
+
+A sharper future: treat checkouts as first-class homes under `.git/` — for example `.git/checkouts/<purpose>/` — **only if Git reserves a new name**.
+
+Do **not** overload `.git/worktrees/`.
+That path is already admin metadata for linked worktrees (per-worktree gitdirs, HEAD, commondir pointers).
+Colliding user checkouts with that bookkeeping is how you get support nightmares and tools that cannot tell "data about a worktree" from "the worktree itself."
+
+If Git ever ships checkout homes inside `.git/`, they need a **new** reserved directory, porcelain that creates them, and discovery that still flows through `git worktree list`.
+
+== What Git must grow
+
+Nesting a worktree under the main tree does **not** fix absolute path encoding by itself.
+Today Git records absolute paths for linked worktrees in several places.
+Move the main clone (or rename a parent), and links break whether the worktree lived as a sibling or as `<repo>/.worktrees/foo`.
+
+Needed:
+
+* **Relative path storage** when the worktree lives inside the main working tree (or another agreed relative root).
+* **`git worktree add --local`** (name flexible) — a first-class mode that means "place under this repo's local worktree home, store relatively, wire excludes."
+* **Auto `info/exclude` (or equivalent)** so `.worktrees/` (or the chosen home) does not show up as untracked garbage in every status.
+* **Tool discovery via porcelain** — IDEs, agents, and wrappers should call `git worktree list` (and friends), not invent parallel layout databases.
+
+Until relative storage exists, "put it under the repo" is a UX preference with the same move-breakage class as sibling trees.
+
+== Placement spectrum (honest tradeoffs)
+
+[cols="1,2,2", options="header"]
+|===
+| Layout | Wins | Costs
+
+| Sibling clutter (`…/repo-feature`)
+| Obvious in a file manager; no nest-in-tree surprises
+| Visual mess; weak association; agents invent inconsistent sibling schemes
+
+| Owner-scoped hive (today)
+| One bucket per org/user; agents can be taught one path schema; forbids global `$CODE_ROOT/.worktrees`
+| Longer leaf names (`<repo>-<purpose>`); checkout not visually "inside" the repo
+
+| Repo-local `<repo>/.worktrees/<purpose>` (ideal)
+| Short names; mental association; less peer clutter
+| Needs relative paths + exclude + `--local`; nesting alone does not fix abs paths
+
+| `.git/checkouts/` (optional future)
+| Checkouts live with repo metadata
+| **Only** with a new reserved name — never `.git/worktrees/` admin collision
+|===
+
+== Owner-scoped remains the compatibility bridge
+
+Hive agents and humans need one rule that works on Git **as shipped today**.
+That rule is already encoded in agent-rules:
+
+----
+$CODE_ROOT/<host>/<owner>/.worktrees/<repo>-<purpose-slug>
+----
+
+Linked only.
+Forbidden: `$CODE_ROOT/.worktrees`, `$CODE_ROOT/worktrees`, and full-clones mislabeled as worktrees.
+
+Use xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees] until Git grows relative/`--local` support worth migrating the default.
+Migration then is mechanical: `git worktree list` → add repo-local trees → move → prune — not a new folklore of path inventiveness.
+
+== How this fits the concurrency essays
+
+xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+covers why many live states hurt (path drift, artifact multiplication, virtual branches).
+xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+is the near-term choose-deliberately matrix (worktrees / jj / GitButler / DIY namespaces).
+
+This page answers a narrower question: **where should a linked worktree live**, today vs when Git can store relative checkout homes.
+Filesystem editions (Phase B) eventually collapse "new workspace" into O(1) forks with stable paths —
+xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions] —
+but until then, placement convention is the userspace load-bearing wall.
+
+== Related
+
+* xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* link:https://github.com/dev-centr/agent-rules/blob/main/general/folder-schema.md[agent-rules folder-schema]
+* link:https://github.com/dev-centr/agent-rules/blob/main/skills/git-worktrees/SKILL.md[skill git-worktrees]

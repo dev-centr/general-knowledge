@@ -1,0 +1,102 @@
+= Org-scoped Git worktrees
+:description: Today's hive standard for linked worktrees — `$CODE_ROOT/<host>/<owner>/.worktrees/<repo>-<purpose-slug>`; linked only; forbid global CODE_ROOT buckets.
+:toc:
+
+Parallel agent or branch checkouts must land in one discoverable place.
+Dev-Centr's **today** standard is **owner-scoped** linked worktrees — not a global hive bucket, and not a second full clone pretending to be a worktree.
+
+This page is the practitioner how-to.
+Normative agent schema: link:https://github.com/dev-centr/agent-rules/blob/main/general/folder-schema.md[agent-rules `folder-schema.md`] (Git worktrees section).
+Operational skill: link:https://github.com/dev-centr/agent-rules/blob/main/skills/git-worktrees/SKILL.md[skill `git-worktrees`].
+Long-range placement redesign (repo-local ideals, relative paths, what Git still lacks):
+xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range].
+
+== Path
+
+----
+$CODE_ROOT/<host>/<owner>/.worktrees/<repo>-<purpose-slug>
+----
+
+Examples:
+
+* `$CODE_ROOT/github.com/dev-centr/.worktrees/agent-rules-docs-pass`
+* `$CODE_ROOT/github.com/dev-centr/.worktrees/hive-watch-tray-fix`
+
+[cols="1,3", options="header"]
+|===
+| Piece | Rule
+
+| Owner scope
+| Same `<owner>` folder as the main clone (org or user under `<host>/`)
+
+| Directory
+| Hidden **`.worktrees`** (not `worktrees`)
+
+| Leaf name
+| `<repo>-<purpose-slug>` — kebab-case purpose after the repo name
+
+| Branch (common)
+| `agent/<purpose>` — optional convention; path policy wins
+|===
+
+== Add a linked worktree
+
+. Resolve the **main clone** (owned / `.forks` / `.clones` per hive-layout).
+. Ensure `$CODE_ROOT/<host>/<owner>/.worktrees` exists.
+. Linked add only:
+
+[source,bash]
+----
+git -C <main-clone> worktree add <path> [-b <branch>] <start-point>
+----
+
+Example:
+
+[source,bash]
+----
+git -C "$CODE_ROOT/github.com/dev-centr/agent-rules" worktree add \
+  "$CODE_ROOT/github.com/dev-centr/.worktrees/agent-rules-docs-pass" \
+  -b agent/docs-pass main
+----
+
+Then verify:
+
+[source,bash]
+----
+git -C <main-clone> worktree list
+----
+
+== Forbidden (new worktrees)
+
+* Full-clone into `.worktrees` (`git clone …/.worktrees/…`) — that is a second independent repo, not a linked worktree.
+* `$CODE_ROOT/.worktrees/<…>`
+* `$CODE_ROOT/worktrees/<…>`
+* Non-hidden `…/<owner>/worktrees/<…>` when creating new ones (prefer `.worktrees`)
+
+== Why owner-scoped (compatibility bridge)
+
+Agents invent layouts under pressure: siblings next to the clone, random `/tmp` trees, hive-root buckets, or "worktree" folders that are actually dirty standalone clones.
+Owner-scoped `.worktrees` keeps every checkout for an org (or user) under one folder agents and humans can grep, without sprinkling purpose checkouts through the repo tree itself.
+
+That is **today's hive standard for agent compatibility**.
+It is not the long-range ideal.
+Repo-local `<repo>/.worktrees/<purpose>` (shorter names, tighter mental association) needs Git help — relative path storage, `git worktree add --local`, auto exclude — before it becomes the default without path breakage.
+Until then, stay on owner-scoped linked trees.
+See xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range].
+
+== Move / migrate
+
+. Prefer `git -C <main-clone> worktree move <old> <new>` when Git supports it and both paths share a volume.
+. Else remove / relocate only with a clear plan — do not leave detached `.git` files pointing at dead paths.
+. After move, `git worktree list`; prune stale entries if needed.
+. Do **not** delete unique commits or dirty state to force a move — stop and report.
+
+== Related
+
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
+* link:https://github.com/dev-centr/agent-rules/blob/main/general/folder-schema.md[agent-rules folder-schema]
+* link:https://github.com/dev-centr/agent-rules/blob/main/skills/git-worktrees/SKILL.md[skill git-worktrees]

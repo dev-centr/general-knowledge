@@ -32,13 +32,16 @@ They keep:
 Until Phase B ships, use the Phase A bridge described in
 xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 and the near-term how-to
-xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]. Worktree placement: xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]; long-range: xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range].
 For why path-shaped commits hurt even in one tree, see
 xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model].
 
 == Related
 
 * xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
+* xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
+* xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]

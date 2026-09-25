@@ -90,12 +90,16 @@ xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions].
 
 Near-term practitioner checklist (worktrees / jj / GitButler tradeoffs):
 xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces].
+Worktree **placement** today: xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees].
+Long-range placement redesign: xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range].
 
 == Related
 
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
+* xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]

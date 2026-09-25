@@ -45,6 +45,15 @@ without multiplying dependency trees needlessly.
 . Share content-addressable dependency stores (e.g. pnpm) across sandboxes
   when possible.
 
+
+== Worktree placement (today vs long-range)
+
+If you choose native worktrees, **where** they live matters as much as how you add them.
+
+* **Today (hive / agent compatibility):** xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees] — `$CODE_ROOT/<host>/<owner>/.worktrees/<repo>-<purpose-slug>`, linked only; forbid global `$CODE_ROOT/.worktrees` and `$CODE_ROOT/worktrees`.
+* **Long-range ideal:** xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range] — repo-local `<repo>/.worktrees/<purpose>`, relative path storage, `git worktree add --local`, without overloading `.git/worktrees/` admin metadata.
+
+Owner-scoped is the compatibility bridge until Git stores relative checkout homes.
 == Phase B pointer
 
 Filesystem editions (connectome-fs) make “new workspace” an O(1) edition
@@ -53,6 +62,8 @@ tradeoffs.
 
 == Related
 
+* xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
+* xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
 * xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
