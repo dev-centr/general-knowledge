@@ -82,7 +82,7 @@ For a mental model that separates *roles* from *paths*, see xref:explanation/arc
 
 == Platform comparison (high level)
 
-[cols="1,1,1,1"]
+[cols="1,1,1,1,1"]
 |===
 | Concern | Windows | macOS | Linux (typical) | BSD (typical)
 
