@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-26 -- Retarget facto-stack in AGENTS.md
+
+* Compose-pack cite in `AGENTS.md` now `facto-stack` (was `antora-facto`), matching hub publishing docs.
+
 == 2026-09-26 -- Config Key Sanitation nav placement
 
 * Moved xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] out of Architecture **By type** (it is not a product type) to a peer of Diagnostics under Architecture deep dives.
