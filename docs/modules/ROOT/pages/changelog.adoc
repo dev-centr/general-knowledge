@@ -2,6 +2,12 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-26 -- Config Key Sanitation nav placement
+
+* Moved xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] out of Architecture **By type** (it is not a product type) to a peer of Diagnostics under Architecture deep dives.
+* Linked from Architecture overview and Software Product Essentials “Config and data layout.”
+* See xref:changelog-details/2026-09-26 - config-key-sanitation.adoc[Detailed changelog].
+
 == 2026-09-26 -- Config Key Sanitation status colors
 
 * Status labels in xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] use colored `.cks-status-*` roles (hub CSS in `dev-centr/docs`).

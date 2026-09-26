@@ -1,16 +1,18 @@
 = Config Key Sanitation
-:description: Why CLI tools must keep detecting and explaining expired config keys forever.
+:description: Why tools must keep detecting and explaining expired config keys forever.
 :page-audience: CLI authors, platform engineers, agent authors
 :page-usage-context: When a tool evolves config keys or inherits mystery keys from old projects
 :page-orig-author: Composer on behalf of Ryan Johnson
 :page-last-author: Composer on behalf of Ryan Johnson
 
-CLIs that drop recognition of old config keys create *silent mystery debt*.
+Tools that drop recognition of old config keys create *silent mystery debt*.
 Old projects keep the key; future versions stop warning; people copy unexplained lines into new files.
+CLIs are the primary consumer, but any artifact that reads layered user/project/global config shares the failure mode.
 
 Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-key-sanitation.html[Config Key Sanitation Protocol].
 
-Parent type essay: xref:explanation/architecture/types/cli.adoc[CLI].
+Parent framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
+(primary type consumer: xref:explanation/architecture/types/cli.adoc[CLI]).
 
 == The failure mode
 
@@ -67,3 +69,10 @@ Reference implementation: link:https://github.com/openshellorg/config-key-sanita
 Toolchain Management owns pin / health / repair for *engines*.
 Config Key Sanitation owns explainability for *settings keys* those engines read.
 They compose: a healthy toolchain that silently ignores mystery config is still a docs failure.
+
+== Related
+
+* xref:explanation/architecture/types/cli.adoc[CLI] — must-ship surfaces (includes this concern)
+* xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern]
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and support]
