@@ -1,0 +1,15 @@
+= Reference Shells/Languages nav nesting
+:description: Changelog detail for fixing Shells/Languages nesting under Google Cloud OAuth in Reference nav.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+
+== Summary
+
+Under **Reference**, **Shells** and **Languages** were indented one level too deep in `nav.adoc`, so Antora treated them as children of **Google Cloud OAuth concept map**. With site-nav-tree `promoteLinkedSectionLandings`, that linked parent became an unlinked section wrapping those typology branches.
+
+== Changes
+
+* `docs/modules/ROOT/nav.adoc`: `*** Shells` / `**** Nushell` and `*** Languages` / `**** C Language` -> `** Shells` / `*** Nushell` and `** Languages` / `*** C Language` (siblings of the OAuth concept map under Reference).
+* No site-nav-tree package change; root cause was content asterisks, not `promoteLinkedSectionLandings` itself.

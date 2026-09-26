@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-09-26 -- Reference Shells/Languages nav nesting
+
+* Fixed `nav.adoc` asterisk depth so **Shells** and **Languages** are siblings under xref:reference/index.adoc[Reference], not children of Google Cloud OAuth concept map (which made `promoteLinkedSectionLandings` nest them under an unlinked OAuth section).
+* See xref:changelog-details/2026-09-26 - reference-shells-languages-nav.adoc[Detailed changelog].
+
 == 2026-09-26 -- Nav Overview child
 
 * Added explicit `* xref:index.adoc[Overview]` so General Knowledge matches other forest roots (`General Knowledge > Overview`) and loads the component index from a discoverable child.

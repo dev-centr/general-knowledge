@@ -40,10 +40,10 @@
 ** xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
 ** xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
-*** Shells
-**** xref:reference/shells/nushell.adoc[Nushell]
-*** Languages
-**** xref:reference/languages/c.adoc[C Language]
+** Shells
+*** xref:reference/shells/nushell.adoc[Nushell]
+** Languages
+*** xref:reference/languages/c.adoc[C Language]
 ** xref:reference/git-performance.adoc[Git Performance]
 ** xref:reference/pnpm-run-routing.adoc[pnpm run routing]
 ** xref:reference/package-registries.adoc[Package Registries]
