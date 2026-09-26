@@ -14,7 +14,7 @@ Agents are useful for docs when the **curriculum is on demand** and the **house 
 | Titles stance (cold-reader + enthymeme), Diátaxis shape, AsciiDoc checklists, Nieman anti-terse tips
 | Mode-split body packs (news vs blog), long anti-slop rubrics, connector loops
 
-| Site `STYLE.adoc` / `AGENTS.md` · xref:agent-rules::editorial-titles.adoc[Editorial titles] · xref:agent-rules::case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice]
+| Site `STYLE.adoc` / `AGENTS.md` · xref:tools:agent-rules:editorial-titles.adoc[Editorial titles] · xref:tools:agent-rules:case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice]
 | `skills/<name>/` via xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
 |===
 
@@ -41,4 +41,4 @@ xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap
 * xref:explanation/literate-programming.adoc[Literate Programming]
 * xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
-* xref:agent-rules::bootstrap.adoc[Agent Rules bootstrap]
+* xref:tools:agent-rules:bootstrap.adoc[Agent Rules bootstrap]

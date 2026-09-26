@@ -32,4 +32,4 @@ If Context7 ships Agent Skills with the plugin, leave them enabled—they teach 
 == Related
 
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] (app connectors, not library docs)
-* xref:agent-rules::bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]
+* xref:tools:agent-rules:bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]

@@ -19,4 +19,4 @@ Org-specific agent setup (`agent-rules` org layer: `AGENTS.md`, junction, skills
 * link:https://team.docs.devcentr.org[team.docs.devcentr.org] — start at *Org agent rules setup* (Cloudflare Access; GitHub org members). How the lock works: xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access].
 * Repository: link:https://github.com/dev-centr/team-docs[`dev-centr/team-docs`] (private)
 
-Public portable rules remain on link:https://docs.devcentr.org/agent-rules/[Agent Rules].
+Public portable rules remain on link:https://docs.devcentr.org/tools/agent-rules/[Agent Rules].

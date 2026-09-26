@@ -71,14 +71,14 @@ Timeline of notable documentation changes in this repository.
 * Internet Reliability index and Provider search openings: human umbrella wording; drop dialectic/ownership briefing lines.
 == 2026-09-03 -- Case study link from writing docs
 
-* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] links agent-rules xref:agent-rules::case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice].
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] links agent-rules xref:tools:agent-rules:case-study-agent-voice-vs-reader-voice.adoc[Case study: agent voice vs reader voice].
 == 2026-09-03 -- HCI docs slug an-alternative-to-urls
 
 * Reliability deep links use `.../an-alternative-to-urls.html` (wiki slug matches public title).
 == 2026-09-03 -- An alternative to URLs + editorial titles
 
 * Internet Reliability sibling faces: symptom *Broken links after a URL rename*; diagnosis/docs *An alternative to URLs*.
-* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] points at agent-rules xref:agent-rules::editorial-titles.adoc[Editorial titles] (enthymeme + self-test).
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI] points at agent-rules xref:tools:agent-rules:editorial-titles.adoc[Editorial titles] (enthymeme + self-test).
 
 == 2026-09-03 -- Oracle titles for conversion quality
 
@@ -192,7 +192,7 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-08-28 -- Agent CLI auth cross-links
 
-* How-to index + secrets / Google Cloud OAuth pages link to agent-rules xref:agent-rules::bitwarden-cli-agents.adoc[Bitwarden CLI (agents)] and xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI (agents)].
+* How-to index + secrets / Google Cloud OAuth pages link to agent-rules xref:tools:agent-rules:bitwarden-cli-agents.adoc[Bitwarden CLI (agents)] and xref:tools:agent-rules:gcloud-cli-agents.adoc[gcloud CLI (agents)].
 
 == 2026-08-28 -- Curated AI watching (Sophontic)
 
@@ -232,7 +232,7 @@ Timeline of notable documentation changes in this repository.
 == 2026-08-17 -- write-a-skill
 
 * Renamed Cursor skill `write-skill` to `write-a-skill` so the slug is not ambiguous with “write” as a verb.
-* How-to, vibe-coding, catalog, and team SOP now name xref:agent-rules::skills-catalog.adoc[`write-a-skill`].
+* How-to, vibe-coding, catalog, and team SOP now name xref:tools:agent-rules:skills-catalog.adoc[`write-a-skill`].
 
 == 2026-08-17 -- Skill descriptions as trigger words
 

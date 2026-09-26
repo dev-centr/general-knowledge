@@ -43,7 +43,7 @@ That is the failure mode.
 |===
 
 Vocabulary for where weights run: xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes].
-Mixr detail: xref:agent-rules::mixr-routing-and-cost.adoc[Mixr routing and cost].
+Mixr detail: xref:tools:agent-rules:mixr-routing-and-cost.adoc[Mixr routing and cost].
 
 == Protocol stance
 

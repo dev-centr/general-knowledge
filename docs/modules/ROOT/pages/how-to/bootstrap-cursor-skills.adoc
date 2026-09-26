@@ -15,7 +15,7 @@ xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
 
 In-repo shop (agent-rules; avoids duplicating this page)::
 https://github.com/dev-centr/agent-rules/blob/main/skills/BOOTSTRAP.md[`skills/BOOTSTRAP.md`] ·
-xref:agent-rules::bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]
+xref:tools:agent-rules:bootstrap.adoc[Agent Rules — Bootstrap Cursor skills]
 
 == Choose an on-ramp
 
@@ -109,6 +109,6 @@ cmd /c mklink /J "$env:USERPROFILE\.cursor\skills\writing-blog" "$base\writing-b
 == See also
 
 * xref:home::tools/agent-rules.adoc[Agent Rules] hub · https://github.com/dev-centr/agent-rules[`dev-centr/agent-rules`]
-* Skill `write-a-skill` (trigger-word descriptions): https://github.com/dev-centr/agent-rules/blob/main/skills/write-a-skill/SKILL.md[`skills/write-a-skill`] · xref:agent-rules::skills-catalog.adoc[Skills catalog]
+* Skill `write-a-skill` (trigger-word descriptions): https://github.com/dev-centr/agent-rules/blob/main/skills/write-a-skill/SKILL.md[`skills/write-a-skill`] · xref:tools:agent-rules:skills-catalog.adoc[Skills catalog]
 * xref:home::tools/rules-manager.adoc[Rules Manager] — compose/watch for rules packs
 * xref:how-to/composio-mcp-setup.adoc[Composio MCP setup] — marketplace plugin that ships `skills/` beside MCP

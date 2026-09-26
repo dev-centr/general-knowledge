@@ -31,8 +31,8 @@
 ** xref:how-to/google-cloud-oauth-for-personal-tools.adoc[Google Cloud OAuth (personal tools)]
 ** xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor Skills]
 ** xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)]
-** xref:agent-rules::bitwarden-cli-agents.adoc[Bitwarden CLI (agents)]
-** xref:agent-rules::gcloud-cli-agents.adoc[gcloud CLI (agents)]
+** xref:tools:agent-rules:bitwarden-cli-agents.adoc[Bitwarden CLI (agents)]
+** xref:tools:agent-rules:gcloud-cli-agents.adoc[gcloud CLI (agents)]
 
 * xref:reference/index.adoc[Reference]
 ** xref:reference/recommended-tools.adoc[Recommended Tools]
