@@ -2,6 +2,10 @@
 
 Timeline of notable documentation changes in this repository.
 
+== 2026-09-26 -- Config Key Sanitation status colors
+
+* Status labels in xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] use colored `.cks-status-*` roles (hub CSS in `dev-centr/docs`).
+
 == 2026-09-26 -- Config Key Sanitation
 
 * Explanation xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] — forever-detect expired CLI config keys; ship indexes; shared classify/match/alert library.

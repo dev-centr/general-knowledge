@@ -33,10 +33,17 @@ Treat key history as a first-class artifact:
 |===
 | Status | Runtime duty
 
-| active | Accept and document
-| deprecated | Accept and always warn (successor + timeline)
-| expired | Ignore value but *always* detect and say expired after version X
-| unknown | Warn (typo / foreign tool / catalog gap)
+| [.cks-status.cks-status-active]#active#
+| Accept and document
+
+| [.cks-status.cks-status-deprecated]#deprecated#
+| Accept and always warn (successor + timeline)
+
+| [.cks-status.cks-status-expired]#expired#
+| Ignore value but *always* detect and say expired after version X
+
+| [.cks-status.cks-status-unknown]#unknown#
+| Warn (typo / foreign tool / catalog gap)
 |===
 
 Ship machine-readable *key indexes* with every release.
