@@ -1,0 +1,16 @@
+= Nav Overview child
+:description: Changelog detail for General Knowledge Overview nav child.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+
+== Summary
+
+General Knowledge now shows an explicit **Overview** child that opens the component index, matching Business Bootstrap and other forest roots.
+
+== Changes
+
+* `docs/modules/ROOT/nav.adoc`: leading `* xref:index.adoc[Overview]`
+* Page H1 stays **General Knowledge**; nav label is Overview
+* Hub site-nav-tree **0.5.0** also synthesizes Overview when a forest root lacks a Home/Overview child

@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-09-26 -- Nav Overview child
+
+* Added explicit `* xref:index.adoc[Overview]` so General Knowledge matches other forest roots (`General Knowledge > Overview`) and loads the component index from a discoverable child.
+* See xref:changelog-details/2026-09-26 - nav-overview-child.adoc[Detailed changelog].
+
 == 2026-09-26 -- Themed SVG dark-text completeness
 
 * `scripts/build-diagrams.mjs`: bind Mermaid `#my-svg` fill / `#my-svg .label` color to `color.text.primary`; mark `access-mock-*` as borrow-from-light light islands (dark preset equals light).
