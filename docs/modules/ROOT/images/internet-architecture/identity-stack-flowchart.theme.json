@@ -79,6 +79,18 @@
   "bindings": [
     {
       "kind": "stylesheet",
+      "selector": "#my-svg .label",
+      "property": "color",
+      "token": "color.text.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg",
+      "property": "fill",
+      "token": "color.text.primary"
+    },
+    {
+      "kind": "stylesheet",
       "selector": ".themed-svg-root",
       "property": "background-color",
       "styleSelector": "#themed-svg-bindings",

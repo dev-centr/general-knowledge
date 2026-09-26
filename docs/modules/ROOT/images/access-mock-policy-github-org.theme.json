@@ -62,21 +62,33 @@
       "color.status.danger-border": "#7a3a32"
     },
     "dark": {
-      "color.canvas": "#10161a",
-      "color.surface.primary": "#182126",
-      "color.surface.secondary": "#203038",
-      "color.text.primary": "#edf4f2",
-      "color.border.primary": "#78909b",
-      "color.edge": "#a8bdc4",
-      "color.accent.primary": "#55d6b2",
-      "color.accent.on-primary": "#071512",
-      "color.status.warning": "#4a3e24",
-      "color.status.warning-border": "#d5b866",
-      "color.status.danger": "#542d2d",
-      "color.status.danger-border": "#e99a9a"
+      "color.canvas": "#f3f1ec",
+      "color.surface.primary": "#ffffff",
+      "color.surface.secondary": "#e8f0ea",
+      "color.text.primary": "#1a1a1a",
+      "color.border.primary": "#2c2c2c",
+      "color.edge": "#2c2c2c",
+      "color.accent.primary": "#1f3a2e",
+      "color.accent.on-primary": "#f7f3e8",
+      "color.status.warning": "#f7f3e8",
+      "color.status.warning-border": "#6b5a3e",
+      "color.status.danger": "#f6e8e6",
+      "color.status.danger-border": "#7a3a32"
     }
   },
   "bindings": [
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg .label",
+      "property": "color",
+      "token": "color.text.primary"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": "#my-svg",
+      "property": "fill",
+      "token": "color.text.primary"
+    },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root",
@@ -284,5 +296,19 @@
   "fallback": {
     "unresolvedToken": "error",
     "missingTarget": "warn"
-  }
+  },
+  "borrowFromLight": [
+    "color.canvas",
+    "color.surface.primary",
+    "color.surface.secondary",
+    "color.text.primary",
+    "color.border.primary",
+    "color.edge",
+    "color.accent.primary",
+    "color.accent.on-primary",
+    "color.status.warning",
+    "color.status.warning-border",
+    "color.status.danger",
+    "color.status.danger-border"
+  ]
 }

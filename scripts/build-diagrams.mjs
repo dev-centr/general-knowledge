@@ -100,6 +100,18 @@ const semanticTokens = {
   danger: ['color.status.danger', 'color.status.danger-border', 'color.text.primary'],
 };
 
+/** UI mockups that must stay light-stable in dark mode (borrow-from-light). */
+const LIGHT_ISLANDS = new Set([
+  'access-mock-team-name',
+  'access-mock-github-oauth-app',
+  'access-mock-github-consent',
+  'access-mock-github-consent-orgs',
+  'access-mock-zero-trust-github-idp',
+  'access-mock-finish-setup',
+  'access-mock-policy-github-org',
+  'access-mock-login',
+]);
+
 function semanticClasses(sourceText) {
   const found = new Set();
   for (const match of sourceText.matchAll(/^\s*class\s+[^ \r\n]+\s+(primary|secondary|warning|success|danger)\s*$/gm)) {
@@ -116,6 +128,8 @@ function stylesheetTokens(sourceText) {
   ];
   if (sequence) {
     bindings.push(
+      ['#my-svg', 'fill', 'color.text.primary'],
+      ['#my-svg .label', 'color', 'color.text.primary'],
       ['.themed-svg-root .actor', 'fill', 'color.surface.primary'],
       ['.themed-svg-root .actor', 'stroke', 'color.border.primary'],
       // Stick-figure `actor` participants: Mermaid paints circle/line under
@@ -138,6 +152,11 @@ function stylesheetTokens(sourceText) {
       ['.themed-svg-root marker path', 'stroke', 'color.edge'],
     );
   } else {
+    // Inherited Mermaid root text color — rewrite #my-svg fill / .label color to color.text.primary
+    bindings.push(
+      ['#my-svg', 'fill', 'color.text.primary'],
+      ['#my-svg .label', 'color', 'color.text.primary'],
+    );
     bindings.push(
       ['.themed-svg-root .label-container', 'fill', 'color.surface.primary'],
       ['.themed-svg-root .label-container', 'stroke', 'color.border.primary'],
@@ -164,14 +183,25 @@ function stylesheetTokens(sourceText) {
 }
 
 function manifestFor(stem, sourceText) {
-  const bindings = stylesheetTokens(sourceText).map(([selector, property, token]) => ({
-    kind: 'stylesheet',
-    selector,
-    property,
-    styleSelector: '#themed-svg-bindings',
-    token,
-  }));
-  return {
+  const lightIsland = LIGHT_ISLANDS.has(stem)
+  const presets = lightIsland
+    ? { light: palettes.light, dark: { ...palettes.light } }
+    : palettes
+  const bindings = stylesheetTokens(sourceText).map(([selector, property, token]) => {
+    const binding = {
+      kind: 'stylesheet',
+      selector,
+      property,
+      token,
+    }
+    // #my-svg / #my-svg .label must rewrite Mermaid's own stylesheet (inherited fill/color).
+    // Other structural bindings stay seeded under #themed-svg-bindings.
+    if (selector !== '#my-svg' && selector !== '#my-svg .label') {
+      binding.styleSelector = '#themed-svg-bindings'
+    }
+    return binding
+  });
+  const manifest = {
     $schema: 'https://unpkg.com/@dev-centr/themed-svg@0.2.3/schema/themed-svg-manifest-v1.schema.json',
     schemaVersion: 1,
     namespace: 'diagram',
@@ -182,10 +212,14 @@ function manifestFor(stem, sourceText) {
     },
     tokens: Object.keys(palettes.light).map((id) => ({ id })),
     defaultPreset: 'light',
-    presets: palettes,
+    presets,
     bindings,
     fallback: { unresolvedToken: 'error', missingTarget: 'warn' },
   };
+  if (lightIsland) {
+    manifest.borrowFromLight = Object.keys(palettes.light)
+  }
+  return manifest
 }
 
 function run(args) {

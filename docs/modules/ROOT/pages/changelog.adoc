@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-09-26 -- Themed SVG dark-text completeness
+
+* `scripts/build-diagrams.mjs`: bind Mermaid `#my-svg` fill / `#my-svg .label` color to `color.text.primary`; mark `access-mock-*` as borrow-from-light light islands (dark preset equals light).
+* `scripts/validate-themed-diagrams.mjs`: require those `#my-svg` structural bindings.
+* Patched baked adaptive/host SVGs + theme manifests for dark-mode text vars.
+
 Timeline of notable documentation changes in this repository.
 
 == 2026-09-26 -- Retarget facto-stack in AGENTS.md

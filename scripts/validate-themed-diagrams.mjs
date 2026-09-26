@@ -41,7 +41,7 @@ const sources = [
   'seo-discovery-system',
 ];
 
-/** PlantUML stems (Kroki → plantuml-svg-css-vars); keep listed for SVG validation. */
+/** PlantUML stems (Kroki â†’ plantuml-svg-css-vars); keep listed for SVG validation. */
 const plantumlSources = ['internet-architecture/label-as-wire-break'];
 const failures = [];
 
@@ -137,6 +137,9 @@ for (const source of sources) {
   }
   const selectors = new Set(manifest.bindings?.map((binding) => binding.selector));
   if (!isPlantuml) {
+    for (const required of ['#my-svg', '#my-svg .label']) {
+      if (!selectors.has(required)) fail(manifestPath, `missing structural binding ${required}`);
+    }
     for (const match of sourceText.matchAll(
       /^\s*class\s+[^ \r\n]+\s+(primary|secondary|warning|success|danger)\s*$/gm,
     )) {
