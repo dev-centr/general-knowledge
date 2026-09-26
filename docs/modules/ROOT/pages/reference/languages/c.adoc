@@ -2,6 +2,8 @@
 
 The **C programming language** provides a low-level, high-performance toolkit for systems programming. It is widely used in the Dev-Centr ecosystem for firmware, drivers, and performance-critical core libraries.
 
+For new systems work you control, we recommend **D** or **Rust** over C; see xref:explanation/languages/d-and-rust.adoc[D and Rust] for the trade-offs. If you want C's familiar feel with D's modern toolchain, use D's **Better-C mode** (`-betterC`).
+
 [IMPORTANT]
 ====
 In Dev-Centr, we **strongly endorse Literate Programming (LP)** for all C development. The historically opaque and verbose nature of C makes it the perfect candidate for an inverted documentation-first approach.

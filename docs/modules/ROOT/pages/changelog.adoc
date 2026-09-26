@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-09-26 -- C language recommendation
+
+* Updated xref:reference/languages/c.adoc[C Language] to recommend D or Rust over C for new systems work, with D's Better-C mode as the C-like option.
+* See xref:changelog-details/2026-09-26 - c-language-recommendation.adoc[Detailed changelog].
+
 == 2026-09-26 -- Reference Shells/Languages nav nesting
 
 * Fixed `nav.adoc` asterisk depth so **Shells** and **Languages** are siblings under xref:reference/index.adoc[Reference], not children of Google Cloud OAuth concept map (which made `promoteLinkedSectionLandings` nest them under an unlinked OAuth section).

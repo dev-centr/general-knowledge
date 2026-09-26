@@ -1,0 +1,15 @@
+= C language recommendation
+:description: Changelog detail for clarifying the C article's D, Rust, and Better-C recommendation.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+
+== Summary
+
+Clarified the C reference page's practical recommendation: prefer D or Rust for new systems work, or use D's Better-C mode when a C-like feel is the goal.
+
+== Changes
+
+* `docs/modules/ROOT/pages/reference/languages/c.adoc`: added the recommendation to the introduction and linked the existing xref:explanation/languages/d-and-rust.adoc[D and Rust] guidance.
+* No navigation, SoftNav, or icon changes.
