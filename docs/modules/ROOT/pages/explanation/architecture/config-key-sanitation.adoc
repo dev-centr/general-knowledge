@@ -1,0 +1,62 @@
+= Config Key Sanitation
+:description: Why CLI tools must keep detecting and explaining expired config keys forever.
+:page-audience: CLI authors, platform engineers, agent authors
+:page-usage-context: When a tool evolves config keys or inherits mystery keys from old projects
+:page-orig-author: Composer on behalf of Ryan Johnson
+:page-last-author: Composer on behalf of Ryan Johnson
+
+CLIs that drop recognition of old config keys create *silent mystery debt*.
+Old projects keep the key; future versions stop warning; people copy unexplained lines into new files.
+
+Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-key-sanitation.html[Config Key Sanitation Protocol].
+
+Parent type essay: xref:explanation/architecture/types/cli.adoc[CLI].
+
+== The failure mode
+
+A familiar sequence:
+
+. Tool warns: unknown or deprecated user config `some-old-key`.
+. Maintainers remove the key from the accepted set.
+. Later releases stop looking for it and stop warning.
+
+The key remains in `.npmrc`, `gitconfig`, or an app settings file.
+Nobody alerts.
+A careful human researches; everyone else inherits folklore.
+Agents get asked to explain keys that the tool itself no longer acknowledges.
+
+== The sanitation pattern
+
+Treat key history as a first-class artifact:
+
+[cols="1,2"]
+|===
+| Status | Runtime duty
+
+| active | Accept and document
+| deprecated | Accept and always warn (successor + timeline)
+| expired | Ignore value but *always* detect and say expired after version X
+| unknown | Warn (typo / foreign tool / catalog gap)
+|===
+
+Ship machine-readable *key indexes* with every release.
+Never delete catalog rows — change status.
+
+== Product checklist (Dev-Centr)
+
+For owned CLIs and toolchain wrappers:
+
+* [ ] Key index checked into the repo and shipped with the package
+* [ ] Startup or first-load scan of user/project/global config sources
+* [ ] Alerts distinguish deprecated vs expired vs unknown
+* [ ] Opt-out is itself a catalogued key
+* [ ] Prefer a shared library for classify → match → alert
+
+Reference implementation: link:https://github.com/openshellorg/config-key-sanitation[openshellorg/config-key-sanitation]
+(wired into OpenShellOrg CLI bridges such as `prohelp-cli`).
+
+== Relationship to Toolchain Management
+
+Toolchain Management owns pin / health / repair for *engines*.
+Config Key Sanitation owns explainability for *settings keys* those engines read.
+They compose: a healthy toolchain that silently ignores mystery config is still a docs failure.

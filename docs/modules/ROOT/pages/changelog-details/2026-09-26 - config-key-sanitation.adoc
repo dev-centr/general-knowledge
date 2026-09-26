@@ -1,0 +1,16 @@
+= 2026-09-26 - config-key-sanitation
+:description: Changelog detail for Config Key Sanitation explanation and CLI checklist update.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Composer on behalf of Ryan Johnson
+:page-last-author: Composer on behalf of Ryan Johnson
+
+== Summary
+
+Documented the Config Key Sanitation pattern for practitioners and linked it from CLI essentials.
+
+== Changes
+
+* New explanation xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation]
+* xref:explanation/architecture/types/cli.adoc[CLI] essentials: must-ship surfaces include key indexes and forever-detection of expired keys
+* Points at OpenShellOrg normative protocol and `openshellorg/config-key-sanitation`
