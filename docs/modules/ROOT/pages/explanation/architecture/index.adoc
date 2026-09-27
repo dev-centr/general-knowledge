@@ -21,7 +21,7 @@ Deep dives (shared)::
 * xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 * xref:explanation/architecture/build-pipeline.adoc[Build pipeline and release engineering]
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics, logging, and support]
-* xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] — forever-detect expired config keys
+* xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management] — forever-detect expired config keys
 * xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stacks, large-document behavior, post-Skia pipelines
 * xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas Interchange (OCIF)] — endorsed canvas edit/interchange; SVG as export
 * xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming (AOP)] — separate cross-cutting chores from core algorithms

@@ -10,7 +10,7 @@ CLIs express product essentials through **flags, subcommands, and package manage
 * `app doctor` (or `app debug-dump`) for support — xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
 * Non-zero exit codes with stable meanings where scripting depends on them
 * Distribution via registry and/or OS packages — xref:reference/package-registries.adoc[Package registries]
-* **Config key sanitation** — ship a key index; never stop detecting expired keys; always alert on deprecated / expired / unknown matches — xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation]
+* **Config lifecycle management** — ship a key index; never stop detecting expired keys; always alert on deprecated / expired / unknown matches — xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]
 
 == Updates
 

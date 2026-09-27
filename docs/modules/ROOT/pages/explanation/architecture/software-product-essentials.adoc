@@ -56,7 +56,7 @@ Every artifact that leaves your machine should cover these concerns *in a form t
 
 | **Config and data layout**
 | Documented paths for config, cache, logs, and secrets; no secrets in the dump by default; outdated keys stay explainable
-| xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics] · xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation]
+| xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics] · xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]
 
 | **Crash and error story**
 | Failures leave a breadcrumb (log, crashpad, exit code + stderr); user can recover or report

@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-09-26 -- Config Key Sanitation renamed to Config Lifecycle Management
+
+* The explanation page is now xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]; the old `config-key-sanitation` URL redirects to it.
+* Status table roles renamed from `.cks-status-*` to `.lifecycle-status-*` (hub CSS in `dev-centr/docs`).
+* See xref:changelog-details/2026-09-26 - config-lifecycle-management-rename.adoc[Detailed changelog].
+
 == 2026-09-26 -- C language recommendation
 
 * Updated xref:reference/languages/c.adoc[C Language] to recommend D or Rust over C for new systems work, with D's Better-C mode as the C-like option.
@@ -29,17 +35,17 @@ Timeline of notable documentation changes in this repository.
 
 == 2026-09-26 -- Config Key Sanitation nav placement
 
-* Moved xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] out of Architecture **By type** (it is not a product type) to a peer of Diagnostics under Architecture deep dives.
+* Moved xref:explanation/architecture/config-lifecycle-management.adoc[Config Key Sanitation] out of Architecture **By type** (it is not a product type) to a peer of Diagnostics under Architecture deep dives.
 * Linked from Architecture overview and Software Product Essentials “Config and data layout.”
 * See xref:changelog-details/2026-09-26 - config-key-sanitation.adoc[Detailed changelog].
 
 == 2026-09-26 -- Config Key Sanitation status colors
 
-* Status labels in xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] use colored `.cks-status-*` roles (hub CSS in `dev-centr/docs`).
+* Status labels in xref:explanation/architecture/config-lifecycle-management.adoc[Config Key Sanitation] use colored `.cks-status-*` roles (hub CSS in `dev-centr/docs`).
 
 == 2026-09-26 -- Config Key Sanitation
 
-* Explanation xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation] — forever-detect expired CLI config keys; ship indexes; shared classify/match/alert library.
+* Explanation xref:explanation/architecture/config-lifecycle-management.adoc[Config Key Sanitation] — forever-detect expired CLI config keys; ship indexes; shared classify/match/alert library.
 * xref:explanation/architecture/types/cli.adoc[CLI] must-ship surfaces updated.
 * See xref:changelog-details/2026-09-26 - config-key-sanitation.adoc[Detailed changelog].
 

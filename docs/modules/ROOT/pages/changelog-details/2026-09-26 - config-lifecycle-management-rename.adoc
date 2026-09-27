@@ -1,0 +1,19 @@
+= 2026-09-26 - config-lifecycle-management-rename
+:description: Changelog detail for renaming Config Key Sanitation to Config Lifecycle Management.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Cursor agent on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+
+== Summary
+
+Renamed the Config Key Sanitation explanation to Config Lifecycle Management.
+"Sanitation" framed the pattern as cleanup; the actual rule is about a key's whole lifecycle, where expired keys stay detected forever.
+
+== Changes
+
+* Page moved to xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management] with `:page-aliases:` for the old path, so the old URL redirects
+* The page opens with a note naming its former title
+* Links updated in nav, Architecture overview, Software Product Essentials, and CLI essentials
+* Status roles renamed from `.cks-status-*` to `.lifecycle-status-*`
+* Matching renames on the OpenShellOrg side: protocol page `standard-config-lifecycle-management`, library `openshellorg/config-lifecycle` (formerly `config-key-sanitation`)

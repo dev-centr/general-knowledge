@@ -1,15 +1,20 @@
-= Config Key Sanitation
+= Config Lifecycle Management
 :description: Why tools must keep detecting and explaining expired config keys forever.
 :page-audience: CLI authors, platform engineers, agent authors
 :page-usage-context: When a tool evolves config keys or inherits mystery keys from old projects
 :page-orig-author: Composer on behalf of Ryan Johnson
-:page-last-author: Composer on behalf of Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-aliases: explanation/architecture/config-key-sanitation.adoc
 
 Tools that drop recognition of old config keys create *silent mystery debt*.
 Old projects keep the key; future versions stop warning; people copy unexplained lines into new files.
 CLIs are the primary consumer, but any artifact that reads layered user/project/global config shares the failure mode.
 
-Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-key-sanitation.html[Config Key Sanitation Protocol].
+NOTE: This page was first published as *Config Key Sanitation*.
+It was renamed because the pattern covers a key's whole lifecycle, not cleanup.
+The old URL redirects here.
+
+Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-lifecycle-management.html[Config Lifecycle Management Protocol].
 
 Parent framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
 (primary type consumer: xref:explanation/architecture/types/cli.adoc[CLI]).
@@ -27,7 +32,7 @@ Nobody alerts.
 A careful human researches; everyone else inherits folklore.
 Agents get asked to explain keys that the tool itself no longer acknowledges.
 
-== The sanitation pattern
+== The lifecycle
 
 Treat key history as a first-class artifact:
 
@@ -35,16 +40,16 @@ Treat key history as a first-class artifact:
 |===
 | Status | Runtime duty
 
-| [.cks-status.cks-status-active]#active#
+| [.lifecycle-status.lifecycle-status-active]#active#
 | Accept and document
 
-| [.cks-status.cks-status-deprecated]#deprecated#
+| [.lifecycle-status.lifecycle-status-deprecated]#deprecated#
 | Accept and always warn (successor + timeline)
 
-| [.cks-status.cks-status-expired]#expired#
+| [.lifecycle-status.lifecycle-status-expired]#expired#
 | Ignore value but *always* detect and say expired after version X
 
-| [.cks-status.cks-status-unknown]#unknown#
+| [.lifecycle-status.lifecycle-status-unknown]#unknown#
 | Warn (typo / foreign tool / catalog gap)
 |===
 
@@ -61,13 +66,13 @@ For owned CLIs and toolchain wrappers:
 * [ ] Opt-out is itself a catalogued key
 * [ ] Prefer a shared library for classify → match → alert
 
-Reference implementation: link:https://github.com/openshellorg/config-key-sanitation[openshellorg/config-key-sanitation]
+Reference implementation: link:https://github.com/openshellorg/config-lifecycle[openshellorg/config-lifecycle]
 (wired into OpenShellOrg CLI bridges such as `prohelp-cli`).
 
 == Relationship to Toolchain Management
 
 Toolchain Management owns pin / health / repair for *engines*.
-Config Key Sanitation owns explainability for *settings keys* those engines read.
+Config Lifecycle Management owns explainability for *settings keys* those engines read.
 They compose: a healthy toolchain that silently ignores mystery config is still a docs failure.
 
 == Related

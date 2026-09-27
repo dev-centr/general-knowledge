@@ -102,7 +102,7 @@
 *** xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]
 *** xref:explanation/architecture/build-pipeline.adoc[Build Pipeline]
 *** xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics and Support]
-*** xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation]
+*** xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]
 *** xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines]
 *** xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming]
 *** xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)

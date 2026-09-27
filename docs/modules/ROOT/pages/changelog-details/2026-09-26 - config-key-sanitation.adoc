@@ -11,7 +11,7 @@ Documented the Config Key Sanitation pattern for practitioners and linked it fro
 
 == Changes
 
-* New explanation xref:explanation/architecture/config-key-sanitation.adoc[Config Key Sanitation]
+* New explanation xref:explanation/architecture/config-lifecycle-management.adoc[Config Key Sanitation]
 * xref:explanation/architecture/types/cli.adoc[CLI] essentials: must-ship surfaces include key indexes and forever-detection of expired keys
 * Points at OpenShellOrg normative protocol and `openshellorg/config-key-sanitation`
 * Nav: peer of Diagnostics (not under **By type**); Architecture overview + Software Product Essentials “Config and data layout” links
