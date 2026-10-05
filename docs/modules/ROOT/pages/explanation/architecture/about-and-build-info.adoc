@@ -15,7 +15,7 @@ Show at least:
 * Channel (`stable`, `beta`, `nightly`, `dev`)
 * Target OS and architecture
 * License summary + link to full text
-* Optional: update status (“Up to date” / “Update available”) with a link into the updater
+* Update status (“Up to date” / “Update available” / “Updates disabled by policy”) with channel and a link into the updater (or native upgrade deep-link)
 
 For libraries, “About” is usually `package.version`, registry metadata, and generated API docs—not a dialog. Still stamp builds in CI artifacts and release notes.
 
@@ -85,6 +85,7 @@ Without build id, you are guessing across weeks of commits.
 
 * [ ] About / `--version` / health shows marketing version **and** build id
 * [ ] Channel is visible
+* [ ] Update status (or last check) visible; managed disable reflected when set
 * [ ] Metadata stamped at build time (not runtime git)
 * [ ] One-click or one-command redacted dump
 * [ ] Dump excludes secrets by default

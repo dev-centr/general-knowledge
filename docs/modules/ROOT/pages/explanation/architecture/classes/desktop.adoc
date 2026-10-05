@@ -7,7 +7,7 @@ Vocabulary: xref:explanation/architecture/auxiliary-features.adoc[Auxiliary feat
 
 == Must-understand constraints
 
-* **Windows** — plan installer + update path on day one (MSI/MSIX/winget and/or in-app). See xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+* **Windows** — plan installer + update path on day one (MSI/MSIX/winget and/or in-app one-shot after quit). Prefer in-place setup EXE/MSIX; never unzip over a running folder. See xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
 * **macOS** — App Store *or* notarized Sparkle-class / Homebrew cask; quit cleanly before replacing the `.app` bundle.
 * **Linux** — prefer distro/Flatpak/AppImage channels; **do not overwrite a running ELF** (see xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates]).
 * Prefer **platform-native updates** first; add in-app UX when channel speed or multi-track needs demand it.
@@ -34,7 +34,7 @@ Legend: **A** = 1.0 band · **B** = support/retention · **C** = fleets/scale ·
 
 | **Apply update safely**
 | A
-| Verify signature/hash; stage; restart/swap without bricking; rollback or last-known-good when feasible
+| Stable feed URL; download+verify; quit process tree **first**; one-shot replace/installer (not a long-lived launcher); refresh shortcuts after exit; no self-replace on Store/winget/Homebrew; rollback when feasible
 
 | **Debug dump / export logs**
 | A
@@ -136,16 +136,16 @@ Prefer versioned docs URLs (`/docs/1.4/…`) so old clients do not land on misma
 | OS | Preferred apply pattern
 
 | Windows
-| Store/MSIX, winget upgrade, or in-app staged installer → restart. Files often locked: schedule replace on restart.
+| Store/MSIX or winget upgrade for package-managed installs. Direct installs: stable feed → download+verify → quit first → one-shot in-place setup EXE/MSIX → refresh shortcuts → relaunch. Never unzip over a running folder or rewrite Start Menu `.lnk` while Explorer holds it.
 
 | macOS
-| App Store; or Sparkle-class quit → replace `.app` → relaunch; Homebrew cask `upgrade` for brew users.
+| App Store or Homebrew: deep-link native upgrade (no Sparkle self-replace). Direct: Sparkle-class quit → replace `.app` → relaunch.
 
 | Linux
-| Package manager / Flatpak update (may stop unit or ask to close app); AppImage: download beside, atomic rename, relaunch. Avoid `ETXTBSY` by never writing over the running binary—see Unix how-to.
+| Package manager / Flatpak (preferred); AppImage: stage beside → wait for PID exit → atomic rename → relaunch. Never write over a running ELF (`ETXTBSY`).
 |===
 
-Details: xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates], xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
+Channel stamp on About decides which path runs. Details: xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates], xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
 
 == Suggested menu map
 

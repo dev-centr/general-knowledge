@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-10-05 -- Desktop auto-update apply lessons
+
+* Documented quit-first **one-shot** apply (not a long-lived launcher), stable marketing-site feed URL + versioned GitHub Release asset, channel-aware Store/winget/Homebrew deferral, and Windows in-place installer / Start Menu `.lnk` pitfalls.
+* Touched xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:how-to/windows-auto-updates.adoc[Windows], xref:how-to/unix-auto-updates.adoc[macOS / Linux], xref:explanation/architecture/classes/desktop.adoc[Desktop], About, and essentials checklists.
+* See xref:changelog-details/2026-10-05 - desktop-auto-update-apply-lessons.adoc[Detailed changelog].
+
 == 2026-09-26 -- Config Key Sanitation renamed to Config Lifecycle Management
 
 * The explanation page is now xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]; the old `config-key-sanitation` URL redirects to it.

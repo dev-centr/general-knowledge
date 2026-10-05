@@ -1,5 +1,5 @@
 = Unix/macOS Auto-Updates
-:description: How to update desktop apps on macOS and Linux safely—package managers, Sparkle-class flows, AppImage replace, process shutdown, and scheduled upgrades.
+:description: How to update desktop apps on macOS and Linux safely—package managers, Sparkle-class flows, AppImage replace, one-shot apply after quit, and scheduled upgrades.
 
 Goal:: Users on macOS and Linux reach newer builds without manual zip hunts, without corrupting a running install.
 Why:: xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
@@ -25,7 +25,7 @@ Windows sibling:: xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
 
 | Linux
 | Distro packages (apt, dnf, …) / Flathub / Snap
-| Default for “feels native”; updates ride OS tools
+| Default for "feels native"; updates ride OS tools
 
 | Linux
 | AppImage + in-app or companion updater
@@ -36,9 +36,16 @@ Windows sibling:: xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
 | Last resort; never the only 1.0 path for a GUI app
 |===
 
-Combining channels is fine (Homebrew *and* Sparkle builds) if **About** shows which channel the binary belongs to and you do not cross-upgrade formats blindly.
+Combining channels is fine (Homebrew *and* Sparkle builds) if **About** shows which channel the binary belongs to and you do not cross-upgrade formats blindly. Package-managed installs (App Store, Homebrew, Flatpak, apt, …) must **not** self-replace—deep-link the native upgrade instead.
 
-== Why “overwrite the running binary” fails
+== Signed update feed (direct / Sparkle / AppImage)
+
+* Host a **stable** feed URL on the marketing site (e.g. `/updates/latest.json` or a Sparkle appcast).
+* CI also attaches a **versioned** feed copy to each GitHub Release.
+* The app fetches the stable URL only.
+* Stamp channel + install source in the binary so beta never "upgrades" onto the wrong track.
+
+== Why "overwrite the running binary" fails
 
 On Unix, a running executable is mapped by the loader.
 
@@ -47,13 +54,26 @@ On Unix, a running executable is mapped by the loader.
 
 **Rule:** stage the new bits beside or under a versioned directory, then **quit → replace → start**, or let the **package manager** stop services/apps as part of the transaction.
 
+== One-shot apply helper (not a long-lived launcher)
+
+For download-page / Sparkle / AppImage flows, prefer a **tiny one-shot** process that runs only at apply time:
+
+. App downloads and verifies
+. App writes "update pending"
+. App **quits completely** (process tree)
+. One-shot waits for PID exit
+. One-shot replaces the bundle / AppImage / runs the package transaction
+. One-shot relaunches the app
+
+Do **not** keep a permanent separate launcher just to own updates. Check and download may live in the main app; replace starts only after exit.
+
 == Safe apply patterns
 
 === 1. Package manager does the work (preferred on Linux)
 
 . Publish to your PPA/COPR/Flathub/etc. from CI.
 . Tell the user (or a helper) to run the native upgrade, e.g. `flatpak update com.example.App` or `sudo apt install --only-upgrade your-app`.
-. If the app must not be running: show “Install update and restart” which:
+. If the app must not be running: show "Install update and restart" which:
  .. Saves state
  .. Exits with a dedicated code or touches a flag file
  .. Launches a **tiny updater stub** or `systemd` oneshot / shell script that waits for the PID to exit, runs the package upgrade, then relaunches
@@ -89,10 +109,10 @@ Desktop user sessions should **prompt** before stopping GUI apps mid-work unless
 === 3. Sparkle-class (macOS direct)
 
 . CI produces a notarized `.app` (zip/dmg) + appcast/feed entry with EdDSA/signature.
-. App checks feed on an interval + “Check for Updates…”
+. App checks feed on an interval + "Check for Updates…"
 . On approve: download → verify → **quit** → replace `.app` → relaunch → show What's new.
 
-Honor “Automatically download updates” vs “Notify only,” and a managed-disable defaults key for enterprises.
+Honor "Automatically download updates" vs "Notify only," and a managed-disable defaults key for enterprises.
 
 === 4. AppImage / portable Linux binary
 
@@ -114,14 +134,13 @@ exec "$APP"
 
 The main app starts this stub, then exits cleanly.
 
-=== 5. Homebrew / apt user education
+=== 5. Homebrew / apt / Store user education
 
-If you do not ship an in-app updater, About should say:
+If the install came from Homebrew, apt, Flatpak, or the Mac App Store:
 
-* “Installed via Homebrew — run `brew upgrade your-cask`”
-* Or “Installed via apt — updates arrive with system updates / `sudo apt upgrade`”
-
-Ship a **Check for updates** that at least opens docs or runs `brew outdated` / equivalent when detectable.
+* Do **not** run the Sparkle/AppImage self-replace path
+* About should say e.g. "Installed via Homebrew — run `brew upgrade your-cask`"
+* **Check for updates** deep-links docs or runs `brew outdated` / opens the Store when detectable
 
 == Killing processes responsibly
 
@@ -130,13 +149,13 @@ Ship a **Check for updates** that at least opens docs or runs `brew outdated` / 
 | Step | Practice
 
 | 1. Ask
-| GUI: modal “Update ready — Restart now / Later”
+| GUI: modal "Update ready — Restart now / Later"
 
 | 2. Save
 | Flush documents/settings; refuse update if unsaved and user cancels
 
 | 3. Quit
-| App quit API / SIGTERM to your process group
+| App quit API / SIGTERM to your process group — **before** any replace
 
 | 4. Wait
 | Poll PID until exit; timeout → offer Force quit
@@ -152,11 +171,11 @@ Background helpers (tray, agents): include them in the quit graph so file locks 
 
 == Security checklist
 
-* [ ] Feed and artifacts over TLS
+* [ ] Feed and artifacts over TLS; stable marketing URL + versioned release asset
 * [ ] Signatures/hashes verified before replace (Sparkle EdDSA, GPG for apt, Flatpak remote trust, minisign/cosign for AppImage—pick one story and stick to it)
 * [ ] No silent elevation loops; prefer per-user installs when possible
-* [ ] Enterprise disable / pin documented
-* [ ] Channel stamped in the binary so beta never “upgrades” to wrong track
+* [ ] Enterprise disable / pin documented; About shows when policy disabled updates
+* [ ] Channel stamped in the binary so package-managed installs never self-replace onto the wrong track
 
 == Related
 
@@ -164,3 +183,4 @@ Background helpers (tray, agents): include them in the quit graph so file locks 
 * xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
 * xref:how-to/app-installer-packaging.adoc[Installer packaging]
 * xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/windows-auto-updates.adoc[Windows auto-updates]

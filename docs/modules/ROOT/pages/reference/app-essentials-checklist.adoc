@@ -25,7 +25,10 @@ Interactive CentrMark copies: xref:how-to/product-essentials-checklists.adoc[Att
 * [ ] Desktop and/or mobile class template triaged
 * [ ] Windows installer signed + uninstallable
 * [ ] Auto-update or Store/winget/pkg updates on each desktop OS
-* [ ] Update status visible in About
+* [ ] Stable signed update feed URL (marketing site) + versioned release asset
+* [ ] Quit-first one-shot apply for direct installs (no long-lived update launcher)
+* [ ] Channel-aware: no self-replace when Store/winget/Homebrew/pkg-managed
+* [ ] Update status visible in About; honor managed disable/pin
 
 == Delivery-class auxiliaries
 

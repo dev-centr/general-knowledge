@@ -1,0 +1,19 @@
+= 2026-10-05 - desktop-auto-update-apply-lessons
+:description: Changelog detail for documenting quit-first one-shot desktop auto-updates, stable feeds, and channel ownership.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+
+== Summary
+
+Captured desktop auto-update lessons from shipping direct-download apps (InstaLay): stable signed feed URL, quit-first one-shot apply (not a long-lived launcher), Windows in-place installer / Start Menu shortcut pitfalls, and channel-aware deferral to Store/winget/Homebrew.
+
+== Changes
+
+* xref:explanation/architecture/automatic-updates.adoc[Automatic updates] — feed location, one-shot apply, canonical quit-first sequence, channel ownership, Windows Start Menu `.lnk` pitfall
+* xref:how-to/windows-auto-updates.adoc[Windows auto-updates] — stable feed, apply sequence, in-place setup EXE/MSIX preference, channel detection, Cursor-class shortcut failure mode
+* xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates] — stable feed, one-shot helper, no self-replace on package-managed installs
+* xref:explanation/architecture/classes/desktop.adoc[Desktop] template rows and OS apply summary aligned
+* xref:explanation/architecture/about-and-build-info.adoc[About and build info] — update status + managed disable
+* Reference checklists: xref:reference/app-essentials-checklist.adoc[App essentials], xref:reference/auxiliary-features-checklist.adoc[Auxiliary features]

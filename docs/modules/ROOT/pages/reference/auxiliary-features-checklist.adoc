@@ -16,7 +16,9 @@ Mark N/A only with a written reason (e.g. “marketing site — no accounts”).
 * [ ] Help menu / Help page (docs + report issue)
 * [ ] About: version + build id + channel
 * [ ] Check for updates (+ policy disable)
-* [ ] Safe apply (stage / quit / replace / relaunch)
+* [ ] Stable signed feed URL (+ versioned release asset)
+* [ ] Safe apply: download+verify → quit first → one-shot replace/installer → relaunch (not a long-lived launcher)
+* [ ] Channel-aware: no self-replace on Store/winget/Homebrew/pkg installs
 * [ ] Debug dump (redacted)
 * [ ] Open logs / config folders
 * [ ] Preferences with reset

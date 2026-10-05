@@ -1,5 +1,5 @@
 = Automatic Updates
-:description: Why shippable apps need a deliberate update path—especially on Windows—covering channels, package managers, in-app updaters, and safety.
+:description: Why shippable apps need a deliberate update path—channels, package managers, signed feeds, one-shot apply after quit, and safety.
 
 Stale installs are the default failure mode of desktop software. **Automatic updates** (or reliable package-manager updates) are essential for security fixes, compatibility, and supportability—above all on Windows, where users often never revisit your download page.
 
@@ -12,34 +12,79 @@ Desktop template:: xref:explanation/architecture/classes/desktop.adoc[Desktop au
 == Goals
 
 * Users reach a patched build without hunting zip files
-* Updates are **channel-aware** (stable vs beta)
+* Updates are **channel-aware** (stable vs beta; Store/winget/Homebrew vs direct)
 * Failed updates do not brick the install (rollback or last-known-good)
 * Enterprise environments can disable or pin when needed
 * Apply steps respect **locked files** and **running processes** on every OS
+* About shows update status and honors a managed disable policy
 
 == Strategy ladder (prefer left when enough)
 
 . **Platform package manager / store** — winget, MS Store, Mac App Store, Homebrew, apt/dnf, Flatpak, Chocolatey, Scoop
-. **Installer that upgrades in place** — MSI major/minor upgrade, MSIX, Sparkle-fed DMG, etc.
-. **In-app updater** — checks a feed, downloads, verifies signature, stages bits, quits, swaps, relaunches
+. **Installer that upgrades in place** — MSI major/minor upgrade, MSIX, Sparkle-fed DMG, Inno/NSIS setup EXE, etc.
+. **In-app updater** — checks a feed, downloads, verifies signature, stages bits, **quits**, one-shot swaps, relaunches
 . **Manual download page** — last resort; document it; never the only path for a 1.0 GUI app
 
-Many products combine (1) + (3): package manager for discovery/install, in-app for faster channels.
+Many products combine (1) + (3): package manager for discovery/install, in-app for faster channels on **direct** installs only.
+
+[[feed-location]]
+== Where the signed feed lives
+
+The feed is **not** baked into the app binary as the only source of truth.
+
+* Publish a **stable URL** on the marketing site (e.g. `https://example.com/updates/latest.json` or a Sparkle appcast). The app always fetches this URL.
+* When CI cuts a release tag, also attach a **versioned** feed copy as a GitHub Release asset so old clients and auditors can verify history.
+* Pin the stable URL in the binary; allow enterprise override via policy/config.
+
+Minimum feed fields:
+
+* Version (comparable)
+* Channel
+* Artifact URL(s) per OS/arch
+* Signature / hash
+* Minimum OS version
+* Release notes URL or inline summary
+* Mandatory flag (for broken releases)
+
+[[one-shot]]
+== One-shot apply — not a long-lived launcher
+
+Robust download-page updates do **not** need a permanent separate launcher process that owns the app lifecycle.
+
+* **In the running app:** check feed, download, verify, prompt, write "update pending"
+* **After the app has fully exited:** a **tiny one-shot** helper (or the installer itself) waits for the PID, replaces / runs setup, refreshes shortcuts, relaunches
+
+A long-lived launcher adds failure modes (orphan processes, confused "which binary is current?") without making apply safer. Sparkle-class and Velopack-class tools follow the quit-then-apply shape even when they ship a short helper.
 
 [[apply-safety]]
 == Apply safety (all desktop OS)
 
-Updating is not “download over the EXE.” Common failure modes:
+Updating is not "download over the EXE." Common failure modes:
 
 * Windows file locks while the app (or tray helper) is running
+* Rewriting Start Menu `.lnk` files while Explorer still holds them — icon vanishes until reboot (Cursor-class failure)
+* Unzipping over a running install folder instead of an in-place setup EXE / MSIX
 * Linux **`ETXTBSY`** when writing over a running ELF; inode confusion if you replace the path while the old binary keeps running
 * macOS mapped frameworks inside a live `.app` bundle
 
-**Canonical sequence:** prompt → save state → **quit process tree** → wait for PID exit → verify artifact → replace → relaunch → show What's new.
-Package managers often own stop/start for you—prefer that on Linux.
+**Canonical sequence:** prompt → save state → download + verify → write update-pending → **quit process tree first** → wait for PID exit → verify again if needed → replace / run installer → refresh shortcuts → relaunch → show What's new.
+
+Never start replace while the main process is still up. Package managers often own stop/start for you—prefer that on Linux and for Store/winget/Homebrew installs.
+
 Details and stubs: xref:how-to/unix-auto-updates.adoc[Unix/macOS auto-updates], xref:how-to/windows-auto-updates.adoc[Windows auto-updates].
 
 Scheduled upgrades (kiosk/daemon hosts) belong in **systemd timers** / unattended-upgrades / Flatpak timers with a narrow package allow-list—not a blind full-system upgrade spawned from the GUI.
+
+[[channel-ownership]]
+== Channel ownership
+
+Detect how this install arrived. If it is Store, winget, Homebrew, Flatpak, or apt-managed:
+
+* Do **not** self-replace with the direct-download updater
+* Deep-link the native upgrade (`winget upgrade …`, `brew upgrade …`, Store listing, package-manager message)
+* Still surface status on About so support sees the channel
+
+Direct / download-page installs own the in-app one-shot path.
 
 == Windows-specific reality
 
@@ -49,13 +94,13 @@ Windows users expect one of:
 * **winget-upgradable installer** — ARP entry + winget manifest with installer URL and version
 * **In-app updater** — common for apps outside the Store (electron-updater, Velopack, custom WinSparkle-class, Squirrel legacy, etc.)
 
-Avoid “download Setup.exe from the website every time” as the primary story. Prefer:
+Avoid "download Setup.exe from the website every time" as the primary story. Prefer:
 
 * Code-signed installers
-* Silent/upgrade-friendly packaging
+* Silent/upgrade-friendly packaging (**in-place setup EXE or MSIX**, not zip-over-running-folder)
 * A clear **Apps & features** uninstall entry
-* Update checks that respect metered networks and “do not disturb” work hours when reasonable
-* Swap-on-restart when files stay locked
+* Update checks that respect metered networks and "do not disturb" work hours when reasonable
+* Quit-first apply; let the installer refresh Start Menu shortcuts after exit
 
 See also: xref:how-to/winget-registration.adoc[Winget registration], xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging].
 
@@ -72,10 +117,10 @@ See also: xref:how-to/winget-registration.adoc[Winget registration], xref:explan
 | Notarize; signed appcast; quit → replace `.app` → relaunch
 
 | Homebrew cask
-| Power-user path; About should mention `brew upgrade …` when detected
+| Power-user path; About should mention `brew upgrade …` when detected; no Sparkle self-replace on brew installs
 
 | apt/dnf/zypper / Flathub / Snap
-| Preferred Linux story; app may stub “update via your package manager” or run a privileged oneshot after quit
+| Preferred Linux story; app may stub "update via your package manager" or run a privileged oneshot after quit
 
 | AppImage / portable
 | Stage beside → wait for exit → atomic rename → exec; never write into the running file
@@ -83,37 +128,26 @@ See also: xref:how-to/winget-registration.adoc[Winget registration], xref:explan
 
 Web and mobile classes differ: **deploy/CDN** and **stores** are the primary updaters—see xref:explanation/architecture/classes/web.adoc[Web] and xref:explanation/architecture/classes/mobile.adoc[Mobile].
 
-== Update feed design
-
-Minimum feed fields:
-
-* Version (comparable)
-* Channel
-* Artifact URL(s) per OS/arch
-* Signature / hash
-* Minimum OS version
-* Release notes URL or inline summary
-* Mandatory flag (for broken releases)
-
-Pin the feed URL in the binary; allow enterprise override via policy/config.
-
 == Safety
 
 * Verify signatures / hashes before apply
 * Stage then swap; keep previous build for rollback when feasible
 * Do not run the updater as a confused admin forever—prefer per-user installs when elevation is not required
 * Never phone home with PII just to check versions; a build id + OS/arch is enough
+* Honor managed disable / pin; reflect it on About
 
 == When auto-update is wrong
 
 * Locked-down fleets that require IT-approved MSI via GPO/Intune — offer a **disabled** updater and an IT package
 * Libraries — consumers update via their package manager (npm, crates.io, DUB, …)
-* One-shot scripts — document version; do not self-mutate the user’s PATH tools unexpectedly
+* One-shot scripts — document version; do not self-mutate the user's PATH tools unexpectedly
 
 == Checklist
 
 * [ ] Primary update path chosen (store / winget / in-app / pkg)
-* [ ] Channels defined and stamped into builds
+* [ ] Stable feed URL on marketing site + versioned release asset
+* [ ] Channels defined and stamped into builds; package-managed installs do not self-replace
+* [ ] One-shot apply after full quit (no long-lived update launcher required)
 * [ ] Signatures verified before apply
 * [ ] Rollback or non-brick failure mode
 * [ ] Enterprise opt-out / pin documented

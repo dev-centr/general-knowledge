@@ -1,5 +1,5 @@
 = Windows Auto-Updates
-:description: How to give Windows apps a reliable update path via Store, winget, or a signed in-app updater.
+:description: How to give Windows apps a reliable update path via Store, winget, or a signed in-app updater—quit first, one-shot apply, stable feed URL.
 
 Goal:: Windows users receive newer builds without manually hunting installers.
 Why:: xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
@@ -16,20 +16,56 @@ Why:: xref:explanation/architecture/automatic-updates.adoc[Automatic updates].
 | winget-upgradable installer
 | Classic desktop app; you already ship MSI/EXE; want discovery in winget
 
-| In-app updater
+| In-app updater (download-page installs)
 | Need fast channels, multiple tracks, or non-Store distribution with guided UX
 |===
 
-Combining winget (install/discover) with in-app updates (speed) is common.
+Combining winget (install/discover) with in-app updates (speed) is common—**if** About stamps the install channel and in-app apply **skips** Store/winget-managed installs (deep-link `winget upgrade` or open the Store listing instead).
+
+== Signed update feed
+
+For download-page / in-app updates:
+
+* Host a **stable** feed URL on the marketing site, e.g. `https://example.com/updates/latest.json` (or Sparkle-style `latest.yml` / appcast).
+* Pin that stable URL in the binary (enterprise may override via policy).
+* When CI cuts a tag, also attach a **versioned** feed copy as a GitHub Release asset so history stays verifiable.
+* The running app fetches **only** the stable URL for "is there a newer build?"
+
+Minimum feed fields: version, channel, per-OS/arch artifact URL, signature/hash, min OS, release notes, mandatory flag.
 
 == In-app updater checklist
 
-. Publish a versioned **update feed** (JSON/YAML/XML) from CI when you cut a release
-. Code-**sign** installers and verify before apply
-. Download to a staging directory; apply on restart
+. Publish the signed feed from CI when you cut a release (stable URL + versioned release asset)
+. Code-**sign** installers and verify signature/hash before apply
+. Download to a staging directory—**never** unzip over a running install folder
+. Prefer an **in-place setup EXE** (Inno Setup / NSIS / similar) or **MSIX** over zip-replace
+. Use a **tiny one-shot updater** only at apply time—not a long-lived separate launcher process
+. Apply order: download + verify → write "update pending" → **quit the app completely** → one-shot waits until PID is gone → run installer / replace → refresh Start Menu shortcuts → relaunch
 . Keep last-known-good when feasible
 . Honor a disable switch for enterprise (`UpdatePolicy=Disabled` or env var)
-. Show status on the About dialog
+. Show status on the About dialog (last check, available version, channel, disabled-by-policy)
+
+== Apply sequence (download-page installs)
+
+**Shut the app down first.** Never start replacing files while the main process (or tray helper) is still running.
+
+. App finishes download and verifies signature/hash
+. App writes an "update pending" flag (and paths to the staged package)
+. App **exits completely** (process tree, including tray helpers)
+. One-shot helper waits until that PID is gone
+. Helper runs the in-place installer (preferred) or performs the file swap
+. Helper refreshes Start Menu / desktop shortcuts via the installer, not by hand-editing a live `.lnk`
+. Helper relaunches the app (optional `--updated` to show What's new)
+
+Check / download / prompt may run inside the still-running app. **Apply work starts only after exit.**
+
+== Channel detection (do not self-replace)
+
+Detect how this binary was installed. If the channel is Store, winget, or another package manager:
+
+* Do **not** run the self-replace / setup-EXE path
+* Offer **Check for updates** that deep-links the native upgrade (`winget upgrade Your.Package`, Store product page, or "Updates arrive via …")
+* Still show update status on About so support can see the channel
 
 == winget path
 
@@ -41,9 +77,13 @@ See xref:how-to/winget-registration.adoc[Winget registration].
 
 == Pitfalls
 
-* Updating while files are locked — schedule swap on restart
+* Updating while files are locked — quit first; schedule swap / installer only after PID exit
+* **Unzip over a running folder** — locked binaries and broken shortcuts; use an in-place installer instead
+* **Rewriting Start Menu `.lnk` while Explorer holds it** — classic failure mode (Start Menu icon vanishes until reboot). Let the installer refresh shortcuts after the app has exited; avoid ad-hoc shortcut rewrites from a still-running process
+* Long-lived separate launcher that owns updates — unnecessary complexity; prefer a one-shot apply helper
 * Per-machine install updated by a per-user process — align install scope
 * Unsigned downloads — SmartScreen and enterprise policy will block you
+* In-app self-replace on a winget/Store install — fights the package manager; detect channel and defer
 
 == Related
 
