@@ -8,7 +8,7 @@
 :page-created: 2026-10-05
 :page-diataxis: how-to
 :page-doc-type: how-to
-:page-keywords: mojibake, UTF-8, pre-commit hook, core.hooksPath, init.templateDir, reusable workflow, ruleset, editorconfig, PowerShell 5.1, encoding guard
+:page-keywords: encoding-guard, check-mojibake, mojibake, UTF-8, pre-commit hook, core.hooksPath, init.templateDir, reusable workflow, ruleset, editorconfig, PowerShell 5.1, encoding guard
 :moji-dash: &#226;&#8364;&#8221;
 
 ifndef::page-context-active[]
@@ -21,6 +21,18 @@ endif::[]
 Goal:: Garbled text such as `{moji-dash}` (an em dash after a UTF-8 file was read as Windows-1252 and saved again) can never be committed, no matter which agent, editor or machine made the edit.
 Why:: xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents].
 Lookup:: xref:reference/mojibake-signatures.adoc[Mojibake signatures].
+
+[TIP]
+.House tool: encoding-guard
+====
+Dev-Centr ships all of this as one tool in link:https://github.com/dev-centr/agent-rules/tree/main/tools/encoding-guard[agent-rules `tools/encoding-guard/`]:
+
+* `check-mojibake.mjs`: dependency-free Node scanner and repair (`--staged`, `--fix`, `--json`, `--allow-non-utf8`). It flags a run of characters only when mapping it back to Windows-1252 or IBM437 bytes gives one valid UTF-8 character, so accented text, box drawing and currency signs pass. It also fails files that are not valid UTF-8 at all (a lone ANSI byte written by PowerShell 5.1 `Set-Content`).
+* `install-global-hooks.mjs`: sets `git config --global core.hooksPath` to the tool's `hooks/` folder, keeps any earlier global hooks path chained, and dispatches every common hook type to the repository's own `.git/hooks/<name>`.
+* `.github/workflows/encoding-guard.yml` in agent-rules: the reusable CI workflow (`workflow_call`).
+
+Rule for agents: `general/text-encoding.md` in agent-rules. The scripts in the sections below are minimal standalone equivalents for machines and forges where you cannot use the house tool.
+====
 
 Four layers, in order of how much they protect you:
 
@@ -55,7 +67,17 @@ Committing a hook to a repository protects nobody until each machine installs it
 `core.hooksPath` points *every* repository, existing and future, at one directory. That is what you want here.
 The catch: a global `core.hooksPath` *replaces* `.git/hooks/`, so the guard must chain to the repository's own hook, as the script below does.
 
-Save this as `pre-commit` in a hooks directory you own, for example `~/.config/git/hooks/pre-commit`.
+With the house tool, installing is one command, and `--status` shows what is configured:
+
+[source,bash]
+----
+node <agent-rules>/tools/encoding-guard/install-global-hooks.mjs
+node <agent-rules>/tools/encoding-guard/install-global-hooks.mjs --status --scan <code-root>
+----
+
+Bypass every hook for one commit with `git commit --no-verify`; skip only the encoding check with `ENCODING_GUARD=0 git commit ...`. Undo with `--uninstall`, which restores the previous global hooks path.
+
+Without Node, save this as `pre-commit` in a hooks directory you own, for example `~/.config/git/hooks/pre-commit`.
 It is ASCII-only on purpose: the signatures are built from octal escapes, so the script cannot be corrupted by the bug it detects.
 
 [source,bash]
@@ -186,7 +208,21 @@ jobs:
           exit $fail
 ----
 
-Caller, if you are not using a ruleset:
+Dev-Centr's own reusable workflow is `dev-centr/agent-rules/.github/workflows/encoding-guard.yml` (it runs `check-mojibake.mjs`, so CI and the hook agree). Every owned organisation was on GitHub's Free plan in October 2026, where organisation rulesets are unavailable, so each repository carries the thin caller:
+
+[source,yaml]
+----
+name: Encoding guard
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  encoding:
+    uses: dev-centr/agent-rules/.github/workflows/encoding-guard.yml@main
+----
+
+Generic caller, if you are not using a ruleset:
 
 [source,yaml]
 ----
@@ -228,13 +264,24 @@ Forks are where a sweep does the most damage if you are careless:
 == 3. Allowlist intentional mojibake
 
 Some files must contain mojibake on purpose: test fixtures for a repair tool, or a raw sample in a bug report.
-List them in `.encoding-allow` at the repository root, one git glob pathspec per line:
+The house tool offers three opt-outs, narrowest first:
+
+Line marker::
+Put `mojibake-guard: allow` anywhere on the line, inside the file's comment syntax (`<!-- mojibake-guard: allow -->` in Markdown or HTML, `# mojibake-guard: allow` in Python or YAML). Only that line is skipped. AsciiDoc has no end-of-line comment, so use character references there instead (below).
+File marker::
+`mojibake-guard: allow-file` within the first 10 lines skips the whole file.
+`.encoding-allow`::
+Globs at the repository root, one per line, `#` comments. The house tool reads them like `.gitignore` patterns: a pattern without a slash matches at any depth, `dir/` matches everything under it, `**` crosses folders. (The standalone scripts above pass the lines to git as `:(exclude,glob)` pathspecs, which are anchored at the root.)
+
+For example:
 
 [source,text]
 ----
 # Fixtures for the encoding repair script; these bytes are the test input.
 tests/fixtures/mojibake/**
 ----
+
+Binaries, lockfiles, `*.min.*` and source maps are the only built-in skips.
 
 Rules for the allowlist:
 
@@ -313,7 +360,8 @@ Windows' system-wide *"Beta: Use Unicode UTF-8 for worldwide language support"* 
 
 . Find affected files with the same signatures the guard uses: `git grep -nIF -e "$(printf '\303\242\342\202\254')" -e "$(printf '\303\203\302')"`.
 . Find the commit that introduced a garbled line: `git log -S "$(printf '\303\242\342\202\254')" --oneline -- <file>`.
-. Transcode back, do not hand-edit: the Dev-Centr `fix-docs-encoding` skill in link:https://github.com/dev-centr/agent-rules[agent-rules] (`skills/fix-docs-encoding/`) reverses classic Windows-1252 mojibake, with the Python `ftfy` library as an optional engine.
+. Transcode back, do not hand-edit: `node <agent-rules>/tools/encoding-guard/check-mojibake.mjs --fix <paths>` applies only verified round-trips, unwinds text that was garbled twice (including Windows-1252 on top of IBM437), and re-decodes stray ANSI bytes as Windows-1252. For Antora SVG XML errors on top of that, use the `fix-docs-encoding` skill in link:https://github.com/dev-centr/agent-rules[agent-rules].
+. Characters already replaced by `?` or the U+FFFD replacement character cannot be inferred from the bytes. Recover them from the newest earlier revision of the line in `git log -p`; the tool reports them but never guesses.
 . Review the diff. A correct repair turns each garbled run back into one character and changes nothing else.
 . Commit the repair as its own commit. Do not rewrite published history to hide the original; the repair commit is the record.
 
