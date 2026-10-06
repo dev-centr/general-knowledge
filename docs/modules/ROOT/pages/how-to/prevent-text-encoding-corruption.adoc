@@ -208,7 +208,7 @@ jobs:
           exit $fail
 ----
 
-Dev-Centr's own reusable workflow is `dev-centr/agent-rules/.github/workflows/encoding-guard.yml` (it runs `check-mojibake.mjs`, so CI and the hook agree). Every owned organisation was on GitHub's Free plan in October 2026, where organisation rulesets are unavailable, so each repository carries the thin caller:
+Dev-Centr's own reusable workflow is `dev-centr/agent-rules/.github/workflows/encoding-guard.yml` (it runs `check-mojibake.mjs`, so CI and the hook agree). All 15 organisations it is rolled out to were on the GitHub Free plan in October 2026, and so is the owner's personal account. Organisation rulesets need GitHub Team or higher (on Free, `GET /orgs/<org>/rulesets` answers 403 "Upgrade to GitHub Team"), so every non-fork, non-archived repository carries its own thin caller workflow instead:
 
 [source,yaml]
 ----
@@ -241,7 +241,7 @@ A required workflow gates pull requests. If your team pushes straight to `main`,
 The workflow file lives once; how each repository picks it up depends on who owns the repository.
 
 Organisation-owned repositories::
-Create an **organisation ruleset** that targets all repositories (or all with a property), protects the default branch, and requires the encoding-guard workflow from `<org>/.github`. Repositories created later match the ruleset automatically. Availability of required workflows in rulesets depends on your GitHub plan and repository visibility; check the ruleset screen before relying on it.
+Create an **organisation ruleset** that targets all repositories (or all with a property), protects the default branch, and requires the encoding-guard workflow from `<org>/.github`. Repositories created later match the ruleset automatically. Organisation rulesets need GitHub Team or higher; on GitHub Free, fall back to a per-repository caller workflow (below) plus a template repository. Availability of the required-workflow rule also depends on plan and repository visibility, so check the ruleset screen before relying on it.
 
 Personal-account repositories::
 A user account has no organisation rulesets, so each repository needs the thin caller workflow shown above. It can still call the organisation's reusable workflow: a reusable workflow in a public repository can be called from any repository, and one in a private repository needs its *Actions access* setting opened to the callers. Put the caller in your personal **template repository** so new repositories start with it.
@@ -282,6 +282,8 @@ tests/fixtures/mojibake/**
 ----
 
 Binaries, lockfiles, `*.min.*` and source maps are the only built-in skips.
+
+Prefer the line marker for a single sample line and `.encoding-allow` for whole fixture files or folders; both are read by `check-mojibake.mjs` in the hook and in CI alike.
 
 Rules for the allowlist:
 
