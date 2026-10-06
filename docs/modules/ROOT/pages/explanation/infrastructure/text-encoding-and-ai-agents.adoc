@@ -126,6 +126,7 @@ So the layering we use is:
 . **`.editorconfig`** with `charset = utf-8` (consistency). Editors and formatters agree on the target encoding.
 
 Steps and code: xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption].
+Organisation rulesets need GitHub Team, so on the Free plan the CI layer is a per-repository caller of one shared workflow, kept complete by a scheduled sweep: xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free].
 
 == Hooks are local, which is the whole design problem
 
@@ -148,6 +149,7 @@ For a guard that should apply to every repository on the machine, `core.hooksPat
 
 * xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
 * xref:reference/mojibake-signatures.adoc[Mojibake signatures]
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
 * xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 * xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 * xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI]

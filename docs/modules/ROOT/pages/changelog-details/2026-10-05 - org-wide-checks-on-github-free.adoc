@@ -1,0 +1,16 @@
+= 2026-10-05 - org-wide-checks-on-github-free
+:description: Changelog detail for the how-to on enforcing one CI check across every repository on the GitHub Free plan.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+
+== Summary
+
+All 15 organisations behind Dev-Centr are on GitHub Free, where organisation rulesets answer 403 "Upgrade to GitHub Team". The encoding guard therefore ships as a per-repository caller of one reusable workflow. This release turns that workaround into its own page, since most projects will not pay for GitHub Team until they are a business.
+
+== Changes
+
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free] -- new how-to: plan table with citations to GitHub's docs (organisation rulesets and required workflows on Team/Enterprise; repository rulesets and branch protection on Free for public repositories only), central reusable workflow and thin caller (real encoding-guard caller as the example), `gh` contents-API rollout script, template repository and scheduled sweep for new repositories, branch protection on Free, local hooks (`core.hooksPath`, `init.templateDir`, `prepare` script), limits and upgrade path.
+* `nav.adoc` and the How-to index list the page next to Prevent text encoding corruption.
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] and xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] link to it.

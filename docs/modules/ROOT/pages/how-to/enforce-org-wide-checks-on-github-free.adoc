@@ -1,0 +1,285 @@
+= Enforce org-wide checks on GitHub Free
+:description: Make one CI check run in every repository of a GitHub Free organisation or personal account: a central reusable workflow, a thin caller per repository, a rollout script, a scheduled sweep for new repositories, and local hooks.
+:page-audience: Owner of one or more GitHub organisations on the Free plan who wants the same check everywhere without paying for GitHub Team yet
+:page-usage-context: Rolling a required check (encoding guard, licence check, lint) across every repository you own, including repositories created later
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-10-05
+:page-created: 2026-10-05
+:page-diataxis: how-to
+:page-doc-type: how-to
+:page-keywords: GitHub Free, organisation ruleset, required workflow, reusable workflow, workflow_call, caller workflow, template repository, scheduled sweep, branch protection, core.hooksPath, init.templateDir, husky, prepare script, GitHub Team
+:gh-docs: https://docs.github.com/en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+Goal:: One check (the example here is the Dev-Centr encoding guard) runs on every push and pull request in every repository you own, existing and new, on the GitHub Free plan.
+Why:: Org-wide enforcement on GitHub is a paid feature, and most projects are not in business yet. You can get most of the protection for free; this page shows how, and what you give up.
+Example in use:: xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] rolls its CI backstop out to 15 Free organisations and a personal account this way.
+
+Plan facts on this page were checked against GitHub's documentation on 2026-10-05. GitHub changes plan boundaries from time to time; re-check the linked pages before you rely on them.
+
+== 1. Why the obvious tools are not available
+
+GitHub has two ways to force a check on every repository in an organisation, and neither is on the Free plan.
+
+[cols="2,1,1,3",options="header"]
+|===
+| Feature | Free | Team / Enterprise | Source
+
+| Organisation rulesets, including the *Require workflows to pass before merging* rule
+| No
+| Yes
+| link:{gh-docs}/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization[Creating rulesets for repositories in your organization]: "For customers on GitHub Team or GitHub Enterprise plans you can create rulesets in your organization". link:{gh-docs}/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets[Available rules for rulesets]: ruleset workflows "can be configured at the organization or enterprise level".
+
+| Repository rulesets and classic branch protection
+| Public repositories only
+| Public and private
+| link:{gh-docs}/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets[About rulesets] and link:{gh-docs}/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches[About protected branches]: available "in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team" and Enterprise Cloud. Private personal-account repositories need GitHub Pro.
+
+| Restrict who can push to a branch
+| Public repositories in organisations
+| All organisation repositories
+| link:{gh-docs}/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#restrict-who-can-push-to-matching-branches[About protected branches]
+
+| Client-side git hooks pushed to contributors
+| No
+| No
+| Not a plan feature at all; see below.
+|===
+
+What the API says on a Free organisation:
+
+[source,console]
+----
+$ gh api orgs/<org>/rulesets
+gh: Upgrade to GitHub Team to enable this feature. (HTTP 403)
+{"message":"Upgrade to GitHub Team to enable this feature.","documentation_url":"https://docs.github.com/rest/orgs/rules#get-all-organization-repository-rulesets","status":"403"}
+----
+
+Client-side hooks cannot fill the gap either. Git never runs a hook because you cloned a repository (that would let any repository execute code on your machine), hooks live in `.git/hooks/` which is never pushed, and every hook can be skipped with `git commit --no-verify`. No GitHub plan changes that. Hooks are a convenience for fast feedback, never the enforcement layer.
+
+== 2. The workaround: one reusable workflow, a thin caller everywhere
+
+Keep the check's logic in *one* place, and give every repository a few lines of YAML that call it.
+
+Central repository::
+Holds the real workflow with `on: workflow_call`. Make it *public*: a public reusable workflow can be called from any repository on GitHub, so one copy serves every organisation and your personal account. A private one can only be shared with repositories of the same owner, after you open it under *Settings > Actions > General > Access* (link:{gh-docs}/actions/how-tos/reuse-automations/share-with-your-organization[Sharing actions and workflows with your organization], link:{gh-docs}/actions/sharing-automations/sharing-actions-and-workflows-from-your-private-repository[from your private repository]).
+Caller::
+`.github/workflows/<name>.yml` in each repository. It only says *when* to run and *what* to call (link:{gh-docs}/actions/sharing-automations/reusing-workflows[Reusing workflows]).
+
+The Dev-Centr central workflow is link:https://github.com/dev-centr/agent-rules/blob/main/.github/workflows/encoding-guard.yml[`dev-centr/agent-rules/.github/workflows/encoding-guard.yml`]. Its shape:
+
+[source,yaml]
+----
+name: Encoding guard
+on:
+  workflow_call:
+    inputs:
+      allow-non-utf8:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  mojibake:
+    name: Check for mojibake
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # check out the caller, fetch check-mojibake.mjs from agent-rules, scan tracked files
+      - ...
+----
+
+The caller that sits in every repository, exactly as deployed (this one is in a repository whose default branch is `master`):
+
+[source,yaml]
+----
+# Fails CI when tracked text files contain double-encoded UTF-8 (mojibake), e.g. an em dash
+# saved as three junk characters by Windows PowerShell 5.1. Backstop for the machine-wide
+# pre-commit hook. Logic: dev-centr/agent-rules tools/encoding-guard (general/text-encoding.md).
+# Intentional examples: "mojibake-guard: allow" on the line, or globs in .encoding-allow.
+name: Encoding guard
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+
+jobs:
+  encoding:
+    uses: dev-centr/agent-rules/.github/workflows/encoding-guard.yml@main
+----
+
+Notes:
+
+* *Pinning.* `@main` means a fix to the central workflow reaches every repository at once, and so does a mistake. Pin to a tag or commit SHA if you want to roll changes out deliberately; the sweep below can bump the pin everywhere.
+* *Logs stay per repository.* The code is shared but every run executes in the calling repository, so failures show up in that repository's Actions tab and on that commit, with the check named `<caller job> / <called job>` (here `encoding / Check for mojibake`).
+* *Cost.* Public repositories on standard GitHub-hosted runners use Actions for free; private repositories draw on the plan's included minutes, 2,000 per month on GitHub Free and GitHub Free for organizations (link:{gh-docs}/billing/concepts/product-billing/github-actions[GitHub Actions billing]). Keep the check fast and give it a `timeout-minutes`.
+
+== 3. Roll it out to existing repositories
+
+Write the caller into every repository through the contents API. No clones needed, and a commit made through the API triggers the new workflow's `push` run, so you see the first result straight away.
+
+The token needs the `repo` and `workflow` scopes; GitHub refuses changes under `.github/workflows/` without `workflow` (`gh auth refresh -s workflow`).
+
+[source,bash]
+----
+#!/usr/bin/env bash
+# add-caller.sh OWNER [OWNER...]: add .github/workflows/encoding-guard.yml where it is missing.
+# Skips forks (upstream-owned trees), archived repositories (read-only) and empty ones (no branch).
+set -euo pipefail
+path=.github/workflows/encoding-guard.yml
+
+caller() {  # $1 = default branch
+  cat <<YAML
+name: Encoding guard
+on:
+  push:
+    branches: ["$1"]
+  pull_request:
+jobs:
+  encoding:
+    uses: dev-centr/agent-rules/.github/workflows/encoding-guard.yml@main
+YAML
+}
+
+for owner in "$@"; do
+  gh repo list "$owner" --limit 1000 --source --no-archived \
+     --json name,isEmpty,defaultBranchRef \
+     --jq '.[] | select(.isEmpty | not) | [.name, .defaultBranchRef.name] | @tsv' |
+  while IFS=$'\t' read -r repo branch; do
+    if gh api "repos/$owner/$repo/contents/$path?ref=$branch" --silent 2>/dev/null; then
+      echo "exists  $owner/$repo"; continue
+    fi
+    if gh api -X PUT "repos/$owner/$repo/contents/$path" \
+         -f message="ci: add encoding guard" -f branch="$branch" \
+         -f content="$(caller "$branch" | base64 -w0)" --silent 2>/dev/null; then
+      echo "added   $owner/$repo"
+    else
+      echo "FAILED  $owner/$repo (protected branch? open a PR instead)" >&2
+    fi
+  done
+done
+----
+
+`--source` excludes forks and `--no-archived` excludes archived repositories (`gh repo list --help`); the `isEmpty` filter drops repositories with no commits.
+Run it once per owner: `./add-caller.sh my-org my-other-org my-user`.
+
+If a default branch is protected (requires pull requests or status checks), the direct `PUT` fails. Record it and open a pull request for that repository instead of loosening the protection.
+
+== 4. Cover repositories created later
+
+A one-off rollout goes stale the day someone creates a repository. Use one or both of these.
+
+=== Template repository
+
+Put the caller (and `.editorconfig`, `.encoding-allow`, licence, README skeleton) in a repository marked *Template repository* in its settings, and create new repositories from it (`gh repo create my-org/new --template my-org/repo-template`).
+
+It costs nothing and needs no token, but it only covers repositories created *from* it, at creation time. A blank "New repository", an import, or a transferred repository gets nothing, and later edits to the template never reach repositories already created. Treat it as the fast path, not the guarantee.
+
+=== Scheduled sweep
+
+Run the rollout script from section 3 on a schedule in the central repository, so any repository that is missing the caller gets it within a day.
+
+`GITHUB_TOKEN` can only write to the repository running the workflow, so the sweep needs its own credential:
+
+GitHub App (preferred)::
+Create an app with *Contents: read and write*, *Workflows: read and write* and *Metadata: read*, install it on every organisation (and your account) for *All repositories*, so new repositories are included automatically. Mint a short-lived token in the job with link:https://github.com/actions/create-github-app-token[`actions/create-github-app-token`].
+Fine-grained personal access token::
+Simpler, but one token covers one resource owner, it expires, and it acts as you. Give it *All repositories* with Contents and Workflows read and write, and store one secret per owner.
+
+[source,yaml]
+----
+# central repo: .github/workflows/sweep-callers.yml
+name: Sweep encoding-guard callers
+on:
+  schedule:
+    - cron: "17 6 * * *"   # daily; off the hour to avoid the top-of-hour queue
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        owner: [my-org, my-other-org]
+    steps:
+      - uses: actions/checkout@v4
+      - id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.SWEEP_APP_ID }}
+          private-key: ${{ secrets.SWEEP_APP_KEY }}
+          owner: ${{ matrix.owner }}
+      - run: ./scripts/add-caller.sh "${{ matrix.owner }}"
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+----
+
+Install the same app on your personal account to sweep its repositories too; add the account to the matrix like any organisation.
+
+Instant coverage instead of daily needs an organisation webhook on `repository` `created` events and a small service to receive it. For most owners the daily sweep is enough.
+
+=== What branch protection can add on Free
+
+The caller makes the check *run*; only branch protection makes a failure *block* a merge. On Free that depends on visibility:
+
+Public repositories (organisation or personal)::
+Classic branch protection and repository rulesets are available. Protect the default branch, require pull requests, and add `encoding / Check for mojibake` as a required status check. Tick *Do not allow bypassing the above settings* or administrators skip it. It is per repository, so the sweep can apply it too (`PUT /repos/{owner}/{repo}/branches/{branch}/protection`); a repository created later is unprotected until the sweep reaches it.
+Private repositories::
+No branch protection and no rulesets on Free (personal private repositories need GitHub Pro). The check runs and turns the commit red, but nothing stops a merge or a direct push. You find out after the fact.
+
+Required status checks gate pull requests and direct pushes to the protected branch. A commit can still land on any other branch; it just cannot reach the protected one while the check fails.
+
+== 5. The local layer
+
+Local hooks give the fastest feedback (before a commit exists) but every machine has to opt in. Offer them as a convenience on top of CI.
+
+Global `core.hooksPath` (one command per machine)::
+`git config --global core.hooksPath <dir>` makes every repository on the machine, existing and future, use the hooks in `<dir>`. The hooks must chain to each repository's own `.git/hooks/<name>`, because the global path hides them. Dev-Centr's installer does this: `node <agent-rules>/tools/encoding-guard/install-global-hooks.mjs`. Put it in your onboarding script and every agent environment you control.
+`init.templateDir`::
+Copies hooks into a repository at `git init` and `git clone` time. Repositories that already exist get nothing, and later improvements never reach earlier copies, so prefer `core.hooksPath`.
+Self-installing hooks via the package manager::
+Repositories with a Node toolchain can install hooks as part of normal setup. npm runs the `prepare` script after `npm install`, so contributors who install dependencies get the hook without a separate step:
++
+[source,json]
+----
+{
+  "scripts": {
+    "prepare": "git config core.hooksPath .githooks"
+  }
+}
+----
++
+with a committed `.githooks/pre-commit` that runs the check (for the encoding guard, a vendored `check-mojibake.mjs --staged`). Husky, lefthook and `pre-commit` do the same with more features. A repository-local `core.hooksPath` *overrides* the global one, so the repository's hook must run every check you care about; the machine-wide guard no longer runs there.
+
+None of these reach a cloud agent, the GitHub web editor, or `--no-verify`. That is what the CI caller is for.
+
+== 6. Limits, and the upgrade path
+
+* *Anyone with write access can delete or edit the caller*, or narrow its `on:` triggers. On Free nothing prevents it. The scheduled sweep re-adds a missing caller; extend it to compare the file with the canonical text and restore drift. In public repositories a `CODEOWNERS` entry for `.github/workflows/` plus required code-owner review makes such a change need your approval.
+* *Direct pushes are flagged, not blocked*, wherever branch protection is not available (every private repository on Free).
+* *Actions can be turned off.* A repository or organisation with Actions disabled never runs the caller; have the sweep check `GET /repos/{owner}/{repo}/actions/permissions` and report it.
+* *Forks are excluded on purpose.* A caller committed to a fork travels upstream with your next pull request. Rely on local hooks there.
+* *Private repositories cost minutes* (section 2).
+
+When an organisation moves to GitHub Team:
+
+. Create an organisation ruleset that targets all repositories (or those with a custom property), with *Require workflows to pass before merging* pointing at the central workflow, plus the default-branch protections you want. New repositories match it automatically.
+. Check that a test pull request is gated by the ruleset.
+. Remove the per-repository callers with the sweep in reverse (otherwise every push runs the check twice) and drop that organisation from the sweep matrix.
+. Keep the template and the local hooks; they still give earlier feedback.
+
+== Related
+
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/git-release-workflow.adoc[Git release workflow]

@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-10-05 -- Org-wide checks on GitHub Free
+
+* New xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free] how-to: why organisation rulesets and required workflows need GitHub Team (403 on Free) and client hooks cannot be forced, the reusable-workflow-plus-thin-caller pattern with the real encoding-guard caller, a `gh` rollout script that skips forks, archived and empty repositories, template repository and scheduled sweep (GitHub App or fine-grained token) for new repositories, what branch protection does on Free for public vs private repositories, the local hook layer, limits, and the upgrade path to rulesets.
+* Linked from xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] and xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents].
+* See xref:changelog-details/2026-10-05 - org-wide-checks-on-github-free.adoc[Detailed changelog].
+
 == 2026-10-05 -- Text encoding corruption from AI agents
 
 * New xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] explanation: how Windows PowerShell 5.1 defaults double-encode UTF-8 (mojibake), why agents committing under your name hide the culprit, and the InstaLay incidents that motivated it.

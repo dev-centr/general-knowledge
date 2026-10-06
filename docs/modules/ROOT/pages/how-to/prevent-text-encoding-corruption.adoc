@@ -208,7 +208,7 @@ jobs:
           exit $fail
 ----
 
-Dev-Centr's own reusable workflow is `dev-centr/agent-rules/.github/workflows/encoding-guard.yml` (it runs `check-mojibake.mjs`, so CI and the hook agree). All 15 organisations it is rolled out to were on the GitHub Free plan in October 2026, and so is the owner's personal account. Organisation rulesets need GitHub Team or higher (on Free, `GET /orgs/<org>/rulesets` answers 403 "Upgrade to GitHub Team"), so every non-fork, non-archived repository carries its own thin caller workflow instead:
+Dev-Centr's own reusable workflow is `dev-centr/agent-rules/.github/workflows/encoding-guard.yml` (it runs `check-mojibake.mjs`, so CI and the hook agree). All 15 organisations it is rolled out to were on the GitHub Free plan in October 2026, and so is the owner's personal account. Organisation rulesets need GitHub Team or higher (on Free, `GET /orgs/<org>/rulesets` answers 403 "Upgrade to GitHub Team"), so every non-fork, non-archived repository carries its own thin caller workflow instead (the full pattern, including covering new repositories, is in xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]):
 
 [source,yaml]
 ----
@@ -371,6 +371,7 @@ Windows' system-wide *"Beta: Use Unicode UTF-8 for worldwide language support"* 
 
 * xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
 * xref:reference/mojibake-signatures.adoc[Mojibake signatures]
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
