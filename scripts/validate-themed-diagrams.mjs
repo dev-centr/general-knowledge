@@ -41,7 +41,7 @@ const sources = [
   'seo-discovery-system',
 ];
 
-/** PlantUML stems (Kroki â†’ plantuml-svg-css-vars); keep listed for SVG validation. */
+/** PlantUML stems (Kroki → plantuml-svg-css-vars); keep listed for SVG validation. */
 const plantumlSources = ['internet-architecture/label-as-wire-break'];
 const failures = [];
 
