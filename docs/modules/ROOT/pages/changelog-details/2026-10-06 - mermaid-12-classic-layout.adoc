@@ -1,0 +1,17 @@
+= 2026-10-06 - mermaid-12-classic-layout
+:description: Changelog detail for pinning Mermaid 12 to the Mermaid 11 dagre layout, classic look, and label wrapping in the diagram build.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+
+== Summary
+
+Mermaid 12 changed three flowchart defaults: the ELK layout engine replaced dagre, the `neo` look (drop shadows, orthogonal edges) replaced `classic`, and the label wrapping width fell from 200px to 120px. The first Mermaid CLI 12 rebuild of these diagrams picked up all three, so labels broke mid-word, most diagrams became narrower and taller, and nodes gained light shadows on dark backgrounds. The build now pins the Mermaid 11 behavior, so the diagrams match their earlier layout.
+
+== Changes
+
+* `mermaid-config.json` -- adds `layout: dagre`, `look: classic`, and `flowchart.wrappingWidth: 200`.
+* `scripts/build-diagrams.mjs` -- Themed SVG manifests record `@mermaid-js/mermaid-cli@12.0.0` as the generator.
+* All 33 Mermaid diagrams regenerated (adaptive and host SVGs, plus manifests). Sizes match the pre-Mermaid 12 renders except for small width changes in a few PlayTime diagrams; `playtime-overlays` draws its circle nodes larger because of a Mermaid 12 circle-shape change that the classic look does not revert.
+* PlantUML diagrams are unchanged.

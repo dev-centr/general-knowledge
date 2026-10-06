@@ -208,7 +208,7 @@ function manifestFor(stem, sourceText) {
     source: {
       kind: 'mermaid',
       uri: `${stem}.mmd`,
-      generator: '@mermaid-js/mermaid-cli@11.17.0',
+      generator: '@mermaid-js/mermaid-cli@12.0.0',
     },
     tokens: Object.keys(palettes.light).map((id) => ({ id })),
     defaultPreset: 'light',

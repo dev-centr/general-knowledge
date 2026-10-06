@@ -5,7 +5,7 @@
   "source": {
     "kind": "mermaid",
     "uri": "access-github-membership-flow.mmd",
-    "generator": "@mermaid-js/mermaid-cli@11.17.0"
+    "generator": "@mermaid-js/mermaid-cli@12.0.0"
   },
   "tokens": [
     {

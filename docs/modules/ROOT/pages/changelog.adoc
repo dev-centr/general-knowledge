@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-10-06 -- Diagrams keep their Mermaid 11 layout under Mermaid 12
+
+* All 33 Mermaid diagrams are regenerated with `@mermaid-js/mermaid-cli` 12 pinned to the previous dagre layout, classic look, and 200px label wrapping. The earlier Mermaid 12 rebuild had switched them to the ELK layout and neo look, which split labels mid-word, narrowed and lengthened most diagrams, and added light drop shadows in dark mode.
+* See xref:changelog-details/2026-10-06 - mermaid-12-classic-layout.adoc[Detailed changelog].
+
 == 2026-10-06 -- Keep GitHub Actions current
 
 * New xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current] how-to: why pinned majors drift (the Node 20 to Node 24 deprecation, the real warning text and GitHub's changelog), verifying a version against its release and `action.yml`, a grouped `dependabot.yml` with monthly as the house default because weekly is noisy, reviewing and merging the pull request, optional auto-merge for minor and patch updates, and the limit that Dependabot opens pull requests but never merges them.
