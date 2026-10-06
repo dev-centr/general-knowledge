@@ -79,9 +79,17 @@
   "bindings": [
     {
       "kind": "stylesheet",
-      "selector": "#my-svg .label",
-      "property": "color",
-      "token": "color.text.primary"
+      "selector": ".themed-svg-root",
+      "property": "background-color",
+      "token": "color.canvas",
+      "styleSelector": "#themed-svg-bindings"
+    },
+    {
+      "kind": "stylesheet",
+      "selector": ".themed-svg-root text",
+      "property": "fill",
+      "token": "color.text.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
@@ -91,136 +99,128 @@
     },
     {
       "kind": "stylesheet",
-      "selector": ".themed-svg-root",
-      "property": "background-color",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.canvas"
-    },
-    {
-      "kind": "stylesheet",
-      "selector": ".themed-svg-root text",
-      "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
+      "selector": "#my-svg .label",
+      "property": "color",
       "token": "color.text.primary"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .label-container",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.surface.primary"
+      "token": "color.surface.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .label-container",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.border.primary"
+      "token": "color.border.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .cluster rect",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.surface.secondary"
+      "token": "color.surface.secondary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .cluster rect",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.border.primary"
+      "token": "color.border.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .flowchart-link",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
+      "token": "color.edge",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root marker path",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
+      "token": "color.edge",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root marker path",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.edge"
+      "token": "color.edge",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .success .label-container",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.accent.primary"
+      "token": "color.accent.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .success .label-container",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.accent.primary"
+      "token": "color.accent.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .success .label",
       "property": "color",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.accent.on-primary"
+      "token": "color.accent.on-primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .success text",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.accent.on-primary"
+      "token": "color.accent.on-primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": "#my-svg .success tspan",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.accent.on-primary"
+      "token": "color.accent.on-primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .primary .label-container",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.surface.primary"
+      "token": "color.surface.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .primary .label-container",
       "property": "stroke",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.border.primary"
+      "token": "color.border.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .primary .label",
       "property": "color",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.text.primary"
+      "token": "color.text.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": ".themed-svg-root .primary text",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.text.primary"
+      "token": "color.text.primary",
+      "styleSelector": "#themed-svg-bindings"
     },
     {
       "kind": "stylesheet",
       "selector": "#my-svg .primary tspan",
       "property": "fill",
-      "styleSelector": "#themed-svg-bindings",
-      "token": "color.text.primary"
+      "token": "color.text.primary",
+      "styleSelector": "#themed-svg-bindings"
     }
   ],
   "fallback": {
