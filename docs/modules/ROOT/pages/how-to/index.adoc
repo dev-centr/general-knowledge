@@ -35,6 +35,7 @@ Tied to xref:explanation/architecture/software-product-essentials.adoc[Software 
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
 * xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] -- machine-wide pre-commit guard plus CI backstop so AI agents and Windows shells cannot commit mojibake
 * xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free] -- one reusable workflow plus a thin caller in every repository, a rollout script and a scheduled sweep, because organisation rulesets need GitHub Team
+* xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current] -- why pinned action majors drift until GitHub retires their Node runtime, a grouped monthly `dependabot.yml`, and how to review (or auto-merge) the pull request it opens
 * xref:how-to/binary-tailor.adoc[Binary Tailor]
 * xref:how-to/winget-registration.adoc[Winget registration]
 

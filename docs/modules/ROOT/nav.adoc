@@ -18,6 +18,7 @@
 ** xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
 ** xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
 ** xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
+** xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current]
 ** xref:how-to/binary-tailor.adoc[Binary Tailor]
 ** xref:how-to/winget-registration.adoc[Winget Registration]
 ** xref:how-to/finding-windows-internals-docs.adoc[Finding Windows Internals Docs]

@@ -4,7 +4,7 @@
 :page-usage-context: Rolling a required check (encoding guard, licence check, lint) across every repository you own, including repositories created later
 :page-orig-author: Grok Bot on behalf of Ryan Johnson
 :page-last-author: Grok Bot on behalf of Ryan Johnson
-:page-last-edited: 2026-10-05
+:page-last-edited: 2026-10-06
 :page-created: 2026-10-05
 :page-diataxis: how-to
 :page-doc-type: how-to
@@ -211,11 +211,11 @@ jobs:
       matrix:
         owner: [my-org, my-other-org]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: app
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ vars.SWEEP_APP_ID }}
+          client-id: ${{ vars.SWEEP_APP_CLIENT_ID }}
           private-key: ${{ secrets.SWEEP_APP_KEY }}
           owner: ${{ matrix.owner }}
       - run: ./scripts/add-caller.sh "${{ matrix.owner }}"
@@ -224,6 +224,8 @@ jobs:
 ----
 
 Install the same app on your personal account to sweep its repositories too; add the account to the matrix like any organisation.
+
+The same sweep is a good place to add other per-repository files that new repositories tend to miss. Dev-Centr's adds `.github/dependabot.yml` (GitHub Actions ecosystem, monthly, one grouped pull request) to every repository that has workflows and lacks it, so action versions stay current without anyone remembering; see xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current].
 
 Instant coverage instead of daily needs an organisation webhook on `repository` `created` events and a small service to receive it. For most owners the daily sweep is enough.
 
@@ -281,5 +283,6 @@ When an organisation moves to GitHub Team:
 
 * xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
 * xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
+* xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current]
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]

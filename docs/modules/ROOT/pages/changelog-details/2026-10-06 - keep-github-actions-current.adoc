@@ -1,0 +1,17 @@
+= 2026-10-06 - keep-github-actions-current
+:description: Changelog detail for the how-to on keeping GitHub Actions versions current with a grouped, monthly Dependabot config.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+
+== Summary
+
+GitHub's Node 20 deprecation put a warning on nearly every Dev-Centr workflow run, because each repository pinned action majors from 2024. All owned repositories were moved to Node 24 majors on 2026-10-06 and given a grouped, monthly `dependabot.yml`; this page explains the pattern so the next runtime change is a monthly pull request instead of a sweep.
+
+== Changes
+
+* xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current] -- new how-to: `runs.using` and why `@v4` never moves to a new runtime, the deprecation annotation (including actions pulled in by composites), checking a version with `gh api` against the release and `action.yml`, breaking changes from the Node 24 round, the `dependabot.yml` (github-actions ecosystem, `directory: "/"`, monthly, one group with `patterns: ["*"]`, `ci` prefix, PR limit) with monthly as the house default because weekly is noisy, reviewing and merging the grouped pull request, Dependabot's read-only token and secrets, an optional `dependabot/fetch-metadata` auto-merge workflow for minor and patch updates and its branch-protection requirement, and limits.
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free] -- the scheduled sweep can add `dependabot.yml` to repositories that lack it; sweep example bumped to `actions/checkout@v7` and `actions/create-github-app-token@v3` with `client-id` (`app-id` is deprecated in v3).
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] -- example uses `actions/checkout@v7`.
+* `nav.adoc` and the How-to index list the new page after Enforce org-wide checks on GitHub Free.

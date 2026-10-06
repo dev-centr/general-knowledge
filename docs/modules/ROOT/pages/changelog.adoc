@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-10-06 -- Keep GitHub Actions current
+
+* New xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current] how-to: why pinned majors drift (the Node 20 to Node 24 deprecation, the real warning text and GitHub's changelog), verifying a version against its release and `action.yml`, a grouped `dependabot.yml` with monthly as the house default because weekly is noisy, reviewing and merging the pull request, optional auto-merge for minor and patch updates, and the limit that Dependabot opens pull requests but never merges them.
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]: the scheduled sweep can also add `dependabot.yml` to new repositories; its example uses `actions/checkout@v7` and `actions/create-github-app-token@v3` (`client-id`). xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] example moved to `actions/checkout@v7`.
+* See xref:changelog-details/2026-10-06 - keep-github-actions-current.adoc[Detailed changelog].
+
 == 2026-10-05 -- Org-wide checks on GitHub Free
 
 * New xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free] how-to: why organisation rulesets and required workflows need GitHub Team (403 on Free) and client hooks cannot be forced, the reusable-workflow-plus-thin-caller pattern with the real encoding-guard caller, a `gh` rollout script that skips forks, archived and empty repositories, template repository and scheduled sweep (GitHub App or fine-grained token) for new repositories, what branch protection does on Free for public vs private repositories, the local hook layer, limits, and the upgrade path to rulesets.

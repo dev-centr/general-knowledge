@@ -1,0 +1,153 @@
+= Keep GitHub Actions current
+:description: Why pinned action majors drift until GitHub retires their runtime (Node 20 to Node 24 in 2025-2026), and how a grouped, monthly Dependabot config plus a review routine keeps every repository current.
+:page-audience: Maintainer of one or more GitHub repositories with Actions workflows (write access to the repository; admin to change Actions settings)
+:page-usage-context: Fixing "Node.js 20 is deprecated" warnings, setting up Dependabot for workflows in a new or existing repository, and handling the monthly update pull request
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-10-06
+:page-created: 2026-10-06
+:page-diataxis: how-to
+:page-doc-type: how-to
+:page-keywords: GitHub Actions, Dependabot, dependabot.yml, github-actions ecosystem, groups, monthly schedule, Node 20 deprecation, Node 24, runs.using, actions/checkout, auto-merge, dependabot/fetch-metadata
+:gh-docs: https://docs.github.com/en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+Goal:: Every workflow uses current action versions, and stays that way without anyone remembering to check.
+Why:: A workflow pins `actions/checkout@v4` once and then nobody touches it. It keeps working right up until GitHub retires the runtime that version was built for. Then every run warns, and later it fails.
+How:: Bring the versions up to date once, add a grouped `dependabot.yml` that checks monthly, and merge the one pull request it opens each month.
+
+Versions and documentation on this page were checked on 2026-10-06.
+
+== 1. Why pinned majors drift
+
+Most actions are small Node programs. Each one declares the Node version it was built for in its `action.yml` (`runs.using: node20`, `node24`, or `composite` for actions that only call other actions). When you write `uses: actions/checkout@v4`, you get whatever `v4` points at, and `v4` was built for Node 20 forever.
+
+GitHub keeps the runners on supported Node releases. On 2025-09-19 it announced that Node 20 actions would be forced onto Node 24 and later stop running (link:https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/[GitHub changelog: Deprecation of Node 20 on GitHub Actions runners]). Since then, every run that still uses a Node 20 action carries an annotation like this one, taken from a real run:
+
+.The deprecation annotation on a workflow run summary
+[source,text]
+----
+Node.js 20 is deprecated. The following actions target Node.js 20 but are
+being forced to run on Node.js 24: actions/checkout@v4,
+actions/configure-pages@v5, actions/setup-node@v4, actions/upload-artifact@v4,
+pnpm/action-setup@v4. For more information see:
+https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+----
+
+Notice `actions/upload-artifact@v4` in that list even though the workflow never mentions it: `actions/upload-pages-artifact@v3` is a composite action that calls it. Composite actions you publish yourself drift the same way.
+
+The fix is a new major, not a new minor: maintainers ship the runtime change as `v5`, `v6`, and so on, often with other breaking changes bundled in. `@v4` will never move to Node 24, so nothing changes until someone edits the file. Copying an old workflow, or asking an AI assistant that learned `@v4` years ago, starts the next repository out of date.
+
+== 2. Bring a repository up to date once
+
+For each `uses:` line in `.github/workflows/*.yml` and in any `action.yml` you own:
+
+. Find the latest release and check its runtime. Do not trust memory, including an assistant's:
++
+[source,bash]
+----
+gh api repos/actions/checkout/releases/latest --jq .tag_name
+gh api "repos/actions/checkout/contents/action.yml?ref=v7.0.1" \
+  -H "Accept: application/vnd.github.raw" | grep using:
+----
++
+`node24` is current as of 2026-10. `releases/latest` returns whichever release is marked latest, which is occasionally an old maintenance line, so glance at the tag list if the answer looks old.
+. Read the release notes for every major you skip and adjust inputs. Examples from the Node 24 round: `actions/download-artifact` v8 fails on digest mismatch by default; `actions/github-script` v9 no longer allows `require('@actions/github')`; `actions/create-github-app-token` v3 deprecates `app-id` in favour of `client-id`; `dlang-community/setup-dlang` v2 sets `$DC` to an absolute path.
+. Pin the major (`@v7`), push, and open the run. The annotation from section 1 should be gone.
+
+Dev-Centr keeps a verified table of current majors and their breaking changes in agent-rules: link:https://github.com/dev-centr/agent-rules/blob/main/general/github-actions-versions.md[`general/github-actions-versions.md`].
+
+== 3. Add the Dependabot config
+
+Create `.github/dependabot.yml`:
+
+[source,yaml]
+----
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"            # covers .github/workflows/ and a root action.yml
+    schedule:
+      interval: "monthly"
+    groups:
+      github-actions:         # one pull request for all action updates
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci"
+    open-pull-requests-limit: 5
+----
+
+What each part does (option names from link:{gh-docs}/code-security/reference/supply-chain-security/dependabot-options-reference[Dependabot options reference]):
+
+`package-ecosystem: "github-actions"`:: Updates `uses:` references to tags and SHA pins. References to a branch, such as a reusable workflow at `@main`, are left alone.
+`directory: "/"`:: Dependabot looks in `.github/workflows/` and at a root `action.yml`. Composite actions in subfolders need `directories: ["/", "/path/to/action"]` instead.
+`schedule.interval: "monthly"`:: **Monthly is the Dev-Centr house default.** Weekly was noisy: a stream of small pull requests per repository that nobody wanted to review, multiplied by every repository you own. Action releases are not urgent, and security updates are not tied to this schedule anyway.
+`groups`:: Without a group, Dependabot opens one pull request per action. `patterns: ["*"]` bundles every action update in the repository into a single pull request.
+`commit-message.prefix: "ci"`:: Titles read `ci: bump the github-actions group ...`, which matches Conventional Commits and keeps changelog tooling quiet.
+`open-pull-requests-limit`:: Caps open version-update pull requests (default 5). With one group there is normally only one.
+
+If the repository already has a `dependabot.yml` (for npm, Cargo, and so on), add the `github-actions` entry to its `updates:` list and leave the other entries alone.
+
+Nothing needs switching on in Settings: the file is the switch for version updates, on every plan including Free. Check *Insights → Dependency graph → Dependabot* after you push to see when it last ran, or trigger a check from there.
+
+== 4. Review and merge the pull request
+
+Once a month, a repository with outdated actions gets one pull request titled like `ci: bump the github-actions group with 3 updates`.
+
+. Open the pull request and read the release notes Dependabot links for each **major** bump. Minor and patch bumps rarely need more than a glance.
+. Let CI run. Because the pull request changes the workflows themselves, this run tests the new versions.
+. If something broke, push a fix to the same branch (adjust the input that changed), or hold one action back with a comment such as `@dependabot ignore actions/checkout major version` (grouped pull requests take the dependency name; see link:{gh-docs}/code-security/reference/supply-chain-security/dependabot-pull-request-comment-commands[comment commands]). Prefer an `ignore` entry in `dependabot.yml` when other people share the repository, so the reason is visible.
+. Merge. Dependabot rebases its other open pull requests on its own; comment `@dependabot rebase` if one is stuck.
+
+Pull requests from Dependabot run with a read-only `GITHUB_TOKEN` and no access to Actions secrets (it has its own *Dependabot secrets* store). A workflow that needs a deploy secret on pull requests will fail on these; skip that job when `github.actor == 'dependabot[bot]'`.
+
+== 5. Optional: auto-merge minor and patch updates
+
+Dependabot opens pull requests; it never merges them. If you trust minor and patch releases, a small workflow can enable auto-merge for those and leave majors for a person:
+
+[source,yaml]
+----
+# .github/workflows/dependabot-auto-merge.yml
+name: Dependabot auto-merge
+on: pull_request
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  automerge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@v3
+      - if: steps.meta.outputs.update-type != 'version-update:semver-major'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+----
+
+For a grouped pull request, `update-type` is the largest bump in the group, so one major bump keeps the whole group for manual review.
+
+Auto-merge waits for the required reviews and status checks of a branch protection rule or ruleset. Turn on *Allow auto-merge* in the repository settings and require your CI checks on the default branch (GitHub recommends *Require status checks to pass before merging* for exactly this case). Without required checks there is nothing to wait for, so do not rely on this workflow there. On the Free plan, private repositories have no branch protection, so auto-merge after CI is only available in public repositories. See link:{gh-docs}/code-security/tutorials/secure-your-dependencies/automate-dependabot-with-actions[Automating Dependabot with GitHub Actions].
+
+== 6. Limits
+
+* *Pull requests pile up if nobody merges them.* Dependabot keeps updating its open pull request but never merges it. Include "open Dependabot pull requests" in whatever maintenance sweep you already do.
+* *Actions with no new release stay stale.* Dependabot can only offer a version that exists. When an action you depend on has no Node 24 release (`ilammy/msvc-dev-cmd` as of 2026-10), keep it, watch it, or replace it.
+* *A new repository has no config until someone adds it.* Put `dependabot.yml` in your template repository, and have the scheduled sweep from xref:how-to/enforce-org-wide-checks-on-github-free.adoc#_scheduled_sweep[Enforce org-wide checks on GitHub Free] add it to repositories that lack it.
+* *Runtime deprecations still need a look.* When GitHub announces the next one, check that the actions you use have shipped the new runtime before the cut-off.
+
+== Related
+
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap]
