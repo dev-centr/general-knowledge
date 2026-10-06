@@ -1,0 +1,21 @@
+= 2026-10-05 - text-encoding-and-ai-agents
+:description: Changelog detail for documenting AI-agent text encoding corruption (mojibake) and the machine-wide hook plus CI guard that prevents it.
+:page-audience: maintainers
+:page-usage-context: Changelog detail
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+
+== Summary
+
+AI agents running commands in Windows PowerShell 5.1 corrupted text in InstaLay twice: a garbled `release.yml` that GitHub rejected (introduced in `8b35a27`, fixed in `b7dd746`) and changelog dashes garbled since `f45ceda` (2026-09-10).
+This release documents the mechanism, the restriction on agents, and the layered guard: a machine-wide pre-commit hook as the primary layer, CI as the backstop.
+
+== Changes
+
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] -- what mojibake is, PowerShell 5.1 `Get-Content` / `Set-Content` / `Out-File` / console code page defaults, why agents and shared git identity make it worse, hooks are local (`core.hooksPath` vs `init.templateDir`)
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] -- tested ASCII-only pre-commit script (chains repository hooks, rejects mojibake and UTF-16, warns on BOM), install and verify steps, reusable CI workflow; rollout across an organisation (ruleset with required workflow) and a personal account (thin caller workflow, template repository); per-repository Actions logs for shared workflow code; fork-sweep rules (fix forward only your own lines, never push to branches backing open upstream PRs, keep your CI out of upstream trees); `.encoding-allow` allowlist (`.txt` not exempt), agent rule text, `.editorconfig`, safe edits in Nushell / pwsh 7 / PowerShell 5.1 via .NET, repairing history
+* xref:reference/mojibake-signatures.adoc[Mojibake signatures] -- before/after table with bytes, guard signatures, BOM / UTF-16 / invalid-UTF-8 table
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist] -- UTF-8 without BOM and encoding-guard items
+* Cross-links: xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell] (encoding row), xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents], xref:how-to/polyglot-ci.adoc[Polyglot CI], xref:how-to/git-release-workflow.adoc[Git release workflow], xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces], xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI]
+
+Garbled examples in these pages are written as character references so the source files stay free of the byte signatures the guard rejects.

@@ -26,6 +26,10 @@ Both ditch “pipe only text blobs.” That is the important part. The rest is t
 | External CLIs
 | Easy to fall back to string arrays
 | Builtins return tables; text tools get `from json` / `detect columns`
+
+| File and pipe encoding
+| Windows PowerShell 5.1: ANSI reads of BOM-less files, ANSI or UTF-16 writes, OEM console page. PowerShell 7: UTF-8 without BOM
+| UTF-8 everywhere
 |===
 
 **Pick PowerShell** when you are deep in AD/Azure/Windows modules or stuck on legacy scripts.
@@ -35,3 +39,5 @@ Both ditch “pipe only text blobs.” That is the important part. The rest is t
 You do **not** rewrite every app in Nu script. Emit JSON/structure, use a plugin, or (soon) call something like link:https://github.com/openshellorg/nu-emit[nu-emit]. See xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents] for the adoption/DevX angle.
 
 We still document PowerShell where the OS forces it. We do not treat it as the long-term default.
+
+If agents on your machine run commands in Windows PowerShell 5.1 (`powershell.exe`, still the Windows default), its encoding defaults double-encode UTF-8 files they rewrite. See xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] and xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption].

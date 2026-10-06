@@ -16,6 +16,7 @@
 ** xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
 ** xref:how-to/automated-releases.adoc[Automated Releases]
 ** xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+** xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
 ** xref:how-to/binary-tailor.adoc[Binary Tailor]
 ** xref:how-to/winget-registration.adoc[Winget Registration]
 ** xref:how-to/finding-windows-internals-docs.adoc[Finding Windows Internals Docs]
@@ -50,6 +51,7 @@
 ** xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
 ** xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]
 ** xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
+** xref:reference/mojibake-signatures.adoc[Mojibake signatures]
 
 * xref:explanation/index.adoc[Explanation]
 ** Windows
@@ -111,6 +113,7 @@
 *** xref:explanation/infrastructure/nushell.adoc[Nushell (recommended shell)]
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
 *** xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+*** xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
 *** xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
 *** xref:explanation/infrastructure/uniprovider.adoc[UniProvider / Open Provider Registry]
 *** xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]

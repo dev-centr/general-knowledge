@@ -34,6 +34,7 @@ xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap
 * Pasting a full style guide into User Rules (context bloat every chat)
 * Telegraphic bullet-essays on the narrative channel
 * Inventing facts, quotes, or “everyone knows” filler
+* Letting an agent rewrite docs through Windows PowerShell 5.1 `Get-Content` / `Set-Content`, which double-encodes every dash and curly quote (xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents])
 * Publishing a second Antora site for one page—wire into the org hub instead (xref:home::where-docs-live.adoc[Where docs live])
 
 == Related
@@ -42,3 +43,4 @@ xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap
 * xref:explanation/documentation/documentation-markup-comparison.adoc[Documentation markup]
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills]
 * xref:tools:agent-rules:bootstrap.adoc[Agent Rules bootstrap]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]

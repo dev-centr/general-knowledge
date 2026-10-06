@@ -1,0 +1,154 @@
+= Text encoding and AI agents
+:description: Why AI coding agents on Windows turn em dashes into three-character garbage, why git blame cannot name the agent that did it, and why a commit guard beats an agent rule.
+:page-audience: Developer with write access to repositories that AI agents also edit
+:page-usage-context: Understanding mojibake (double-encoded UTF-8) introduced by agent shell commands before choosing prevention
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-10-05
+:page-created: 2026-10-05
+:page-diataxis: explanation
+:page-doc-type: explanation
+:page-keywords: mojibake, UTF-8, Windows-1252, PowerShell 5.1, Get-Content, Set-Content, AI agents, encoding guard, pre-commit
+:moji-dash: &#226;&#8364;&#8221;
+:moji-rsquo: &#226;&#8364;&#8482;
+:moji-ldquo: &#226;&#8364;&#339;
+:moji-eacute: &#195;&#169;
+:moji-lead: &#226;&#8364;
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+If an em dash in your repository has turned into `{moji-dash}`, or a curly apostrophe into `{moji-rsquo}`, a tool read a UTF-8 file as if it were the old Windows code page and then saved what it misread.
+On a developer workstation in 2026, that tool is very often an AI coding agent running shell commands on your behalf.
+This page explains the mechanism, why agents make it worse than humans did, and why the durable fix is a guard at commit time rather than a polite rule.
+
+== What mojibake is
+
+UTF-8 stores every character outside ASCII as two to four bytes.
+An em dash (`U+2014`) is the three bytes `E2 80 94`.
+
+Windows-1252 (often labelled "ANSI" on Windows) is a single-byte code page: every byte is one character.
+Read those same three bytes as Windows-1252 and you get three characters: `&#226;` (`E2`), `&#8364;` (`80`) and `&#8221;` (`94`).
+
+Nothing is visibly wrong yet; the bytes on disk are unchanged.
+The damage happens on *save*.
+If the tool writes its misread text back out as UTF-8, each of those three characters becomes its own multi-byte UTF-8 sequence.
+The file now literally contains `{moji-dash}`, and every later reader, correctly configured or not, shows the garbage.
+
+That read-wrong, write-back pattern is *double encoding*.
+The visible result is called *mojibake*.
+Run the cycle twice and the garbage grows (each pass multiplies the byte count), which is why some old files carry strings of `&#195;` and `&#194;` far longer than the character they started as.
+
+[cols="1,1,2",options="header"]
+|===
+| Original | Shows up as | Why
+
+| `—` em dash
+| `{moji-dash}`
+| `E2 80 94` read as Windows-1252
+
+| `’` right single quote
+| `{moji-rsquo}`
+| `E2 80 99` read as Windows-1252
+
+| `“` left double quote
+| `{moji-ldquo}`
+| `E2 80 9C` read as Windows-1252
+
+| `é`
+| `{moji-eacute}`
+| `C3 A9` read as Windows-1252 / Latin-1
+|===
+
+The full lookup table, with the byte patterns a guard should search for, is in xref:reference/mojibake-signatures.adoc[Mojibake signatures].
+
+== Why Windows PowerShell 5.1 is the usual culprit
+
+Windows still ships *Windows PowerShell 5.1* as `powershell.exe`.
+Agent harnesses and IDE terminals frequently land in it, because it is the shell that is guaranteed to exist.
+Its defaults predate UTF-8 as the norm:
+
+* `Get-Content` reads a file **without a byte-order mark** using the system ANSI code page (Windows-1252 on US-English installs). Most modern UTF-8 files have no BOM, so they are misread.
+* `Set-Content` writes in ANSI by default. `Out-File` and the `>` redirect write UTF-16LE. `-Encoding UTF8` in 5.1 writes UTF-8 *with* a BOM, which some tools (shebang lines, YAML parsers, `.editorconfig`-strict linters) also reject.
+* The console code page is usually the OEM page (IBM437 on US-English installs). Output from native tools such as `git`, `node` or `python` is decoded through that page when PowerShell captures it, so piping `git show` into a file can corrupt text that was fine in the repository.
+
+PowerShell 7 (`pwsh`) changed every one of those defaults to UTF-8 without a BOM.
+The problem is not "PowerShell"; it is the 2016-era Windows PowerShell that is still the default `powershell.exe`.
+
+The classic agent edit is a one-liner like "read the file, replace a string, write it back":
+read with `Get-Content`, transform, write with `Set-Content`.
+Every non-ASCII character in the file is double-encoded in one step, including characters far from the line the agent meant to change.
+
+== Why agents make this worse
+
+People hit this bug for decades. Agents change three things about it.
+
+They edit text in bulk through the shell::
+A human usually edits in an editor that detects UTF-8.
+An agent without a dedicated file-edit tool, or one that decides a regex replace is quicker, reaches for shell commands, and on Windows that often means PowerShell 5.1.
+
+They touch files they were not asked to change::
+A "fix the version string" task can rewrite the whole changelog, and the diff reviewer sees hundreds of changed lines in a file that should have changed by one.
+
+They commit under your name::
+Agents run `git commit` with the human's configured identity.
+`git blame` and `git log` show you, not which agent or session wrote the bytes.
+You cannot tell from history whether a garbled line came from today's agent, last month's different assistant, or a human using the same shell.
+Only the mechanism is certain.
+
+== Incidents that motivated this page
+
+These are real, from the InstaLay repository in October 2026:
+
+* An AI-made auto-update commit (`8b35a27`) garbled ASCII-looking dashes in `release.yml` into mojibake. GitHub rejected the workflow file, so the next tag would not have published. Fixed in `b7dd746`.
+* Three older `CHANGELOG` entries had shown garbled dashes since commit `f45ceda` (2026-09-10). Nobody noticed for almost a month, because nothing failed: the text was just wrong on every page that rendered it.
+
+The second incident is the more common shape.
+Corrupted YAML or JSON fails loudly. Corrupted prose ships.
+
+== Why a guard beats a rule
+
+An agent rule such as "never rewrite text with PowerShell 5.1 `Get-Content` / `Set-Content`" is necessary but not sufficient:
+
+* Rules are context. They get summarised away, overridden by a task-specific instruction, or skipped by a different harness that never loaded them.
+* Different agents, cloud runners and humans share the same repository. A rule loaded by one of them protects only that one.
+* Mojibake has a byte signature. Unlike most quality problems, it is mechanically detectable with almost no false positives.
+
+So the layering we use is:
+
+. **Machine-wide pre-commit hook** (primary). Installed once per workstation through `git config --global core.hooksPath`, chaining to any repo-local hooks, so it covers every repository on the machine, including ones cloned tomorrow. Mojibake never enters history.
+. **CI check** (backstop). Catches commits that never ran the hook: cloud agents, web-UI edits, other machines, `--no-verify`. Ideally one reusable workflow, required across the organisation by a ruleset, so new repositories are covered without anyone remembering.
+. **Agent rule** (reduce the rate). Tell agents to use file-edit tools, `pwsh` 7, or explicit UTF-8-without-BOM writes.
+. **`.editorconfig`** with `charset = utf-8` (consistency). Editors and formatters agree on the target encoding.
+
+Steps and code: xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption].
+
+== Hooks are local, which is the whole design problem
+
+Git hooks live in `.git/hooks/`, which is not versioned and is not cloned.
+A hook committed to a repository does nothing until each machine opts in.
+There are two ways to get a hook onto a machine without per-repository setup:
+
+`init.templateDir`::
+Git copies the template directory into `.git/` when you `git init` or `git clone`.
+It only affects repositories created *after* you set it, and each copy is a snapshot: improving the hook later does not update existing clones.
+
+`core.hooksPath`::
+Points Git at one hooks directory for every repository, existing and future.
+Set globally, it replaces `.git/hooks/`, so repository-local hooks stop running unless the global hook explicitly chains to them.
+A repository that sets its own `core.hooksPath` (Husky does this) overrides the global value, which is one more reason the CI backstop exists.
+
+For a guard that should apply to every repository on the machine, `core.hooksPath` is the right tool, provided the hook chains.
+
+== Related
+
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
+* xref:reference/mojibake-signatures.adoc[Mojibake signatures]
+* xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
+* xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]
+* xref:explanation/writing-clear-docs-with-ai.adoc[Writing clear docs with AI]
+* link:https://docs.opensh.org/open-shell-org/standard-design-considerations/[OpenShellOrg: SOS design considerations (text encoding)]

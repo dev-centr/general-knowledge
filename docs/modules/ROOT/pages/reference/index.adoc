@@ -8,6 +8,7 @@ Reference pages are for **retrieval**—checklists, layouts, tool lists, and reg
 * xref:reference/app-essentials-checklist.adoc[App essentials checklist]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
 * xref:reference/checklist-sidecar.adoc[Checklist sidecar]
+* xref:reference/mojibake-signatures.adoc[Mojibake signatures] -- what punctuation looks like after UTF-8 is misread as Windows-1252, and the bytes a guard rejects
 * xref:reference/package-registries.adoc[Package registries]
 * xref:reference/pnpm-run-routing.adoc[pnpm run routing] — script names, `--filter`, `-C`, root-first monorepos
 

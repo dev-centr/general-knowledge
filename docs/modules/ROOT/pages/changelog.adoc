@@ -1,5 +1,12 @@
 = Changelog
 
+== 2026-10-05 -- Text encoding corruption from AI agents
+
+* New xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] explanation: how Windows PowerShell 5.1 defaults double-encode UTF-8 (mojibake), why agents committing under your name hide the culprit, and the InstaLay incidents that motivated it.
+* New xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] how-to: machine-wide pre-commit guard via `core.hooksPath` (chains repo hooks), CI backstop as one reusable workflow plus org ruleset (thin caller for personal-account repos, template repo fallback, where per-repo logs appear), fork-sweep rules, `.encoding-allow` allowlist, agent rule, `.editorconfig`, safe shell recipes, and repair.
+* New xref:reference/mojibake-signatures.adoc[Mojibake signatures] lookup table; app essentials checklist gains UTF-8 and encoding-guard items; cross-links from PowerShell, CI, release, agent-workspace, and docs-with-AI pages.
+* See xref:changelog-details/2026-10-05 - text-encoding-and-ai-agents.adoc[Detailed changelog].
+
 == 2026-10-05 -- Desktop auto-update apply lessons
 
 * Documented quit-first **one-shot** apply (not a long-lived launcher), stable marketing-site feed URL + versioned GitHub Release asset, channel-aware Store/winget/Homebrew deferral, and Windows in-place installer / Start Menu `.lnk` pitfalls.

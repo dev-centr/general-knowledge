@@ -33,6 +33,7 @@ Tied to xref:explanation/architecture/software-product-essentials.adoc[Software 
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] -- machine-wide pre-commit guard plus CI backstop so AI agents and Windows shells cannot commit mojibake
 * xref:how-to/binary-tailor.adoc[Binary Tailor]
 * xref:how-to/winget-registration.adoc[Winget registration]
 

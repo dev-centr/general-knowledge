@@ -37,9 +37,11 @@ Stamp the channel into build info so About and updaters agree.
 * Ship laptop-only binaries as the official build
 * Move tags after people may have downloaded them
 * Skip checksums on public desktop artifacts
+* Tag a commit whose workflow files or changelog an agent rewrote through a legacy shell without an encoding check (xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption])
 
 == Related
 
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:how-to/app-installer-packaging.adoc[Installer packaging]
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]

@@ -32,6 +32,7 @@ Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:expl
 Featured agent / studio topics:
 
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
 * xref:explanation/infrastructure/uniprovider.adoc[UniProvider / Open Provider Registry]
 * xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap]
 * xref:explanation/infrastructure/studio-mcp-install-strategies.adoc[Studio MCP install strategies]

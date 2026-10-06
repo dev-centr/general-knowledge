@@ -44,6 +44,10 @@ without multiplying dependency trees needlessly.
   mutating `HEAD` in place.
 . Share content-addressable dependency stores (e.g. pnpm) across sandboxes
   when possible.
+. Install the encoding guard machine-wide (`core.hooksPath`) before agents
+  commit anywhere: agents commit under your identity, so history cannot tell
+  you which one double-encoded a file
+  (xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]).
 
 
 == Worktree placement (today vs long-range)
@@ -68,5 +72,6 @@ tradeoffs.
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
 * link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]

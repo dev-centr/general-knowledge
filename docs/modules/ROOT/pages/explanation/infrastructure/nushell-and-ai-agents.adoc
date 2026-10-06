@@ -112,3 +112,4 @@ We are not picking a fight with NVIDIA's naming. We are picking a fight with uns
 * xref:explanation/infrastructure/nushell.adoc[Why we recommend Nushell]
 * xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell (short)]
 * xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents] -- legacy shell encoding defaults as an agent hazard

@@ -52,3 +52,4 @@ If the project can build with `cosmocc`, add a job that emits `app.com` **in add
 
 * xref:how-to/binary-tailor.adoc[Binary Tailor]
 * xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption] -- reusable encoding-guard workflow; a mojibake-corrupted workflow file is rejected by GitHub outright

@@ -1,0 +1,327 @@
+= Prevent text encoding corruption
+:description: Stop AI agents and Windows shells from committing mojibake: a machine-wide pre-commit guard via core.hooksPath, a CI backstop, an agent rule, .editorconfig, and safe edit recipes.
+:page-audience: Developer with write access to repositories that AI agents also edit
+:page-usage-context: Setting up a workstation and an organisation so double-encoded UTF-8 never reaches git history
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-10-05
+:page-created: 2026-10-05
+:page-diataxis: how-to
+:page-doc-type: how-to
+:page-keywords: mojibake, UTF-8, pre-commit hook, core.hooksPath, init.templateDir, reusable workflow, ruleset, editorconfig, PowerShell 5.1, encoding guard
+:moji-dash: &#226;&#8364;&#8221;
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+Goal:: Garbled text such as `{moji-dash}` (an em dash after a UTF-8 file was read as Windows-1252 and saved again) can never be committed, no matter which agent, editor or machine made the edit.
+Why:: xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents].
+Lookup:: xref:reference/mojibake-signatures.adoc[Mojibake signatures].
+
+Four layers, in order of how much they protect you:
+
+[cols="1,2,2",options="header"]
+|===
+| Layer | Catches | Misses
+
+| Machine-wide pre-commit hook
+| Every commit made on this workstation, in every repository, by any agent or human
+| Commits made elsewhere; `--no-verify`; repositories that set their own `core.hooksPath`
+
+| CI check (reusable workflow + org ruleset)
+| Everything pushed to the forge, including cloud agents and web edits
+| Nothing reaches history *later* than this, but a direct push to `main` is flagged after the fact, not blocked
+
+| Agent rule
+| Lowers how often agents produce mojibake at all
+| Any agent that did not load the rule, or ignored it
+
+| `.editorconfig`
+| Editors and formatters writing the wrong charset
+| Shell one-liners, which ignore it
+|===
+
+== 1. Install the guard machine-wide with `core.hooksPath`
+
+Hooks live in `.git/hooks/`, which Git never versions or clones.
+Committing a hook to a repository protects nobody until each machine installs it, so install the guard once per workstation instead.
+
+`core.hooksPath` vs `init.templateDir`::
+`init.templateDir` copies hooks into repositories at `git init` / `git clone` time only. Existing clones get nothing, and later improvements never reach earlier copies.
+`core.hooksPath` points *every* repository, existing and future, at one directory. That is what you want here.
+The catch: a global `core.hooksPath` *replaces* `.git/hooks/`, so the guard must chain to the repository's own hook, as the script below does.
+
+Save this as `pre-commit` in a hooks directory you own, for example `~/.config/git/hooks/pre-commit`.
+It is ASCII-only on purpose: the signatures are built from octal escapes, so the script cannot be corrupted by the bug it detects.
+
+[source,bash]
+----
+#!/usr/bin/env bash
+# encoding-guard: reject mojibake and UTF-16 in staged text files.
+# Installed machine-wide via `git config --global core.hooksPath`.
+
+# 1. Chain to the repository's own pre-commit hook (core.hooksPath hides it).
+common_dir=$(git rev-parse --git-common-dir)
+if [ -x "$common_dir/hooks/pre-commit" ]; then
+  "$common_dir/hooks/pre-commit" "$@" || exit $?
+fi
+
+# 2. Signatures: UTF-8 bytes that were read as Windows-1252 and saved again.
+sig_lead=$(printf '\303\242\342\202\254')  # "a-circumflex, euro": E2 80 xx (dashes, quotes)
+sig_atilde=$(printf '\303\203\302')        # "A-tilde" + Latin-1 char: C3 xx (accented letters)
+sig_acirc=$(printf '\303\202\302')         # "A-circumflex" + Latin-1 char: C2 xx (nbsp, degree)
+
+# 3. Intentional examples and fixtures are listed in .encoding-allow
+#    (git glob pathspecs, one per line, # comments). .txt is NOT exempt.
+excludes=()
+if [ -f .encoding-allow ]; then
+  while IFS= read -r pat || [ -n "$pat" ]; do
+    pat=${pat%$'\r'}
+    case "$pat" in ''|'#'*) continue ;; esac
+    excludes+=(":(exclude,glob)$pat")
+  done < .encoding-allow
+fi
+
+files=()
+while IFS= read -r -d '' f; do files+=("$f"); done < <(
+  git diff --cached --name-only --diff-filter=ACMR -z -- . "${excludes[@]}"
+)
+[ ${#files[@]} -eq 0 ] && exit 0
+
+fail=0
+for f in "${files[@]}"; do
+  head=$(git show ":$f" | head -c 4 | od -An -tx1 | tr -d ' \n')
+  case "$head" in
+    fffe*|feff*) echo "encoding-guard: $f is UTF-16/32; save it as UTF-8 without a BOM" >&2; fail=1 ;;
+    efbbbf*)     echo "encoding-guard: warning: $f starts with a UTF-8 BOM" >&2 ;;
+  esac
+done
+
+if git grep --cached -nIF -e "$sig_lead" -e "$sig_atilde" -e "$sig_acirc" -- "${files[@]}" >&2; then
+  echo "encoding-guard: mojibake above (UTF-8 read as Windows-1252, then re-saved)." >&2
+  echo "encoding-guard: repair the file; do not retype or re-save the garbled glyphs." >&2
+  fail=1
+fi
+exit $fail
+----
+
+Install it (Git Bash, macOS, Linux; on Windows Git runs hooks through its bundled bash, so the same script works):
+
+[source,bash]
+----
+mkdir -p ~/.config/git/hooks
+cp pre-commit ~/.config/git/hooks/pre-commit
+chmod +x ~/.config/git/hooks/pre-commit
+git config --global core.hooksPath '~/.config/git/hooks'
+----
+
+Verify it fires, in a scratch repository:
+
+[source,bash]
+----
+git init /tmp/guard-test && cd /tmp/guard-test
+printf 'dash: \303\242\342\202\254\342\200\235\n' > bad.md   # an em dash, double-encoded
+git add bad.md
+git commit -m test    # expected: encoding-guard prints bad.md:1 and the commit is rejected
+----
+
+Notes:
+
+* If you also rely on other hook types (`commit-msg`, `pre-push`, ...), add a passthrough script with that name to the same directory that runs `$common_dir/hooks/<name>` when it exists. Otherwise those repository hooks silently stop running.
+* A repository that sets its own `core.hooksPath` (Husky does) overrides the global one. Check with `git config --local --get core.hooksPath` and call the guard from that repository's hook, or rely on CI there.
+* Agents that run `git commit --no-verify` bypass any hook. The agent rule below forbids it; CI catches it anyway.
+
+== 2. Add the CI backstop
+
+The hook only sees commits made on machines that installed it.
+Cloud agents, web-UI edits, a second laptop and `--no-verify` all skip it, so run the same check on the forge.
+
+Prefer **one reusable workflow** for the whole organisation, so the check is maintained in one place:
+
+. Put the scan in the organisation's shared workflow repository (on GitHub, conventionally `<org>/.github`) as a workflow with `on: workflow_call`.
+. Make it required across repositories with an **organisation ruleset** that requires the workflow to pass, where your plan offers required workflows. New repositories are then covered automatically, with no per-repository file to forget.
+. Where rulesets are not available, add a two-line caller workflow to each repository, and put it in your **template repository** so new repositories start with it.
+
+The CI job scans the whole tracked tree, not just the latest diff, so a commit that skipped the hook cannot hide behind a later clean one:
+
+[source,yaml]
+----
+# <org>/.github/.github/workflows/encoding-guard.yml
+name: Encoding guard
+on:
+  workflow_call:
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject mojibake and UTF-16 in tracked text
+        shell: bash
+        run: |
+          sig_lead=$(printf '\303\242\342\202\254')
+          sig_atilde=$(printf '\303\203\302')
+          sig_acirc=$(printf '\303\202\302')
+          excludes=()
+          if [ -f .encoding-allow ]; then
+            while IFS= read -r pat || [ -n "$pat" ]; do
+              pat=${pat%$'\r'}
+              case "$pat" in ''|'#'*) continue ;; esac
+              excludes+=(":(exclude,glob)$pat")
+            done < .encoding-allow
+          fi
+          fail=0
+          while IFS= read -r -d '' f; do
+            case "$(head -c 2 "$f" | od -An -tx1 | tr -d ' \n')" in
+              fffe|feff) echo "::error file=$f::UTF-16/32 file; save as UTF-8 without a BOM"; fail=1 ;;
+            esac
+          done < <(git ls-files -z -- . "${excludes[@]}")
+          if git grep -nIF -e "$sig_lead" -e "$sig_atilde" -e "$sig_acirc" -- . "${excludes[@]}"; then
+            echo "::error::Mojibake found (UTF-8 read as Windows-1252, then re-saved)"
+            fail=1
+          fi
+          exit $fail
+----
+
+Caller, if you are not using a ruleset:
+
+[source,yaml]
+----
+# .github/workflows/encoding-guard.yml in each repository
+name: Encoding guard
+on: [push, pull_request]
+jobs:
+  encoding:
+    uses: <org>/.github/.github/workflows/encoding-guard.yml@main
+----
+
+A required workflow gates pull requests. If your team pushes straight to `main`, the check still runs on push and turns the commit red, but it cannot un-push it. That is the reason the machine-wide hook is the primary layer.
+
+=== Roll it out across an organisation and a personal account
+
+The workflow file lives once; how each repository picks it up depends on who owns the repository.
+
+Organisation-owned repositories::
+Create an **organisation ruleset** that targets all repositories (or all with a property), protects the default branch, and requires the encoding-guard workflow from `<org>/.github`. Repositories created later match the ruleset automatically. Availability of required workflows in rulesets depends on your GitHub plan and repository visibility; check the ruleset screen before relying on it.
+
+Personal-account repositories::
+A user account has no organisation rulesets, so each repository needs the thin caller workflow shown above. It can still call the organisation's reusable workflow: a reusable workflow in a public repository can be called from any repository, and one in a private repository needs its *Actions access* setting opened to the callers. Put the caller in your personal **template repository** so new repositories start with it.
+
+Template repository::
+Works for both owners, but only for repositories created *from* it, and only at creation time. It is the fallback, not the mechanism: existing repositories still need the ruleset or a caller file, and a later fix to the template does not reach repositories already created.
+
+Where the logs appear::
+The workflow code is shared, but every run executes and logs in the repository that triggered it. A failure shows up in *that* repository's Actions tab and on *that* commit's checks (as `encoding / scan` for the caller above, or under the ruleset's required workflow), not in `<org>/.github`. To see the whole estate, filter the organisation's Actions or check runs by workflow name rather than looking in the shared repository.
+
+=== Forks of other people's projects
+
+Forks are where a sweep does the most damage if you are careless:
+
+* **Fix forward only lines you introduced.** Legacy mojibake that came from upstream belongs in an upstream pull request (or an issue), not in a silent rewrite on your fork that will conflict with every future sync.
+* **Do not push encoding fixes to a branch that backs an open upstream pull request.** The commit lands in the PR immediately and changes what the maintainers are reviewing. Use a new branch and, if the fix is wanted, a separate PR.
+* **Do not add your CI workflow to upstream-owned trees.** A caller file committed to a fork's branches travels upstream with the next pull request. In forks, rely on the machine-wide hook; it runs locally and never becomes part of the project.
+* If a fork's own CI or hooks conflict with yours, the upstream project's conventions win in its tree.
+
+== 3. Allowlist intentional mojibake
+
+Some files must contain mojibake on purpose: test fixtures for a repair tool, or a raw sample in a bug report.
+List them in `.encoding-allow` at the repository root, one git glob pathspec per line:
+
+[source,text]
+----
+# Fixtures for the encoding repair script; these bytes are the test input.
+tests/fixtures/mojibake/**
+----
+
+Rules for the allowlist:
+
+* Name files or fixture folders, never whole file types. `*.txt` is **not** exempt: plain-text notes, logs and changelogs get corrupted exactly like `.adoc` and `.md`.
+* Add a comment saying why each entry exists.
+* In documentation, prefer *not* to need an entry: write the garbled sample with character references (AsciiDoc and HTML both accept `&amp;#226;&amp;#8364;&amp;#8221;`), so the source stays clean and the page still shows the garbage.
+
+== 4. Give agents the rule
+
+Put this, or your harness's equivalent, in the always-on agent rules shared by every agent that touches your repositories:
+
+[source,text]
+----
+Text files are UTF-8 without a BOM.
+- Edit files with the harness's file-edit tool, not shell one-liners.
+- Never rewrite text with Windows PowerShell 5.1 Get-Content / Set-Content /
+  Out-File / ">" unless the encoding is explicitly UTF-8 without a BOM.
+  Prefer pwsh 7, Nushell, or .NET UTF8Encoding($false).
+- Never commit with --no-verify to get past the encoding guard.
+- If you see garbled text (a-circumflex + euro sign, A-tilde + symbol),
+  repair the bytes; never retype or re-save the garbled glyphs.
+----
+
+== 5. Set `.editorconfig`
+
+[source,ini]
+----
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+----
+
+`charset = utf-8` means UTF-8 *without* a BOM (`utf-8-bom` is a separate value).
+Editors and many formatters honour it. Shell commands do not, which is why this is the last layer, not the first.
+
+== 6. Edit safely from a shell
+
+When an agent or a script must rewrite a file from the command line:
+
+Nushell::
+UTF-8 everywhere by default:
++
+[source,nu]
+----
+open --raw CHANGELOG.adoc | str replace 'old' 'new' | save --force CHANGELOG.adoc
+----
+
+PowerShell 7 (`pwsh`)::
+Defaults to UTF-8 without a BOM, so `Get-Content -Raw` / `Set-Content` are safe. Check you are really in 7: `$PSVersionTable.PSVersion`.
+
+Windows PowerShell 5.1 (`powershell.exe`)::
+Bypass the cmdlets and use .NET with an explicit no-BOM encoding. .NET resolves relative paths against the *process* directory, not the PowerShell location, so resolve the path first:
++
+[source,powershell]
+----
+$path = (Resolve-Path .\CHANGELOG.adoc).Path
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+$text = [System.IO.File]::ReadAllText($path, $utf8)
+[System.IO.File]::WriteAllText($path, $text.Replace('old', 'new'), $utf8)
+----
++
+Before capturing output from native tools (`git show`, `node`, `python`), switch the console decoding to UTF-8 so PowerShell does not decode it through the OEM code page:
++
+[source,powershell]
+----
+[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+$OutputEncoding = [Console]::OutputEncoding
+----
+
+Windows' system-wide *"Beta: Use Unicode UTF-8 for worldwide language support"* setting makes the ANSI code page UTF-8, which also fixes 5.1's reads, but it can break older non-Unicode applications. Treat it as a per-machine decision, not a substitute for the guard.
+
+== 7. Repair what is already in history
+
+. Find affected files with the same signatures the guard uses: `git grep -nIF -e "$(printf '\303\242\342\202\254')" -e "$(printf '\303\203\302')"`.
+. Find the commit that introduced a garbled line: `git log -S "$(printf '\303\242\342\202\254')" --oneline -- <file>`.
+. Transcode back, do not hand-edit: the Dev-Centr `fix-docs-encoding` skill in link:https://github.com/dev-centr/agent-rules[agent-rules] (`skills/fix-docs-encoding/`) reverses classic Windows-1252 mojibake, with the Python `ftfy` library as an optional engine.
+. Review the diff. A correct repair turns each garbled run back into one character and changes nothing else.
+. Commit the repair as its own commit. Do not rewrite published history to hide the original; the repair commit is the record.
+
+== Related
+
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
+* xref:reference/mojibake-signatures.adoc[Mojibake signatures]
+* xref:reference/app-essentials-checklist.adoc[App essentials checklist]
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]

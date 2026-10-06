@@ -15,6 +15,8 @@ Interactive CentrMark copies: xref:how-to/product-essentials-checklists.adoc[Att
 * [ ] Checksums (and signatures when required) published
 * [ ] Secrets redacted from logs/dumps by default
 * [ ] Support doc: what users should attach
+* [ ] Text files UTF-8 without BOM; `.editorconfig` `charset = utf-8`
+* [ ] Encoding guard: machine-wide pre-commit hook + CI backstop reject mojibake and UTF-16 (xref:how-to/prevent-text-encoding-corruption.adoc[how-to])
 
 == GUI
 
@@ -71,3 +73,4 @@ Prefer the printable xref:reference/auxiliary-features-checklist.adoc[Auxiliary 
 * xref:how-to/git-release-workflow.adoc[]
 * xref:how-to/automated-releases.adoc[]
 * xref:how-to/winget-registration.adoc[]
+* xref:how-to/prevent-text-encoding-corruption.adoc[]

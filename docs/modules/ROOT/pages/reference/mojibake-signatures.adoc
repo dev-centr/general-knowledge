@@ -1,0 +1,169 @@
+= Mojibake signatures
+:description: Lookup table of what common punctuation and accented letters look like after UTF-8 is misread as Windows-1252 and saved again, with the byte patterns an encoding guard should reject.
+:page-audience: Developer with write access to repositories that AI agents also edit
+:page-usage-context: Recognising and grepping for double-encoded UTF-8 in files, diffs, and CI logs
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-10-05
+:page-created: 2026-10-05
+:page-diataxis: reference
+:page-doc-type: reference
+:page-keywords: mojibake, UTF-8, Windows-1252, double encoding, byte signatures, encoding guard
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+endif::[]
+
+Use this table when a diff, page or log shows short runs of accented capitals and currency symbols where punctuation should be.
+Each row is one original character, its UTF-8 bytes, what it turns into after one read-as-Windows-1252-and-save cycle, and the bytes now on disk.
+Why it happens: xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents].
+Prevention: xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption].
+
+== One round of double encoding
+
+[cols="2,2,2,3",options="header"]
+|===
+| Character | Original code point and UTF-8 bytes | Shows up as | Bytes on disk after corruption
+
+| em dash
+| `U+2014` `E2 80 94`
+| `&#226;&#8364;&#8221;`
+| `C3 A2 E2 82 AC E2 80 9D`
+
+| en dash
+| `U+2013` `E2 80 93`
+| `&#226;&#8364;&#8220;`
+| `C3 A2 E2 82 AC E2 80 9C`
+
+| left single quote
+| `U+2018` `E2 80 98`
+| `&#226;&#8364;&#732;`
+| `C3 A2 E2 82 AC CB 9C`
+
+| right single quote / apostrophe
+| `U+2019` `E2 80 99`
+| `&#226;&#8364;&#8482;`
+| `C3 A2 E2 82 AC E2 84 A2`
+
+| left double quote
+| `U+201C` `E2 80 9C`
+| `&#226;&#8364;&#339;`
+| `C3 A2 E2 82 AC C5 93`
+
+| right double quote
+| `U+201D` `E2 80 9D`
+| `&#226;&#8364;&#157;`
+| `C3 A2 E2 82 AC C2 9D`
+
+| ellipsis
+| `U+2026` `E2 80 A6`
+| `&#226;&#8364;&#166;`
+| `C3 A2 E2 82 AC C2 A6`
+
+| bullet
+| `U+2022` `E2 80 A2`
+| `&#226;&#8364;&#162;`
+| `C3 A2 E2 82 AC C2 A2`
+
+| right arrow
+| `U+2192` `E2 86 92`
+| `&#226;&#8224;&#8217;`
+| `C3 A2 E2 80 A0 E2 80 99`
+
+| no-break space
+| `U+00A0` `C2 A0`
+| `&#194;&#160;`
+| `C3 82 C2 A0`
+
+| degree sign
+| `U+00B0` `C2 B0`
+| `&#194;&#176;`
+| `C3 82 C2 B0`
+
+| copyright sign
+| `U+00A9` `C2 A9`
+| `&#194;&#169;`
+| `C3 82 C2 A9`
+
+| e acute
+| `U+00E9` `C3 A9`
+| `&#195;&#169;`
+| `C3 83 C2 A9`
+
+| u umlaut
+| `U+00FC` `C3 BC`
+| `&#195;&#188;`
+| `C3 83 C2 BC`
+
+| n tilde
+| `U+00F1` `C3 B1`
+| `&#195;&#177;`
+| `C3 83 C2 B1`
+
+| multiplication sign
+| `U+00D7` `C3 97`
+| `&#195;&#8212;`
+| `C3 83 E2 80 94`
+|===
+
+Two rounds (the corrupted file read and saved wrongly a second time) roughly double the length again; you will see long runs of `&#195;` and `&#194;` between the remnants of the original text.
+
+== Guard signatures
+
+Three byte prefixes cover almost every case and almost never appear in legitimate text:
+
+[cols="1,2,3",options="header"]
+|===
+| Bytes | Looks like | Produced by
+
+| `C3 A2 E2 82 AC`
+| `&#226;&#8364;` followed by one more symbol
+| Characters encoded `E2 80 xx` in UTF-8 (General Punctuation): dashes, curly quotes, ellipsis, bullet
+
+| `C3 83 C2`
+| `&#195;` followed by a Latin-1 symbol
+| Accented Latin letters encoded `C3 xx` (`&#233;`, `&#252;`, `&#241;`, ...)
+
+| `C3 82 C2`
+| `&#194;` followed by a Latin-1 symbol or space
+| Characters encoded `C2 xx`: no-break space, degree, copyright, section sign
+|===
+
+Other three-byte ranges also start with `&#226;` but continue differently (arrows `E2 86 xx` become `&#226;&#8224;` plus a symbol; box drawing `E2 94 xx` becomes `&#226;&#8221;` plus a symbol). Add signatures for those if your files use them.
+
+Build them from escapes so the script itself stays ASCII:
+
+[source,bash]
+----
+sig_lead=$(printf '\303\242\342\202\254')
+sig_atilde=$(printf '\303\203\302')
+sig_acirc=$(printf '\303\202\302')
+git grep -nIF -e "$sig_lead" -e "$sig_atilde" -e "$sig_acirc"
+----
+
+Related byte-level problems a guard should also reject or warn about:
+
+[cols="1,2,2",options="header"]
+|===
+| First bytes | Meaning | Typical source
+
+| `FF FE` or `FE FF`
+| UTF-16 (or UTF-32) text; Git treats it as binary
+| Windows PowerShell 5.1 `Out-File` or `>` redirect
+
+| `EF BB BF`
+| UTF-8 with a byte-order mark
+| Windows PowerShell 5.1 `-Encoding UTF8`, some Windows editors; breaks shebang lines and some parsers
+
+| Lone bytes `80`-`FF` that are not valid UTF-8
+| Windows-1252 or Latin-1 bytes in a file that claims UTF-8
+| `Set-Content` default (ANSI) in 5.1; hand-authored SVG labels
+|===
+
+== Related
+
+* xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]
