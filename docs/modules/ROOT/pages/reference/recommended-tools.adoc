@@ -48,6 +48,10 @@ DevCentr lets you pick between those two (Appearance in the top bar). Install th
 * link:https://git-scm.com/[Git] — Required.
 * link:https://cli.github.com/[GitHub CLI (`gh`)] — GitHub operations from the terminal (prefer running under Nushell).
 
+== Hosting & Free Tiers
+
+* link:https://free-for.dev/[free-for.dev] — Community-maintained list of SaaS, PaaS, and IaaS offerings with free developer tiers; check it for hosting, CI, databases, and monitoring before paying for a plan.
+
 == Documentation
 
 * AsciiDoc + Antora for Dev-Centr published docs (see org publishing guides).

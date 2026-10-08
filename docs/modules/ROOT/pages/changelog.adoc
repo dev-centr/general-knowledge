@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-10-07 -- free-for.dev in Recommended tools
+
+* xref:reference/recommended-tools.adoc[Recommended tools] gains a **Hosting & Free Tiers** section listing link:https://free-for.dev/[free-for.dev], a community-maintained list of SaaS, PaaS, and IaaS offerings with free developer tiers.
+* See xref:changelog-details/2026-10-07 - free-for-dev.adoc[Detailed changelog].
+
 == 2026-10-06 -- Diagrams keep their Mermaid 11 layout under Mermaid 12
 
 * All 33 Mermaid diagrams are regenerated with `@mermaid-js/mermaid-cli` 12 pinned to the previous dagre layout, classic look, and 200px label wrapping. The earlier Mermaid 12 rebuild had switched them to the ELK layout and neo look, which split labels mid-word, narrowed and lengthened most diagrams, and added light drop shadows in dark mode.

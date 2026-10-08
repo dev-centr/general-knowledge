@@ -1,0 +1,5 @@
+= 2026-10-07 - free-for.dev in Recommended tools
+:description: Added free-for.dev as a lookup for free developer tiers across hosting, CI, databases, and monitoring.
+
+* Added free-for.dev (https://free-for.dev/) to xref:reference/recommended-tools.adoc[Recommended tools] under a new **Hosting & Free Tiers** section.
+* free-for.dev is a community-maintained list (source: https://github.com/ripienaar/free-for-dev) of SaaS, PaaS, and IaaS offerings with free developer tiers, limited to real free tiers rather than trials.
