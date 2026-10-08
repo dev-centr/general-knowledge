@@ -69,6 +69,17 @@ Founder/ops support systems (scheduling, design hosts, vault servers, team chat)
 * xref:business-bootstrap::vault/explanation/bitwarden-and-vaultwarden.adoc[Bitwarden and Vaultwarden]
 * xref:business-bootstrap::chat/explanation/mattermost-self-host.adoc[Mattermost self-host]
 
+== Creative & Media
+
+* link:https://getartcraft.com/[ArtCraft] — Free AI image and video studio (2D canvas, 3D scene staging, character posing) for macOS, Windows, and the web; source is public under a fair-source license (not OSI open source), and model generations use paid credits or your own provider accounts. Its Crafting Apps are separate native Rust apps under Apache-2.0, free to use and mostly early alpha:
+** link:https://getartcraft.com/apps/photocraft[PhotoCraft] — Image editor with layers, masks, adjustment layers, layer styles, type, and brushes.
+** link:https://getartcraft.com/apps/vectorcraft[VectorCraft] — Vector illustration with the pen, panels, and shortcuts illustrators expect.
+** link:https://getartcraft.com/apps/filmcraft[FilmCraft] — Video editor with source and program monitors, a timeline, and trim modes (desktop only).
+** link:https://getartcraft.com/apps/lightcraft[LightCraft] — Photo library and non-destructive raw developer that runs on your machine.
+** link:https://getartcraft.com/apps/pdfcraft[PdfCraft] — PDF workbench to read, organize, combine, split, and secure PDFs.
+** link:https://getartcraft.com/apps/effectcraft[EffectCraft] — Motion graphics and visual effects with compositions, keyframes, and 3D cameras and lights.
+** link:https://getartcraft.com/apps/designcraft[DesignCraft] — Page layout and publishing with spreads, threaded stories, styles, and text wrap.
+
 == Design & Brand Motion
 
 UI/brand **canvas**: prefer xref:business-bootstrap::design/explanation/penpot.adoc[Penpot] when the team wants an open design platform; stay on Figma when partners already live there.

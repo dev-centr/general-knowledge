@@ -1,0 +1,6 @@
+= 2026-10-07 - ArtCraft and its Crafting Apps
+:description: Added ArtCraft and its seven Crafting Apps to Recommended tools under a new Creative & Media section.
+
+* Added ArtCraft (https://getartcraft.com/) to xref:reference/recommended-tools.adoc[Recommended tools] under a new **Creative & Media** section: a free AI image and video studio for macOS, Windows, and the web.
+* Noted the licensing split: the ArtCraft studio (https://github.com/storytold/artcraft) is source-available under the work-in-progress ArtCraft License ("fair source", not OSI open source) and sells optional generation credits; the Crafting Apps are separate Apache-2.0 repositories under https://github.com/storytold.
+* Listed the seven Crafting Apps as nested bullets, in the order the ArtCraft site uses: PhotoCraft (image editor), VectorCraft (vector illustration), FilmCraft (video editing), LightCraft (photo library and raw developer), PdfCraft (PDF workbench), EffectCraft (motion graphics and visual effects), and DesignCraft (page layout and publishing). As of this date PhotoCraft and PdfCraft are early alpha and the rest are in development.

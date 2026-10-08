@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-10-07 -- ArtCraft and its Crafting Apps
+
+* xref:reference/recommended-tools.adoc[Recommended tools] gains a **Creative & Media** section listing link:https://getartcraft.com/[ArtCraft], a free AI image and video studio under a fair-source license, with its seven Apache-2.0 Crafting Apps (PhotoCraft, VectorCraft, FilmCraft, LightCraft, PdfCraft, EffectCraft, DesignCraft) as nested entries.
+* See xref:changelog-details/2026-10-07 - artcraft-crafting-apps.adoc[Detailed changelog].
+
 == 2026-10-07 -- free-for.dev in Recommended tools
 
 * xref:reference/recommended-tools.adoc[Recommended tools] gains a **Hosting & Free Tiers** section listing link:https://free-for.dev/[free-for.dev], a community-maintained list of SaaS, PaaS, and IaaS offerings with free developer tiers.
