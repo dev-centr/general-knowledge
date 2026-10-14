@@ -40,6 +40,7 @@
 
 * xref:reference/index.adoc[Reference]
 ** xref:reference/recommended-tools.adoc[Recommended Tools]
+** xref:reference/web-design-tools.adoc[Web design tools]
 ** xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
 ** xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]

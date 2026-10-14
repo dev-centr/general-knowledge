@@ -1,0 +1,5 @@
+= 2026-10-13 — Web design tools reference
+
+* New xref:reference/web-design-tools.adoc[Web design tools]: Figma as de facto comparison baseline, Penpot and Lunacy as practical defaults, explicit **Framer** warning (closed platform / bundled hosting — poor primary site home).
+* xref:reference/recommended-tools.adoc[Recommended tools] Design & Brand Motion blurb links the comparison page.
+* Nav + xref:reference/index.adoc[Reference index] wired.

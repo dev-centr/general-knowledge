@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-10-13 -- Web design tools (Figma baseline · Penpot · Lunacy · Framer warning)
+
+* New xref:reference/web-design-tools.adoc[Web design tools] reference — compare UI canvases to Figma; prefer Penpot and Lunacy for handoff; call out Framer as a closed site platform to avoid.
+* See xref:changelog-details/2026-10-13 - web-design-tools.adoc[Detailed changelog].
+
 == 2026-10-07 -- ArtCraft and its Crafting Apps
 
 * xref:reference/recommended-tools.adoc[Recommended tools] gains a **Creative & Media** section listing link:https://getartcraft.com/[ArtCraft], a free AI image and video studio under a fair-source license, with its seven Apache-2.0 Crafting Apps (PhotoCraft, VectorCraft, FilmCraft, LightCraft, PdfCraft, EffectCraft, DesignCraft) as nested entries.

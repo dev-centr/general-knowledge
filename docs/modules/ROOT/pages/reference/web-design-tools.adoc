@@ -1,0 +1,100 @@
+= Web design tools
+:description: UI and product design canvases compared to Figma — Penpot and Lunacy as practical defaults, Framer called out as a closed platform to avoid for durable sites.
+:page-audience: Nonprofit operators, product teams, and developers choosing a design canvas or marketing-site stack
+:page-usage-context: Reference — pick a Figma-class tool for frames and handoff; keep the public site in git-backed static or app code
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-10-13
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+**What do I need?** A shared place for UI mockups, components, and developer handoff — not a proprietary website host that owns your URL forever.
+
+Use **Figma** as the mental baseline: that is what agencies, plugins, and “send me the file” still mean in 2026. Then choose an editor that fits your license, hosting, and export story.
+
+== Compare at a glance
+
+[cols="1,1,2,2",options="header"]
+|===
+| Tool | License / host | Good for | Watch out
+
+| **link:https://www.figma.com/[Figma]** (baseline)
+| Proprietary SaaS; de facto industry standard
+| Partner libraries, design systems, agency deliverables, plugin ecosystem
+| Proprietary files; cloud account is the default source of truth
+
+| **link:https://penpot.app/[Penpot]**
+| Open source; self-host or Penpot cloud
+| Teams that want inspect/handoff with open formats; orgs that can run a design host in `infra` — xref:business-bootstrap::design/explanation/penpot.adoc[ops detail]
+| Not a site builder; motion pipelines stay separate (see xref:reference/recommended-tools.adoc#_design_brand_motion[Design & Brand Motion])
+
+| **link:https://icons8.com/lunacy[Lunacy]** (Icons8)
+| Proprietary app; free core editor on desktop
+| Desktop-first teams, opening `.fig` without Figma seats, offline-friendly editing
+| Not open source; paid Icons8 asset packs are optional upsells
+
+| **link:https://www.framer.com/[Framer]** — avoid for primary sites
+| Closed platform; design + hosted runtime bundled
+| Quick marketing experiments when you accept full vendor lock-in
+| **Closed source**, export/hosting tied to Framer; poor fit when you need a durable, portable site on *your* domain and stack
+|===
+
+== Figma as the comparison anchor
+
+When someone says “design file,” they usually mean **Figma**. Compare every alternative on the axes that matter to you:
+
+* Can you **open what partners send** (`.fig`, shared libraries)?
+* Where does the **source of truth** live (their cloud vs your host vs files on disk)?
+* What **handoff** looks like (CSS, components, tokens in git)?
+* Whether the tool is a **canvas only** or also a **site host** (see Framer below).
+
+Stay on Figma when libraries, contractors, or grant reporting already assume it. Migrate when the cost of proprietary lock-in exceeds migration work — xref:business-bootstrap::design/explanation/penpot.adoc[Penpot] is the open default we document for greenfield product UI.
+
+== Penpot (open default)
+
+Penpot is the open-source, Figma-class platform we treat as a first-class **business resource**: self-host or use Penpot cloud, open file format, design tokens and inspect paths aimed at real CSS/HTML/SVG.
+
+Strategy and ops notes live in Business Bootstrap — xref:business-bootstrap::design/explanation/penpot.adoc[Penpot explanation] · xref:business-bootstrap::design/index.adoc[Design area] · xref:tools:tools/penpot.adoc[Tools portal stub].
+
+== Lunacy (desktop Figma-class)
+
+**Lunacy** is Icons8’s free desktop editor (Windows, macOS, Linux). It targets the same jobs as Figma — frames, components, prototyping — with strong **Figma file import** when you are not paying for Figma seats.
+
+Pick Lunacy when:
+
+* The team wants a **native app** and local files without standing up Penpot.
+* You mainly need to **view or edit** agency `.fig` deliverables on a budget.
+
+Lunacy is **not** our open-source default (the editor is proprietary). Pair it with exports and git-backed implementation; do not confuse it with a self-hosted open canvas.
+
+== Framer — name it so teams skip it
+
+**Framer** is useful to mention as a **counterexample**, not a recommendation.
+
+It is a **closed-source platform** that merges UI design with **Framer-hosted publishing**. That sounds fast until you need:
+
+* A marketing site that survives vendor pricing, account loss, or product changes
+* HTML/CSS you can audit, mirror, and put behind your own Access or CDN rules
+* A nonprofit story where the canonical site is **your repo**, not an export menu
+
+For durable public sites, **design in Penpot, Lunacy, or Figma** and **ship** with static or app code you control (Astro, Next.js, SolidStart, etc.). Keep animated brand marks in portable formats (xref:explanation/brand-motion.adoc[brand motion]) — not locked inside a SaaS runtime.
+
+We do **not** list Framer as a catalog default on link:https://nonprofit-resources.org/[Nonprofit Resources]; link:https://nonprofit-resources.org/guides/web-design-tools[the Web design tools guide there] repeats this for operators.
+
+== Related
+
+* xref:reference/recommended-tools.adoc[Recommended tools] — Creative & media apps; Design & Brand Motion
+* xref:business-bootstrap::software-stack.adoc[Business Bootstrap software stack] — Penpot in the org stack map
+* link:https://nonprofit-resources.org/guides/publish-a-brand-kit[Publish a brand kit] — logos and tokens on your domain (Nonprofit Resources)

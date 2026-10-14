@@ -82,7 +82,7 @@ Founder/ops support systems (scheduling, design hosts, vault servers, team chat)
 
 == Design & Brand Motion
 
-UI/brand **canvas**: prefer xref:business-bootstrap::design/explanation/penpot.adoc[Penpot] when the team wants an open design platform; stay on Figma when partners already live there.
+UI/brand **canvas**: compare options in xref:reference/web-design-tools.adoc[Web design tools] (Figma as baseline, xref:business-bootstrap::design/explanation/penpot.adoc[Penpot] and Lunacy as practical defaults, Framer called out as a closed site platform to avoid). Stay on Figma when partners already live there.
 
 No single **motion** format wins. Choose by job (see xref:explanation/brand-motion.adoc[Brand and UI Motion Formats] for the full matrix):
 
