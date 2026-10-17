@@ -66,7 +66,7 @@ Stay on Figma when libraries, contractors, or grant reporting already assume it.
 
 Penpot is the open-source, Figma-class platform we treat as a first-class **business resource**: self-host or use Penpot cloud, open file format, design tokens and inspect paths aimed at real CSS/HTML/SVG.
 
-Strategy and ops notes live in Business Bootstrap — xref:business-bootstrap::design/explanation/penpot.adoc[Penpot explanation] · xref:business-bootstrap::design/index.adoc[Design area] · xref:tools:tools/penpot.adoc[Tools portal stub].
+Strategy and ops notes live in Business Bootstrap — xref:business-bootstrap::design/explanation/penpot.adoc[Penpot explanation] · xref:business-bootstrap::design/index.adoc[Design area] · xref:home::tools/penpot.adoc[Tools portal stub].
 
 == Lunacy (desktop Figma-class)
 
