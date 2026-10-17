@@ -67,5 +67,5 @@ Full rules and examples: link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alte
 == Related
 
 * xref:explanation/internet-architecture/reliability/identity-stack.adoc[Identity stack]
-* xref:home::publishing/antora-essential-extensions.adoc[Antora essential extensions] — alias-to-latest and related plumbing
+* xref:home::docs-site/antora-essential-extensions.adoc[Antora essential extensions] — alias-to-latest and related plumbing
 * link:https://www.w3.org/Provider/Style/URI[Cool URIs don't change]

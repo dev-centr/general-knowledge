@@ -1,0 +1,93 @@
+= Code signing in the release pipeline
+:navtitle: Code signing in the release pipeline
+:description: Why OS vendors require signing, what each platform expects, and how build tools and CI can automate the work.
+
+== Why signing exists
+
+End users get software from the open internet. Operating system vendors (Microsoft, Apple, and others) use **cryptographic signing** so that:
+
+* The **publisher identity** of a binary or installer is **attestable** (a certificate ties a key to a legal entity the CA verified).
+* **Tampering** after signing is **detectable** (bad signatures fail verification).
+* **Policy** (Gatekeeper, SmartScreen, store rules) can allow **known good** software without training every user to ignore warnings.
+
+Signing **does not** assert that the code is free of bugs or malware; it asserts **who** shipped it and that it **has not been altered** since signing (within the trust model of the platform).
+
+== What you are still responsible for
+
+Even with a perfect signing setup:
+
+* A **brand-new** certificate or unknown publisher can still get **reputation** or **user-education** friction (for example, Windows SmartScreen may still show prompts until a publishing identity builds history).
+* **Enterprise** machines can block software regardless of signature.
+* You **cannot** guarantee that every person will **never** see a warning, only that you follow each vendor’s **required** and **recommended** steps so *normal* consumer installs work.
+
+Protect **private keys** as production secrets: hardware tokens, HSM, or hosted signing; never commit signing material to a repository.
+
+== Apple platforms (macOS, and related rules for iOS)
+
+Apple’s model for **distribution outside the Mac App Store** is built around **Developer ID**:
+
+* You **sign** with a **Developer ID Application** certificate (from an Apple Developer Program membership), using tools such as `codesign` (often driven by your IDE, `xcodebuild`, or a packager’s post-build step).
+* You **notarize** by uploading the signed product to **Apple’s notarization service**; Apple scans and records compliance with current rules, then you **staple** the returned ticket to the app so **Gatekeeper** can verify **offline** at install time.
+* Stale or missing notarization, or signing with the wrong **certificate class**, is the most common reason users see *“can’t be opened”* or *“damaged”* for otherwise fine builds.
+
+**Build tools and generators** (mobile or desktop) often add steps or flags so that *release* or *production* targets run signing with the right entitlements, then call **notarization** via `notarytool` (or the older `altool` flow). Some teams wrap this in **Fastlane** or a CI job that has access to a **one-time** sign-and-notarize path using API keys in the keychain of an **ephemeral** builder.
+
+**What “guarantees” the least pain:** a production pipeline that **always** does Developer ID signing + notarization + stapling for shippable artifacts, with **Hardened Runtime** and entitlements that match your app’s behavior.
+
+== Windows
+
+On Windows, **Authenticode** is the common desktop signing format. You sign **PE executables** and **installers** (MSI, etc.) with a code-signing certificate (files such as a `.pfx` or, better, a **hardware-protected** key).
+
+* **Time stamping** (RFC 3161) is important so signatures **remain verifiable** after the signing certificate’s **not-after** date.
+* **SmartScreen** uses reputation; **EV** (Extended Validation) code-signing is often used when teams want a **smoother** experience for new identities, but no certificate **guarantees** zero prompts on the first day.
+
+**Build tools and ecosystems** that produce `.exe` or installers often integrate **post-build signing**:
+
+* **MSBuild**-family projects can import targets that run `SignTool` after the linker.
+* **WiX** / **Inno Setup** and similar installer generators typically offer a “sign the output” phase or a documented `SignTool` hook.
+* **.NET** publishing can be configured to sign the produced binaries.
+* **Many cross-platform** packagers and desktop runtimes (Electron, Flutter, and others) call **optionally** into Windows signing if you provide certificate configuration and a password or token.
+
+CI systems usually store the certificate as a **protected secret** and run `SignTool` (or a vendor’s CLI) in the **last** build stage that produces the artifact users download.
+
+== Linux and other ecosystems
+
+**Linux** distributions do not mirror the Apple/Microsoft “one global signing + OS gate” model in the same way. Packaged software may use **GPG**-signed repositories, **Flatpak** has its OSTree signing, **Snaps** are signed in the store, and so on. The **friction** users feel is more about **trust of the source** and **package manager** policy than a single *developer certificate for a loose binary* in the same sense as Windows and macOS.
+
+== How build systems help (without binding you to one stack)
+
+The common pattern is **separation of concerns**:
+
+. **Compile and link** (or interpret and package) the application.
+. **Assemble** the distributable: `.app` bundle, `.msi`, `.deb`, a folder tree, and so on.
+. **Sign** the **exact bytes** the user will run or install, with **per-platform** tools.
+. **Notarize** or **attest** where the **platform** requires a second online step.
+. **Store** the artifact, upload to a **store** or **GitHub Release**, and keep **receipts** of which keys were used.
+
+**General-purpose** automation tools help by **scripting the same** sequence every time: CI templates that load secrets, **release** jobs that only run on tags, and **reproducible** steps so a missed signing step is a **build failure** rather than a surprise for users.
+
+**Specialized** desktop and mobile packagers often provide **one configuration block** (certificate thumbprint, key vault URL, notarization API key, and so on) and run the platform-specific commands for you, but the **concepts** above stay the same: the tool is wiring **industry-standard** signers, not replacing them.
+
+== Checklist (platform-agnostic)
+
+* [ ] **Identity:** Own the legal entity and certificates your users should trust.
+* [ ] **Separation:** Keep signing keys out of source control; use **HSM** or a **CI secret store** with **least privilege**.
+* [ ] **Per artifact:** Sign **ship candidates**; do not sign only a debug build while publishing a different file.
+* [ ] **Time stamps (Windows):** Use a supported **timestamp server** for long-lived verifiability.
+* [ ] **Notarization (macOS):** Plan for **staple**d artifacts when users are offline.
+* [ ] **Verify:** In CI, run the same **verify** tools users’ OSes will use (`spctl`, `codesign -vvv`, `signtool verify`, and so on) on the **finished** download.
+* [ ] **Document** for your team: which keys are for **dev**, **test**, and **release**, and **where** the release key lives.
+
+== Further reading (official)
+
+* link:https://developer.apple.com/support/code-signing/[Apple — Code signing]
+* link:https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution[Apple — Notarizing macOS software]
+* link:https://learn.microsoft.com/en-us/windows/win32/seccrypto/cryptography-tools[Microsoft — Windows cryptography tools (incl. SignTool)]
+
+This page is **explanatory**; for your own product’s **exact** commands, follow the documentation for the language, framework, and packager you use, then validate with the **vendor’s** signing and notarization guides.
+
+== Related
+
+* xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and Packaging]
+* xref:explanation/architecture/build-pipeline.adoc[Build Pipeline]
+* xref:business-bootstrap::index.adoc[Business Bootstrap] — org setup that eventually needs a signing identity

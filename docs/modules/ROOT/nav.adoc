@@ -103,6 +103,7 @@
 ***** xref:explanation/architecture/installation/linux.adoc[Linux installation]
 ***** xref:explanation/architecture/installation/bsd.adoc[BSD installation]
 ***** xref:explanation/architecture/installation/unified-layout.adoc[Unity Install Layout (UIL)]
+*** xref:explanation/architecture/code-signing-in-the-release-pipeline.adoc[Code signing in the release pipeline]
 *** xref:explanation/architecture/release-target-patterns.adoc[Release target patterns]
 *** xref:explanation/architecture/open-canvas-interchange.adoc[Open Canvas (OCIF)]
 *** xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)]

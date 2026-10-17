@@ -43,7 +43,7 @@ A serious Windows/macOS/Linux desktop install should provide:
 * File associations / URL protocol handlers when claimed
 * Add/Remove Programs (Windows) or equivalent uninstall
 * Upgrade that preserves user data
-* Code signing (Windows Authenticode; Apple notarization)
+* Code signing (Windows Authenticode; Apple notarization) — see xref:explanation/architecture/code-signing-in-the-release-pipeline.adoc[Code signing in the release pipeline]
 
 On Windows, prefer **MSI**, **MSIX**, or a well-behaved bundle that winget can ingest. Per-user installs reduce UAC friction for many tools; machine-wide fits enterprise.
 
