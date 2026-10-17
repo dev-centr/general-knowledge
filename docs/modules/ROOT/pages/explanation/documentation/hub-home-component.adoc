@@ -1,0 +1,78 @@
+= Hub home component (Overview + portal H1)
+:page-aliases: home::docs-site/hub-home-component.adoc,home::publishing/hub-home-component.adoc
+:navtitle: Hub home component
+:description: Recommended Antora pattern for org hub aggregators — component `home`, sidebar Overview, portal-branded start page, and avoiding `/docs/docs/` URLs.
+
+Multi-repo org hubs (this site, link:https://dlang-supplemental.github.io/docs/[D Lang Supplemental docs^]) share one **aggregator component** for portal pages, org roadmap, and publishing notes. Product repos stay separate Antora components wired through the playbook.
+
+Agent skill: `hub-home-overview` (canonical under `dev-centr/agent-rules`; xref:tools:agent-rules:skills-catalog.adoc[skills catalog]).
+
+== Component and playbook
+
+[cols="1,2",options="header"]
+|===
+| Setting | Value
+
+| Component `name`
+| `home`
+
+| Component `title`
+| `Home` (forest / picker label — not the sidebar first item)
+
+| Hub repo layout
+| Antora component under `\{org}/docs/docs/` (this repo). Playbook lists the hub source with `start_path: docs`.
+
+| `site.start_page`
+| `home::index.adoc`
+
+| Product repos
+| Each source uses `start_path: docs` → that repo’s `docs/` tree. Component `name:` matches the product (`agent-rules`, `uniconfig`, …), not `docs`.
+|===
+
+Example playbook header (trimmed):
+
+[source,yaml]
+----
+site:
+  start_page: home::index.adoc
+content:
+  sources:
+    - url: https://github.com/dev-centr/docs.git
+      branches: HEAD
+      start_path: docs
+----
+
+== Sidebar vs page title
+
+The hub **left nav** should lead with **Overview** — not Portal, Home, or the portal H1:
+
+[source,asciidoc]
+----
+* xref:index.adoc[Overview]
+* xref:where-docs-live.adoc[Where Documentation Lives]
+----
+
+The hub **index** page uses a **portal-branded H1** (this site: *DevCentr portal*; D Lang Supplemental: *D Lang Supplemental Portal*). That is an intentional exception to the usual “H1 = nav label” rule for teaching pages:
+
+[source,asciidoc]
+----
+= DevCentr portal
+:navtitle: Overview
+----
+
+Product component homes still follow the house Antora title rule (H1 = nav label; linked section parents, not `.Section` + Overview) — skill `antora-org-site` and agent-rules `general/documentation.md`.
+
+== Why not name the hub component `docs`
+
+When GitHub Pages (or `site.url`) already serves under `/docs`, a component named `docs` produces awkward paths such as `/docs/docs/…`. Name the aggregator **`home`** so published URLs use `/home/` (with `urls.html_extension_style: indexify`, the start page is the folder URL under that segment).
+
+`start_path: docs` in the playbook only tells Antora which **directory in each git repo** holds `antora.yml` — it does not set the public component id.
+
+== site-nav-tree
+
+On multi-component hubs, register `@antora-supplemental/site-nav-tree` with `home` first in `include` and `order`. Prefer **Overview** as the start-page nav label in product components so forest roots do not collide with the **Home** component title — see xref:explanation/documentation/antora-essential-extensions.adoc#site-wide-component-nav-tree[site-nav-tree] and link:https://github.com/antora-supplemental/site-nav-tree#hub-home-component-naming[site-nav-tree README — hub component naming^].
+
+== See also
+
+* xref:home::where-docs-live.adoc[Where documentation lives] — inventory and nav vs component picker
+* xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions]

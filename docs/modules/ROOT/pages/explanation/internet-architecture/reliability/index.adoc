@@ -80,4 +80,4 @@ image::internet-architecture/three-altitudes-diagram.svg["Three nested altitudes
 == Diagrams on this hub
 
 Internet Reliability pages use **build-time** Mermaid and PlantUML (via Kroki → SVG) plus hand-authored SVG mockups.
-See xref:home::docs-site/antora-diagram-formats.adoc[Antora diagram formats] on the docs hub.
+See xref:explanation/documentation/antora-diagram-formats.adoc[Antora diagram formats].

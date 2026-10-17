@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-10-17 -- Antora hub articles from Home docs-site
+
+* Canonical copies: xref:explanation/documentation/hub-home-component.adoc[Hub home component], xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions], xref:explanation/documentation/antora-diagram-formats.adoc[Antora diagram formats], xref:how-to/notify-docs-hub-link-changes.adoc[Hub link-cache invalidation] (from `dev-centr/docs` Home `docs-site/`). `:page-aliases:` preserve `home::docs-site/…` and legacy `home::publishing/…` URLs.
+* Nav: Documentation explanation group + how-to entry; `nav-typology.svg` copied for essential-extensions diagram.
+* Internet Reliability cross-links updated to same-component xrefs.
+
 == 2026-10-17 -- Fix Scriptbook host-awareness hub xref
 
 * xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks]: table link targets `tools:scriptbook:host-awareness.adoc` (was stale equivalence-engine coord).

@@ -1,0 +1,120 @@
+= Notify the docs hub of link changes
+:page-aliases: home::docs-site/notify-docs-hub-link-changes.adoc
+:navtitle: Hub link-cache invalidation
+:description: How content repos poke dev-centr/docs with repository_dispatch link-cache-invalidate and surgical link-validator invalidation.
+:page-audience: Hub maintainers and component-repo CI authors
+:page-usage-context: Multi-repo Antora aggregator on GitHub Actions
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-10-17
+
+Multi-repo hubs rebuild when something *pokes* the playbook repo — same star pattern as `extension-updated` and `docs-source-updated` (see link:https://docs.antora-supplemental.org/antora-deployment/#auto-rebuild-when-content-sources-or-extensions-update[Antora deployment: auto-rebuild^]).
+
+**Link-cache invalidation** adds optional *surgical* recheck hints for `@antora-supplemental/link-validator` (env `LINK_VALIDATOR_INVALIDATE_*`, v0.2.2+) while the hub still runs a full Antora generate and GitHub Pages deploy.
+
+Agent skill: `docs-hub-link-invalidate` (`dev-centr/agent-rules`).
+
+== Topology
+
+[source]
+----
+content repo push (docs/**) ──► repository_dispatch: link-cache-invalidate
+                                        │
+                                        ▼
+                              dev-centr/docs deploy.yml
+                                        │
+                    LINK_VALIDATOR_INVALIDATE_SOURCES / _URLS
+                                        │
+                                        ▼
+                         full generate → Pages (+ updated link cache)
+----
+
+== Hub subscriber (this repo)
+
+Workflow: `.github/workflows/deploy.yml` listens for:
+
+* `push` to `main`
+* `workflow_dispatch`
+* `repository_dispatch` types `extension-updated`, `link-cache-invalidate`
+
+On `link-cache-invalidate`, the build step maps `github.event.client_payload` to:
+
+| Payload field | Build env | Notes |
+|===|===|===
+| `sources` | `LINK_VALIDATOR_INVALIDATE_SOURCES` | Comma-separated string or JSON array |
+| `urls` | `LINK_VALIDATOR_INVALIDATE_URLS` | Comma-separated string or JSON array |
+| `ref` | checkout ref | Default `main` when omitted |
+| `source` | (log context) | Calling repo, e.g. `dev-centr/agent-rules` |
+| `sha` | (log context) | Caller commit |
+
+Deploy runs for `repository_dispatch` even when the hub checkout ref is not `refs/heads/main` (Pages still publishes the built artifact from the dispatched run).
+
+== Org secret checklist
+
+Use secret name **`DOCS_HUB_DISPATCH_TOKEN`** in every org that runs a docs hub. Each org stores **its own token value** (not one token shared across orgs).
+
+[cols="1,2",options="header"]
+|===
+| Org | Token must `repository_dispatch` into
+
+| dev-centr | `dev-centr/docs` (this hub)
+| dlang-supplemental | `dlang-supplemental/docs` — see https://dlang-supplemental.github.io/docs/notify-docs-hub-link-changes.html[DLang hub how-to^]
+| antora-supplemental | `antora-supplemental/docs` — see https://docs.antora-supplemental.org/notify-docs-hub-link-changes.html[Antora hub how-to^]
+|===
+
+Fine-grained PAT or GitHub App installation token; content repos inherit the org secret. Reusable workflows reference `secrets.DOCS_HUB_DISPATCH_TOKEN`. Callers skip dispatch when the secret is missing (configure before relying on auto-rebuild).
+
+== Fire a dispatch with `gh`
+
+Org admins store the token as organization secret **`DOCS_HUB_DISPATCH_TOKEN`** for the dev-centr org.
+
+[source,shell]
+----
+gh api repos/dev-centr/docs/dispatches \
+  -f event_type=link-cache-invalidate \
+  -f client_payload[source]=dev-centr/agent-rules \
+  -f client_payload[ref]=main \
+  -f client_payload[sha]=$(git rev-parse HEAD) \
+  -f client_payload[sources]=docs/modules/agent-rules/pages/usage.adoc \
+  -f client_payload[urls]=https://example.com/changed-target
+----
+
+Omit `sources` / `urls` to rebuild with the existing on-disk link cache (no surgical bypass).
+
+== Reusable caller workflow (org default)
+
+Canonical reusable workflow lives in `dev-centr/agent-rules`:
+
+* `.github/workflows/docs-hub-link-cache-invalidate-dispatch.yml` (`workflow_call`)
+* Exemplar thin caller: `.github/workflows/notify-docs-hub-link-invalidate.yml` (paths `docs/**`, `skills/**` on `main`)
+
+[source,yaml]
+----
+jobs:
+  notify:
+    uses: dev-centr/agent-rules/.github/workflows/docs-hub-link-cache-invalidate-dispatch.yml@main
+    secrets:
+      DOCS_HUB_DISPATCH_TOKEN: ${{ secrets.DOCS_HUB_DISPATCH_TOKEN }}
+    with:
+      hub_repo: dev-centr/docs
+      sources: 'docs/modules/my-component/pages/index.adoc'
+----
+
+Input `hub_repo` defaults to `dev-centr/docs`; override for other org hubs.
+
+== When to use which event
+
+[cols="1,2",options="header"]
+|===
+| Dispatch type | Use when
+
+| `docs-source-updated` | New or moved AsciiDoc; nav/playbook content refresh (no surgical link hints)
+| `extension-updated` | Theme, UI bundle, or Antora extension release
+| `link-cache-invalidate` | Docs or outbound link targets changed; optional surgical invalidation + hub rebuild
+|===
+
+== Related
+
+* xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions] — link-validator pin and cache file
+* https://github.com/antora-supplemental/asciidoc-link-validator#environment[asciidoc-link-validator env vars]
+* xref:home::where-docs-live.adoc[Where documentation lives]

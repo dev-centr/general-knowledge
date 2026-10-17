@@ -1,0 +1,190 @@
+= Antora essential extensions
+:page-aliases: home::docs-site/antora-essential-extensions.adoc,home::publishing/antora-essential-extensions.adoc
+:navtitle: Antora essential extensions
+:description: Extensions that should be treated as required until Antora core absorbs them, with upstream proposal links.
+
+This page lists Antora extensions DevCentr / OpenShellOrg / antora-supplemental treat as **essential**: behavior so basic that every docs site we ship should enable it, and that we argue belongs closer to Antora core (or at least in every playbook by default).
+
+Playbook URL style (not an extension): set `urls.html_extension_style: indexify` so published pages use folder paths (`…/email/` for `email/index.adoc`). Canonical links and the sitemap follow that URL. Section landings stay `index.adoc` with a **linked parent** in nav (link text = H1); do not use `.Section` + Overview, do not invent `overview.adoc`, and do not advertise `index.html` in prose. See link:https://docs.antora.org/antora/latest/page/url-format/[Antora: URL format^] for upstream URL rules.
+
+== Essential Extensions / Extensions that should be in core
+
+=== Site search (`@antora/lunr-extension`)
+
+*Package:* link:https://gitlab.com/antora/antora-lunr-extension[`@antora/lunr-extension`] (official Antora extension)
+
+*Problem:* Without Lunr, the site has no client-side full-text search. Users (and Valentus Search/Ask chrome) expect a working omnibox.
+
+*Behavior:* Indexes published pages at build time and ships a browser search UI. Valentus and related themes assume Lunr (or a wrapper such as `@antora-supplemental/antora-search-chat`) is present.
+
+*Playbook:*
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+----
+
+Install the package in the playbook repo (`pnpm add -D @antora/lunr-extension`). Register Lunr **before** any wrapper that depends on it (for example `antora-search-chat`).
+
+*Upstream:* Lunr is the official search extension — see link:https://docs.antora.org/antora/latest/extend/add-search-to-site/[Add search to the site^]. Treat it as mandatory site plumbing for every Antora site we publish—not optional polish.
+
+=== Site-wide component nav tree (`@antora-supplemental/site-nav-tree`)
+
+*Package:* link:https://github.com/antora-supplemental/site-nav-tree[`@antora-supplemental/site-nav-tree`]
+
+*Problem:* The Default UI (and Valentus tree-only chrome) shows only the **current component's** nav. Other components hide behind a drawer or breadcrumbs. Multi-component hubs make whole sections easy to miss (Org infra vs encyclopedia Infrastructure).
+
+*Behavior:* After Antora builds per-component navigation, wrap `NavigationCatalog#getNavigation` so each page receives a **site-wide forest** of **curated** roots (existing nav trees as children). Stock `nav-tree` + expand/collapse JS stay — **not** a full navigator replacement. Prefer an **`include` allowlist**: registering a content source publishes pages/xrefs but does **not** add a sidebar root. Align the breadcrumb component picker with the same curation (`site.keys.site_nav_tree_*`).
+
+*Playbook:*
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora-supplemental/site-nav-tree'
+      include: [home, general-knowledge, business-bootstrap, agent-rules]
+      order: [home, general-knowledge, business-bootstrap, agent-rules]
+----
+
+Valentus: copy the package's `ui/partials/nav-menu.hbs` into hub `supplemental-ui/partials/` to drop the redundant current-component title line.
+
+Copy `@antora-supplemental/nav-typology` companion UI into hub `supplemental-ui/` (`partials/nav-tree.hbs`, `helpers/nav-typology.js`, `helpers/strip-nav-typology-emoji.js`, `css/nav-typology.css`, `img/nav-typology.svg`) after enabling the extension in the playbook.
+
+==== Multi-nav files vs `include::` (component modules)
+
+Antora allows multiple `nav:` entries in `antora.yml`. Each file becomes a **separate nav tree** concatenated as **siblings** under the component—not nested under your linked parents.
+
+**Anti-pattern:** list `modules/ROOT/nav.adoc`, `modules/specifications/nav.adoc`, `modules/secrets-manager/nav.adoc`, … in `antora.yml`. The sidebar then shows Secrets Manager `.Overview & design` as if it were DevCentr IA, and clicking a deep spec page can collapse the product overview branch (especially with site-nav-tree).
+
+**Preferred:** one `nav:` entry on ROOT; nest modules with `include::module$nav.adoc[]` under the linked parent (`* xref:platforms:secrets-manager:index.adoc[Secrets Manager]`). The included file uses `**` / `***` depth under that parent.
+
+[.themed-svg]
+image::nav-typology.svg[Nav typology: single tree with includes vs parallel multi-nav trees,width=760]
+
+Hub companion JS (`supplemental-ui/js/site-nav-tree-current.js`) prefers the deepest `is-current-page`, expands only that ancestry (`is-current-path`), and restores other open trees from `sessionStorage` across navigations. In-doc link crossfade + scroll preservation: `supplemental-ui/js/site-doc-nav.js`. Wide AsciiDoc tables: `supplemental-ui/js/adt-table-scroll.js` (see xref:home::docs-site/antora-ui-branding.adoc#wide-asciidoc-tables[wide table scroll] on the DevCentr hub).
+
+*Upstream note for `@antora-supplemental/site-nav-tree`:* multi-nav concatenation behavior is documented in the extension README (hub diagram: `nav-typology.svg` above).
+
+=== Nav typology icons (`@antora-supplemental/nav-typology`)
+
+*Package:* link:https://github.com/antora-supplemental/nav-typology[`@antora-supplemental/nav-typology`]
+
+*Problem:* Structural nav labels (Diátaxis buckets, spec groupings) encoded as Unicode emoji render differently on every OS font and cannot share a site color palette.
+
+*Behavior:* Enriches navigation at build time and renders a shared SVG sprite in the sidebar via companion `nav-tree` partial + Handlebars helpers. Strips leading structural emoji from nav titles when an icon replaces them. Tags changelog / activity-log entries and hoists them near the top of each nav branch (second slot after the landing link).
+
+*Hub overlay:* site-nav-tree component roots use accent expand chevrons (not the generic `component-root` typology sprite). Optional per-component app logos: `supplemental-ui/helpers/nav-component-logo.js` + `supplemental-ui/img/nav-logos/` (Antora component name → SVG/PNG). Typology icons apply to Diátaxis, spec, and changelog rows deeper in the tree.
+
+*Companion UI:* copy `ui/partials/nav-tree.hbs`, `ui/helpers/*.js`, `ui/css/nav-typology.css`, and `ui/img/nav-typology.svg` from the package into hub `supplemental-ui/`; add hub `nav-component-logo.js`; link `nav-typology.css` in `head-meta.hbs` (same pattern as `site-math.css`).
+
+*Optional Diátaxis plugin:* link:https://github.com/antora-supplemental/nav-typology-diataxis[`@antora-supplemental/nav-typology-diataxis`] — path/title auto-detection for tutorial / how-to / reference / explanation. Omit on non-Diátaxis sites.
+
+*Playbook:* register **after** `site-nav-tree`.
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora-supplemental/site-nav-tree'
+      include: [home, general-knowledge]
+    - require: '@antora-supplemental/nav-typology'
+    - require: '@antora-supplemental/nav-typology-diataxis'
+----
+
+*Upstream:* Prefer this over hand-pasting 🎓/🛠️/📚/🧠 in every `nav.adoc`. Expressive emoji stays available for CTAs and prose.
+
+=== Alias versioned component root → latest start page
+
+*Package:* link:https://github.com/antora-supplemental/antora-alias-component-to-latest[`@antora-supplemental/alias-component-to-latest`]
+
+*Problem:* A component with only numbered versions (`0.2.0`, `1.0`, …) publishes under `/component/0.2.0/`. The bare URL `/component/` 404s. Shared links and naive “open the component” navigation break.
+
+*Behavior:* For each component that has no empty/`version: ~` version, register a versionless alias of `ROOT` `index.adoc` (latest start page) so `/component/` routes to the latest start page. Same algorithm as the official Antora extension use case.
+
+*Playbook:*
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora-supplemental/alias-component-to-latest'
+----
+
+*Upstream:* This should be an opt-in core playbook key (for example `urls.alias_component_to_latest: true`), not a forever copy-paste extension. Antora already documents the snippet; core should own the switch.
+
+*Proposal / discussion:* link:https://gitlab.com/antora/antora/-/issues/291[antora/antora#291] (closed after `#314`; remaining gap is bare `/component/` → latest, not symbolic `latest`/`current`). Comment on that thread rather than opening a duplicate unless maintainers ask for a new issue.
+
+*Official use-case docs:* link:https://docs.antora.org/antora/latest/extend/extension-use-cases/#redirect-from-component-to-latest-version[Redirect from component to latest version]
+
+=== Build-time diagrams (Mermaid + PlantUML → SVG)
+
+*Package:* link:https://github.com/ggrossetie/asciidoctor-kroki[`asciidoctor-kroki`] (Kroki)
+
+*Problem:* Runtime-only Mermaid leaves published pages dependent on CDN JS and skips PlantUML. Authors need two stable text-diagram formats that ship as SVG.
+
+*Behavior:* At Antora build time, Mermaid and PlantUML blocks are converted to SVG via Kroki (`kroki-fetch-diagram: true` embeds them so readers do not call Kroki at view time).
+
+*Playbook:* See xref:explanation/documentation/antora-diagram-formats.adoc[Antora diagram formats]. Compose with Lunr/math/Valentus via link:https://github.com/antora-supplemental/facto-stack[`facto-stack`] — not by loading extras into Valentus core.
+
+=== Math formulas (KaTeX + AsciiDoc `stem`)
+
+*Problem:* Docs borrow equations from design notes and leave them as raw `$Hash(…)$` or plain text. Sites without a math renderer cannot grow into technical explanation pages without a retrofit.
+
+*Behavior:* Every Antora site enables `stem: latexmath` in the playbook and loads KaTeX auto-render (`site-math.js` / `site-math.css` in Valentus, mirrored into org `supplemental-ui` until the next Valentus UI bundle release). Authors write `stem:[a^2+b^2=c^2]` or `[stem]` blocks. Markdown/Astro sites use `remark-math` + `rehype-katex` (or equivalent) with KaTeX CSS.
+
+*Playbook:*
+
+[source,yaml]
+----
+asciidoc:
+  attributes:
+    stem: latexmath
+----
+
+Load KaTeX even when the current corpus has zero formulas — plumbing, not polish.
+
+=== Emoji literals + Twemoji (`@antora-supplemental/asciidoctor-emoji-literals` + `asciidoctor-emoji`)
+
+*Packages:* link:https://github.com/antora-supplemental/asciidoctor-emoji-literals[`@antora-supplemental/asciidoctor-emoji-literals`] (interim preprocessor) + link:https://www.npmjs.com/package/asciidoctor-emoji[official npm `asciidoctor-emoji@0.5.x`]
+
+*Problem:* Authors paste Unicode emoji (🚀) into AsciiDoc. Official 0.5.x only converts explicit `emoji:rocket[]` macros. Antora 3 still uses `@asciidoctor/core` 2.x/3.x, so asciidoctor-emoji 1.x (core 4) is not available yet.
+
+*Behavior:* The literals extension rewrites known Unicode emoji in prose to `emoji:name[]` before parsing; `asciidoctor-emoji` renders Twemoji (or playbook `emoji-pattern`). Listing/passthrough/literal blocks are skipped. Opt out with `:emoji-literals: false`. When link:https://github.com/ggrossetie/asciidoctor-emoji/pull/104[upstream literal support] ships on core 4, remove the interim package and keep `asciidoctor-emoji` only.
+
+*Playbook:*
+
+[source,yaml]
+----
+asciidoc:
+  extensions:
+    - '@antora-supplemental/asciidoctor-emoji-literals'
+    - asciidoctor-emoji
+----
+
+Registered in link:https://github.com/antora-supplemental/facto-stack[facto-stack] by default.
+
+=== Build stack footer (`@antora-supplemental/build-stack`)
+
+*Package:* link:https://github.com/antora-supplemental/build-stack[`@antora-supplemental/build-stack`]
+
+*Problem:* Site footers credit the UI theme only. The real stack — Lunr, site-nav-tree, nav-typology, Kroki, page-context — lives in playbook YAML but Antora never exposes `antora.extensions` or `asciidoc.extensions` to Handlebars.
+
+*Behavior:* On `playbookBuilt`, publishes linked HTML to `site.keys.build_stack_antora_html` / `build_stack_asciidoc_html` and infers `ui_bundle_name` / `ui_bundle_url` from `ui.bundle.url`. Copy companion `ui/partials/footer-build-stack.hbs` into hub `supplemental-ui` and `{{> footer-build-stack}}` from `footer-content.hbs`.
+
+*Playbook:*
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - '@antora-supplemental/build-stack'
+----
+
+Registered in link:https://github.com/antora-supplemental/facto-stack[facto-stack] by default.
+
+== Related
+
+* xref:home::docs-site/antora-ui-branding.adoc[Antora UI branding] (DevCentr hub playbook)

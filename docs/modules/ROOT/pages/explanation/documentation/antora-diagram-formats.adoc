@@ -1,0 +1,238 @@
+= Antora diagram formats
+:page-aliases: home::docs-site/antora-diagram-formats.adoc,home::publishing/antora-diagram-formats.adoc
+:navtitle: Antora diagram formats
+:description: Supported diagram paths for Antora hubs: bake SVG at build (Kroki/Themed SVG), ship client Mermaid, or hybrid per diagram — plus zoom/lightbox chrome.
+
+Antora does **not** force a diagram engine.
+DevCentr / antora-supplemental hubs support two first-class strategies (and a hybrid):
+
+[cols="1,2,2"]
+|===
+| Option | When to use | Theme story
+
+| **A — Bake SVG at build**
+| Default for hubs; PlantUML; offline/print; no JS required for the figure
+| Fixed-color Kroki `<img>`, or Themed SVG adaptive/host for dark-mode toggle
+
+| **B — Client render engine**
+| Mermaid that must re-theme without dual SVG forks (DeepWiki-style)
+| Mermaid `theme` / `themeVariables` (and CSS) at runtime; source stays in HTML until JS runs
+
+| **Hybrid**
+| Bake PlantUML (or stable Mermaid) and keep selected Mermaid client-side
+| Per-block choice on the same site
+|===
+
+Text formats at a glance:
+
+[cols="1,2,2"]
+|===
+| Format | AsciiDoc form | Engine path
+
+| Mermaid
+| `[source,mermaid]` / `[mermaid]` (bake) or `[.mermaid-client]` + `[source,text]` (client)
+| Kroki bake **or** `@antora-supplemental/mermaid-client` (CDN runtime; preferred)
+
+| PlantUML
+| `[plantuml]` / `[source,plantuml]`
+| Kroki build SVG (client PlantUML is harder; not shipped)
+
+| Hand SVG
+| `image::…​.svg[]` under `modules/*/images/`
+| Author file (+ optional Themed SVG pipeline)
+|===
+
+== Option A — Bake SVG at build (Kroki / Themed SVG)
+
+`asciidoctor-kroki` converts diagram blocks to SVG **during** `antora` when `kroki-fetch-diagram: true`.
+Readers never call Kroki; the published page has an `<img>` (or you post-process into Themed SVG artifacts).
+
+.Pros
+* Works without JavaScript; good for print, SSR, and broken-CDN resilience.
+* PlantUML and Mermaid share one gateway.
+* Self-hosted Kroki avoids public `kroki.io` Mermaid 500s.
+
+.Cons
+* Raw Kroki embeds are **fixed-color** — `html.dark-theme` does not recolor `<img>` pixels.
+* Theme-aware figures need the Themed SVG pipeline (extra generate/check step) or dual light/dark files.
+* Incomplete dark text in adaptive SVGs surfaces as build **WARN**s (see below).
+
+=== Playbook wiring (this hub)
+
+[source,yaml]
+----
+asciidoc:
+  extensions:
+    - asciidoctor-kroki
+  attributes:
+    stem: latexmath
+    kroki-server-url: http://127.0.0.1:8000
+    kroki-fetch-diagram: true
+----
+
+Install: `pnpm add -D asciidoctor-kroki` in the playbook repo.
+
+=== Self-hosted Kroki (local + CI)
+
+Local sibling builds and GitHub Actions both use `yuzutech/kroki` + `yuzutech/kroki-mermaid` on `http://127.0.0.1:8000`.
+
+[source,shell]
+----
+pnpm kroki:up
+pnpm build
+pnpm kroki:down
+----
+
+Mermaid is a **companion** service — the gateway alone answers **503** for `/mermaid/*`.
+CI starts the same images as job `services`.
+
+One-off public server:
+
+[source,shell]
+----
+pnpm antora --attribute kroki-server-url=https://kroki.io antora-playbook-local.yml
+----
+
+=== Theme-aware figures (Themed SVG)
+
+****
+DevCentr Themed SVG / bake pipeline remains **live but unmaintained** — do not gut it when adopting client Mermaid.
+****
+
+Post-process renderer SVG in CI:
+
+[cols="1,2,2"]
+|===
+| Source | Adapter | Contract
+
+| Mermaid (`.mmd` / `mmdc`)
+| link:https://github.com/dev-centr/mermaid-svg-css-vars[`@dev-centr/mermaid-svg-css-vars`]
+| link:https://github.com/dev-centr/themed-svg[Themed SVG] adaptive + host
+
+| PlantUML (`.puml` / Kroki)
+| link:https://github.com/dev-centr/plantuml-svg-css-vars[`@dev-centr/plantuml-svg-css-vars`]
+| same
+|===
+
+Serve with a `[.themed-svg]` image role so the hub runtime can inline the host SVG.
+
+.Dark-text completeness (build WARN)
+****
+Adaptive Themed SVG fallbacks should use lighter text when the dark palette darkens the background (component `diagrams:generate` / `diagrams:build` checks help).
+The hub playbook loads `lib/verify-themed-svg-dark-mode.js`, which at Antora `contentClassified` emits **one WARN per finding** (per diagram / issue) in plain language — not a single rollup with details hidden at info.
+Example: `WARN themed-svg-dark-text: Dark-mode picture agent-cli-auth-flow.svg still has dark text that will be hard to read. Try lighter text for dark backgrounds.`
+Borrow from light:: Keep intentional light islands by matching dark preset values to light (for example `access-mock-*` UI mocks), or list token ids in `borrowFromLight` (stripped before the transformer). If a surface stays light, nested text for that region should stay light-looking too. The check skips light-stable figures and still flags darkened backgrounds that left light-mode text behind.
+****
+
+These adapters are general-purpose packages in **dev-centr**; Antora importance is compose/recommend (see link:https://antora-supplemental.org/facto-stack/[facto-stack]; GitHub: link:https://github.com/antora-supplemental/facto-stack[antora-supplemental/facto-stack]), not forks into antora-supplemental.
+
+== Option B — Ship client render engines (Mermaid first)
+
+DeepWiki-style sites keep Mermaid **source** in the page payload and draw SVG **after** JS.
+Pre-JS HTML has no `mermaid-*` SVG ids; ids such as `mermaid-pn8g0g8w28` appear only post-render.
+That is why they can theme light/dark with Mermaid `theme` / `themeVariables` (and CSS) **without** dual checked-in SVG forks.
+
+.Pros
+* One source; theme follows `html.dark-theme` on (re)render.
+* No Kroki round-trip for those blocks; no Themed SVG generate step for them.
+
+.Cons
+* Requires JavaScript (and a Mermaid bundle / CDN).
+* PlantUML-in-browser is heavier (not shipped here).
+* SEO/print see source text or empty hosts until JS runs.
+* SoftNav pages must re-run the helper on `SoftNav.loaded` (hub `site-mermaid.js` already does).
+
+=== How to enable on an Antora hub
+
+Prefer the maintained packages from link:https://github.com/antora-supplemental/antora-diagram-engines[`antora-supplemental/antora-diagram-engines`]:
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora-supplemental/mermaid-client/antora'
+      # CDN default: pinned jsDelivr Mermaid 11.6.0
+    - require: '@antora-supplemental/diagram-lightbox'
+asciidoc:
+  extensions:
+    - asciidoctor-kroki   # PlantUML / other bake formats
+  attributes:
+    mermaid-client: ''
+    mermaid-client-mode: client
+    kroki-fetch-diagram: true
+----
+
+Theme partials (this hub): `{{> mermaid-client-styles}}` / `{{> mermaid-client-scripts}}` and `{{> diagram-lightbox-styles}}` / `{{> diagram-lightbox-scripts}}` in supplemental head/footer.
+The Antora entries inject `site-mermaid.js/css` and lightbox assets into the UI catalog (CDN config via `mermaid-client-config`).
+Do **not** also vendor duplicate `site-mermaid.js` / lightbox scripts in supplemental-ui — that double-inits Mermaid.
+
+With `mermaid-client-mode: client`, `[source,mermaid]` listings become client hosts **before** Kroki bake (PlantUML and other formats still use Kroki).
+
+.Author a client Mermaid sample (flip a page)
+****
+With playbook `mermaid-client-mode: client`, plain `[source,mermaid]` is enough (extension converts before Kroki). Hybrid authors can still use a listing Kroki will **not** claim (`[source,text]`) plus an explicit role:
+
+[source,asciidoc]
+----
+[.mermaid-client]
+[source,text]
+----
+flowchart TD
+  A[Bake SVG] -->|stable UML| B[Kroki]
+  A2[Client Mermaid] -->|theme toggle| C[Runtime SVG]
+----
+----
+
+Or a bare passthrough host:
+
+[source,asciidoc]
+----
+++++
+<pre class="mermaid">flowchart LR
+  X[Source in HTML] --> Y[SVG after JS]
+</pre>
+++++
+----
+
+After build, view-source should show the Mermaid text (no baked `<img>` for that block).
+With JS on, an SVG appears inside `.adt-mermaid`.
+****
+
+Theming knobs: Mermaid `themeVariables` inside `mermaid.initialize({…})` in `site-mermaid.js`, plus `site-mermaid.css` using `--adt-*` tokens.
+
+== Hybrid — choose per diagram or per site
+
+| Goal | Pattern |
+|---|---|
+| Site mostly bake | Keep `asciidoctor-kroki` + `kroki-fetch-diagram: true`. Use `[mermaid]` / `[plantuml]` as today. |
+| One Mermaid client-side | Keep Kroki for PlantUML / other Mermaid; author that figure as `[.mermaid-client]` + `[source,text]` (or `pre.mermaid`). |
+| Site mostly client Mermaid | Require `@antora-supplemental/mermaid-client/antora` with `mermaid-client-mode: client` (this hub). Keep Kroki for PlantUML. |
+
+When Kroki converts a `[mermaid]` block, the listing becomes an image — `site-mermaid.js` finds nothing to re-render (no double draw). That is intentional for Option A.
+
+== Diagram lightbox (zoom / pan)
+
+UX name: **lightbox**. Package id: link:https://github.com/antora-supplemental/antora-diagram-engines/tree/main/packages/diagram-lightbox[`@antora-supplemental/diagram-lightbox`]
+(patterns from chassis `diagram-zoom`).
+
+* In-article chrome on `.doc .imageblock` and client Mermaid hosts: zoom in/out, reset, expand.
+* Lightbox overlay: drag-pan, wheel-zoom, Esc/backdrop/close; labeled buttons; basic focus cycle.
+* SoftNav-safe; in-article wheel zoom requires Ctrl/Cmd so left-nav scroll is not stolen.
+* Styles use `--adt-*` tokens (Valentus / DevCentr light+dark).
+
+This hub requires the package in the playbook and includes `{{> diagram-lightbox-styles}}` / `{{> diagram-lightbox-scripts}}` (assets injected into the UI catalog).
+Opt out of a single figure with role/class `no-diagram-zoom` when needed.
+
+== facto-stack pack (not Valentus core)
+
+Valentus UI stays a **lean theme**.
+Reusable playbook defaults (Valentus + Lunr + stem/math + Kroki diagrams + related essentials) live in the separate compose pack link:https://github.com/antora-supplemental/facto-stack[`antora-supplemental/facto-stack`] — the *facto-stack* compose pack, discovered by pack name like a VS Code extension pack, not forced into the Valentus `v2` rolling tag.
+Client Mermaid + diagram lightbox (`diagram-lightbox`) are **supported supplemental options** on top of facto-stack, not Valentus core.
+
+== Related
+
+* xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions]
+* xref:home::docs-site/antora-ui-branding.adoc[Antora UI branding] (DevCentr hub)
+* xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability] (uses both formats)
+* link:https://github.com/antora-supplemental/antora-diagram-engines[antora-diagram-engines] (mermaid-client + diagram-lightbox)
+* link:https://github.com/antora-supplemental/antora-ui-chassis/tree/main/packages/diagram-zoom[Chassis diagram-zoom patterns]
