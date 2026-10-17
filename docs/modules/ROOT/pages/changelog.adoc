@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-10-17 -- Fix Scriptbook host-awareness hub xref
+
+* xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks]: table link targets `tools:scriptbook:host-awareness.adoc` (was stale equivalence-engine coord).
+
 == 2026-10-17 -- Email, org-infra, and funding concepts rehomed from Business Bootstrap
 
 * Twelve general-knowledge pages (email lanes, Cloudflare Routing limits, DMARC path, Resend DNS roles, provider comparison, org infra repo pattern, Pulumi Cloud and state, OSS funding, donation ask) now live here; Business Bootstrap links to them. Old URLs alias.

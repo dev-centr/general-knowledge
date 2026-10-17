@@ -265,7 +265,7 @@ Concrete script cells stay valid. Mixed books are the sweet spot: Nushell for gl
 | xref:platforms:specifications:features/scriptbook-system-playbooks.adoc[DevCentr Scriptbook spec]
 | Product pointer (not SLP, not shell translation)
 
-| xref:tools:equivalence-engine:host-awareness.adoc[Equivalence Engine: Host Awareness]
+| xref:tools:scriptbook:host-awareness.adoc[Bake vs run]
 | Bake vs run; `--list` / `--format`; `--to` stays a host alias
 
 | link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Blog essay]
