@@ -195,7 +195,7 @@ Docs hub repositories use GitHub **repository topics** for release fan-out (`gh 
 
 Do **not** tag transitive pack members when the hub only requires facto-stack (no `linkinator`, `page-edit`, `antora-search-chat`, `nav-typology`, `build-stack`, … topics unless the hub also pins them). Compose packs and the footer *Extensions* line already communicate the stack.
 
-Canonical checklist: link:https://antora-supplemental.org/docs/home/hub-github-topics.html[Hub GitHub topics^] (antora-supplemental/docs). DevCentr hub detail: xref:home::docs-site/antora-ui-branding.adoc#_github_repository_topics_direct_deps[Antora UI branding — GitHub topics].
+Canonical checklist: link:https://docs.antora-supplemental.org/docs/hub-github-topics/[Hub GitHub topics^] (antora-supplemental/docs). DevCentr hub detail: xref:home::docs-site/antora-ui-branding.adoc#_github_repository_topics_direct_deps[Antora UI branding — GitHub topics].
 
 == Related
 

@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-10-17 -- Hub GitHub topics canonical URL
+
+* xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions]: link to `docs.antora-supplemental.org/docs/hub-github-topics/` (was apex `/docs/home/…` 404).
+
 == 2026-10-17 -- Antora hub articles from Home docs-site
 
 * Canonical copies: xref:explanation/documentation/hub-home-component.adoc[Hub home component], xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions], xref:explanation/documentation/antora-diagram-formats.adoc[Antora diagram formats], xref:how-to/notify-docs-hub-link-changes.adoc[Hub link-cache invalidation] (from `dev-centr/docs` Home `docs-site/`). `:page-aliases:` preserve `home::docs-site/…` and legacy `home::publishing/…` URLs.
