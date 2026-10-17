@@ -1,4 +1,5 @@
 = Code signing in the release pipeline
+:page-aliases: home::publishing/code-signing-in-the-release-pipeline.adoc
 :navtitle: Code signing in the release pipeline
 :description: Why OS vendors require signing, what each platform expects, and how build tools and CI can automate the work.
 
