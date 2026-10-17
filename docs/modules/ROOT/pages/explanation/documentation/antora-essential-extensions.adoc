@@ -185,6 +185,18 @@ antora:
 
 Registered in link:https://github.com/antora-supplemental/facto-stack[facto-stack] by default.
 
+=== GitHub topics on hub playbooks (direct deps only)
+
+Docs hub repositories use GitHub **repository topics** for release fan-out (`gh search repos --topic valentus-theme`). Tag **direct** dependencies only:
+
+* Playbook top-level `require:` (including `@antora-supplemental/facto-stack` → topic `facto-stack`)
+* Hub `package.json` pins (including supplemental-ui sync and maint tooling)
+* UI bundle → `valentus-theme`
+
+Do **not** tag transitive pack members when the hub only requires facto-stack (no `linkinator`, `page-edit`, `antora-search-chat`, `nav-typology`, `build-stack`, … topics unless the hub also pins them). Compose packs and the footer *Extensions* line already communicate the stack.
+
+Canonical checklist: link:https://antora-supplemental.org/docs/home/hub-github-topics.html[Hub GitHub topics^] (antora-supplemental/docs). DevCentr hub detail: xref:home::docs-site/antora-ui-branding.adoc#_github_repository_topics_direct_deps[Antora UI branding — GitHub topics].
+
 == Related
 
 * xref:home::docs-site/antora-ui-branding.adoc[Antora UI branding] (DevCentr hub playbook)
