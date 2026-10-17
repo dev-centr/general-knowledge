@@ -185,17 +185,16 @@ antora:
 
 Registered in link:https://github.com/antora-supplemental/facto-stack[facto-stack] by default.
 
-=== GitHub topics on hub playbooks (direct deps only)
+=== GitHub topics on hub playbooks (facto-stack as provider)
 
-Docs hub repositories use GitHub **repository topics** for release fan-out (`gh search repos --topic valentus-theme`). Tag **direct** dependencies only:
+Docs hub repositories use GitHub **repository topics** for release fan-out (`gh search repos --topic facto-stack`). Tag the **provider** the hub declares:
 
-* Playbook top-level `require:` (including `@antora-supplemental/facto-stack` → topic `facto-stack`)
-* Hub `package.json` pins (including supplemental-ui sync and maint tooling)
-* UI bundle → `valentus-theme`
+* Hub on `@antora-supplemental/facto-stack` → topic **`facto-stack` only**.
+* Hub on Valentus with no compose pack → `valentus-theme` (plus any extension it directly requires).
 
-Do **not** tag transitive pack members when the hub only requires facto-stack (no `linkinator`, `page-edit`, `antora-search-chat`, `nav-typology`, `build-stack`, … topics unless the hub also pins them). Compose packs and the footer *Extensions* line already communicate the stack.
+facto-stack supplies page-context, site-nav-tree, soft-nav-page-toc, nav-typology, link-validator, linkinator, page-edit, antora-search-chat, build-stack, and the maint CLIs (`facto-maint`), so none of those topics belong on a pack hub. The hub `package.json` declares `facto-stack` and `antora`; `supplemental-ui` files are hub-owned copies, not pins. The Valentus UI bundle is a release asset named in `ui.bundle.url`, not an npm dependency of the pack, and it pairs with the pack — no separate `valentus-theme` topic.
 
-Canonical checklist: link:https://docs.antora-supplemental.org/docs/hub-github-topics/[Hub GitHub topics^] (antora-supplemental/docs). DevCentr hub detail: xref:home::docs-site/antora-ui-branding.adoc#_github_repository_topics_direct_deps[Antora UI branding — GitHub topics].
+Canonical checklist: link:https://docs.antora-supplemental.org/docs/hub-github-topics/[Hub GitHub topics^] (antora-supplemental/docs). DevCentr hub detail: xref:home::docs-site/antora-ui-branding.adoc#_github_repository_topics_facto_stack_provider[Antora UI branding — GitHub topics].
 
 == Related
 
