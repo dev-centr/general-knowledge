@@ -29,6 +29,8 @@ Explanation pages teach **why**. Start with architecture if you are building a p
 
 Toolchain management, shells, WSL, IaC, MCP/studio install strategies, xref:explanation/infrastructure/abstract-playbooks.adoc[abstract playbooks] (PlayTime / Scriptbook / Equivalence Engine), xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model], xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token], xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries], xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites] (including xref:explanation/infrastructure/access-in-front-of-static-sites.adoc#how-github-org-membership[how GitHub org membership is checked]), and related topics live under Explanation → Infrastructure in the nav.
 
+Org infra: xref:explanation/infrastructure/org-infra-repo-pattern.adoc[Org infra repo pattern], xref:explanation/infrastructure/pulumi-cloud-org-model.adoc[Pulumi Cloud org model], xref:explanation/infrastructure/pulumi-secrets-vs-state.adoc[Pulumi secrets vs stack state] (Business Bootstrap links here).
+
 Featured agent / studio topics:
 
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
@@ -40,6 +42,15 @@ Featured agent / studio topics:
 * xref:explanation/infrastructure/google-cloud-project-mental-model.adoc[Google Cloud projects as OAuth boundaries]
 * xref:explanation/infrastructure/secrets-distribution-hub.adoc[Secrets distribution hub]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog] (reference master list)
+
+== Email
+
+* xref:explanation/email/index.adoc[Email] — lanes, Cloudflare Routing limits, personal Gmail send-as, DMARC policy path, Resend DNS roles (setup path: xref:business-bootstrap::email/index.adoc[Business Bootstrap email])
+
+== Funding
+
+* xref:explanation/funding/oss-funding-landscape.adoc[OSS funding landscape] — fiscal hosts, grants, sponsorships, bounties
+* xref:explanation/funding/donation-ask-ideas.adoc[Donation ask ideas] — on-site ask patterns that show raised amount and goal
 
 == AI literacy
 

@@ -1,0 +1,60 @@
+= Human vs product messaging
+:description: Why personal SMTP / Gmail send-as choices differ from app transactional and marketing journey stacks.
+:page-aliases: business-bootstrap::explanation/human-vs-product-messaging.adoc
+
+Two conversations often get conflated. They optimize for different jobs.
+
+[cols="1,2,2",options="header"]
+|===
+| Context | Job to be done | What "good" optimizes for
+
+| **Human / org email**
+| Custom-domain inbox, Gmail "Send mail as", DMARC/SPF/DKIM, cheap SMTP for people
+| Setup friction, seat cost, collaborator access, DNS simplicity
+
+| **Product messaging**
+| App-triggered mail, behavioral journeys, multi-channel (email/SMS/push)
+| API DX, event model, deliverability for product mail, orchestration
+|===
+
+== Locked lane split
+
+[cols="1,1,2",options="header"]
+|===
+| Lane | Provider | Why
+
+| Product / app mail
+| **Resend**
+| Best DX for code; keep quota and reputation for automated sends. Restrict Resend to the application.
+
+| Human correspondence / Gmail send-as
+| **ZeptoMail**
+| Mail Agents, collaborator perms, pay-as-you-go, purpose-built SMTP without burning the app ESP.
+
+| Product marketing + journeys
+| **Customer.io** (+ Twilio for SMS)
+| Event-driven multi-channel orchestration. Prefer over Brevo when the product emits events.
+
+| Inbound to personal Gmail
+| **Cloudflare Email Routing**
+| Free receive/forward; not an outbound SMTP product on the free tier.
+|===
+
+Resend SMTP *technically* works for Gmail "Send mail as" (host `smtp.resend.com`, username literally `resend`, password = API key). Treat that as a footnote only — **possible, not recommended**. Most teams should keep Resend in the repo and give humans ZeptoMail.
+
+== Diagram
+
+```
+Email need
+├── Human correspondence
+│   ├── Inbound → Cloudflare Email Routing
+│   ├── Outbound → ZeptoMail SMTP (per-user keys)
+│   └── Auth → DMARC p=none → quarantine → reject
+└── Product messaging
+    ├── Hard transactional → Resend (API)
+    ├── Journeys / marketing → Customer.io
+    ├── SMS → Twilio (under CIO)
+    └── Separate marketing subdomain (e.g. news.)
+```
+
+See xref:business-bootstrap::explanation/email-decision-matrix.adoc[Email decision matrix] for the full job table.

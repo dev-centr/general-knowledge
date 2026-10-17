@@ -1,0 +1,57 @@
+= Org infra repo pattern
+:description: One Pulumi infra repo per GitHub org, with Antora docs beside the stacks.
+:page-aliases: business-bootstrap::explanation/org-infra-repo-pattern.adoc
+
+== Pattern
+
+Each GitHub **organization** gets one central repository named `infra` (or `infrastructure`):
+
+* **Pulumi** (TypeScript preferred in our orgs) owns shared DNS, email-related records, and other cross-repo platform resources.
+* Application repos stay mostly IaC-free (or thin wrappers only).
+* Secrets live in Pulumi config / ESC / a vault — **never** committed.
+* A small **Antora component** under `docs/` holds stack inventory, apply/preview how-tos, and org-specific DNS checklists.
+* Member-only static hostnames (`team.docs.`, internal runbooks) get **Cloudflare Access** on the orange-cloud record — not a docs-app rewrite. Identities live in the GitHub org (or Google / email PIN). See xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites] and xref:how-to/cloudflare-access-static-site.adoc[the Access how-to].
+
+Strategic "which vendor" guidance is curated in xref:business-bootstrap::software-stack.adoc[Business Bootstrap]. This page is the general pattern; org `infra` docs answer "how *our* stacks work."
+
+== Why central infra
+
+* One source of truth for DNS and shared platform resources
+* Easier review, policy, and secret hygiene
+* Matches DevCentr IaC Discovery's "centralized infrastructure repository" pattern
+
+Reusable skeleton: link:https://github.com/dev-centr/infra-template[dev-centr/infra-template].
+
+Live example: link:https://github.com/FoodTruckNerdz/infra[FoodTruckNerdz/infra].
+
+== Tooling note
+
+DevCentr installation flows may still offer **OpenTofu** as a broadly compatible default for new users. For orgs following this bootstrap guide, prefer **Pulumi** when scaffolding the org `infra` repo. OpenTofu/Terraform remain valid for discovery and personal/repo-level IaC.
+
+**Pulumi Cloud trap:** the free Individual plan is one user — no org invites. Multi-human collaboration needs paid Team, OSS Team, or a self-managed state backend. See xref:explanation/infrastructure/pulumi-cloud-org-model.adoc[Pulumi Cloud org model] and xref:business-bootstrap::infra/how-to/backup-pulumi-state.adoc[Back up Pulumi stack state].
+
+See also xref:business-bootstrap::infra/index.adoc[Org infra] (area overview), xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] (identity pass before `infra` exists), and xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)].
+
+== What Pulumi can and cannot automate for email
+
+[cols="1,2",options="header"]
+|===
+| Automatable in `infra`
+| Usually manual / portal / Gmail UI
+
+| Cloudflare DNS: SPF, DKIM, DMARC, Resend / Customer.io CNAMEs
+| Gmail **create** Send mail as (Composio/Gmail Settings API: list + patch existing; create often missing or verification-bound)
+
+| Placeholder records; stack outputs for operators
+| ZeptoMail Mail Agents / API keys (no native Pulumi provider — Dynamic Provider later optional)
+
+| Documented secret slots
+| ESP dashboard domain verification clicks
+
+| Optional Email Routing MX (if managed in stack)
+| Routing destination verification + address creation; **no outbound SMTP** from Routing
+|===
+
+Personal Gmail + free Cloudflare Routing limits: xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas], xref:explanation/email/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits].
+
+Pulumi can consume Terraform providers via `pulumi package add terraform-provider …` when a vendor has TF but not Pulumi.

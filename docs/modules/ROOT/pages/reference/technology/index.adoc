@@ -10,4 +10,4 @@ Technology Reference is for **quick retrieval**. Deep rationale lives under Expl
 == Related
 
 * xref:explanation/infrastructure/iac.adoc[Infrastructure as Code] (Explanation)
-* Business ops email / DNS gotchas → xref:business-bootstrap::email/how-to/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
+* Business ops email / DNS gotchas → xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]

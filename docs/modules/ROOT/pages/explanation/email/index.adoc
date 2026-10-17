@@ -1,0 +1,23 @@
+= Email
+:description: Concepts and reference for organization email — lanes, Cloudflare Email Routing limits, personal Gmail send-as, DMARC, Resend DNS roles, and provider comparison.
+
+General knowledge about **how organization email works**, independent of any one setup order. Business Bootstrap links here from its curated email path; the pages live here so every product and org doc can share one copy.
+
+== Explanation
+
+* xref:explanation/email/human-vs-product-messaging.adoc[Human vs product messaging] — why personal SMTP / Gmail send-as differs from app transactional and marketing stacks
+* xref:explanation/email/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits] — receive/forward only, not a mailbox or SMTP service
+* xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
+* xref:explanation/email/dmarc-policy-path.adoc[DMARC policy path] — why `p=none` first, how to reach enforcement
+* xref:explanation/email/resend-dns-roles.adoc[Resend subdomain DNS roles]
+* xref:explanation/email/itil-email-services.adoc[ITIL-shaped email services]
+
+== Reference
+
+* xref:reference/email/provider-comparison.adoc[Email provider comparison]
+
+== Setup paths (Business Bootstrap)
+
+* xref:business-bootstrap::email/index.adoc[Email — bootstrap path]
+* xref:business-bootstrap::tutorials/bootstrap-org-email.adoc[Bootstrap org email]
+* xref:business-bootstrap::explanation/email-decision-matrix.adoc[Email decision matrix]

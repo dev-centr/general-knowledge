@@ -1,0 +1,67 @@
+= Donation ask ideas
+:description: On-site fundraising patterns that show raised amount and the floor or goal — not only a Donate button. Canonical writeup lives on Nonprofit Resources.
+:page-aliases: business-bootstrap::funding/explanation/donation-ask-ideas.adoc
+
+Donation-supported orgs (nonprofits, OSS collectives, products that ask instead of charging) usually fail the ask in the same way: a mission sentence and a button, often on someone else's site. Visitors never see **where the fund is** or **what “enough” means**.
+
+The ideas below are page patterns. Payment rails (Stripe, Open Collective, GitHub Sponsors, a fiscal host) can stay wherever accounting already works. The *ask* should stay on your property.
+
+== Canonical writeup
+
+The full operator guide lives on Nonprofit Resources so DevCentr does not grow a second fundraising handbook:
+
+link:https://nonprofit-resources.org/guides/donate-page-as-a-ledger[Donate page as a ledger] (Nonprofit Resources)
+
+== Idea: operating fund as a ledger
+
+Show, on one page:
+
+* **Balance or raised** (cash in the named fund, with an as-of date)
+* **Floor** (minimum to keep the service running for the period) and/or a campaign **goal**
+* **Ask** (donate / sponsor) without a hop to a blank third-party form
+* **Work the money buys** (a queue, a milestone list, a public budget line)
+
+link:https://www.transparencyhoa.org/analyze-queue[Transparency HOA’s Analyze Queue] is the clearest public example we have on file: monthly cost of the Analyze service (~$6,000), Analysis Fund balance ($7,881 as of 30 April 2026 in the capture below), Donate Now, and the pending work list on the same view.
+
+image::transparencyhoa-analyze-queue.png["Transparency HOA Analyze Queue: fund balance, monthly cost, Donate Now, and pending associations"]
+
+Screenshot of the public page, captured 2026, used as a cited example. Source: link:https://www.transparencyhoa.org/analyze-queue[transparencyhoa.org/analyze-queue].
+
+A surplus above the floor is still useful to show. Honesty beats a crisis headline.
+
+This pattern fits **any** donation model, not only 501(c)(3). Tax receipts change with the legal wrapper; the UX does not.
+
+== Other ask shapes (stubs)
+
+These are cousins, not replacements. Expand when someone implements them.
+
+[cols="1,2",options="header"]
+|===
+| Shape | When it helps
+
+| Campaign thermometer **with a floor line**
+| You have a dated drive (server, legal fund, one grant match). Show the floor you must hit *and* the stretch goal so the bar is not a vanity target.
+
+| Public collective budget
+| Multi-maintainer money that must be invoiced and spent in the open. link:https://opencollective.com/[Open Collective] already *is* the ledger — embed or link the budget next to your own ask, do not hide it behind “Sponsor us.”
+
+| Sponsors goal + what it unlocks
+| GitHub-native audience. A dollar goal is weak unless you say what crosses the line (N hours/week, a second maintainer, the next CI bill).
+
+| Credits vs cash, labeled
+| Cloud/CI grants lower burn but do not pay rent. If you publish a floor, say which part is cash.
+
+| Paid access (not a donation)
+| Different problem: entitlements, stores, Stripe. See xref:home::explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms] on the docs hub.
+|===
+
+== How this sits next to the funding landscape
+
+xref:explanation/funding/oss-funding-landscape.adoc[OSS funding landscape] maps **channels** (fiscal hosts, grants, Sponsors, Tidelift). This page is the **on-site ask**: what a visitor sees before money moves through those channels.
+
+== Related
+
+* Nonprofit Resources — link:https://nonprofit-resources.org/guides/donate-page-as-a-ledger[Donate page as a ledger]
+* xref:business-bootstrap::funding/index.adoc[Funding overview]
+* xref:explanation/funding/oss-funding-landscape.adoc[OSS funding landscape]
+* xref:business-bootstrap::defaults-by-org-stage.adoc[Defaults by org stage]

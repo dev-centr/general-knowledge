@@ -1,0 +1,130 @@
+= OSS funding landscape
+:description: Funding models for open source — fiscal hosts, public grants, sponsorships, enterprise subscriptions, bounties, and credits — with examples and a pointer to deeper directories.
+:page-aliases: business-bootstrap::funding/explanation/oss-funding-landscape.adoc
+
+Open source often runs on unpaid maintenance until something critical breaks. The industry answer is not “make every library a startup.” It is a set of **decoupled funding channels**: projects register once; companies (or public funders) send money through a known pipe; maintainers get paid without each sponsor becoming a product manager.
+
+This page is a map of those pipes. For a live, searchable directory that goes much deeper (platforms, grants, revenue models, overhead reduction), use link:https://www.oss.fund/[OSS.Fund] — especially their link:https://www.oss.fund/guides/open-source-grants-2026/[2026 grants guide] and funding guides. Treat our list as orientation; treat OSS.Fund and each program’s official site as the source of truth for deadlines and eligibility.
+
+== The decoupling idea
+
+Without a middle layer, a company that wants to support `left-pad`-class infrastructure has awkward choices: wire money to a personal PayPal, invent a consulting SOW, or do nothing. Maintainers get either zero money or a pile of “can you just…” emails.
+
+Decoupled channels fix the awkwardness:
+
+* The **project** (or maintainer) registers once — Sponsors profile, Open Collective, foundation membership, grant portal.
+* The **funder** pays through procurement-friendly invoices, subscriptions, or public applications.
+* Scope is usually **maintenance / security / public-good work**, not a private roadmap.
+
+Open Collective + a **fiscal host** (often link:https://opencollective.com/opensource[Open Source Collective]) is the clearest example of “register the project, accept company money, publish the ledger.” Public programs like the link:https://www.sovereign.tech/programs/fund[Sovereign Tech Fund] and link:https://nlnet.nl/[NLnet] are the grant-shaped cousin: apply once per call; funding is for digital commons, not a vendor relationship.
+
+== Funding types (with examples)
+
+[cols="1,2,2",options="header"]
+|===
+| Type | What it is | Examples
+
+| Recurring sponsorships
+| Individuals or companies tip or subscribe to a maintainer or org. Low ceremony; weak “guarantees.”
+| link:https://github.com/sponsors[GitHub Sponsors], link:https://liberapay.com/[Liberapay], link:https://polar.sh/[Polar], Patreon / Ko-fi (creator-shaped)
+
+| Transparent collectives + fiscal hosting
+| A **collective** holds a public budget; a **fiscal host** is the legal entity that banks, invoices, and pays expenses. Sponsors fund the project without incorporating it.
+| link:https://opencollective.com/[Open Collective] platform; host e.g. link:https://www.oscollective.org/[Open Source Collective] (OSC)
+
+| Nonprofit / foundation fiscal sponsorship
+| Heavier organizational home: legal, trademarks, grant intake, sometimes employment. Selective; best for established projects.
+| link:https://sfconservancy.org/[Software Freedom Conservancy], link:https://numfocus.org/[NumFOCUS], Apache / Eclipse / Linux Foundation project homes (ecosystem-dependent)
+
+| Public and foundation **grants**
+| Time-boxed money for scoped public-good work (security, standards, maintenance, research software). Application + reporting.
+| link:https://www.sovereign.tech/programs/fund[Sovereign Tech Fund], link:https://nlnet.nl/propose/[NLnet], link:https://numfocus.org/programs/small-development-grants[NumFOCUS Small Development Grants], link:https://openssf.org/[OpenSSF] initiative funding, language/ecosystem foundation RFPs
+
+| Enterprise maintenance subscriptions
+| Companies pay for packaged maintenance / security commitments across dependencies; maintainers share revenue against standards.
+| link:https://tidelift.com/[Tidelift]
+
+| Dependency-graph corporate giving
+| Company budget fans out automatically across packages their code depends on.
+| link:https://thanks.dev/[thanks.dev] (and similar SBOM-aware programs)
+
+| Bounties and paid issues
+| Specific tasks get a price; good for concrete bugs/features, weak as sole maintainer salary.
+| link:https://algora.io/[Algora], IssueHunt-class marketplaces, one-off sponsored issues
+
+| Infrastructure credits
+| Free or discounted cloud, CI, CDN, registries — reduces burn, does not pay rent.
+| AWS / GCP / Azure open source credit programs; GitHub / CI vendor OSS tiers
+
+| Productized revenue around the code
+| Sell support, hosted SaaS, training, dual licensing, or dual open-core — commercial entity owns the offer; OSS stays the commons (or a deliberate fork boundary).
+| Classic “open core / hosted” patterns (Cal.com cloud vs community, Mattermost editions, etc.)
+|===
+
+== Which pipe fits which job
+
+[cols="1,2",options="header"]
+|===
+| Job | Lean default
+
+| Solo maintainer, GitHub-native audience
+| GitHub Sponsors first; add Polar or Liberapay if you want non-GitHub rails
+
+| Multi-maintainer project that needs shared money + public expenses
+| Open Collective under OSC (or another fiscal host that fits tax/charity needs)
+
+| Established FOSS needing legal/trademark home
+| Conservancy, NumFOCUS, or the right software foundation — expect a real application
+
+| Critical infrastructure / security / standards work with a proposal
+| Grant programs (Sovereign Tech Fund, NLnet, OpenSSF, ecosystem RFPs) — verify the current call
+
+| Companies want maintenance SLAs they can put in vendor risk
+| Tidelift-style subscription (when your package is in their catalog)
+
+| Company wants to “just fund dependencies” with minimal drama
+| thanks.dev / Sponsors org budgets / Open Collective donations (invoice via fiscal host)
+
+| One painful bug or feature someone will pay for
+| Bounty or short contract — do not confuse with sustainability
+
+| Burn is hosting/CI, not payroll
+| Credits and OSS vendor tiers first
+|===
+
+== Company side (why this exists)
+
+Commercial entities often **want** to support essential tools and still avoid:
+
+* Owning a private fork relationship with every maintainer
+* Ad-hoc wire transfers to individuals
+* Being treated as the product owner because they paid once
+
+Fiscal hosts, grant agencies, and subscription marketplaces are the buffers. Your org can donate or subscribe through accounting; the project keeps governance. That is the same spirit as “fund the commons without absorbing the commons.”
+
+== Stage notes for DevCentr orgs
+
+Funding is optional until you **are** the open source (or critically depend on unpaid infrastructure you might steward). Rough fit against xref:business-bootstrap::defaults-by-org-stage.adoc[org stage]:
+
+* *Solo / pre-product* — Skip unless you publish libraries people already lean on. Sponsors profile is cheap insurance.
+* *Product shipping* — If parts of the stack are OSS you maintain, stand up Sponsors and/or an Open Collective before the first corporate “how do we pay you?” email.
+* *Small team* — Prefer a collective or foundation path once money must be shared, invoiced, or granted.
+* *Compliance / many seats* — Treat sponsorship and grant compliance like any other vendor risk (KYC on fiscal hosts, grant reporting, trademark ownership).
+
+== Caveats
+
+* **Eligibility is narrow.** Many grants fund digital commons or security work — not a generic SaaS roadmap.
+* **Fees and tax treatment differ.** OSC is a 501(c)(6)-style host for many OSS collectives; donations are often **not** charitable deductions. Charity-shaped sponsors differ — read the host docs.
+* **Grants are not MRR.** They fund milestones; plan what happens when the grant ends.
+* **Directories go stale.** Prefer link:https://www.oss.fund/[OSS.Fund] and official program pages over copying dates from this article.
+
+== Related
+
+* xref:business-bootstrap::funding/index.adoc[Funding overview]
+* xref:explanation/funding/donation-ask-ideas.adoc[Donation and monetization ask ideas]
+* xref:business-bootstrap::index.adoc[Business topics]
+* xref:business-bootstrap::defaults-by-org-stage.adoc[Defaults by org stage]
+* link:https://nonprofit-resources.org/guides/donate-page-as-a-ledger[Donate page as a ledger] (Nonprofit Resources)
+* link:https://www.oss.fund/[OSS.Fund] · link:https://www.oss.fund/guides/open-source-grants-2026/[Open source grants (2026)]
+* link:https://opencollective.com/opensource[Open Source Collective on Open Collective]
+* link:https://www.sovereign.tech/programs/fund[Sovereign Tech Fund]

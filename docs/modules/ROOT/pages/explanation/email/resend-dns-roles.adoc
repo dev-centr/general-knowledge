@@ -1,0 +1,49 @@
+= Resend DNS roles
+:description: Sending identity, return-path, and tracking subdomains for Resend — deliverability isolation pattern.
+:page-aliases: business-bootstrap::explanation/resend-dns-roles.adoc
+
+Resend's "Add domain" flow pushes **subdomain isolation**, not pedantry. Do not verify the apex for app mail when the same zone also hosts human (ZeptoMail) and marketing senders.
+
+== Named DNS roles
+
+[cols="1,1,1,2",options="header"]
+|===
+| Role | Resend field | Recommended label | Notes
+
+| Sending identity
+| Domain **Name**
+| Dedicated transactional subdomain (e.g. `updates.example.com`)
+| Apex mixes reputations. `updates.` is a clear product-mail hostname and may nudge Gmail toward Updates vs Primary (not guaranteed — auth, content, and engagement dominate).
+
+| Return-Path / bounce
+| Custom Return-Path
+| `send`
+| Must differ from tracking.
+
+| Click/open tracking
+| Tracking subdomain
+| `links`
+| Must differ from Return-Path. Prefer vendor default `links` over `click` unless you want a privacy/brand statement.
+|===
+
+== Tracking toggles
+
+* **Click tracking** — on for product emails with measurable CTAs.
+* **Open tracking** — default **off** (inaccurate + privacy-sensitive; Resend warns about this).
+
+== FoodTruckNerdz example
+
+| Role | FQDN |
+|------|------|
+| Sending | `updates.foodtrucknerdz.com` |
+| Return-Path | `send.foodtrucknerdz.com` (or as Resend emits) |
+| Tracking | `links.foodtrucknerdz.com` |
+
+Set application `From` to a local-part on the verified sending host (e.g. `support@updates.foodtrucknerdz.com`). Keep marketing on a separate identity (e.g. `news.…` / Customer.io).
+
+Encode these records in the org xref:explanation/infrastructure/org-infra-repo-pattern.adoc[`infra` Pulumi stack] once Resend shows the exact TXT/CNAME values.
+
+== Related
+
+* xref:business-bootstrap::how-to/resend-domain-dns.adoc[Resend domain DNS how-to]
+* xref:business-bootstrap::explanation/email-decision-matrix.adoc[Email decision matrix]

@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-10-17 -- Email, org-infra, and funding concepts rehomed from Business Bootstrap
+
+* Twelve general-knowledge pages (email lanes, Cloudflare Routing limits, DMARC path, Resend DNS roles, provider comparison, org infra repo pattern, Pulumi Cloud and state, OSS funding, donation ask) now live here; Business Bootstrap links to them. Old URLs alias.
+* New xref:explanation/email/index.adoc[Email] hub.
+* See xref:changelog-details/2026-10-17 - rehome-email-infra-funding-from-bootstrap.adoc[Detailed changelog].
+
 == 2026-10-13 -- Web design tools (Figma baseline · Penpot · Lunacy · Framer warning)
 
 * New xref:reference/web-design-tools.adoc[Web design tools] reference — compare UI canvases to Figma; prefer Penpot and Lunacy for handoff; call out Framer as a closed site platform to avoid.

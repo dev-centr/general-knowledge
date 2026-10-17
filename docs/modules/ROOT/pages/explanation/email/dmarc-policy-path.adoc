@@ -1,0 +1,27 @@
+= DMARC policy path
+:description: Why Cloudflare (and others) start DMARC at p=none, and how to escalate to quarantine and reject safely.
+:page-aliases: business-bootstrap::explanation/dmarc-policy-path.adoc
+
+== Why `p=none` is not stupid
+
+Setting `p=none` puts DMARC in **monitoring mode**. Receiving servers evaluate SPF/DKIM alignment and send aggregate reports (`rua`) without dropping or quarantining mail.
+
+If automation jumped straight to `p=quarantine` or `p=reject`, any legitimate sender missing SPF/DKIM (transactional ESP, marketing tool, support desk, "Send mail as") would lose mail. Monitoring first prevents operational self-DoS.
+
+Security scanners still flag `p=none` because it offers **zero spoofing enforcement** — attackers can forge `From:` and still deliver. Treat monitoring as temporary.
+
+== Path to enforcement
+
+. Run `p=none` for 1–2 weeks; review aggregate reports (e.g. Cloudflare DMARC Management).
+. Align every legitimate sender: SPF includes and matching DKIM for each ESP.
+. Move to `p=quarantine`, then `p=reject`.
+
+Aggregate reporting (`rua`) continues under `p=reject`. Rejection at SMTP negotiation (5xx) still feeds daily XML reports; disposition shows as `reject` instead of `none`.
+
+== Gmail "Send mail as" under enforcement
+
+* **Google Workspace** on the custom domain — works when SPF includes `_spf.google.com` and Workspace DKIM is published.
+* **Personal `@gmail.com` "Send mail as"** using Gmail's own SMTP — fails alignment under quarantine/reject. Route through an authenticated custom SMTP (ZeptoMail) that signs with your domain DKIM.
+* Disabling "Treat as an alias" does **not** fix DMARC; it only changes threading/Reply-To behavior.
+
+See xref:business-bootstrap::how-to/dmarc-escalation.adoc[Escalate DMARC policy] and xref:business-bootstrap::how-to/zeptomail-gmail-send-as.adoc[ZeptoMail + Gmail send-as].

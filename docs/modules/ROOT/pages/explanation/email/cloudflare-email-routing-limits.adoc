@@ -1,0 +1,31 @@
+= Cloudflare Email Routing limits
+:description: Free Cloudflare Email Routing is receive/forward only — not a mailbox or SMTP service.
+:page-aliases: business-bootstrap::email/explanation/cloudflare-email-routing-limits.adoc
+
+Cloudflare **Email Routing** is excellent early-stage plumbing for custom-domain *addresses* that land in a personal Gmail inbox. It is easy to over-read what "free email on Cloudflare" means.
+
+== Included (typical free Routing)
+
+* Create addresses / catch-alls on your zone
+* Forward to verified destination inboxes (Gmail, etc.)
+* Optional workers for advanced routing (plan-dependent)
+
+== Not included
+
+* Outbound SMTP (you cannot "send as" through Routing alone)
+* Hosted mailbox storage / IMAP / POP
+* Google Workspace / Microsoft 365 replacement
+* Automatic Gmail Send mail as configuration
+
+== Implications for founders
+
+* Pair Routing (**inbound**) with ZeptoMail or similar (**outbound human SMTP**) and Resend/Customer.io (**product** lanes).
+* Org `infra` Pulumi can manage MX / related DNS when you opt into Routing, but address creation is often dashboard or Cloudflare API — treat it as ops, not app deploy.
+* Free Cloudflare accounts and personal Gmail do **not** give you admin-provisioned `@company.com` identities the way paid Workspace does.
+
+== Related
+
+* xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
+* xref:business-bootstrap::how-to/zeptomail-gmail-send-as.adoc[ZeptoMail + Gmail send-as]
+* xref:explanation/email/human-vs-product-messaging.adoc[Human vs product messaging]
+* xref:business-bootstrap::explanation/email-decision-matrix.adoc[Email decision matrix]

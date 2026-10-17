@@ -1,0 +1,73 @@
+= Pulumi Cloud org model
+:description: Free Individual accounts cannot invite teammates; Organizations are paid or self-hosted state.
+:page-aliases: business-bootstrap::infra/explanation/pulumi-cloud-org-model.adoc
+
+Pulumi is two layers. Confusing them is how founders end up stuck on an ephemeral agent account or a paid Team trial they did not expect.
+
+== CLI engine vs Pulumi Cloud
+
+[cols="1,2",options="header"]
+|===
+| Layer
+| What it is
+
+| **CLI engine** (`pulumi` binary)
+| Open source. Compiles your program, diffs desired vs actual, calls cloud provider APIs. Runs on your machine / CI.
+
+| **State backend**
+| Where stack checkpoints, locks, and (usually) secret encryption metadata live. Default `pulumi login` → **Pulumi Cloud** SaaS.
+|===
+
+The CLI alone does **not** give Facebook-style multi-org membership for free. Collaboration features that feel "like Groups" live in **Pulumi Cloud Organizations**, which are a paid product surface.
+
+== Identity model (when you do use Pulumi Cloud)
+
+* One **user** identity (GitHub / Google / SAML / email) can belong to many Organizations once invited or after you create them.
+* You do **not** need a separate Pulumi password per org email — you link IdPs under Account Settings → Identities.
+* Switch org in the UI (top-left) or select stacks as `<org>/<project>/<stack>`.
+* Local default org: `pulumi org set-default <org-name>` (not a `pulumi config` key).
+
+== Free tier reality check
+
+[cols="1,2",options="header"]
+|===
+| Plan / path
+| Collaboration
+
+| **Individual** (free)
+| Single user. **No member invites.** Fine for solo founder stacks.
+
+| **Organization + Team** (paid; trial often available)
+| Invites, RBAC, teams. Base list price historically starts around tens of USD/month — confirm current pricing on pulumi.com.
+
+| **Team for Open Source**
+| Free Team Edition by application when the org is strictly OSS.
+
+| **Self-managed backend** (skip Pulumi Cloud)
+| Free multi-author via bucket IAM / shared filesystem. You own locks, backups, and encryption keys. No Pulumi Cloud UI/RBAC.
+|===
+
+If the goal is "several GitHub orgs, one human, shared infra work" **without** paying Pulumi: prefer a **self-managed state backend**, not "create a free Pulumi Organization and invite myself from each org email."
+
+== Agent / ephemeral login gotcha
+
+Cursor (and similar) agents often `pulumi login` into an **ephemeral Pulumi agent account**. That account:
+
+* Holds stacks until you **claim** it (claim URL is printed by the CLI)
+* Expires if unclaimed
+* Is a poor long-term home for production org state
+
+Finish agent apply work, then **claim** (or better: migrate state to *your* individual login or a self-managed backend) before the claim window closes. Claiming locks the org during the claim process.
+
+== Practical recommendation for DevCentr-shaped orgs
+
+. Day-one solo: Individual Pulumi Cloud **or** `pulumi login file://…` / object storage — document which.
+. Before a second human needs `pulumi up`: either pay for Team, apply for OSS Team, or move to S3/GCS/Azure/file backend and stop depending on Pulumi Cloud invites.
+. Keep org `infra` repos private when they hold zone IDs and operational layout; secrets stay in Pulumi config / ESC / vault — never git.
+
+== Related
+
+* xref:business-bootstrap::infra/how-to/backup-pulumi-state.adoc[Back up Pulumi stack state]
+* xref:explanation/infrastructure/org-infra-repo-pattern.adoc[Org infra repo pattern]
+* xref:business-bootstrap::infra/reference/pulumi-cloudflare-email-checklist.adoc[Pulumi + Cloudflare email checklist]
+* xref:explanation/infrastructure/iac.adoc[Infrastructure as Code]

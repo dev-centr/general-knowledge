@@ -1,0 +1,51 @@
+= 2026-10-17 -- Email, org-infra, and funding concepts rehomed from Business Bootstrap
+
+== What landed
+
+Twelve explanation and reference pages moved here from `business-bootstrap` because they are general knowledge, not setup paths. Business Bootstrap keeps its how-tos, tutorials, stage defaults, and vendor-default pages, and links here.
+
+[cols="1,1",options="header"]
+|===
+| Old (business-bootstrap) | New (general-knowledge)
+
+| `email/explanation/cloudflare-email-routing-limits`
+| `explanation/email/cloudflare-email-routing-limits`
+
+| `email/how-to/personal-gmail-send-as-gotchas`
+| `explanation/email/personal-gmail-send-as-gotchas`
+
+| `explanation/dmarc-policy-path`
+| `explanation/email/dmarc-policy-path`
+
+| `explanation/human-vs-product-messaging`
+| `explanation/email/human-vs-product-messaging`
+
+| `explanation/itil-email-services`
+| `explanation/email/itil-email-services`
+
+| `explanation/resend-dns-roles`
+| `explanation/email/resend-dns-roles`
+
+| `email/reference/provider-comparison`
+| `reference/email/provider-comparison`
+
+| `explanation/org-infra-repo-pattern`
+| `explanation/infrastructure/org-infra-repo-pattern`
+
+| `infra/explanation/pulumi-cloud-org-model`
+| `explanation/infrastructure/pulumi-cloud-org-model`
+
+| `infra/explanation/pulumi-secrets-vs-state`
+| `explanation/infrastructure/pulumi-secrets-vs-state`
+
+| `funding/explanation/oss-funding-landscape`
+| `explanation/funding/oss-funding-landscape`
+
+| `funding/explanation/donation-ask-ideas`
+| `explanation/funding/donation-ask-ideas`
+|===
+
+* Every moved page carries `:page-aliases: business-bootstrap::<old path>` so old `docs.devcentr.org/business-bootstrap/...` URLs redirect.
+* New xref:explanation/email/index.adoc[Email] hub page; nav and Explanation/Reference indexes updated.
+* `transparencyhoa-analyze-queue.png` moved with the donation ask page.
+* Cross-links in xref:explanation/infrastructure/iac.adoc[IaC] and the Technology reference now point at the local pages.

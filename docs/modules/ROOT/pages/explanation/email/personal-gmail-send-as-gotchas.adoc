@@ -1,0 +1,56 @@
+= Personal Gmail send-as gotchas
+:description: Limits when wiring custom domain From addresses into a personal Gmail account.
+:page-aliases: business-bootstrap::email/how-to/personal-gmail-send-as-gotchas.adoc
+
+Personal Gmail (`@gmail.com`) can send as `you@yourdomain.com` via *Settings → Accounts → Send mail as*, but several constraints surprise founders.
+
+== What works
+
+* Gmail Settings API (and Composio tools such as list / get / patch send-as) can read and update **existing** send-as entries for a connected personal account.
+* SMTP "Send mail as" using an ESP that issues per-user SMTP credentials (our default: **ZeptoMail** Mail Agent keys).
+* Cloudflare Email Routing (or other MX) for **inbound** catch-all / address → forward to Gmail.
+
+== What usually fails or is incomplete
+
+[cols="1,2",options="header"]
+|===
+| Expectation
+| Reality
+
+| Cloudflare Email Routing = full mailbox
+| Routing is **inbound forward only**. No free outbound SMTP, no IMAP mailbox, no Calendar.
+
+| Pulumi / Cloudflare API creates Gmail send-as
+| DNS and Routing are automatable. Gmail send-as is a **Gmail user setting**. Personal accounts are not Google Workspace — there is no Admin SDK to provision aliases for `@gmail.com` users the way Workspace does for `@company.com`.
+
+| One click "verify" forever
+| Gmail emails a confirmation link to the custom address. That only works if Routing (or MX) delivers to an inbox you can open. Re-verify after password/SMTP changes.
+
+| Treat as alias fixes DMARC
+| "Treat as an alias" affects threading / reply behavior in Gmail. It does **not** replace SPF/DKIM alignment.
+
+| Resend SMTP for human send-as
+| Use Resend for **product** transactional mail. Prefer ZeptoMail (or similar) for human send-as; keep lanes separate.
+
+| Shared SMTP password for the team
+| Breaks auditability; hits rate limits as one identity. Issue **per-user** SMTP keys.
+
+| IP allowlisting on the ESP
+| Gmail clients egress from dynamic Google IPs — allowlisting breaks send-as.
+|===
+
+== Recommended path (personal Gmail + custom domain)
+
+. Put the domain on Cloudflare DNS.
+. Enable **Email Routing**; create destination (your Gmail) and addresses (`support@`, `hello@`, …).
+. Create a ZeptoMail Mail Agent; verify domain (SPF/DKIM via org `infra` Pulumi where possible).
+. Generate a SMTP key for the person who uses `rj.amdphreak@gmail.com` (or whatever personal mailbox).
+. In Gmail → Send mail as: add the address, enter Zepto SMTP host/port/user/pass, complete the verification email.
+. Optionally patch display name / signature via API after the alias exists.
+
+== Related
+
+* xref:business-bootstrap::how-to/zeptomail-gmail-send-as.adoc[ZeptoMail + Gmail send-as] (procedure)
+* xref:explanation/email/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits]
+* xref:explanation/email/human-vs-product-messaging.adoc[Human vs product messaging]
+* xref:explanation/infrastructure/org-infra-repo-pattern.adoc[Org infra repo pattern]

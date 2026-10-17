@@ -1,0 +1,32 @@
+= ITIL email services
+:description: Name email capabilities as catalog services with owners and change paths.
+:page-aliases: business-bootstrap::explanation/itil-email-services.adoc
+
+Treat email as named **services** in a lightweight catalog (ITIL-flavored, not a full ITIL implementation). DevCentr org-setup wizards can later register these capabilities.
+
+[cols="1,2,1,2",options="header"]
+|===
+| Service | Description | Typical owner | Change path
+
+| Email Inbound
+| Receive mail for `@domain` (Cloudflare Email Routing or Workspace MX)
+| Ops / founder
+| DNS MX / routing rules via `infra` Pulumi + provider portal
+
+| Email Outbound Human
+| People sending as `@domain` (ZeptoMail + Gmail send-as)
+| Ops
+| Per-user SMTP keys; DNS SPF/DKIM in `infra`
+
+| Email Transactional App
+| App-triggered hard transactional (Resend API)
+| Engineering
+| API keys in app secrets; Resend DNS roles in `infra`
+
+| Marketing Journeys
+| Campaigns and behavioral multi-channel (Customer.io + Twilio)
+| Marketing + engineering
+| Separate marketing subdomain; events from product; never dual-brain with Resend Broadcasts
+|===
+
+Keep services separate in the catalog so wizards never collapse "set up email" into a single vendor step.

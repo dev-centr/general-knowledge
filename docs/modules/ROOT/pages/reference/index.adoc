@@ -24,6 +24,10 @@ See the Reference section in the left navigation for workspace organization, Git
 * xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms] — PeerTube / Odysee / LBRY-class hosts + Wayback for survey articles
 * xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map] — ideal app nouns → Console objects
 
+== Email
+
+* xref:reference/email/provider-comparison.adoc[Email provider comparison] — Resend, ZeptoMail, Customer.io, Brevo, SES by lane
+
 == Technology
 
 * xref:reference/technology/index.adoc[Technology overview]

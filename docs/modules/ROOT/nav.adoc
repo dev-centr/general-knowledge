@@ -55,6 +55,7 @@
 ** xref:reference/auxiliary-features-checklist.adoc[Auxiliary Features Checklist]
 ** xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
 ** xref:reference/mojibake-signatures.adoc[Mojibake signatures]
+** xref:reference/email/provider-comparison.adoc[Email provider comparison]
 
 * xref:explanation/index.adoc[Explanation]
 ** Windows
@@ -134,6 +135,9 @@
 *** xref:explanation/infrastructure/toolchain-framework.adoc[Toolchain Framework (TCF)]
 *** xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency]
 *** xref:explanation/infrastructure/iac.adoc[Infrastructure as Code (IaC)]
+*** xref:explanation/infrastructure/org-infra-repo-pattern.adoc[Org infra repo pattern]
+*** xref:explanation/infrastructure/pulumi-cloud-org-model.adoc[Pulumi Cloud org model]
+*** xref:explanation/infrastructure/pulumi-secrets-vs-state.adoc[Pulumi secrets vs stack state]
 *** xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites]
 *** xref:explanation/infrastructure/api-key-vs-token.adoc[API key vs token]
 *** xref:explanation/infrastructure/git-concurrency-enshittification.adoc[Git concurrency enshittification]
@@ -143,6 +147,17 @@
 *** xref:explanation/infrastructure/pnpm-mechanics.adoc[pnpm Mechanics]
 *** xref:explanation/infrastructure/npm-package-managers.adoc[npm package managers]
 *** xref:explanation/infrastructure/wsl-distro-comparison.adoc[WSL Distro Comparison]
+** Email
+*** xref:explanation/email/index.adoc[Email overview]
+*** xref:explanation/email/human-vs-product-messaging.adoc[Human vs product messaging]
+*** xref:explanation/email/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits]
+*** xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas]
+*** xref:explanation/email/dmarc-policy-path.adoc[DMARC policy path]
+*** xref:explanation/email/resend-dns-roles.adoc[Resend subdomain DNS roles]
+*** xref:explanation/email/itil-email-services.adoc[ITIL-shaped email services]
+** Funding
+*** xref:explanation/funding/oss-funding-landscape.adoc[OSS funding landscape]
+*** xref:explanation/funding/donation-ask-ideas.adoc[Donation ask ideas]
 ** AI literacy
 *** xref:explanation/ai/curated-watching.adoc[Curated watching (AI)]
 ** Programming

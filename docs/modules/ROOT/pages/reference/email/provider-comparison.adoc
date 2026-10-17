@@ -1,0 +1,52 @@
+= Provider comparison
+:description: Qualitative comparison of Resend, ZeptoMail, Customer.io, Brevo, SES, and related tools.
+:page-aliases: business-bootstrap::email/reference/provider-comparison.adoc
+
+[cols="1,1,1,1,1,1",options="header"]
+|===
+| Dimension | Resend | ZeptoMail | Customer.io | Brevo | SES
+
+| Best lane
+| App transactional
+| Human SMTP / PAYG txn
+| Journeys / multi-channel
+| Classic ESP marketing
+| High-volume AWS
+
+| Cheap multi-user
+| Good
+| Strong (Mail Agents)
+| Plan-dependent
+| Weak on free/starter
+| IAM (powerful, heavy)
+
+| Gmail send-as
+| Possible; not recommended
+| Recommended
+| N/A
+| Awkward / seat friction
+| Possible; high friction
+
+| Product API DX
+| Excellent
+| Good
+| Event/journey focused
+| OK
+| Low-level
+
+| Pricing shape
+| Free + plan steps
+| Credits PAYG
+| SaaS tiers
+| Seats + tiers
+| Per-email PAYG
+
+| IaC
+| DNS via Cloudflare
+| DNS + optional Dynamic Provider
+| Mostly portal / API
+| TF bridge possible
+| Native cloud IaC
+|===
+
+Full job table: xref:business-bootstrap::explanation/email-decision-matrix.adoc[Email decision matrix].
