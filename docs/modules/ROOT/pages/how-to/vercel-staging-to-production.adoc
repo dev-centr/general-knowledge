@@ -1,0 +1,105 @@
+= Vercel staging branch to production
+:navtitle: Vercel staging to production
+:description: Run a staging branch as a protected Vercel Preview environment with its own domain and dev backend, then release by fast-forwarding main.
+:keywords: vercel, staging, preview environment, production, release, fast-forward, workflow_dispatch, promote to production, convex, rulesets
+
+A two-branch layout for Vercel projects: `staging` is a long-lived Preview environment you can click around in, and `main` is Production. A release is a fast-forward of `main` to `staging`, never a rebuild-free promotion.
+
+== Layout
+
+[cols="1,2,2"]
+|===
+| Branch | Vercel environment | Backend and access
+
+| `staging`
+| Preview (branch-specific), with its own custom domain such as `staging.example.com`
+| Dev backend database; behind Vercel Authentication so only the team can open it
+
+| `main`
+| Production
+| Production backend database; public (or gated, see <<pre-launch-gate>>)
+|===
+
+Set up::
+. In the Vercel project, assign the custom domain `staging.example.com` to the `staging` branch (Domains, Git branch).
+. Scope environment variables: dev backend values to *Preview* (optionally limited to the `staging` branch), production values to *Production*.
+. Turn on Vercel Authentication (Deployment Protection) for Preview deployments.
+
+== Release staging to production
+
+=== By hand
+
+[source,sh]
+----
+git checkout main
+git pull
+git fetch origin
+git merge --ff-only origin/staging
+git push
+----
+
+`--ff-only` refuses the release if `main` has commits that `staging` does not, so production never gets a merge commit nobody tested.
+
+=== With a release button (GitHub Actions)
+
+A `workflow_dispatch` workflow gives you a *Run workflow* button that does the same fast-forward:
+
+[source,yaml]
+----
+name: Release staging to prod
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify staging descends from main
+        run: |
+          git fetch origin main staging
+          git merge-base --is-ancestor origin/main origin/staging \
+            || { echo "staging is not a fast-forward of main"; exit 1; }
+      - name: Fast-forward main
+        run: git push origin origin/staging:main
+----
+
+A push made with the workflow's `GITHUB_TOKEN` does not trigger other GitHub Actions workflows, but Vercel's Git integration is not a workflow: it sees the push to `main` and builds Production as usual.
+
+== Warnings
+
+Do not use *Promote to Production* on a staging deployment::
+A Preview deployment was built with Preview environment variables. Values inlined at build time (for example a public backend URL such as `NEXT_PUBLIC_CONVEX_URL`) stay baked in, so the promoted live site would talk to the dev database. Release by pushing to `main` so Production builds with Production variables.
+
+Run backend deploys only from Production builds::
+Preview builds should not run backend deploy commands (for example `convex deploy`). Branch the build command on `VERCEL_ENV` so only `production` deploys the backend; previews just build the frontend against the dev backend.
+
+Keep the Preview deploy key until you have checked runtime use::
+Runtime code may still read the Preview-scoped backend key (for example an auth library writing sessions to the backend). Removing it blindly from Preview breaks sign-in on staging; search the code before deleting it.
+
+Protect both branches::
+Add repository rulesets that block force-push and deletion on `main` and `staging`. The fast-forward release never needs to bypass them, so leave the bypass list empty.
+
+[#pre-launch-gate]
+== Free pre-launch gate for Production
+
+Vercel's password protection for Production is a paid feature. Before launch, an app-level gate does the same job:
+
+. Add an env flag (for example `PRELAUNCH_GATE=1`) and a secret token in Production.
+. In middleware, when the flag is on, let a request through only if it carries a valid access cookie.
+. A secret link `https://example.com/?access=<token>` sets that cookie and redirects to the clean URL.
+. Everyone else is redirected to the existing coming-soon site.
+. At launch, unset the flag and redeploy.
+
+Keep the token in the hosting environment and your vault, never in the repository.
+
+== Related
+
+* xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
+* xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI and MCP)]

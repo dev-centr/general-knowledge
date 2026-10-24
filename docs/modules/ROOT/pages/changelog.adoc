@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-10-24 -- Vercel staging to production how-to
+
+* New xref:how-to/vercel-staging-to-production.adoc[Vercel staging to production]: staging branch as Preview env with own domain and dev backend, fast-forward release (manual and workflow_dispatch), Promote-to-Production and backend-deploy warnings, branch rulesets, free pre-launch gate.
+
 == 2026-10-17 -- Hub GitHub topics canonical URL
 
 * xref:explanation/documentation/antora-essential-extensions.adoc[Antora essential extensions]: link to `docs.antora-supplemental.org/docs/hub-github-topics/` (was apex `/docs/home/…` 404).

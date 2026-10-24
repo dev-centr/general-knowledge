@@ -12,6 +12,7 @@
 ** xref:how-to/github-pages-custom-domain.adoc[GitHub Pages Custom Domain]
 ** xref:how-to/cloudflare-access-static-site.adoc[Cloudflare Access for static sites]
 ** xref:how-to/git-release-workflow.adoc[Git Release Workflow]
+** xref:how-to/vercel-staging-to-production.adoc[Vercel staging to production]
 ** xref:how-to/concurrent-agent-workspaces.adoc[Concurrent Agent Workspaces]
 ** xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
 ** xref:how-to/automated-releases.adoc[Automated Releases]
