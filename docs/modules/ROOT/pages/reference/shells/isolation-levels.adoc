@@ -1,0 +1,119 @@
+= Isolation levels
+:description: Proposed terms for venvs, version-manager shims, sandboxes, containers and VMs: what is separated (overlay, fence, partition, guest), how long it lasts (run, session, kept) and what it applies to.
+:page-orig-author: Ryan Johnson
+:page-orig-author-github: AMDphreak
+
+CAUTION: *Proposed vocabulary.* These terms are a proposal from the essay link:https://devcentr.org/blog/2026-10-26-virtual-environments-are-neither-virtual-nor-temporary[Virtual environments are neither virtual nor temporary]. They describe existing tools; they do not rename them.
+
+Words like "virtual environment", "container" and "sandbox" do not say what is separated, how long it lasts, or what it applies to. This page gives each of those a small fixed vocabulary.
+
+== Three things, not one
+
+[cols="1,3,2"]
+|===
+| Term | Meaning | Examples
+
+| Recipe
+| A description of what is wanted.
+| `requirements.txt`, `pyproject.toml`, `Dockerfile`, `flake.nix`, `.nvmrc`, `.tool-versions`
+
+| Artifact
+| What was built from a recipe and stored.
+| a venv folder, a Node version folder, a container image, a VM disk
+
+| Attachment
+| A process, session or folder currently using an artifact.
+| an activated venv, `nvm use`, a running container, a booted VM
+|===
+
+Artifacts and attachments each have their own lifetime.
+
+== Isolation: what is separated
+
+[cols="1,3,3"]
+|===
+| Level | What changes | Examples
+
+| *overlay*
+| Only name lookup: `PATH`, environment variables, import paths, command-namespace nodes. Files, processes, network and kernel are shared.
+| Python venv, nvm / nvm-windows, pyenv, asdf, mise, direnv, Nix dev shells, Volta
+
+| *fence*
+| Same view of the OS; permissions are reduced.
+| seccomp, Landlock, AppArmor, SELinux confinement, macOS sandbox, Windows AppContainer, Firejail profiles
+
+| *partition*
+| Own view of files, processes and network; shared kernel.
+| Docker / Podman containers, FreeBSD jails, systemd-nspawn, Linux namespaces, Windows Server containers (process isolation)
+
+| *guest*
+| Own kernel on virtual hardware.
+| Hyper-V, VirtualBox, QEMU/KVM VMs, Firecracker microVMs, WSL2, Windows Sandbox, Hyper-V-isolated containers
+|===
+
+Plan 9 per-process namespaces sit between overlay and partition: each process gets its own file tree, built by binding, without a separate kernel.
+
+== Lifetime: how long it lasts
+
+[cols="1,3"]
+|===
+| Term | Ends when
+
+| *run* | the command or process exits
+| *session* | the shell session closes
+| *kept* | someone deletes it
+|===
+
+== Scope: what it applies to
+
+process, session, folder (project), user, machine.
+
+== Writing a full name
+
+`<lifetime> <level>`, optionally `@<scope>` for the attachment.
+
+[cols="2,2,3"]
+|===
+| Thing | Full name | Why
+
+| Python venv, activated
+| kept overlay, attached @session
+| The folder persists; `activate` edits `PATH`, `VIRTUAL_ENV` and the prompt in one session. Calling `.venv/bin/python` directly needs no activation.
+
+| `nvm use 22`
+| kept overlay, attached @session
+| Versions are persistent folders; `use` edits `PATH`.
+
+| mise / asdf / direnv pin
+| kept overlay, attached @folder
+| A file in the project selects; the effect follows the current folder.
+
+| `docker run --rm`
+| run partition
+| The writable layer is removed on exit; the image stays.
+
+| Named container
+| kept partition
+| The writable layer lasts until `docker rm`.
+
+| Windows Sandbox
+| run guest
+| A lightweight VM discarded on close.
+
+| Hyper-V / VirtualBox VM
+| kept guest
+| Disk persists; snapshots allow rewinding.
+|===
+
+== Common misconceptions
+
+* *"A venv dies with the shell."* Only its activation does. The venv is a folder.
+* *"Containers are persistent."* Images are. A container lasts until removed, which with `--rm` is on exit.
+* *"A container is a lightweight VM."* On Linux it shares the host kernel; that is what separates a partition from a guest.
+* *"A sandbox is a VM."* Usually it is a fence. Windows Sandbox is the exception: it is a guest.
+
+== See also
+
+* link:https://devcentr.org/blog/2026-10-26-virtual-environments-are-neither-virtual-nor-temporary[Virtual environments are neither virtual nor temporary] (essay)
+* link:https://docs.opensh.org/open-shell-org/concept-command-namespace.html[Command namespace and context requests] (OpenShellOrg, proposed)
+* xref:reference/shells/nushell.adoc[Nushell]

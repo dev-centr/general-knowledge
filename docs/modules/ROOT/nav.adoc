@@ -48,6 +48,7 @@
 ** xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 ** Shells
 *** xref:reference/shells/nushell.adoc[Nushell]
+*** xref:reference/shells/isolation-levels.adoc[Isolation levels]
 ** Languages
 *** xref:reference/languages/c.adoc[C Language]
 ** xref:reference/git-performance.adoc[Git Performance]
