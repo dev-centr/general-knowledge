@@ -1,0 +1,5 @@
+= 2026-10-26 - Markpad Markdown viewer
+:description: Added Markpad (markpad.dev) as a recommended local Markdown edit-and-preview tool with clickable task checkboxes.
+
+* Added Markpad (https://markpad.dev/) to xref:reference/recommended-tools.adoc[Recommended tools] - free, open-source, light Markdown editor + GFM preview; task-list checkboxes toggle the source.
+* New *Also good: Markpad* section in xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk].

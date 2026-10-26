@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-10-26 -- Markpad Markdown viewer
+
+* Added link:https://markpad.dev/[Markpad] to xref:reference/recommended-tools.adoc[Recommended tools] and xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] - light editor + preview with clickable task checkboxes.
+* See xref:changelog-details/2026-10-26 - markpad-markdown-viewer.adoc[Detailed changelog].
+
 == 2026-10-24 -- Vercel staging to production how-to
 
 * New xref:how-to/vercel-staging-to-production.adoc[Vercel staging to production]: staging branch as Preview env with own domain and dev backend, fast-forward release (manual and workflow_dispatch), Promote-to-Production and backend-deploy warnings, branch rulesets, free pre-launch gate.

@@ -4,7 +4,7 @@
 :page-usage-context: Explanation in general-knowledge
 :page-orig-author: Ryan Johnson
 :page-last-author: Cursor agent on behalf of Ryan Johnson
-:page-last-edited: 2026-09-03
+:page-last-edited: 2026-10-26
 
 ifndef::page-context-active[]
 [.page-context.page-context-lead]
@@ -68,6 +68,14 @@ It is **not** how DevCentr products should render docs or Markdown in-product.
 Dev-Centr already opted to keep viewing inside its own surfaces — Antora / AsciiDoc for published docs, and each app’s own rendering components and module provisions for in-app Markdown or help.
 Do not shell out to MarkView (or any external viewer) as the primary DevCentr reading experience; that would split chrome, theming, navigation, and component behavior away from the house stack.
 MarkView stays on the recommended-tools list for *people’s machines*, not as an embedded or default DevCentr viewer dependency.
+
+== Also good: Markpad (light edit + preview)
+
+link:https://markpad.dev/[Markpad] is a free, open-source, Notepad-light Markdown editor and viewer (Rust / Tauri) for macOS, Windows, and Linux: GFM preview, synchronized split, Monaco with Vim mode, KaTeX + Mermaid, tabs, disk auto-reload, no telemetry.
+Task-list checkboxes in its preview are **clickable** and write `[ ]` / `[x]` back to the file.
+Source: link:https://github.com/sftwrdotdev/Markpad[sftwrdotdev/Markpad]; Windows: `choco install markpad-app`.
+
+Use Markpad when you want a viewer that can also tick a checklist or make a quick edit, without a vault-style app.
 
 == AI and local model runners
 
