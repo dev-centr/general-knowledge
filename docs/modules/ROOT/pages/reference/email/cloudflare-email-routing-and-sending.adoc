@@ -1,0 +1,128 @@
+= Cloudflare Email Routing + Email Sending
+:navtitle: Cloudflare Routing + Sending
+:description: Complementary pattern: free Cloudflare Email Routing for inbound, Email Sending (beta) for outbound, Gmail Send mail as over Cloudflare SMTP, and parked-domain DNS.
+:keywords: cloudflare email routing, cloudflare email sending, email service, cf-bounce, smtp.mx.cloudflare.net, gmail send mail as, null mx, parked domain, dmarc
+
+Cloudflare Email Service has two halves that work on the same domain without conflict. *Email Routing* receives mail for your domain and forwards it to an existing mailbox. *Email Sending* sends mail as your domain. Together they give a small org a custom-domain address that a person can read and reply from in Gmail, with no hosted mailbox.
+
+Facts and prices below were checked against the official docs on *2026-10-31*. Prices and beta status change; re-check the linked pages before you rely on them.
+
+All names below are placeholders (`example.com`, `hello@example.com`, `you@gmail.com`).
+
+== The two halves
+
+[cols="1,2,2",options="header"]
+|===
+| | Email Routing | Email Sending
+
+| Direction
+| Inbound: receive and forward (or hand to a Worker)
+| Outbound: send as the domain (Workers binding, REST API, or SMTP)
+
+| Status
+| Generally available
+| Beta
+
+| Plan
+| Workers Free and Workers Paid
+| Workers Paid needed to send to arbitrary recipients
+
+| Price (as of 2026-10-31)
+| Inbound is unlimited on both plans
+| 3,000 emails included per month, then $0.35 per 1,000
+
+| DNS lives on
+| Root domain (`example.com`)
+| `cf-bounce.example.com` subdomain, plus `_dmarc.example.com`
+|===
+
+Billing notes from the pricing page:
+
+* The 3,000 included emails are *per Cloudflare account, per month*, aligned with the account's billing cycle. All onboarded sending domains in the account share that one quota.
+* Hard bounces and other messages Email Service accepts count toward the quota. Messages rejected at the API boundary (including sends blocked by the suppression list) do not.
+* Sending to *verified destination addresses* in your own account is free on all plans, even with only Routing configured, and does not use the quota.
+* Routing Workers (if you process mail in code) are billed as normal Workers.
+
+Routing alone cannot send. It has no SMTP, no mailbox, and no IMAP/POP. See xref:explanation/email/cloudflare-email-routing-limits.adoc[Cloudflare Email Routing limits].
+
+== DNS: how the two coexist
+
+Each half onboards from its own dashboard page (*Compute > Email Service > Email Routing* or *Email Sending*) and adds its own records. Removing one does not affect the other.
+
+Routing (root domain)::
+* `MX example.com` -> `route1.mx.cloudflare.net`, `route2...`, `route3...` (priorities set by Cloudflare)
+* `TXT example.com` -> `v=spf1 include:_spf.mx.cloudflare.net ~all`
+* `TXT cf2024-1._domainkey.example.com` -> DKIM key for forwarded mail
+
+Sending (`cf-bounce` subdomain)::
+* `MX cf-bounce.example.com` -> `route1/2/3.mx.cloudflare.net` (bounces come back to Cloudflare)
+* `TXT cf-bounce.example.com` -> `v=spf1 include:_spf.mx.cloudflare.net ~all`
+* `TXT cf-bounce._domainkey.example.com` -> DKIM key for sent mail
+* `TXT _dmarc.example.com` -> DMARC policy (onboarding proposes `v=DMARC1; p=reject;`)
+
+Why they do not collide::
+* *MX*: Routing owns the root MX; Sending only adds MX on `cf-bounce`. The bounce (envelope) address uses `cf-bounce.example.com`, so SPF for sent mail is checked there, not at the root.
+* *SPF*: one `v=spf1` record per name. The root SPF belongs to Routing; `cf-bounce` has its own. If the root already has SPF for another sender, merge the `include:` values into one record (10 DNS-lookup limit).
+* *DKIM*: different selectors (`cf2024-1` for Routing, `cf-bounce` for Sending), so both keys live side by side. DMARC passes on DKIM alignment because the signing domain is your domain.
+* *DMARC*: there is only one `_dmarc` record. If you already have one, keep yours and check that it does not conflict; do not create a second.
+
+Records Email Service creates are *locked* in the DNS editor. Only the Routing records on the root can be unlocked; the `cf-bounce` records stay managed for as long as the domain is onboarded to Sending.
+
+== Replying as the domain from Gmail (Send mail as)
+
+Routing forwards `hello@example.com` into `you@gmail.com`. To reply *as* `hello@example.com`, add it in Gmail under *Settings > Accounts and Import > Send mail as* and use Cloudflare's SMTP submission endpoint:
+
+[cols="1,2"]
+|===
+| SMTP server | `smtp.mx.cloudflare.net`
+| Port | `465`
+| Security | SSL (implicit TLS). Port 587 / STARTTLS is not supported.
+| Username | the literal string `api_token`
+| Password | a Cloudflare API token with the *Email Sending: Edit* permission
+|===
+
+* Create the token in the Cloudflare dashboard; an account-owned token is recommended. Scope it to *Email Sending: Edit* only.
+* Anyone holding the token can send from *every* onboarded domain in that account. Store it in a password manager. Never commit it, paste it into docs, or put it in a ticket.
+* Gmail confirms the address by sending a code to `hello@example.com`. Routing forwards that code to your inbox, which closes the loop.
+* The sender domain must be onboarded for Sending in the same account as the token, or SMTP returns `550 5.7.1`.
+* A send to an arbitrary recipient needs Workers Paid; each reply counts toward the monthly quota.
+
+See also xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas].
+
+== Parked domains (no mail at all)
+
+For a domain that should never send or receive mail, publish records that say so. This stops spoofing and lets receivers reject fakes fast. Do not onboard a parked domain to Routing or Sending.
+
+[source,text]
+----
+example.net.          MX   0 .                          ; null MX (RFC 7505): accepts no mail
+example.net.          TXT  "v=spf1 -all"                ; authorizes no senders
+_dmarc.example.net.   TXT  "v=DMARC1; p=reject;"        ; reject anything claiming this domain
+----
+
+Optionally add `*._domainkey.example.net. TXT "v=DKIM1; p="` to revoke any DKIM key.
+
+== Verification checklist
+
+. Routing: dashboard shows Routing *enabled* and its root MX, SPF, and DKIM records as configured.
+. `dig MX example.com` returns the three `route*.mx.cloudflare.net` hosts and nothing else.
+. `dig TXT example.com` returns exactly one `v=spf1` record.
+. Send a test to `hello@example.com` from another account; it lands in the destination inbox.
+. Sending: dashboard *Email Sending > Settings* lists the `cf-bounce` MX, SPF, DKIM, and the DMARC record as configured (Locked or Unlocked both mean OK).
+. `dig MX cf-bounce.example.com`, `dig TXT cf-bounce.example.com`, `dig TXT cf-bounce._domainkey.example.com`, and `dig TXT _dmarc.example.com` all answer.
+. Gmail *Send mail as* confirmation code arrives and the address is verified.
+. Reply from Gmail as `hello@example.com` to an outside mailbox; in *Show original*, SPF, DKIM, and DMARC all show `PASS`, and DKIM `d=` is `example.com`.
+. The message shows in the Email Sending activity log.
+. The API token lives only in the password manager; `git grep` of your repos finds no token.
+. Parked domains: `dig MX` shows `0 .`, SPF is `-all`, DMARC is `p=reject`.
+
+== Official sources
+
+* link:https://developers.cloudflare.com/email-service/[Cloudflare Email Service]
+* link:https://developers.cloudflare.com/email-service/platform/pricing/[Pricing]
+* link:https://developers.cloudflare.com/email-service/configuration/domains/[Domain configuration (DNS records)]
+* link:https://developers.cloudflare.com/email-service/api/send-emails/smtp/[SMTP]
+* link:https://developers.cloudflare.com/email-service/get-started/route-emails/[Route emails]
+* link:https://www.rfc-editor.org/rfc/rfc7505[RFC 7505: null MX]
+
+Related: xref:reference/email/provider-comparison.adoc[Email provider comparison], xref:explanation/email/dmarc-policy-path.adoc[DMARC policy path]

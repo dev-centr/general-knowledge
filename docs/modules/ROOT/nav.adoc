@@ -59,6 +59,7 @@
 ** xref:reference/checklist-sidecar.adoc[Checklist Sidecar]
 ** xref:reference/mojibake-signatures.adoc[Mojibake signatures]
 ** xref:reference/email/provider-comparison.adoc[Email provider comparison]
+** xref:reference/email/cloudflare-email-routing-and-sending.adoc[Cloudflare Email Routing + Sending]
 
 * xref:explanation/index.adoc[Explanation]
 ** Windows
