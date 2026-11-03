@@ -3,7 +3,7 @@
 :toc:
 
 **Installation** is how a product's bits become a durable, discoverable presence on a host: where files live, who may change them, how upgrades and uninstalls stay honest, and how shells and desktops find what you shipped.
-It sits under xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging] and pairs with xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], and the how-to xref:how-to/authoritative-installations.adoc[Authoritative installations].
+It sits under xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging] and pairs with xref:explanation/architecture/automatic-updates.adoc[Automatic updates], xref:explanation/infrastructure/os-install-concurrency.adoc[OS install concurrency], and the how-to xref:how-to/authoritative-installations.adoc[Authoritative installations]. Which formats to ship per software type: xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type].
 
 Platform deep dives::
 xref:explanation/architecture/installation/windows.adoc[Windows] ·

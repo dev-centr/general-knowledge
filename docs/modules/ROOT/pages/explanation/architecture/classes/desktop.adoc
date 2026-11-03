@@ -54,7 +54,7 @@ Legend: **A** = 1.0 band · **B** = support/retention · **C** = fleets/scale ·
 
 | **Installer + uninstall**
 | A
-| Signed package; ARP/Applications entry; clean uninstall — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]
+| Signed package; ARP/Applications entry; clean uninstall — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]; formats: xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type]
 
 | **What's new**
 | B

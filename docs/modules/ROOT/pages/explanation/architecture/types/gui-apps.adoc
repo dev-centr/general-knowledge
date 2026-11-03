@@ -16,7 +16,7 @@ For the full Band A/B/C auxiliary matrices, use the delivery-class templates (GU
 * **Debug dump** button on that dialog — xref:how-to/about-screen-and-debug-dump.adoc[How-to]
 * **Settings** with paths to logs/config or a “Open logs folder” action
 * **Update** affordance — check now / restart to update — xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
-* **Installer** with uninstall (desktop) — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]
+* **Installer** with uninstall (desktop) — xref:explanation/architecture/distribution-and-packaging.adoc[Distribution]; formats: xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type]
 
 == Desktop OS emphasis
 

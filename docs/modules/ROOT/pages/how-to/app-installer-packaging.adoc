@@ -3,6 +3,7 @@
 
 Goal:: Produce installers users and IT can trust, upgrade, and uninstall.
 Why:: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging].
+Which formats:: xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type] (defaults per CLI, GUI app, library, service, SDK).
 Decision tree:: xref:how-to/authoritative-installations.adoc[Authoritative installations] · xref:explanation/architecture/installation/index.adoc[Installation architecture].
 
 == Windows

@@ -1,8 +1,12 @@
 = Changelog
 
+== 2026-11-03 -- Package formats page nested under Distribution and packaging
+
+* Moved xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type] into `explanation/architecture/distribution-and-packaging/` so it is a child of xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]. Linked it from xref:how-to/app-installer-packaging.adoc[App installer packaging], xref:explanation/architecture/installation/index.adoc[Installation architecture], xref:explanation/architecture/types/gui-apps.adoc[GUI apps], and xref:explanation/architecture/classes/desktop.adoc[Desktop class].
+
 == 2026-11-02 -- Package formats by software type
 
-* New xref:explanation/architecture/package-formats-by-software-type.adoc[Package formats by software type]: default installer and package formats for CLIs, GUI apps, libraries, services, SDKs, and extensions, with reasons (why CLIs skip Snap and Flatpak, why there is a Homebrew tap, AUR -bin, Nix flake).
+* New xref:explanation/architecture/distribution-and-packaging/package-formats-by-software-type.adoc[Package formats by software type]: default installer and package formats for CLIs, GUI apps, libraries, services, SDKs, and extensions, with reasons (why CLIs skip Snap and Flatpak, why there is a Homebrew tap, AUR -bin, Nix flake).
 
 == 2026-10-26 -- Markpad Markdown viewer
 
