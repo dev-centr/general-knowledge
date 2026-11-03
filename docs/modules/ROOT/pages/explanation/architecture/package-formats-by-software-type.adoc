@@ -1,0 +1,82 @@
+= Package formats by software type
+:navtitle: Package formats by software type
+:description: Which installer and package formats to ship for a CLI, GUI app, library, service, SDK, or extension, and why. Covers MSI, winget, .pkg, .dmg, Homebrew, .deb, .rpm, AUR, Nix, Flatpak, AppImage, Snap, and containers.
+
+The right set of package formats depends on what kind of software you ship. A command-line tool, a desktop app, and a library reach users through different channels, and a format that suits one can actively hurt another. This page gives a default set for each type and the reasoning behind it.
+
+Context: xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and Packaging], xref:explanation/architecture/installation/index.adoc[Installation architecture] (with platform essays for xref:explanation/architecture/installation/windows.adoc[Windows], xref:explanation/architecture/installation/macos.adoc[macOS], and xref:explanation/architecture/installation/linux.adoc[Linux]), xref:how-to/app-installer-packaging.adoc[App installer packaging], xref:how-to/authoritative-installations.adoc[Authoritative installations], and xref:reference/package-registries.adoc[Package registries].
+
+== Defaults
+
+[cols="1,2,2,3,2",options="header"]
+|===
+| Type | Windows | macOS | Linux | Usually skip
+
+| CLI or TUI
+| MSI; winget manifest optional
+| `.pkg` (universal binary when possible) and a Homebrew tap formula
+| `.deb` and `.rpm` for x64 and arm64, tarballs, AUR `-bin` PKGBUILD, Nix flake
+| Snap, Flatpak
+
+| GUI desktop app
+| MSIX or MSI, plus winget
+| `.dmg` (drag to Applications) or `.pkg`
+| Flatpak first, plus AppImage; `.deb`/`.rpm` and Snap optional
+| -
+
+| Library
+3+| The language registry only: DUB, npm, crates.io, PyPI, NuGet, Maven Central
+| OS packages
+
+| Service or daemon
+| MSI that registers a Windows service, if supported
+| Homebrew formula with a service block, if relevant
+| Multi-arch OCI container image, plus `.deb`/`.rpm` with a systemd unit and a dedicated user
+| Snap, Flatpak, AppImage
+
+| SDK or toolchain
+| MSI or zip, plus winget
+| `.pkg` and Homebrew
+| Relocatable tarball, `.deb`/`.rpm`, Nix flake; versions installable side by side
+| Snap, Flatpak
+
+| Editor or IDE extension
+3+| The marketplace: VS Code Marketplace and Open VSX, JetBrains Marketplace
+| OS packages
+|===
+
+Every release also carries plain archives (`.tar.gz`, `.zip`) for each target and a `SHA256SUMS` file, and the README lists one install command per channel.
+
+== Why
+
+=== Command-line tools
+
+A CLI needs to read the user's project files, environment, `PATH`, and dotfiles, and to be callable from any shell. Snap and Flatpak sandbox the process, which breaks exactly that, or forces "classic" confinement and a store review. Flatpak is designed for graphical apps and has no first-class CLI story. A native `.deb` or `.rpm` puts one binary in `/usr/bin` with no runtime and upgrades cleanly with the system package manager.
+
+Homebrew is the default package manager for developers on macOS and is common on Linux. A project-owned *tap* ships on day one, while homebrew-core needs notability and review. The macOS `.pkg` covers people without Homebrew. It can install into `/usr/local/bin`, which a `.dmg` cannot.
+
+The AUR `-bin` package and the Nix flake only repackage the release tarball, so they cost one generated file each. A release workflow can refresh their checksums on every tag. Publishing to the AUR or to nixpkgs is a separate step for a maintainer. Until then, users can run `makepkg -si` from the repository, or `nix run github:<owner>/<repo>`.
+
+=== Desktop apps
+
+Desktop apps benefit from sandboxing and portals. One Flatpak build runs across distributions and is discoverable on Flathub, and AppImage covers running without installing. On macOS, users expect a `.dmg` with a `.app` bundle to drag to Applications. On Windows, MSIX gives clean install and uninstall, and winget gives a scriptable path.
+
+=== Libraries
+
+Consumers resolve libraries through their language's package manager and lockfile. OS packages for libraries are the distributions' business, and shipping them yourself creates version conflicts.
+
+=== Services
+
+Operators deploy services through containers or configuration management. A container image is the portable default. A `.deb`/`.rpm` with a systemd unit gives `systemctl enable --now`, log integration, and upgrades without a container runtime.
+
+=== SDKs and toolchains
+
+Projects pin toolchain versions, so several versions must coexist (one directory per version, a relocatable layout). Sandboxed formats get in the way of compilers, linkers, and debuggers reaching the system.
+
+== Signing
+
+Unsigned `.pkg`, MSI, and `.dmg` files work but trigger Gatekeeper or SmartScreen warnings. Say so in the release notes and explain the bypass until signing is set up.
+
+== Example
+
+The `envsafe` CLI follows the CLI defaults: link:https://github.com/dev-centr/envsafe/releases/tag/v0.2.2[release v0.2.2] (MSI, universal `.pkg`, `.deb`, `.rpm`, tarballs), and the link:https://github.com/dev-centr/homebrew-tap[dev-centr/homebrew-tap] formula. The release workflow builds `.deb` and `.rpm` with nfpm and smoke-installs the `.deb` in CI.

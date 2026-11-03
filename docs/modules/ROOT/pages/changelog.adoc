@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-11-02 -- Package formats by software type
+
+* New xref:explanation/architecture/package-formats-by-software-type.adoc[Package formats by software type]: default installer and package formats for CLIs, GUI apps, libraries, services, SDKs, and extensions, with reasons (why CLIs skip Snap and Flatpak, why there is a Homebrew tap, AUR -bin, Nix flake).
+
 == 2026-10-26 -- Markpad Markdown viewer
 
 * Added link:https://markpad.dev/[Markpad] to xref:reference/recommended-tools.adoc[Recommended tools] and xref:explanation/documentation/markdown-editors-on-disk.adoc[Markdown editors on local disk] - light editor + preview with clickable task checkboxes.

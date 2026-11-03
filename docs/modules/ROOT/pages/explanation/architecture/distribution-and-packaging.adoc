@@ -5,6 +5,7 @@
 
 Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
 How-to: xref:how-to/app-installer-packaging.adoc[Package installers for desktop apps].
+Which formats to ship for each kind of software, and why: xref:explanation/architecture/package-formats-by-software-type.adoc[Package formats by software type].
 
 [IMPORTANT]
 ====
