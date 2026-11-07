@@ -8,7 +8,7 @@
 :page-last-author: Cursor agent on behalf of Ryan Johnson
 :page-last-edited: 2026-10-17
 
-Multi-repo hubs rebuild when something *pokes* the playbook repo — same star pattern as `extension-updated` and `docs-source-updated` (see link:https://docs.antora-supplemental.org/antora-deployment/#auto-rebuild-when-content-sources-or-extensions-update[Antora deployment: auto-rebuild^]).
+Multi-repo hubs rebuild when something *pokes* the playbook repo — same star pattern as `extension-updated` and `docs-source-updated` (see link:https://docs.antora-supplemental.org/home/antora-deployment/#auto-rebuild-when-content-sources-or-extensions-update[Antora deployment: auto-rebuild^]).
 
 **Link-cache invalidation** adds optional *surgical* recheck hints for `@antora-supplemental/link-validator` (env `LINK_VALIDATOR_INVALIDATE_*`, v0.2.2+) while the hub still runs a full Antora generate and GitHub Pages deploy.
 
@@ -58,8 +58,8 @@ Use secret name **`DOCS_HUB_DISPATCH_TOKEN`** in every org that runs a docs hub.
 | Org | Token must `repository_dispatch` into
 
 | dev-centr | `dev-centr/docs` (this hub)
-| dlang-supplemental | `dlang-supplemental/docs` — see https://dlang-supplemental.github.io/docs/notify-docs-hub-link-changes.html[DLang hub how-to^]
-| antora-supplemental | `antora-supplemental/docs` — see https://docs.antora-supplemental.org/notify-docs-hub-link-changes.html[Antora hub how-to^]
+| dlang-supplemental | `dlang-supplemental/docs` — see https://dlang-supplemental.github.io/docs/home/notify-docs-hub-link-changes/[DLang hub how-to^]
+| antora-supplemental | `antora-supplemental/docs` — see https://docs.antora-supplemental.org/home/notify-docs-hub-link-changes/[Antora hub how-to^]
 |===
 
 Fine-grained PAT or GitHub App installation token; content repos inherit the org secret. Reusable workflows reference `secrets.DOCS_HUB_DISPATCH_TOKEN`. Callers skip dispatch when the secret is missing (configure before relying on auto-rebuild).

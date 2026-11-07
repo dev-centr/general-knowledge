@@ -11,7 +11,7 @@ When an agent compiles (or runs any long tool), **do not** treat stderr scrollba
 
 OpenShellOrg defines a **Tool Run** bus: structured diagnostics in, short CLI stub + magic link out, shared daemon for history, embeddable library for host chrome.
 
-Canon: link:https://opensh.org/docs/shell-architecture/tool-run-diagnostics.html[Tool runs and diagnostics] · link:https://opensh.org/docs/shell-architecture/command-channels.html[Command channels].
+Canon: link:https://docs.opensh.org/shell-architecture/tool-run-diagnostics/[Tool runs and diagnostics] · link:https://docs.opensh.org/shell-architecture/command-channels/[Command channels].
 
 == What Dev-Centr should do
 
@@ -35,4 +35,4 @@ Always still talk to the **daemon** when the user wants a second index of past c
 * xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
 * xref:explanation/infrastructure/nushell-and-ai-agents.adoc[Nushell and AI agents]
 * xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh]
-* HCI face: link:https://hci-nerdz.github.io/docs/hci-nerdz/programmer-pov-diagnostics.html[Programmer-POV diagnostics]
+* HCI face: link:https://hci-nerdz.github.io/docs/hci-nerdz/programmer-pov-diagnostics/[Programmer-POV diagnostics]

@@ -115,5 +115,5 @@ process, session, folder (project), user, machine.
 == See also
 
 * link:https://devcentr.org/blog/2026-10-26-virtual-environments-are-neither-virtual-nor-temporary[Virtual environments are neither virtual nor temporary] (essay)
-* link:https://docs.opensh.org/open-shell-org/concept-command-namespace.html[Command namespace and context requests] (OpenShellOrg, proposed)
+* link:https://docs.opensh.org/open-shell-org/concept-command-namespace/[Command namespace and context requests] (OpenShellOrg, proposed)
 * xref:reference/shells/nushell.adoc[Nushell]

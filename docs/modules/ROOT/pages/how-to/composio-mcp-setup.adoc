@@ -125,5 +125,5 @@ That loop is the intended product use—not “MCP listed in settings.”
 * xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 * xref:home::tools/composio.adoc[Docs hub: Composio]
 * xref:home::tools/agentic-email-integration.adoc[Agentic Email Integration] — Himalaya + local Cursor SDK path (own-your-inbox product)
-* link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[Essay: When the inbox is the CI pager]
+* When the inbox is the CI pager (earlier essay; currently unavailable)
 * link:https://composio.dev/[composio.dev]

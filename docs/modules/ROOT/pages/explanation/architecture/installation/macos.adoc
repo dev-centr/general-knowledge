@@ -83,7 +83,7 @@ Pairs with dmg/pkg first install and xref:explanation/architecture/automatic-upd
 == Shell-visible installs
 
 macOS does not auto-refresh every terminal's `PATH` when pkg edits `/etc/paths.d`.
-OpenShellOrg link:https://opensh.org/docs/shell-architecture/shell-host-env-refresh.html[env refresh] and Dev-Centr xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] treat post-install discovery as part of the install contract—not an afterthought.
+OpenShellOrg link:https://docs.opensh.org/shell-architecture/shell-host-and-env-refresh/[env refresh] and Dev-Centr xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] treat post-install discovery as part of the install contract—not an afterthought.
 
 == Related
 

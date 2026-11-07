@@ -6,7 +6,7 @@ You are choosing a **rendering pipeline**: how vectors become pixels, how much w
 
 This page is a working map for that decision.
 It complements xref:explanation/architecture/types/gui-apps.adoc[GUI applications] and xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (browser-heavy products on the Dev-Centr docs playbook).
-Essay (inward voice): link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed].
+Essay (inward voice): link:https://devcentr.org/blog/2026-08-19-after-skia-modern-2d-rendering-engine-with-vello[After Skia: where rendering is headed].
 
 == Why rendering choice shows up late—and hurts early
 
@@ -252,4 +252,4 @@ All engines listed here are open source under permissive licenses:
 * xref:explanation/architecture/types/gui-apps.adoc[GUI applications]
 * xref:explanation/architecture/classes/desktop.adoc[Desktop apps — auxiliary template]
 * xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
-* link:https://devcentr.org/news/2026-08-19-after-skia-where-rendering-is-headed[After Skia: where rendering is headed] (essay)
+* link:https://devcentr.org/blog/2026-08-19-after-skia-modern-2d-rendering-engine-with-vello[After Skia: where rendering is headed] (essay)

@@ -55,7 +55,7 @@ Choose scope early: it affects upgrade (same user hive?), winget manifest `Scope
 * **PATH** may be machine or user; installers that only document “add to PATH manually” fail discovery for normal users.
 * **Services** and **drivers** require SCM/co-installer discipline; botched service install survives as a broken ARP + orphaned service.
 
-Post-install, shells need a coherent world: xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] and OpenShellOrg link:https://opensh.org/docs/shell-architecture/shell-host-env-refresh.html[Shell Host / Env Refresh].
+Post-install, shells need a coherent world: xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] and OpenShellOrg link:https://docs.opensh.org/shell-architecture/shell-host-and-env-refresh/[Shell Host / Env Refresh].
 
 == Package managers on Windows
 

@@ -14,7 +14,7 @@ NOTE: This page was first published as *Config Key Sanitation*.
 It was renamed because the pattern covers a key's whole lifecycle, not cleanup.
 The old URL redirects here.
 
-Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-lifecycle-management.html[Config Lifecycle Management Protocol].
+Normative standard (OpenShellOrg / SOS): link:https://docs.opensh.org/open-shell-org/standard-config-lifecycle-management/[Config Lifecycle Management Protocol].
 
 Parent framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials]
 (primary type consumer: xref:explanation/architecture/types/cli.adoc[CLI]).

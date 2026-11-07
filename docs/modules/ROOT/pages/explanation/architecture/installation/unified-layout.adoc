@@ -65,7 +65,7 @@ Partner context: connectome-fs lists DevCentr and link:https://opensh.org/[OpenS
 == OpenShell and a shell-visible world
 
 Install is incomplete if the operator cannot **find and run** what you installed.
-OpenShellOrg's link:https://opensh.org/docs/shell-architecture/[shell architecture] stresses structured pipelines, **entrypoint dispatch** (auto-install + re-exec at the shell boundary), and **shell host / env refresh** so PATH and orientation update without folklore restarts.
+OpenShellOrg's link:https://docs.opensh.org/shell-architecture/[shell architecture] stresses structured pipelines, **entrypoint dispatch** (auto-install + re-exec at the shell boundary), and **shell host / env refresh** so PATH and orientation update without folklore restarts.
 
 UIL therefore treats **discovery and env refresh** as install outcomes:
 
@@ -83,7 +83,7 @@ Version is a release attribute, not a substitute for identity when side-by-side 
 === Edition
 
 Parallel binding of the same logical product—stable vs beta, LTS vs current, agent sandbox vs human workspace.
-On classic OS this is “install folder per channel”; in connectome-fs, an **edition** is a first-class CoW binding (see link:https://connectome-fs.github.io/docs/connectome-fs/explanation/editions.html[Editions in connectome-fs docs]).
+On classic OS this is “install folder per channel”; in connectome-fs, an **edition** is a first-class CoW binding (see link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/editions/[Editions in connectome-fs docs]).
 
 === Payload tree
 
@@ -160,5 +160,5 @@ The problems compose but do not merge.
 
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
-* link:https://connectome-fs.github.io/docs/connectome-fs/explanation/model.html[Connectome model]
-* link:https://opensh.org/docs/shell-architecture/entrypoint-dispatch.html[Entrypoint dispatch]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/model/[Connectome model]
+* link:https://docs.opensh.org/shell-architecture/entrypoint-dispatch/[Entrypoint dispatch]

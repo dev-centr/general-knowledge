@@ -10,7 +10,7 @@ A `.cmk` playbook (CentrMark file). The Scriptbook app. PlayTime (the engine ins
 You do **not** need a bash-to-PowerShell translator. That is the whole point.
 
 Companion essay::
-link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Intents, not shell translation]
+link:https://devcentr.org/blog/2026-08-13-stop-translating-shells[Intents, not shell translation]
 
 Contracts::
 link:https://github.com/dev-centr/scriptbook/blob/main/spec/playtime.adoc[PlayTime] ·
@@ -18,8 +18,8 @@ link:https://github.com/dev-centr/scriptbook/blob/main/spec/playbook-profile.ado
 link:https://github.com/dev-centr/scriptbook/blob/main/spec/host-awareness.adoc[Host Awareness]
 
 OpenShellOrg cousins::
-link:https://docs.opensh.org/shell-architecture/playtime-at-the-shell-boundary.html[PlayTime at the shell boundary] ·
-link:https://docs.opensh.org/shell-architecture/argv-as-execution-currency.html[Argv as execution currency]
+link:https://docs.opensh.org/shell-architecture/playtime-at-the-shell-boundary/[PlayTime at the shell boundary] ·
+link:https://docs.opensh.org/shell-architecture/argv-as-execution-currency/[Argv as execution currency]
 
 == The idea in one kitchen
 
@@ -268,6 +268,6 @@ Concrete script cells stay valid. Mixed books are the sweet spot: Nushell for gl
 | xref:tools:scriptbook:host-awareness.adoc[Bake vs run]
 | Bake vs run; `--list` / `--format`; `--to` stays a host alias
 
-| link:https://devcentr.org/news/2026-08-13-intents-not-shell-translation[Blog essay]
+| link:https://devcentr.org/blog/2026-08-13-stop-translating-shells[Blog essay]
 | Inward tour of the same system
 |===

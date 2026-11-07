@@ -14,7 +14,7 @@ Lookup table::
 xref:reference/google-cloud-oauth-concept-map.adoc[Google Cloud OAuth concept map]
 
 Companion essay::
-link:https://devcentr.org/news/2026-08-12-when-a-cloud-project-pretends-to-be-an-app[When a Cloud project pretends to be an app]
+link:https://devcentr.org/blog/2026-08-12-oauth-is-not-a-cloud-project[When a Cloud project pretends to be an app]
 
 == Ideal mental model
 

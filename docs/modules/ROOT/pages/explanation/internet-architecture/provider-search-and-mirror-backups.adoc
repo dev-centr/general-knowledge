@@ -28,7 +28,7 @@ That pressure points at two product surfaces every serious data provider will ev
 . **Opt-in mirror backups** — redundant stores that **mimic the provider’s data shape and API surface**, so consumers can leave, audit, or RAG against *their* copy without inventing a second schema.
 
 This article sits under xref:explanation/internet-architecture/index.adoc[Internet Architecture]: durability of shared memory for correspondence and structured collections, not only packet uptime.
-For the human-side ache when history lives only on a host, see HCI link:https://hci-nerdz.github.io/docs/hci-nerdz/host-held-history.html[Host-held history].
+For the human-side ache when history lives only on a host, see HCI link:https://hci-nerdz.github.io/docs/hci-nerdz/host-held-history/[Host-held history].
 Issues Browser and personal `.issues` archives are a near-term way to practice the pattern before every forge exposes search and mirrors.
 
 == Why local copies proliferate today

@@ -142,7 +142,7 @@ Sources::
 
 * https://www.heise.de/en/news/Desktop-CPU-shipments-can-best-be-described-as-dismal-11424318.html[heise online summary of Mercury Research Q2 2026] (Arm client share ≈ 15.3%; AMD desktop x86 share 34.9%).
 * https://gigazine.net/gsc_news/en/20260825-amd-client-cpu-share/[GIGAZINE / Tom’s Hardware / The Register coverage] of the same Mercury figures.
-* Primary research firm: https://www.mercuryresearch.com/[Mercury Research] (detailed tables typically commercial).
+* Primary research firm: http://www.mercuryresearch.com/[Mercury Research] (detailed tables typically commercial).
 
 Implication for `common/2026`:: Shipping **both** x64 and arm64 on Windows and Linux covers the dominant x86 install base **and** the growing Arm client minority without waiting for Arm to “win” gaming.
 

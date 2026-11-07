@@ -6,9 +6,9 @@
 ====
 *Stub.* Expand after the connectome-fs editions implementation matures.
 Canonical design:
-link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[VCS collapse over editions].
+link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/vcs-collapse/[VCS collapse over editions].
 Semantic units (features/dependencies, not only paths):
-link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[Semantic change units].
+link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/semantic-change-units/[Semantic change units].
 ====
 
 == Abstract
@@ -43,7 +43,7 @@ xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped c
 * xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
 * xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/editions/[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/vcs-collapse/[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/semantic-change-units/[connectome-fs: Semantic change units]
 * link:https://github.com/connectome-fs/connectome-fs[github.com/dev-centr/connectome-fs]

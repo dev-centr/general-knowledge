@@ -102,5 +102,5 @@ Do not force every SaaS call through Composio. Prefer the shell when you already
 * xref:reference/recommended-tools.adoc[Recommended tools]
 * xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog]
 * xref:home::tools/composio.adoc[Docs hub: Composio]
-* link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[Essay: When the inbox is the CI pager]
+* When the inbox is the CI pager (earlier essay; currently unavailable)
 * link:https://connect.composio.dev/api/onboarding/setup[Official Composio setup]

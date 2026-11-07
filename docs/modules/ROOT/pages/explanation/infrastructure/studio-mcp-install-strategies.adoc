@@ -185,7 +185,7 @@ Bake that into the skill and the how-to smoke test.
 |===
 
 Essay (relaxed)::
-link:https://www.ryanjohnson.dev/blog/posts/when-the-inbox-is-the-ci-pager[When the inbox is the CI pager]
+When the inbox is the CI pager (earlier essay; currently unavailable)
 
 == Checklist for shipping your own connector
 

@@ -7,10 +7,7 @@ They do not give concurrent agent workflows a machine-wide admission queue.
 When two workers both decide a toolchain is missing, “install” is often a bounce—or a silent race—unless the **agent host** owns a critical section.
 
 This page is the short practitioner framing for Dev-Centr toolchain and agent work.
-The long OS essays (failure modes, feature asks, cooperation tables) live on News:
-
-* link:https://devcentr.org/news/2026-08-09-windows-install-concurrency[Installation concurrency when Windows has a mutex but not a queue]
-* link:https://devcentr.org/news/2026-08-09-linux-install-concurrency[Installation concurrency when Linux locks wait—or don't]
+For the wider installation contract, see xref:explanation/architecture/installation/windows.adoc[Windows installation] and xref:explanation/architecture/installation/linux.adoc[Linux installation].
 
 == What the OS actually gives you
 
@@ -53,7 +50,6 @@ If you are designing an agent runner that spans Windows and Linux, keep one orch
 
 == See also
 
-* News diptych (deep dive): link:https://devcentr.org/news/2026-08-09-windows-install-concurrency[Windows] · link:https://devcentr.org/news/2026-08-09-linux-install-concurrency[Linux]
 * xref:explanation/infrastructure/toolchain-control-plane.adoc[Toolchain Control Plane]
 * xref:how-to/app-installer-packaging.adoc[App Installer Packaging] (shipping installers—not running them concurrently)
 * xref:explanation/architecture/installation/index.adoc[Installation architecture] · xref:explanation/architecture/installation/windows.adoc[Windows installation]

@@ -5,7 +5,7 @@
 
 This page lists Antora extensions DevCentr / OpenShellOrg / antora-supplemental treat as **essential**: behavior so basic that every docs site we ship should enable it, and that we argue belongs closer to Antora core (or at least in every playbook by default).
 
-Playbook URL style (not an extension): set `urls.html_extension_style: indexify` so published pages use folder paths (`…/email/` for `email/index.adoc`). Canonical links and the sitemap follow that URL. Section landings stay `index.adoc` with a **linked parent** in nav (link text = H1); do not use `.Section` + Overview, do not invent `overview.adoc`, and do not advertise `index.html` in prose. See link:https://docs.antora.org/antora/latest/page/url-format/[Antora: URL format^] for upstream URL rules.
+Playbook URL style (not an extension): set `urls.html_extension_style: indexify` so published pages use folder paths (`…/email/` for `email/index.adoc`). Canonical links and the sitemap follow that URL. Section landings stay `index.adoc` with a **linked parent** in nav (link text = H1); do not use `.Section` + Overview, do not invent `overview.adoc`, and do not advertise `index.html` in prose. See link:https://docs.antora.org/antora/latest/playbook/urls-html-extension-style/[Antora: URL format^] for upstream URL rules.
 
 == Essential Extensions / Extensions that should be in core
 
@@ -28,7 +28,7 @@ antora:
 
 Install the package in the playbook repo (`pnpm add -D @antora/lunr-extension`). Register Lunr **before** any wrapper that depends on it (for example `antora-search-chat`).
 
-*Upstream:* Lunr is the official search extension — see link:https://docs.antora.org/antora/latest/extend/add-search-to-site/[Add search to the site^]. Treat it as mandatory site plumbing for every Antora site we publish—not optional polish.
+*Upstream:* Lunr is the official search extension — see link:https://gitlab.com/antora/antora-lunr-extension[Add search to the site^]. Treat it as mandatory site plumbing for every Antora site we publish—not optional polish.
 
 === Site-wide component nav tree (`@antora-supplemental/site-nav-tree`)
 

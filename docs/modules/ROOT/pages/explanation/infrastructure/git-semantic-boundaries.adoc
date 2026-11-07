@@ -8,7 +8,7 @@ Everything that makes collaborative coding pleasant—orthogonal functions in on
 
 This is the Dev-Centr practitioner framing.
 Canonical connectome design for the same thesis:
-link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units].
+link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/semantic-change-units/[connectome-fs: Semantic change units].
 
 image::git-blobs-vs-graph-units.webp[alt="Left: Git sees file blobs with mixed features. Right: a graph sees feature nodes and dependency edges projected onto files"]
 
@@ -47,7 +47,7 @@ The pain is that *file identity forced a dependency that did not exist in the pr
 * **Jujutsu-style operation logs** — healthier uncommitted graph; still blob-centric unless a semantic layer is added.
 * **link:https://www.unison-lang.org/[Unison]** — content-addressed definitions; renames and refactors are graph ops. Strong proof that *code identity* should not be “path + line.”
 * **connectome-fs** — GUID nodes, typed associations (`depends-on`, …), and
-  link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[editions]
+  link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/editions/[editions]
   so the filesystem itself can carry the meta-model Unison demonstrates for one language.
 
 == Syntax-aware auto-forward
@@ -83,7 +83,7 @@ File-shaped history also fails *teaching*.
 A one-shot or heavily iterated tree does not expose the naive entrypoint a newcomer needs.
 connectome-fs names two projections over GUID identity — evolutionary walks (pathogenesis) and compositional aspect graphs — with a userspace sidecar that can live beside any git repo until the VFS carries those associations natively:
 
-link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/pathogenesis-and-composition.html[connectome-fs: Pathogenesis and composition].
+link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/pathogenesis-and-composition/[connectome-fs: Pathogenesis and composition].
 
 Pilot: link:https://github.com/dlang-supplemental/tgc/tree/main/pathogenesis[dlang-supplemental/tgc pathogenesis].
 
@@ -94,9 +94,9 @@ Pilot: link:https://github.com/dlang-supplemental/tgc/tree/main/pathogenesis[dla
 * xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
 * xref:how-to/org-scoped-git-worktrees.adoc[Org-scoped Git worktrees]
 * xref:explanation/infrastructure/git-worktrees-long-range.adoc[Git worktrees long-range]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/pathogenesis-and-composition.html[connectome-fs: Pathogenesis and composition]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/vcs-collapse.html[connectome-fs: VCS collapse]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/semantic-change-units/[connectome-fs: Semantic change units]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/pathogenesis-and-composition/[connectome-fs: Pathogenesis and composition]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/vcs-collapse/[connectome-fs: VCS collapse]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/editions/[connectome-fs: Editions]
 * link:https://github.com/connectome-fs/connectome-fs[github.com/connectome-fs/connectome-fs]
 * link:https://www.unison-lang.org/[Unison language]

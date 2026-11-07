@@ -73,5 +73,5 @@ tradeoffs.
 * xref:explanation/infrastructure/vcs-over-fs-editions.adoc[VCS over FS editions]
 * xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes]
 * xref:explanation/infrastructure/text-encoding-and-ai-agents.adoc[Text encoding and AI agents]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/editions.html[connectome-fs: Editions]
-* link:https://connectome-fs.github.io/connectome-fs/manual/connectome-fs/0.1/explanation/semantic-change-units.html[connectome-fs: Semantic change units]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/editions/[connectome-fs: Editions]
+* link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/semantic-change-units/[connectome-fs: Semantic change units]

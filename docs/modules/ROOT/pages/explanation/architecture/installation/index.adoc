@@ -128,4 +128,4 @@ For a mental model that separates *roles* from *paths*, see xref:explanation/arc
 * xref:explanation/architecture/polyglot-distribution.adoc[Polyglot distribution (experimental)] — one download; does not replace install contracts
 * xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] — post-install PATH and env visibility
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] — pin, repair, upgrade lifecycle
-* link:https://opensh.org/docs/shell-architecture/entrypoint-dispatch.html[OpenShellOrg: Entrypoint dispatch] — install + re-exec at the shell boundary
+* link:https://docs.opensh.org/shell-architecture/entrypoint-dispatch/[OpenShellOrg: Entrypoint dispatch] — install + re-exec at the shell boundary

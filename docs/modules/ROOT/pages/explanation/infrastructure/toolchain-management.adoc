@@ -180,7 +180,7 @@ flowchart TB
 ----
 
 * xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]
-* link:https://openshellorg.github.io/open-shell-org/shell-architecture/entrypoint-dispatch.html[Entrypoint Dispatch] (shell-architecture)
+* link:https://docs.opensh.org/shell-architecture/entrypoint-dispatch/[Entrypoint Dispatch] (shell-architecture)
 * link:https://github.com/openshellorg/nu-require[nu-require] — re-exec under Nushell
 * link:https://openshellorg.github.io/[OpenShellOrg home]
 

@@ -88,7 +88,7 @@ UI/brand **canvas**: compare options in xref:reference/web-design-tools.adoc[Web
 No single **motion** format wins. Choose by job (see xref:explanation/brand-motion.adoc[Brand and UI Motion Formats] for the full matrix):
 
 * link:https://www.w3.org/Graphics/SVG/[**Animated SVG**] — **Default** for portable brand motion (org profiles, docs, marketing without a JS player). Prefer a self-contained file that honors `prefers-reduced-motion`. Best agentic/git fit.
-* link:https://airbnb.design/lottie/[**Lottie**] — Use when motion is complex *baked* timeline work (often After Effects). JSON is text but cumbersome to edit; needs a player. Acceptable in AE pipelines (including CentrMark’s Lottie support); **not** the automatic default for simple marks.
+* link:https://airbnb.tech/opensource/lottie/[**Lottie**] — Use when motion is complex *baked* timeline work (often After Effects). JSON is text but cumbersome to edit; needs a player. Acceptable in AE pipelines (including CentrMark’s Lottie support); **not** the automatic default for simple marks.
 * link:https://rive.app/[**Rive**] — Option for *interactive* / theme-driven UI motion (state machines, inputs) when a runtime is justified. Runtimes MIT; **editor proprietary**; **`.riv` is binary** (weak agentic authoring). Prefer lite packages when possible; lazy-load. **Do not** treat as an open de facto standard.
 
 Watch-only (not endorsed defaults): text-first motion DSLs / CSS-shaped scene formats aimed at LLM workflows — see the explanation page. **Popkorn** is noted there as a *potential future* solution; outreach: link:https://github.com/ayarse/popkorn/issues/7[ayarse/popkorn#7].

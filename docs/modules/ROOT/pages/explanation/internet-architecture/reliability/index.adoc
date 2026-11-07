@@ -69,10 +69,10 @@ image::internet-architecture/three-altitudes-diagram.svg["Three nested altitudes
 | link:https://hci-nerdz.github.io/blog/broken-links-after-a-url-rename/[Broken links after a URL rename] · link:https://hci-nerdz.github.io/demos/broken-links-after-a-url-rename/[demo]
 
 | Diagnosis and treatment (HCI)
-| link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alternative-to-urls.html[An alternative to URLs]
+| link:https://hci-nerdz.github.io/docs/hci-nerdz/an-alternative-to-urls/[An alternative to URLs]
 
 | Filesystem / graph substrate
-| link:https://connectome-fs.github.io/connectome-fs/docs/connectome-fs/0.1/explanation/navigating-by-content.html[connectome-fs]
+| link:https://connectome-fs.github.io/docs/connectome-fs/0.1/explanation/navigating-by-content/[connectome-fs]
 |===
 
 (If you came looking for menu-style install guides titled *Navigating by content*, that is a different HCI essay — not this reliability topic.)

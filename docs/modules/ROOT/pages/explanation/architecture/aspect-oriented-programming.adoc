@@ -26,7 +26,7 @@ In programming, these chores are things like:
 
 By using AOP, your main code stays simple and focused on what it is supposed to do, while the "chores" are handled separately. This prevents "pollution" of the core algorithm with infrastructure details.
 
-For more information, see the article on link:https://simple.wikipedia.org/wiki/Aspect-oriented_programming[Simple Wikipedia].
+For more information, see the article on link:https://en.wikipedia.org/wiki/Aspect-oriented_programming[Simple Wikipedia].
 
 == Related
 
