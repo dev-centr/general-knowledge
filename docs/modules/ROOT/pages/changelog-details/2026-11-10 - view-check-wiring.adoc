@@ -1,0 +1,15 @@
+= View-check wiring
+:description: A product host selects a view-check profile and keeps exceptions next to the view.
+:page-audience: Maintainers tracking general-knowledge documentation changes
+:page-usage-context: Changelog detail for the view-check architecture page
+:page-orig-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-edited: 2026-11-10
+:hide-page:
+:navtree-parent: changelog.adoc
+
+xref:explanation/architecture/view-check.adoc[View-check] tells a product how to call the command in link:https://github.com/dev-centr/view-check[dev-centr/view-check].
+
+* The host passes `--profile`, `--snapshot`, and, when a view breaks a rule on purpose, `--exceptions`.
+* The exception file lives with the view. It is not an `excludes` line in the profile ledger.
+* The page links to HCI Nerdz for the sentences a person agrees to, and does not restate them.

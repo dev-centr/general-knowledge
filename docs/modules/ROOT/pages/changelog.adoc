@@ -1,5 +1,12 @@
 = Changelog
 
+== 2026-11-10
+
+=== View-check wiring
+
+* New xref:explanation/architecture/view-check.adoc[View-check]: a product CI host passes a profile id, a snapshot, and a per-view exception file. The human criteria sentences stay in HCI Nerdz docs.
+* Detail: xref:changelog-details/2026-11-10 - view-check-wiring.adoc[View-check wiring].
+
 == 2026-11-07
 
 === Refresh documentation destinations

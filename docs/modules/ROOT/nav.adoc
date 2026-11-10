@@ -96,6 +96,7 @@
 ***** xref:explanation/architecture/classes/desktop.adoc[Desktop]
 ***** xref:explanation/architecture/classes/web.adoc[Web]
 ***** xref:explanation/architecture/classes/mobile.adoc[Mobile]
+*** xref:explanation/architecture/view-check.adoc[View-check]
 *** xref:explanation/architecture/auxiliary-features.adoc[Auxiliary Features]
 *** xref:explanation/architecture/marketing-for-engineers.adoc[Marketing for engineers]
 *** xref:explanation/architecture/about-and-build-info.adoc[About and Build Info]

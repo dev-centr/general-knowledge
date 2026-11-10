@@ -13,6 +13,9 @@ Auxiliary features and delivery classes::
 ** xref:explanation/architecture/classes/web.adoc[Web]
 ** xref:explanation/architecture/classes/mobile.adoc[Mobile]
 
+Visual rule check::
+xref:explanation/architecture/view-check.adoc[View-check] — the host passes a profile id and an exception file.
+
 Deep dives (shared)::
 * xref:explanation/architecture/about-and-build-info.adoc[About, build info, and debug dumps]
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]

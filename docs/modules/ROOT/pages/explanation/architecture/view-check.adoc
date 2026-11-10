@@ -1,0 +1,39 @@
+= View-check
+:description: How a product selects a view-check profile and where the exception file lives.
+:page-audience: Product authors wiring visual checks into CI
+:page-usage-context: Choosing a profile id and an exception file for a view snapshot
+:page-orig-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-edited: 2026-11-10
+
+View-check reads a snapshot and a profile id. The host passes those two, plus an exception file when a view breaks a rule on purpose. The host does not copy the thresholds into the pipeline.
+
+The command lives in link:https://github.com/dev-centr/view-check[dev-centr/view-check].
+
+Parent:: xref:explanation/architecture/index.adoc[Architecture overview]
+Delivery classes:: xref:explanation/architecture/classes/index.adoc[Desktop / web / mobile templates]
+
+== What the host passes
+
+. Pick the profile id for the shell under test: `web`, `mobile-web`, or `ipad-web`.
+. Point `--snapshot` at the view snapshot for that run. An embedded canvas is a second snapshot and a second run.
+. Point `--exceptions` at the exception file for that view, when the view has one.
+
+[source,shell]
+----
+view-check --profile mobile-web --snapshot layout.json --exceptions view.kdl
+----
+
+The profile ledger is KDL in the view-check repo. A product does not fork a copy of the rules into its CI script.
+
+== Where the exception file lives
+
+The exception file sits with the view, in the product repo. One view, one file. It names the rule, the node, and the reason.
+
+It is not a line in the profile ledger. Ledger `excludes` means the rule does not apply to that profile. An exception means this view breaks a rule that does apply.
+
+== What stays outside the command
+
+The snapshot is the input. A DOM walker, a CSS reader, or a scene exporter builds that snapshot and stays in the product. View-check does not open a browser.
+
+The sentences a person can agree to are written by HCI Nerdz, in link:https://github.com/HCI-Nerdz/docs[HCI-Nerdz/docs]. This page does not restate them.
