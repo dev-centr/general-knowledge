@@ -36,4 +36,4 @@ It is not a line in the profile ledger. Ledger `excludes` means the rule does no
 
 The snapshot is the input. A DOM walker, a CSS reader, or a scene exporter builds that snapshot and stays in the product. View-check does not open a browser.
 
-The sentences a person can agree to are written by HCI Nerdz, in link:https://github.com/HCI-Nerdz/docs[HCI-Nerdz/docs]. This page does not restate them.
+The sentences a person can agree to are on link:https://hci-nerdz.github.io/docs/view-conformance/[View conformance]. This page does not restate them.

@@ -12,4 +12,4 @@ xref:explanation/architecture/view-check.adoc[View-check] tells a product how to
 
 * The host passes `--profile`, `--snapshot`, and, when a view breaks a rule on purpose, `--exceptions`.
 * The exception file lives with the view. It is not an `excludes` line in the profile ledger.
-* The page links to HCI Nerdz for the sentences a person agrees to, and does not restate them.
+* The page links to link:https://hci-nerdz.github.io/docs/view-conformance/[View conformance] for the sentences a person agrees to, and does not restate them.
