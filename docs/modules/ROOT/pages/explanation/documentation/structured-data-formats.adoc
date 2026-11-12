@@ -3,6 +3,8 @@
 
 JSON is the default interchange shape. Human-edited config, programmable constraints, LLM token budgets, and zero-copy wire formats pull in different successors. This page mirrors the **Configuration** classification and lineage graph in DevCentr’s Create… catalog.
 
+Schema.org is not one of these file formats. It names a public HTML page. See xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site].
+
 == Do not confuse prose with data
 
 **CentrMark / Markdown / AsciiDoc** model document trees (paragraphs, headings, directives). **SDLang / KDL / JSON** model data trees (nodes, arguments, properties). Comparing KDL to CentrMark as peers is a category error—pick documentation markup or structured data first.

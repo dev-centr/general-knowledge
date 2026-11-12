@@ -1,0 +1,149 @@
+= Schema.org on a public site
+:description: Schema.org names the thing a public page is, in JSON-LD the raw HTML already carries, so a crawler can tell a docs page from a news post or a software project.
+:page-audience: Developers and editors publishing a public site, docs hub, news page, or product page
+:page-usage-context: Explanation of the Schema.org vocabulary and where it belongs beside crawlable HTML
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-11-12
+:page-diataxis: explanation
+:page-keywords: Schema.org, JSON-LD, structured data, TechArticle, Organization, WebSite
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience:: {page-audience}
+****
+
+[.page-context.page-context-footer]
+****
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Schema.org is a shared list of names for things on the public web: an organization, a website, a docs page, a news post, a software project.
+A page states those facts in the HTML it already returns, as one JSON-LD block (`<script type="application/ld+json">`).
+A crawler, a search engine, or another site can then tell those pages apart without guessing from the title.
+
+The sitemap lists the URLs.
+The HTML is the page a person can read.
+The JSON-LD says what that page is.
+Search-result presentation is one consumer, and it is not guaranteed.
+The durable reason to emit the block is that the page names itself.
+See xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website] for the rest of the discovery loop.
+
+== Two projects share the word schema
+
+JSON Schema (`https://json-schema.org`) checks the shape of a file.
+Extension manifests, install records, and config documents use it.
+That `$schema` field does not describe a public page.
+
+Schema.org (`https://schema.org`) names a thing a stranger can open in a browser.
+A CLI record, a session file, and an extension manifest stay in their own formats.
+The public page about them can still be a docs article or a software project.
+File formats for config and documents are a separate choice: xref:explanation/documentation/structured-data-formats.adoc[Structured data formats].
+
+== Which type to use
+
+Use the type that matches the visible page.
+Omit a property the page does not show.
+Do not invent a rating, a price, or a type the page is not.
+
+[cols="1,2"]
+|===
+| Page | Schema.org type
+
+| The organization, stated once per site
+| `Organization`
+
+| The site
+| `WebSite`
+
+| A documentation page
+| `TechArticle`
+
+| A news post
+| `NewsArticle`
+
+| A blog post
+| `BlogPosting`
+
+| A product or application page
+| `SoftwareApplication`
+
+| A library or source repository page
+| `SoftwareSourceCode`
+
+| The trail the page already shows
+| `BreadcrumbList`
+|===
+
+A docs hub page is a `TechArticle` published by the organization, and it is part of the docs `WebSite`.
+A news site uses `NewsArticle` for the post and the same organization as publisher.
+A product homepage that is the application, not an essay about it, uses `SoftwareApplication`.
+
+== What the block looks like
+
+The block is in the raw HTML, so it is present before any client script runs.
+`<` inside the JSON is written as `\u003c` so a title cannot close the script tag.
+
+[source,json]
+----
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://devcentr.org/#organization",
+      "name": "DevCentr",
+      "url": "https://devcentr.org"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://docs.devcentr.org/#website",
+      "name": "Dev-Centr Docs",
+      "url": "https://docs.devcentr.org",
+      "publisher": { "@id": "https://devcentr.org/#organization" }
+    },
+    {
+      "@type": "TechArticle",
+      "headline": "Schema.org on a public site",
+      "url": "https://docs.devcentr.org/general-knowledge/explanation/schema-org-on-a-public-site/",
+      "isPartOf": { "@id": "https://docs.devcentr.org/#website" },
+      "publisher": { "@id": "https://devcentr.org/#organization" }
+    }
+  ]
+}
+----
+
+== Antora docs sites
+
+The Valentus theme writes this graph into every docs page from `partials/head-schema-org.hbs`.
+The default page type is `TechArticle`.
+Name the organization in the playbook:
+
+[source,yaml]
+----
+site:
+  title: Dev-Centr Docs
+  url: https://docs.devcentr.org
+  keys:
+    schema_org_name: DevCentr
+    schema_org_url: https://devcentr.org
+----
+
+`schema_org_type` sets the page type for the whole site (`NewsArticle` on a news site, for example).
+A single page overrides that with the AsciiDoc attribute `:page-schema-type:`.
+Accepted values are `TechArticle`, `NewsArticle`, `BlogPosting`, `Article`, `SoftwareApplication`, `SoftwareSourceCode`, and `WebPage`.
+Anything else stays `TechArticle`.
+
+An OpenShellOrg docs hub uses the same keys: organization OpenShellOrg, site https://docs.opensh.org[docs.opensh.org].
+A shell command's own stdout is not a Schema.org document.
+The docs page that describes the command is.
+
+== House rule
+
+Public content routes already have to return readable HTML, a sitemap, and `robots.txt`.
+Schema.org is part of that contract.
+The portable rule is https://github.com/dev-centr/agent-rules/blob/main/general/web-crawlability.md[`general/web-crawlability.md`] (skill `web-crawlability`).

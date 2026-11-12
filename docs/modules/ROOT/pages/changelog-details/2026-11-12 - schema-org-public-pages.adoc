@@ -1,0 +1,10 @@
+= 2026-11-12
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Schema.org on a public site
+
+xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site] explains the vocabulary, the split from JSON Schema, and the playbook keys a docs hub sets.
+
+The page type matches the visible page: `TechArticle` for docs, `NewsArticle` for news, `BlogPosting` for a blog, `SoftwareApplication` for a product, `SoftwareSourceCode` for a library.

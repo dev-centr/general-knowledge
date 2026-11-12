@@ -1,5 +1,12 @@
 = Changelog
 
+== 2026-11-12
+
+=== Schema.org on a public site
+
+* New xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site]: JSON-LD in the raw HTML names the organization, the site, and the page. JSON Schema stays the file-shape contract.
+* Detail: xref:changelog-details/2026-11-12 - schema-org-public-pages.adoc[Schema.org on a public site].
+
 == 2026-11-10
 
 === View-check wiring

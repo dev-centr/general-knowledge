@@ -103,6 +103,7 @@ Private content needs authentication; an indexable page that should disappear ne
 === Structured data clarifies entities
 
 JSON-LD can identify an article, event, product, organization, breadcrumb trail, or local business using supported Schema.org vocabulary.
+Which type to use, and how a docs hub emits it, is xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site].
 It can make a page eligible for a richer search presentation.
 It does not create facts that are absent from the visible page, and eligibility does not guarantee that a rich result will appear.
 

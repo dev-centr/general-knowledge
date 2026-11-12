@@ -173,6 +173,7 @@
 *** xref:explanation/open-source/ecosystem-failures-and-successes.adoc[Ecosystem failures and successes]
 ** Web publishing
 *** xref:explanation/what-seo-does-for-a-public-website.adoc[What SEO does for a public website]
+*** xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site]
 ** Documentation
 *** xref:explanation/writing-clear-docs-with-ai.adoc[Writing Clear Docs with AI]
 *** xref:explanation/literate-programming.adoc[Literate Programming (LP)]
