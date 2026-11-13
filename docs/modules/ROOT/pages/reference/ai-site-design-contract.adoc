@@ -1,0 +1,126 @@
+= AI site design contract
+:description: Semantic tokens, banned generated patterns, and prompt shapes to hand an AI coding agent so a site keeps one visual language.
+:page-audience: Developers shipping a public site with an AI coding agent
+:page-usage-context: Reference lookup while tightening an existing site. The procedure is the how-to; the reason is the explanation.
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-11-12
+:page-created: 2026-11-12
+:page-published: 2026-11-12
+:page-diataxis: reference
+:page-doc-type: reference
+:page-status: published
+:page-keywords: design tokens, CSS variables, Tailwind, visual hierarchy, component libraries
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Look up the contract while you edit.
+The procedure is xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site].
+Why the contract exists is xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+
+Put these names in CSS (or the theme file the agent must read) and refuse raw palette utilities in new markup.
+
+== Semantic tokens
+
+[cols="1,2", options="header"]
+|===
+| Token | Job
+
+| `--surface-primary`
+| Default page or panel background
+
+| `--surface-muted`
+| Adjacent band when two regions separate by contrast
+
+| `--border-subtle`
+| Hairline. Low contrast. Dialogs, selected rows, tables
+
+| `--text-primary`
+| Body and headings
+
+| `--text-muted`
+| Metadata, dates, tags, secondary labels
+
+| `--space-*`
+| One spacing scale. New layout uses a step on this scale
+
+| `--radius-*`
+| One radius, or two (control vs panel). A new feature does not invent a third
+
+| `--shadow-*`
+| Optional. If present, one elevation for overlays. Sections prefer surface contrast
+
+| `--font-sans`
+| UI and reading text. Geometric sans is a common marketing choice
+
+| `--font-mono`
+| Metadata, dates, tags, code
+|===
+
+Example pairing, not a house mandate: a geometric sans such as Geist or Plus Jakarta Sans with JetBrains Mono for metadata.
+Self-host the files you ship.
+
+== Patterns to replace
+
+[cols="1,2", options="header"]
+|===
+| Generated default | Replacement
+
+| Raw palette utilities (`bg-slate-800`, `text-gray-500`, arbitrary spacing)
+| The semantic token for that role
+
+| Bordered, shadowed card inside another bordered card
+| `--surface-primary` against `--surface-muted`, plus whitespace
+
+| Purple or blue gradient page background as the brand
+| The surface tokens. Color shows up in type hierarchy and one accent
+
+| Lucide (or similar) icon inside a glowing rounded square, used as a section illustration
+| A CSS replica of the product UI when the section is about the product. An icon stays on a real control
+
+| A new badge color for every status
+| Weight, size, and `--text-muted`
+
+| A third corner radius on a new feature
+| The existing `--radius-*` step
+|===
+
+== Prompt shapes
+
+Hand the model one of these.
+A paragraph that only describes a mood leaves the defaults in the table above in charge.
+
+[cols="1,2", options="header"]
+|===
+| What you attach | What you ask
+
+| `THEME.md` or the token file
+| Implement this screen with these tokens only. Audit the JSX and replace raw palette classes.
+
+| One section screenshot
+| Rebuild this component with the spacing scale, border opacity, and type hierarchy in the image. Keep this data model.
+
+| An existing template or component library
+| Adapt these components to this data. Keep their spacing scale.
+|===
+
+Libraries people use as that constraint include shadcn/ui, Radix, Aceternity UI, Magic UI, Tailwind UI, and Cruip.
+Naming one is a constraint.
+It is not a Dev-Centr recommendation for the design canvas.
+Canvas choice stays on xref:reference/web-design-tools.adoc[Web design tools].
+
+== Where this is used
+
+* xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site]
+* xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design]
+* xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — studio setup, before visual work
+* xref:business-bootstrap::design/index.adoc[Design] in Business Bootstrap — canvas and handoff

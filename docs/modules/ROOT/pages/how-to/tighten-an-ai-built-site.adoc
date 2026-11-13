@@ -1,0 +1,104 @@
+= Tighten an AI-built site
+:description: Lock semantic tokens, strip nested cards, set type hierarchy, and prompt from a reference screenshot so an existing AI-built site stops drifting.
+:page-audience: Developers shipping a public site with an AI coding agent
+:page-usage-context: How-to for a site that already runs. A from-scratch lesson would be a tutorial; that lesson is not written yet.
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-11-12
+:page-created: 2026-11-12
+:page-published: 2026-11-12
+:page-diataxis: how-to
+:page-doc-type: how-to
+:page-status: published
+:page-keywords: design tokens, Tailwind, visual hierarchy, polish pass, reference prompting
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+You already have a site the agent built, and the pages work.
+They still look like a sequence of prompts: radii disagree, every block is a card, and empty areas are icons in rounded squares.
+
+This is a how-to for that site.
+A tutorial would walk you through building one small page from an empty folder so you learn the contract.
+That lesson is not written yet.
+Why the drift happens is xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+The token names and banned patterns are xref:reference/ai-site-design-contract.adoc[AI site design contract].
+
+== Lock the contract before the next prompt
+
+. Add a theme file the agent must read (`THEME.md`, or the CSS variables themselves).
+. Define semantic tokens for surface, border, text, space, and radius.
+  Use the names in the xref:reference/ai-site-design-contract.adoc[contract].
+. Tell the agent to audit JSX and CSS and replace raw palette utilities (`bg-slate-800`, `text-gray-500`) and one-off spacing with those tokens.
+. Keep one or two radii for the whole site.
+  A new feature uses the existing radius.
+
+Until this file exists, every later prompt is allowed to invent a new gray.
+
+== Separate sections with surface and space
+
+. Walk each page and mark nested cards: a bordered, shadowed box inside another bordered, shadowed box.
+. Remove about half of those borders and drop shadows.
+. Separate the sections that remain with a background change (`--surface-primary` against `--surface-muted`) and with whitespace from the spacing scale.
+. Leave a border where the user must see a boundary (a dialog, a selected row, a table).
+  A paragraph does not need one.
+
+== Set type before you add color
+
+. Tighten heading tracking.
+  Large headings on marketing pages usually want `tracking-tight` or the equivalent in your scale.
+. Pair a geometric sans for UI text with a monospace for metadata, dates, and tags.
+  Geist, Plus Jakarta Sans, and JetBrains Mono are examples of that pairing.
+  Self-host the files you actually ship.
+. Prefer weight, size, and a muted text token over a new badge color for every status.
+. Check contrast for body text and for the muted token.
+  A gray that looked fine on one card often fails once the card border is gone.
+
+== Prompt from a picture of one section
+
+Describing a look in a paragraph hands the model the same defaults you are trying to leave.
+
+. Pick one section from a site whose spacing you want (a timeline, a settings row, a file tree).
+. Capture that section only.
+. Ask the agent to rebuild *your* component using the spacing scale, border opacity, and type hierarchy in the image.
+. Name the component and the data it must keep.
+  The screenshot constrains the visuals.
+  Your data model constrains the content.
+
+== Show the product
+
+When a section is about the product, depict the product: a file list, a diff, a chat transcript, a stylized window.
+
+. Replace abstract icon tiles in those sections with a small CSS replica of the real UI.
+. Keep the replica on the same tokens as the rest of the page.
+. Use an icon when the control is an icon (a button, a nav item).
+  A hero does not have to be a glowing square with a generic glyph.
+
+== Run one polish pass
+
+After the tokens are in place, take the repo through a single tightening pass.
+Scaffolding can stay.
+The pass is allowed to delete.
+
+. Align padding to the spacing scale.
+. Check one narrow viewport and one wide viewport for each template.
+. Unify font weights so a label is not medium on one page and bold on the next.
+. Remove wrapper divs that only existed to hold a card style you deleted.
+
+Stop when a new screen can be built by pointing at the theme file and an existing section.
+That is the condition the next prompt should meet.
+
+== Related
+
+* xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design] — why open prompts drift
+* xref:reference/ai-site-design-contract.adoc[AI site design contract] — tokens, tells, prompt shapes
+* xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — studio setup, before any of this
+* xref:reference/web-design-tools.adoc[Web design tools] — canvas for the human half (Penpot, Lunacy, Figma)

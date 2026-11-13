@@ -3,6 +3,15 @@
 
 Tutorials are **learning** paths. Use them when you want guided practice—not a single task lookup.
 
+A tutorial builds one example so you learn the idea by doing it.
+A how-to assumes you already have the goal and need the steps.
+Those two were easy to blur for AI-built sites, so the visual-design material is split on purpose:
+
+* There is no tutorial yet that builds a page from an empty folder under a locked theme. That would be the learning path.
+* The site already runs and looks uneven: xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site].
+* You want the reason open prompts drift: xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+* You need the token list while you edit: xref:reference/ai-site-design-contract.adoc[AI site design contract].
+
 == Featured
 
 * xref:tutorials/build-a-search-ready-nextjs-listing-site.adoc[Build a search-ready Next.js listing site] — render useful listing HTML, describe canonical pages, publish sitemap and robots routes, add JSON-LD, and verify the production response

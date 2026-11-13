@@ -1,0 +1,17 @@
+= 2026-11-12
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Constrained AI web design
+
+The Gemini export this set started from mixed one explanation, one procedure, and one lookup list.
+Public docs keep those apart:
+
+* xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design] — taste and architecture stay with a person; the agent implements inside a contract. Agenta's public marketing-site pull request is the worked example (tokens, licensed type, product-shaped sections, off Framer).
+* xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] — for a site that already runs.
+* xref:reference/ai-site-design-contract.adoc[AI site design contract] — tokens, replacements, prompt shapes.
+
+A from-scratch tutorial is intentionally absent.
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] and Business Bootstrap design only link here.
+They do not absorb the visual contract.

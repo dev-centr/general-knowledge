@@ -95,6 +95,9 @@ We do **not** list Framer as a catalog default on link:https://nonprofit-resourc
 
 == Related
 
+* xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design] — agent implements a human visual contract; Agenta's move off Framer into a tokenized repo
+* xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] — procedure once the site already runs
+* xref:reference/ai-site-design-contract.adoc[AI site design contract] — tokens and prompt shapes
 * xref:reference/recommended-tools.adoc[Recommended tools] — Creative & media apps; Design & Brand Motion
 * xref:business-bootstrap::software-stack.adoc[Business Bootstrap software stack] — Penpot in the org stack map
 * link:https://nonprofit-resources.org/guides/publish-a-brand-kit[Publish a brand kit] — logos and tokens on your domain (Nonprofit Resources)

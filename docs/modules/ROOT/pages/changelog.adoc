@@ -2,6 +2,11 @@
 
 == 2026-11-12
 
+=== Constrained AI web design
+
+* New xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design], xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site], and xref:reference/ai-site-design-contract.adoc[AI site design contract]. Open prompts and a locked visual contract stay in different Diataxis slots. Studio bootstrap only links here.
+* Detail: xref:changelog-details/2026-11-12 - constrained-ai-web-design.adoc[Constrained AI web design].
+
 === Schema.org on a public site
 
 * New xref:explanation/schema-org-on-a-public-site.adoc[Schema.org on a public site]: JSON-LD in the raw HTML names the organization, the site, and the page. JSON Schema stays the file-shape contract.

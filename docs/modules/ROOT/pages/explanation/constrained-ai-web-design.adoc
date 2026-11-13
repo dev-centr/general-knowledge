@@ -1,0 +1,96 @@
+= Constrained AI web design
+:description: Polished sites that use an AI coding agent still start from a human visual contract. Open prompts optimize each feature and let type, spacing, and color drift.
+:page-audience: Developers shipping a public site with an AI coding agent
+:page-usage-context: Explanation on the general-knowledge hub. Read this before the how-to or the token reference.
+:page-orig-author: Ryan Johnson
+:page-last-author: Cursor agent on behalf of Ryan Johnson
+:page-last-edited: 2026-11-12
+:page-created: 2026-11-12
+:page-published: 2026-11-12
+:page-diataxis: explanation
+:page-doc-type: explanation
+:page-status: published
+:page-keywords: vibe coding, design tokens, visual hierarchy, AI-assisted design, landing pages
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+A public site can be written with an agent and still look designed.
+The part that holds it together is a visual language a person locked first: type, spacing, color tokens, and what a section is allowed to depict.
+The agent then implements inside that contract.
+
+[.themed-svg]
+image::constrained-ai-web-design.svg[alt="Two panels. Open prompts produce three cards with different corner radii. A locked contract keeps one radius, one spacing scale, and a short file list that depicts the product.",width=760]
+
+The left panel is what repeated open prompts do to one product.
+The right panel is the same product after the visual language is already decided.
+Notice the radii on the left and the single radius on the right.
+
+== Taste and implementation are different jobs
+
+High-polish commercial sites separate two kinds of work.
+
+* **Taste and architecture** choose the hierarchy, the spacing scale, the type, and which real product surfaces appear on the page.
+* **Implementation** turns that decision into markup, styles, and responsive behavior. An agent is well suited to this half when the first half is already written down.
+
+An open prompt such as "make a landing page for this product" hands both jobs to the model.
+Models share a narrow default: purple and blue gradients, one ubiquitous sans, generic icons in glowing rounded squares, and a three-column bento of bordered cards.
+That default is what people notice when they say a page looks generated.
+
+Pointing the model at an existing visual language changes the job.
+A `design-system.md`, a token file, or a specific component library (shadcn/ui, Radix, Aceternity UI, Magic UI, a Tailwind UI or Cruip template, a Linear- or Stripe-like scale you name) tells the model which averages to refuse.
+Those libraries are constraints, not a Dev-Centr default canvas.
+The canvas comparison stays on xref:reference/web-design-tools.adoc[Web design tools].
+
+== Each prompt optimizes the feature in front of it
+
+A multi-surface app makes the drift obvious.
+Public pages, role-specific profiles, and a private tracking view are easy to ship one prompt at a time.
+Each prompt is graded on whether that feature works.
+Border radius, shadow depth, vertical rhythm, and information density are free to shift, because nothing in the prompt scores them against the rest of the site.
+
+Layout and aesthetics can be separated before that happens.
+Write the DOM hierarchy and the copy with little or no styling, or start from a template whose spacing scale you intend to keep, and let the agent adapt the components to your data.
+A later polish pass then tightens padding, breakpoints, font weights, and redundant wrappers.
+Teams that publish their stacks often describe the first pass as scaffolding and the second as the pass that makes the site look like one product.
+The steps for that pass are xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site].
+The tokens to enforce are xref:reference/ai-site-design-contract.adoc[AI site design contract].
+
+== What a polished public site actually shows
+
+You cannot tell from the outside whether a given line was typed by a model.
+You can tell whether a visual contract survived into the repo.
+
+link:https://agenta.ai/[Agenta] is a useful public example because the marketing-site move is described in the open repository, not inferred from the pixels.
+link:https://github.com/Agenta-AI/agenta/pull/5440[Pull request 5440] moves `agenta.ai` off Framer into an Astro package in the monorepo so the site sits in review with the rest of the product.
+The pull request describes a warm-dark token system in which color comes from tokens, a font pipeline for two licensed faces (GT Alpina and PP Mondwest) with a system fallback when the binaries are absent, and landing sections that depict the product: template galleries, chat, files, a browser, diffs.
+That is the same shape as the right-hand panel above.
+Framer as a primary host is the case xref:reference/web-design-tools.adoc[Web design tools] already warns about: the canonical site leaves your repo.
+
+A separate public write-up by a designer who worked on the product describes an earlier playground that functioned and still felt like stacked settings, because screens had been engineered without a designer and the layout followed the data model.
+link:https://ahmedrehman.framer.website/my-work/agenta-ai[That case study] is one person's account of the product UI, not a claim about who typed the marketing site.
+The useful part is the failure mode: a complete interface can still have no hierarchy.
+
+Product-shaped sections matter for the same reason.
+A file tree, a diff, or a chat transcript gives the visitor something specific to recognize.
+An open prompt that has no asset to imitate reaches for a generic icon in a rounded square, because a text prompt is a weak way to invent a cohesive illustration.
+
+== Where this sits next to studio bootstrap
+
+xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] gets the studio ready: skills, MCP, agent rules.
+It does not choose type, spacing, or color.
+Business Bootstrap's xref:business-bootstrap::design/index.adoc[Design] area chooses a canvas (Penpot, Lunacy, Figma) and hands mockups to implementation.
+This page is the gap between those two: the contract you give the agent once it can edit the repo.
+
+There is no tutorial here that builds a page from an empty folder.
+A tutorial would be a guided build whose point is to learn the contract by using it once.
+xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] assumes the site already runs and you want the drift gone.
+xref:reference/ai-site-design-contract.adoc[AI site design contract] is the list you look up while you do that.

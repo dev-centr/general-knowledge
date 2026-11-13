@@ -3,6 +3,13 @@
 
 Task-oriented guides. Pick a guide when you already know what you want to do.
 
+A how-to assumes the goal and the thing you are changing.
+A tutorial would teach by building a small example from the start.
+For AI-built sites, the how-to is xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] (the site already runs).
+The from-scratch lesson is not written; the Tutorials landing says so.
+Why the pages drift: xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+Tokens: xref:reference/ai-site-design-contract.adoc[AI site design contract].
+
 == Featured
 
 * xref:how-to/secrets-distribution-cli-mcp.adoc[Secrets distribution (CLI · MCP)] — Vault custom fields → local env → hosting env; hub later so matrix changes are not retyping. Tutorial: xref:tutorials/secrets-from-vendor-to-deploy.adoc[From vendor dashboard to deploy matrix].
@@ -12,6 +19,7 @@ Task-oriented guides. Pick a guide when you already know what you want to do.
 * xref:tools:agent-rules:bitwarden-cli-agents.adoc[Bitwarden CLI for agentic workflows] — optional vault session persist for agents.
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills setup] — Library/API docs MCP for version-sensitive agent work.
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] — Personal Agent Skills without clogging always-on User Rules; YAML `description` is trigger words, not a lay blurb (skill `write-a-skill`). Operator path or drop the recipe into a permissive agent. Framing: xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap].
+* xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] — lock tokens, drop nested cards, and prompt from one screenshot. The site already runs. Why it drifted: xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
 * xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] — GitHub org identity (profile, site, docs hub) as an agent skill; capability-area IT stays in Business Bootstrap. Not the same as installing Cursor skills.
 * xref:how-to/nushell-setup.adoc[Install and set up Nushell] — Default shell for Dev-Centr on every OS.
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.

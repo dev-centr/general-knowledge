@@ -60,3 +60,15 @@ TIP: Always-on User Rules are expensive. Skills load when the task matches **tri
 
 Worked example for a personal writing skill::
 xref:how-to/bootstrap-cursor-skills.adoc#worked-example-writing-news-and-blog[Bootstrap Cursor skills — writing-news and writing-blog]
+
+== Visual design is a later constraint
+
+This page stands up the studio.
+It does not choose type, spacing, or color.
+
+Once the agent can edit the repo, hand it a visual contract or each new screen drifts.
+The reason is xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+The procedure for a site that already runs is xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site].
+The token list is xref:reference/ai-site-design-contract.adoc[AI site design contract].
+
+A canvas for the human half (Penpot, Lunacy, Figma) stays in Business Bootstrap's design area and on xref:reference/web-design-tools.adoc[Web design tools].
