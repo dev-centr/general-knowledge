@@ -1,0 +1,10 @@
+= 2026-11-12
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Service manager ownership
+
+The rules for a service that can run more than once live in OpenShellOrg: https://docs.opensh.org/open-shell-org/standard-service-manager/[Service Manager].
+
+Dev-Centr records the split on xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg]. A singleton stays one process. Every other service uses the manager, the short ids, detach by default, and the terminal record.

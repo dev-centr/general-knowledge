@@ -2,6 +2,12 @@
 
 == 2026-11-12
 
+=== Service manager ownership
+
+* A service that can run more than once is an OpenShellOrg standard. Dev-Centr follows it and does not keep a second copy of the rules.
+* The ownership table on xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and OpenShellOrg] names that split.
+* Detail: xref:changelog-details/2026-11-12 - service-manager.adoc[Service manager ownership].
+
 === Constrained AI web design
 
 * New xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design], xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site], and xref:reference/ai-site-design-contract.adoc[AI site design contract]. Open prompts and a locked visual contract stay in different Diataxis slots. Studio bootstrap only links here.

@@ -45,6 +45,10 @@ Dev-Centr and link:https://github.com/openshellorg[Open Shell Organization (Open
 | Tool runs / compiler diagnostics UX
 | **Embed** the OpenShellOrg library in agent timelines (`embed` / `headless`); do not fork a second bus
 | Own Tool Run protocol, daemon, wrappers, session ids (shell-architecture)
+
+| Services that can run more than once
+| Follow the Service Manager standard. Do not invent a second id scheme
+| Own the **Service Manager** standard: short ids, detach by default, `-listen`, which terminal spawned each instance and which is showing it
 |===
 
 == Why the goals feel the same
@@ -63,6 +67,7 @@ That overlap is real. It is why OpenShellOrg work is **relevant** to Dev-Centr. 
 
 * Put **user guidance and DevCentr behavior** in Dev-Centr / general-knowledge.
 * Put **cross-vendor standards, certification, and reusable CLI libraries** in OpenShellOrg.
+* Put the **Service Manager** standard in OpenShellOrg (link:https://docs.opensh.org/open-shell-org/standard-service-manager/[Service Manager]). Dev-Centr services that can run more than once follow it. A singleton stays one process and does not use that id space.
 * Put **reusable env-refresh and shell-host products** in OpenShellOrg; DevCentr consumes and prefers them.
 * Put **entrypoint install+re-exec mechanics** in OpenShellOrg (shell-architecture Entrypoint Dispatch + `nu-require`); put **toolchain lifecycle ownership** in DevCentr (Toolchain Management Pattern).
 * Put **PlayTime** (play a `.cmk` by binding intents to argv) in Dev-Centr `scriptbook` while it is being built. Document the argv / host-identity *stance* on OpenShellOrg. Do not move the engine yet. See xref:explanation/infrastructure/abstract-playbooks.adoc[Abstract playbooks].
