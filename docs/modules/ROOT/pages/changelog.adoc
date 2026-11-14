@@ -12,10 +12,20 @@
 * A spam report is investigated. It does not remove the inbox whitelist, and the provider Spam button is not how platform mail is reported.
 * Detail: xref:changelog-details/2026-11-13 - spam-complaint-is-an-incident.adoc[A spam complaint is an incident].
 
-=== Feedback loops go to fbl
+=== Feedback Loop (FBL) copies
 
-* `abuse@` is the public human contact. Automated ARF feeds go to `fbl@`. Postmaster Tools is not pointed at `abuse@`.
-* Detail: xref:changelog-details/2026-11-13 - feedback-loops-go-to-fbl.adoc[Feedback loops go to fbl].
+* `abuse@` is the public human contact. A Feedback Loop (FBL) sends its automated copy to `fbl@`. Postmaster Tools is not pointed at `abuse@`.
+* Detail: xref:changelog-details/2026-11-13 - feedback-loops-go-to-fbl.adoc[Feedback Loop (FBL) copies].
+
+=== Warn the mailbox about a spoof
+
+* Inbound mail that spoofs an address we control is warned in the web UI and by a new message in the recipient's mailbox. Nothing is sent to the forged envelope sender.
+* Detail: xref:changelog-details/2026-11-13 - claimed-from-us-spoof.adoc[Warn the mailbox about a spoof].
+
+=== Spell out Feedback Loop
+
+* The first mention on the Cloudflare mail page is Feedback Loop (FBL), with the provider-program definition beside it.
+* Detail: xref:changelog-details/2026-11-13 - spell-out-feedback-loop.adoc[Spell out Feedback Loop].
 
 == 2026-11-12
 

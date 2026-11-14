@@ -1,0 +1,10 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Spell out Feedback Loop
+
+xref:reference/email/cloudflare-email-routing-and-sending.adoc#operator-addresses[Operator addresses] introduces the address as Feedback Loop (FBL).
+
+A Feedback Loop is a program a mailbox provider (Yahoo, Microsoft, and others) offers the sender. When someone at that provider marks the sender's message as spam, the provider emails a copy to an address the sender registered. The copy uses the Abuse Reporting Format (RFC 5965): the complaint outside, the original message attached. Our registered address for that automated copy is `fbl@`. `abuse@` is not that address. Gmail does not send these per-message copies.

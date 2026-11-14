@@ -9,4 +9,4 @@ xref:reference/email/cloudflare-email-routing-and-sending.adoc#operator-addresse
 
 The report covers `mailer-daemon`, `support`, `postmaster`, `abuse`, `bounces`, any other address on these domains, the sending IPs, and the domains. It is not a reason to remove the inbox whitelist.
 
-The Spam button at Gmail, Yahoo, or Microsoft trains that provider and does not forward the message. `abuse@` is the public contact a person reads. Automated ARF feedback loops go to `fbl@`. Gmail does not send per-message ARF, and Postmaster Tools is not pointed at `abuse@`. A foreign IP on the attached original is forgery. A platform IP with no matching send is recorded. The whitelist stays.
+The Spam button at Gmail, Yahoo, or Microsoft trains that provider and does not forward the message. `abuse@` is the public contact a person reads. A Feedback Loop (FBL) sends its automated copy to `fbl@`. Gmail does not send these per-message copies, and Postmaster Tools is not pointed at `abuse@`. A foreign IP on the attached original is forgery. A platform IP with no matching send is recorded. The whitelist stays.

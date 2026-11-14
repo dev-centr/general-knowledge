@@ -95,7 +95,9 @@ House practice for domains this organization controls. The agent copy is link:ht
 
 Every owned apex gets three public addresses, and only these as the published set: `support@`, `postmaster@`, and `abuse@`. `abuse@` is the public contact a person or another postmaster writes to. A person reads it. They are operator destinations, not a list of forbidden usernames. Do not enable a catch-all.
 
-Do not add a `mail.` hostname on every domain. User mail for Userdata, when a person has an account, is `name@mail.userdata.cloud`. That namespace stays closed until then. On `mail.userdata.cloud` the platform addresses are `postmaster@`, `abuse@`, `bounces@`, `mailer-daemon@`, and `fbl@`. `bounces@` is the envelope return path for mail the platform sends. A delivery-status notice uses a null envelope sender and From `mailer-daemon@mail.userdata.cloud`. Those two are operator destinations, not user accounts. `fbl@` is also on each apex that already has Email Routing. It is not a published public contact.
+Do not add a `mail.` hostname on every domain. User mail for Userdata, when a person has an account, is `name@mail.userdata.cloud`. That namespace stays closed until then. On `mail.userdata.cloud` the platform addresses are `postmaster@`, `abuse@`, `bounces@`, `mailer-daemon@`, and the Feedback Loop (FBL) address `fbl@`. `bounces@` is the envelope return path for mail the platform sends. A delivery-status notice uses a null envelope sender and From `mailer-daemon@mail.userdata.cloud`. Those two are operator destinations, not user accounts. `fbl@` is also on each apex that already has Email Routing. It is not a published public contact.
+
+A Feedback Loop is a program a mailbox provider (Yahoo, Microsoft, and others) offers the sender. When someone at that provider marks the sender's message as spam, the provider emails a copy to an address the sender registered. The copy uses the Abuse Reporting Format (RFC 5965): the complaint outside, the original message attached. Our registered address for that automated copy is `fbl@`. `abuse@` is not that address. Gmail does not send these per-message copies.
 
 `mailer-daemon@` is hard-whitelisted. Deliver it to the inbox. Do not mark it as spam and do not train a filter on it. Google once had a compromised mailer daemon that sent spam; after that spam was reported, later legitimate mail from the same address kept landing in spam. Leave the whitelist in place.
 
@@ -105,11 +107,22 @@ A spam complaint about anything this organization controls is an incident. The s
 
 The Spam button at Gmail, Yahoo, or Microsoft does not forward the message to the operator. That provider trains its own filter. Never report `mailer-daemon`, or any platform address, with that button.
 
-Automated Abuse Reporting Format feedback loops (RFC 5965) go to `fbl@` on that domain. `fbl@` is not the published public contact. The detector reads `fbl@`. Gmail does not send per-message ARF copies. Do not point Postmaster Tools at `abuse@`.
+The detector reads `fbl@`. Do not point Postmaster Tools at `abuse@`.
 
 Compare the attached original on `fbl@` to mail the platform sent: sending IP, DKIM, and the bounce id or VERP token. A foreign IP is forgery. A platform IP with no matching send is a hijacked credential or daemon. Record it. Leave the inbox whitelist in place.
 
 If the apex already has MX at a provider, do not replace it. If it has no MX, Cloudflare Email Routing may receive the three addresses, forwarded to an address that is already verified. Merge `include:_spf.mx.cloudflare.net` into an existing SPF record; do not replace a record that already authorizes a sender. Add `v=DMARC1; p=none` only when no DMARC record exists. Do not set `p=reject`. A null MX stays a null MX (see the next section).
+
+[#claimed-from-us-spoof]
+=== A claimed-from-us spoof
+
+When inbound mail for a local user claims to be from an address we control (including `mailer-daemon@`) and the sending IP or DKIM signature is not ours, or a platform IP has no matching bounce id or VERP token, treat it as a spoof.
+
+Tell the recipient in two places. Put a warning in the web UI. Also deliver a new message into that user's own mailbox explaining the spoof, so an IMAP or other mail app shows it with no web UI. The new message is from the platform (`mailer-daemon` or a notices address we control), addressed to the user. It is not an SMTP autoreply to the forged sender. Do not send anything to the spoof's envelope sender. That would be backscatter.
+
+The operator incident still goes to the detector that reads `fbl@`. `abuse@` stays the public human contact. A spoof does not remove the `mailer-daemon` inbox whitelist.
+
+This delivery behavior has to live in a mail server we can modify. A third-party mailbox host for end users does not give us a place to file that warning.
 
 == Parked domains (no mail at all)
 

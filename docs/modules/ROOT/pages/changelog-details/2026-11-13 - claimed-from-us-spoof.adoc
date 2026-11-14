@@ -1,0 +1,12 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Warn the mailbox about a spoof
+
+xref:reference/email/cloudflare-email-routing-and-sending.adoc#claimed-from-us-spoof[A claimed-from-us spoof] says inbound mail for a local user that claims to be from an address we control is a spoof when the sending IP, DKIM signature, or bounce id does not match.
+
+The recipient sees a warning in the web UI and a new message in their own mailbox. That message is from the platform and is addressed to the user. Nothing is sent to the forged envelope sender. The operator incident still goes to the detector that reads the Feedback Loop (FBL) address `fbl@`. `abuse@` stays the public human contact, and the `mailer-daemon` inbox whitelist stays.
+
+Filing that warning has to live in a mail server we can modify. A third-party mailbox host for end users does not give us a place to file it.
