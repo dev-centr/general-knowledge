@@ -21,7 +21,7 @@ Zero Trust may already exist on the account (a team domain like `https://<team-n
 [[preferred-path]]
 == Preferred path
 
-Use **Antora Private Docs Site** instead of registering a GitHub OAuth app for each Access team. It is one OpenID Connect issuer. A GitHub organization opts in by installing that GitHub App (owned by the antora-supplemental organization). A GitLab group opts in by inviting the configured user. GitLab does not install apps the way GitHub does, so belonging to a group is not itself an opt-in.
+Use **Antora Private Docs Login** instead of registering a GitHub OAuth app for each Access team. It is one OpenID Connect issuer. A GitHub organization opts in by installing that GitHub App (owned by the antora-supplemental organization). A GitLab group opts in by inviting the configured user. GitLab does not install apps the way GitHub does, so belonging to a group is not itself an opt-in.
 
 Steps and the groups-claim shape (`github:<host>:<org>`, `gitlab:<host>:<group path>`): https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Private docs login].
 
@@ -101,7 +101,7 @@ One-time PIN is the fastest spike. GitHub org membership is the durable default 
 [[github-as-idp]]
 === Fallback: GitHub OAuth app fields
 
-This is the fallback from <<preferred-path>>. The preferred login is the Antora Private Docs Site issuer, not a new OAuth app per team.
+This is the fallback from <<preferred-path>>. The preferred login is the Antora Private Docs Login issuer, not a new OAuth app per team.
 
 . In GitHub: organization **Settings** -> **Developer settings** -> **OAuth Apps** -> **Register a new application** (prefer an **organization-owned** app so the org controls the secret). User-owned apps work; they are harder to hand off.
 . Application name: something readers will see on GitHub's consent screen (`Team docs (Access)`).

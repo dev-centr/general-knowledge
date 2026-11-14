@@ -5,7 +5,7 @@
 
 == Private docs login is the preferred Access path
 
-The Access how-to and the static-site explanation now lead with Antora Private Docs Site.
+The Access how-to and the static-site explanation now lead with Antora Private Docs Login.
 
 A GitHub organization installs one GitHub App. A GitLab group opts in by inviting a configured user. Cloudflare Access is a generic OpenID Connect client of that issuer. The groups claim uses a forge prefix.
 

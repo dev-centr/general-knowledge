@@ -25,7 +25,7 @@ Tokens: xref:reference/ai-site-design-contract.adoc[AI site design contract].
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.
 * xref:how-to/flutter-setup.adoc[Set up Flutter tooling] — SDK bootstrap; community version bridges until an official Toolchain Control Plane exists (see Toolchain Management Pattern).
 * xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain + Cloudflare HTTPS] — Grey-cloud for GitHub LE; poll Pages API; companion `scripts/check-gh-pages-https.nu`.
-* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — Member-only hostname. Preferred login is Antora Private Docs Site (GitHub App install and GitLab group opt-in) as generic OpenID Connect. Fallback: a per-team GitHub OAuth app, then policy, then apps. Cover `*.pages.dev` too. Why: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
+* xref:how-to/cloudflare-access-static-site.adoc[Protect a static site with Cloudflare Access] — Member-only hostname. Preferred login is Antora Private Docs Login (GitHub App install and GitLab group opt-in) as generic OpenID Connect. Fallback: a per-team GitHub OAuth app, then policy, then apps. Cover `*.pages.dev` too. Why: xref:explanation/infrastructure/access-in-front-of-static-sites.adoc[Access in front of static sites].
 * xref:how-to/finding-windows-internals-docs.adoc[Finding Windows internals documentation] — Learn / MSDN-shaped trees, MicrosoftDocs GitHub, search when wording differs.
 
 == Shipping software

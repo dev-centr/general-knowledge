@@ -2,9 +2,14 @@
 
 == 2026-11-13
 
+=== Display name is Antora Private Docs Login
+
+* Preferred-path pages name the issuer Antora Private Docs Login. That is the GitHub App and the GitLab application an owner approves.
+* Detail: xref:changelog-details/2026-11-13 - login-display-name.adoc[Display name is Antora Private Docs Login].
+
 === Private docs login is the preferred Access path
 
-* Member-only static sites prefer Antora Private Docs Site: one GitHub App install and a GitLab group opt-in, with Cloudflare Access as a generic OpenID Connect client. A per-team GitHub OAuth app stays documented as the fallback.
+* Member-only static sites prefer Antora Private Docs Login: one GitHub App install and a GitLab group opt-in, with Cloudflare Access as a generic OpenID Connect client. A per-team GitHub OAuth app stays documented as the fallback.
 * Detail: xref:changelog-details/2026-11-13 - private-docs-login.adoc[Private docs login is the preferred Access path].
 
 === Spoof warning stays in the thread

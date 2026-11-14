@@ -1,0 +1,12 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Display name is Antora Private Docs Login
+
+Preferred-path pages name the sign-in product Antora Private Docs Login.
+
+That is the GitHub App and the GitLab application an owner approves.
+The groups claim format is unchanged.
+A per-team GitHub OAuth app stays the documented fallback.
