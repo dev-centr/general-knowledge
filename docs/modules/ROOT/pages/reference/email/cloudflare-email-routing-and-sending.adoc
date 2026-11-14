@@ -1,7 +1,7 @@
 = Cloudflare Email Routing + Email Sending
 :navtitle: Cloudflare Routing + Sending
 :description: Complementary pattern: free Cloudflare Email Routing for inbound, Email Sending (beta) for outbound, Gmail Send mail as over Cloudflare SMTP, and parked-domain DNS.
-:keywords: cloudflare email routing, cloudflare email sending, email service, cf-bounce, smtp.mx.cloudflare.net, gmail send mail as, null mx, parked domain, dmarc
+:keywords: cloudflare email routing, cloudflare email sending, email service, cf-bounce, smtp.mx.cloudflare.net, gmail send mail as, null mx, parked domain, dmarc, support, postmaster, abuse, mailer-daemon
 
 Cloudflare Email Service has two halves that work on the same domain without conflict. *Email Routing* receives mail for your domain and forwards it to an existing mailbox. *Email Sending* sends mail as your domain. Together they give a small org a custom-domain address that a person can read and reply from in Gmail, with no hosted mailbox.
 
@@ -88,6 +88,20 @@ Routing forwards `hello@example.com` into `you@gmail.com`. To reply *as* `hello@
 * A send to an arbitrary recipient needs Workers Paid; each reply counts toward the monthly quota.
 
 See also xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gmail send-as gotchas].
+
+== Operator addresses
+
+House practice for domains this organization controls. The agent copy is link:https://github.com/dev-centr/agent-rules/blob/main/general/org-mail-addresses.md[org mail addresses] (skill `org-mail-addresses`).
+
+Every owned apex gets three addresses, and only these as the default set: `support@`, `postmaster@`, and `abuse@`. They are operator destinations, not a list of forbidden usernames. Do not enable a catch-all.
+
+Do not add a `mail.` hostname on every domain. User mail for Userdata, when a person has an account, is `name@mail.userdata.cloud`. That namespace stays closed until then. On `mail.userdata.cloud` the platform addresses are `postmaster@`, `abuse@`, `bounces@`, and `mailer-daemon@`. `bounces@` is the envelope return path for mail the platform sends. A delivery-status notice uses a null envelope sender and From `mailer-daemon@mail.userdata.cloud`. Those two are operator destinations, not user accounts.
+
+`mailer-daemon@` is hard-whitelisted. Deliver it to the inbox. Do not mark it as spam and do not train a filter on it. Google once had a compromised mailer daemon that sent spam; after that spam was reported, later legitimate mail from the same address kept landing in spam. Leave the whitelist in place.
+
+The mailbox filter matches From or Return-Path for `mailer-daemon@` on each domain where that address exists, keeps the message in the inbox, and does not apply a spam label. Do not delete unrelated filters. Whitelist `postmaster@` only when it shares that operational path. The required whitelist is `mailer-daemon`.
+
+If the apex already has MX at a provider, do not replace it. If it has no MX, Cloudflare Email Routing may receive the three addresses, forwarded to an address that is already verified. Merge `include:_spf.mx.cloudflare.net` into an existing SPF record; do not replace a record that already authorizes a sender. Add `v=DMARC1; p=none` only when no DMARC record exists. Do not set `p=reject`. A null MX stays a null MX (see the next section).
 
 == Parked domains (no mail at all)
 

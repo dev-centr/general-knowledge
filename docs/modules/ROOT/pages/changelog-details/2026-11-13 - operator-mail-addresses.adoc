@@ -1,0 +1,12 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Operator addresses on owned domains
+
+xref:reference/email/cloudflare-email-routing-and-sending.adoc#operator-addresses[Operator addresses] records the house mail split.
+
+Each owned apex gets `support@`, `postmaster@`, and `abuse@`. `mail.userdata.cloud` also keeps `postmaster@`, `abuse@`, `bounces@`, and `mailer-daemon@`. There is no catch-all, and a `mail.` hostname is not added on every domain.
+
+`mailer-daemon@` is hard-whitelisted into the inbox. Google once had a compromised mailer daemon that sent spam; after that spam was reported, later legitimate mail from the same address kept landing in spam. The whitelist is not something to remove later.
