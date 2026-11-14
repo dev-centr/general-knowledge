@@ -1,0 +1,12 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Private docs login is the preferred Access path
+
+The Access how-to and the static-site explanation now lead with Antora Private Docs Site.
+
+A GitHub organization installs one GitHub App. A GitLab group opts in by inviting a configured user. Cloudflare Access is a generic OpenID Connect client of that issuer. The groups claim uses a forge prefix.
+
+The older per-team GitHub OAuth app, including the example name `Team docs (Access)` and a callback on `<team-name>.cloudflareaccess.com`, remains on those pages as the fallback. Documenting the preferred path does not change an identity provider that is already serving a hostname.

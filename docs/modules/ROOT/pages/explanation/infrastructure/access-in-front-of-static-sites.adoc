@@ -30,7 +30,7 @@ Per-page ACLs inside one site are the exception. Two playbooks (public vs privat
 | **Cloudflare Access** (Zero Trust) on the orange-cloud hostname. SSO cookie; HTML never leaves the edge for strangers.
 
 | Identity
-| GitHub org, Google Workspace / Google accounts, or email one-time PIN. Access does **not** invent a second password database.
+| Preferred: GitHub org or GitLab group through Antora Private Docs Site. Fallback: a per-team GitHub OAuth app. Also Google Workspace / Google accounts, or email one-time PIN. Access does **not** invent a second password database.
 |===
 
 [source,mermaid]
@@ -38,7 +38,7 @@ Per-page ACLs inside one site are the exception. Two playbooks (public vs privat
 flowchart LR
   visitor[Visitor]
   access[Cloudflare Access]
-  idp[IdP: GitHub / Google / OTP]
+  idp[IdP: private docs login / Google / OTP]
   origin[Static origin]
   visitor --> access
   access -->|"no session"| idp
@@ -48,8 +48,17 @@ flowchart LR
 
 Orange-cloud (proxied) DNS is required so Access can intercept the request. Grey-cloud to GitHub Pages cannot do this; that path is for **public** sites (xref:how-to/github-pages-custom-domain.adoc[GitHub Pages custom domain]).
 
+[[preferred-login]]
+== Preferred login
+
+The preferred gate is one OpenID Connect issuer, Antora Private Docs Site. A GitHub organization opts in by installing that one GitHub App, published by the antora-supplemental organization. A GitLab group opts in by inviting the configured user. GitLab does not ship a GitHub-style installation, and a group the person merely belongs to is not opted in. The ID token lists those organizations and groups with a forge prefix (`github:<host>:<org>`, `gitlab:<host>:<group path>`) plus a `forge` claim.
+
+Cloudflare Access is one client of that issuer: a generic OIDC identity provider. The issuer's listen address and public URL are configuration, so Access is not the required host. Operator steps: https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Private docs login]. Registering the client does not replace an identity provider that is already in use.
+
 [[how-github-org-membership]]
-== How Cloudflare learns GitHub org membership
+== Fallback: how a stock GitHub IdP learns org membership
+
+This section is the fallback, a GitHub OAuth app per Access team (example name `Team docs (Access)`, callback on `<team-name>.cloudflareaccess.com`). The preferred path is <<preferred-login>>.
 
 Cloudflare does not scrape the GitHub org, and it does not keep a member roster of its own. **GitHub answers at login.** Access then stores that answer in a session cookie until the cookie expires.
 
@@ -59,7 +68,7 @@ image::access-github-membership-flow.svg[alt="How Cloudflare Access learns GitHu
 
 === Handshake
 
-. You register a **GitHub OAuth App** (org-owned is best) and paste its Client ID / secret into Zero Trust as the GitHub identity provider. Homepage and callback URLs are the Zero Trust team domain (`https://<team-name>.cloudflareaccess.com`), not the docs hostname. Mocks: xref:how-to/cloudflare-access-static-site.adoc#github-as-idp[How-to · GitHub as IdP].
+. Fallback only: you register a **GitHub OAuth App** (org-owned is best) and paste its Client ID / secret into Zero Trust as the GitHub identity provider. Homepage and callback URLs are the Zero Trust team domain (`https://<team-name>.cloudflareaccess.com`), not the docs hostname. Mocks: xref:how-to/cloudflare-access-static-site.adoc#github-as-idp[How-to · GitHub as IdP]. The preferred path does not create this app.
 . The first **Authorize** grants Cloudflare Access **read-only organizations and teams** plus **read-only email**. Those are GitHub's `read:org` and `user:email` scopes.
 . A visitor hits the member hostname. Access has no JWT cookie, so it sends them to GitHub's login / consent screen.
 . GitHub authenticates them and (if they approve) hands Access a short-lived token.
@@ -107,7 +116,9 @@ Authorize is not "pick the Access Allow org." Cloudflare requested `read:org`, s
 [[what-agents-cannot-automate]]
 == What agents cannot automate
 
-The GitHub OAuth App is a **dashboard** object. GitHub's REST API has no "create OAuth App" route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
+That limit belongs to the fallback stock GitHub identity provider. The preferred issuer is a GitHub App named Antora Private Docs Site. A local command posts a manifest a person approves in GitHub. That approval is still a click. See <<preferred-login>>.
+
+The fallback GitHub OAuth App is a **dashboard** object. GitHub's REST API has no "create OAuth App" route. An agent with a working GitHub connection can list org members and still cannot mint `client_id` / `client_secret`. Cloudflare then refuses the GitHub identity provider: `missing_client_id_or_client_secret`.
 
 .Human step, then API
 [.themed-svg]

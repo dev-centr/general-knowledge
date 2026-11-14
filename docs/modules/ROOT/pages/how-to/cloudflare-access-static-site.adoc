@@ -16,12 +16,28 @@ Figures on this page are **simplified mocks** (field labels from Cloudflare / Gi
 
 Free Zero Trust is enough for small orgs (on the order of **50 seats**). A seat is consumed on first Access login, not when you type an email into a policy.
 
-Zero Trust may already exist on the account (a team domain like `https://<team-name>.cloudflareaccess.com`, and often a default **One-time PIN** identity provider). PIN is not GitHub org membership. Add GitHub as its own IdP.
+Zero Trust may already exist on the account (a team domain like `https://<team-name>.cloudflareaccess.com`, and often a default **One-time PIN** identity provider). PIN is not GitHub org membership.
+
+[[preferred-path]]
+== Preferred path
+
+Use **Antora Private Docs Site** instead of registering a GitHub OAuth app for each Access team. It is one OpenID Connect issuer. A GitHub organization opts in by installing that GitHub App (owned by the antora-supplemental organization). A GitLab group opts in by inviting the configured user. GitLab does not install apps the way GitHub does, so belonging to a group is not itself an opt-in.
+
+Steps and the groups-claim shape (`github:<host>:<org>`, `gitlab:<host>:<group path>`): https://docs.antora-supplemental.org/home/how-to/private-docs-login/[Private docs login].
+
+. An owner installs the GitHub App, or invites the GitLab opt-in user.
+. In Zero Trust, add a generic **OpenID Connect** identity provider pointed at the issuer. Auth URL `{issuer}/authorize`, token URL `{issuer}/token`, certificate URL `{issuer}/jwks`, scope `openid`.
+. Allow when the groups claim contains the prefixed organization or group.
+. Then create Access applications on the hostnames.
+
+Adding that client does not edit an identity provider that is already serving a hostname. Switching a live team is a separate change.
+
+The stock GitHub identity provider is the fallback below. Its example application name is `Team docs (Access)`, and its homepage and callback sit on `https://<team-name>.cloudflareaccess.com`.
 
 [[access-setup-order]]
-== Order of operations
+== Fallback: per-team GitHub OAuth app
 
-Access applications **deny by default**. Create the GitHub (or PIN) identity provider and the Allow policy **before** you attach applications to live hostnames. Otherwise the origin goes dark for everyone, including you, until a policy exists.
+Use this order only when the shared issuer is not available. Access applications **deny by default**. Create the identity provider and the Allow policy **before** you attach applications to live hostnames. Otherwise the origin goes dark for everyone, including you, until a policy exists.
 
 .IdP first, lock last
 [.themed-svg]
@@ -83,7 +99,9 @@ You do **not** create a username in Cloudflare for each reader. They sign in wit
 One-time PIN is the fastest spike. GitHub org membership is the durable default when the same people already have forge access.
 
 [[github-as-idp]]
-=== GitHub as IdP
+=== Fallback: GitHub OAuth app fields
+
+This is the fallback from <<preferred-path>>. The preferred login is the Antora Private Docs Site issuer, not a new OAuth app per team.
 
 . In GitHub: organization **Settings** -> **Developer settings** -> **OAuth Apps** -> **Register a new application** (prefer an **organization-owned** app so the org controls the secret). User-owned apps work; they are harder to hand off.
 . Application name: something readers will see on GitHub's consent screen (`Team docs (Access)`).
