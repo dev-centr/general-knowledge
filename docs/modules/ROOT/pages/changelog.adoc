@@ -12,6 +12,11 @@
 * A spam report is investigated. It does not remove the inbox whitelist, and the provider Spam button is not how platform mail is reported.
 * Detail: xref:changelog-details/2026-11-13 - spam-complaint-is-an-incident.adoc[A spam complaint is an incident].
 
+=== Feedback loops go to fbl
+
+* `abuse@` is the public human contact. Automated ARF feeds go to `fbl@`. Postmaster Tools is not pointed at `abuse@`.
+* Detail: xref:changelog-details/2026-11-13 - feedback-loops-go-to-fbl.adoc[Feedback loops go to fbl].
+
 == 2026-11-12
 
 === Service manager ownership
