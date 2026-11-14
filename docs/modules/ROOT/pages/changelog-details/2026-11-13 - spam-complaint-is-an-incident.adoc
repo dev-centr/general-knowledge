@@ -1,0 +1,12 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== A spam complaint is an incident
+
+xref:reference/email/cloudflare-email-routing-and-sending.adoc#operator-addresses[Operator addresses] now says a spam report is an incident.
+
+The report covers `mailer-daemon`, `support`, `postmaster`, `abuse`, `bounces`, any other address on these domains, the sending IPs, and the domains. It is not a reason to remove the inbox whitelist.
+
+The Spam button at Gmail, Yahoo, or Microsoft trains that provider and does not forward the message. Feedback-loop complaints arrive at `abuse@` in Abuse Reporting Format (RFC 5965). Gmail rates are aggregate in Postmaster Tools. A foreign IP on the attached original is forgery. A platform IP with no matching send is recorded. The whitelist stays.

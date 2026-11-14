@@ -7,6 +7,11 @@
 * The Cloudflare mail reference now states the house addresses: `support@`, `postmaster@`, and `abuse@` on each owned apex, and a hard inbox whitelist for `mailer-daemon@`.
 * Detail: xref:changelog-details/2026-11-13 - operator-mail-addresses.adoc[Operator addresses on owned domains].
 
+=== A spam complaint is an incident
+
+* A spam report is investigated. It does not remove the inbox whitelist, and the provider Spam button is not how platform mail is reported.
+* Detail: xref:changelog-details/2026-11-13 - spam-complaint-is-an-incident.adoc[A spam complaint is an incident].
+
 == 2026-11-12
 
 === Service manager ownership

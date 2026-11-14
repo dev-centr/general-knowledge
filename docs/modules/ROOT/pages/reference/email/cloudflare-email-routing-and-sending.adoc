@@ -101,6 +101,14 @@ Do not add a `mail.` hostname on every domain. User mail for Userdata, when a pe
 
 The mailbox filter matches From or Return-Path for `mailer-daemon@` on each domain where that address exists, keeps the message in the inbox, and does not apply a spam label. Do not delete unrelated filters. Whitelist `postmaster@` only when it shares that operational path. The required whitelist is `mailer-daemon`.
 
+A spam complaint about anything this organization controls is an incident, not a reason to blacklist the address or to remove that whitelist. The set includes `mailer-daemon`, `support`, `postmaster`, `abuse`, `bounces`, any other address on these domains, the sending IPs, and the domains.
+
+The Spam button at Gmail, Yahoo, or Microsoft does not forward the message to the operator. That provider trains its own filter. Never report `mailer-daemon`, or any platform address, with that button.
+
+Complaints the operator can investigate arrive at `abuse@` as an Abuse Reporting Format message (RFC 5965) when a provider has a feedback loop: the complaint is outside, and the original message is attached. Register those loops to `abuse@` on that domain. Gmail does not send per-message copies. Gmail rates are aggregate, via Postmaster Tools.
+
+Compare the attached original to mail the platform sent: sending IP, DKIM, and the bounce id or VERP token. A foreign IP is forgery. A platform IP with no matching send is a hijacked credential or daemon. Record it. Leave the inbox whitelist in place.
+
 If the apex already has MX at a provider, do not replace it. If it has no MX, Cloudflare Email Routing may receive the three addresses, forwarded to an address that is already verified. Merge `include:_spf.mx.cloudflare.net` into an existing SPF record; do not replace a record that already authorizes a sender. Add `v=DMARC1; p=none` only when no DMARC record exists. Do not set `p=reject`. A null MX stays a null MX (see the next section).
 
 == Parked domains (no mail at all)
