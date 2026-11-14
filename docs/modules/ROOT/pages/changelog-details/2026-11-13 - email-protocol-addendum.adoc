@@ -1,0 +1,10 @@
+= 2026-11-13
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Spoof warning stays in the thread
+
+xref:reference/email/cloudflare-email-routing-and-sending.adoc#claimed-from-us-spoof[A claimed-from-us spoof] files the warning in the same thread as the spoofed message.
+
+The Operator addresses section points at the draft on the member site: https://team.docs.userdata.cloud/home/reference/email-protocol-addendum/[Email protocol addendum].

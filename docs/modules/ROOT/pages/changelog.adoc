@@ -2,6 +2,11 @@
 
 == 2026-11-13
 
+=== Spoof warning stays in the thread
+
+* The Operator addresses section points at the draft email addendum. The spoof warning is a new message in the same thread as the spoofed message.
+* Detail: xref:changelog-details/2026-11-13 - email-protocol-addendum.adoc[Spoof warning stays in the thread].
+
 === Operator addresses on owned domains
 
 * The Cloudflare mail reference now states the house addresses: `support@`, `postmaster@`, and `abuse@` on each owned apex, and a hard inbox whitelist for `mailer-daemon@`.

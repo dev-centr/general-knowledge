@@ -91,7 +91,7 @@ See also xref:explanation/email/personal-gmail-send-as-gotchas.adoc[Personal Gma
 
 == Operator addresses
 
-House practice for domains this organization controls. The agent copy is link:https://github.com/dev-centr/agent-rules/blob/main/general/org-mail-addresses.md[org mail addresses] (skill `org-mail-addresses`).
+House practice for domains this organization controls. The agent copy is link:https://github.com/dev-centr/agent-rules/blob/main/general/org-mail-addresses.md[org mail addresses] (skill `org-mail-addresses`). The draft addendum for threading and the spoof warning is link:https://team.docs.userdata.cloud/home/reference/email-protocol-addendum/[Email protocol addendum] on the member site.
 
 Every owned apex gets three public addresses, and only these as the published set: `support@`, `postmaster@`, and `abuse@`. `abuse@` is the public contact a person or another postmaster writes to. A person reads it. They are operator destinations, not a list of forbidden usernames. Do not enable a catch-all.
 
@@ -118,7 +118,7 @@ If the apex already has MX at a provider, do not replace it. If it has no MX, Cl
 
 When inbound mail for a local user claims to be from an address we control (including `mailer-daemon@`) and the sending IP or DKIM signature is not ours, or a platform IP has no matching bounce id or VERP token, treat it as a spoof.
 
-Tell the recipient in two places. Put a warning in the web UI. Also deliver a new message into that user's own mailbox explaining the spoof, so an IMAP or other mail app shows it with no web UI. The new message is from the platform (`mailer-daemon` or a notices address we control), addressed to the user. It is not an SMTP autoreply to the forged sender. Do not send anything to the spoof's envelope sender. That would be backscatter.
+Tell the recipient in two places. Put a warning in the web UI. Also deliver a new message into that user's own mailbox explaining the spoof, in the same thread as the spoofed message, so an IMAP or other mail app shows it with no web UI. The new message is from the platform (`mailer-daemon` or a notices address we control), addressed to the user. It is not an SMTP autoreply to the forged sender. Do not send anything to the spoof's envelope sender. That would be backscatter.
 
 The operator incident still goes to the detector that reads `fbl@`. `abuse@` stays the public human contact. A spoof does not remove the `mailer-daemon` inbox whitelist.
 
