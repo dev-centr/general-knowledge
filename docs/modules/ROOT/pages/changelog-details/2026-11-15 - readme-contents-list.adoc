@@ -1,0 +1,11 @@
+= 2026-11-15
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-orig-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-author: Grok 4.7 on behalf of Ryan Johnson
+:page-last-edited: 2026-11-15
+
+== README contents list
+
+The README contents list now sits under the header inside the expander.
+
