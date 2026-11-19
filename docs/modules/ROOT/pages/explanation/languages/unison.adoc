@@ -1,0 +1,71 @@
+= Unison
+:description: What Unison is—content-addressed definitions, a codebase manager, and a bytecode runtime—and why it is not a native systems compiler.
+
+Unison is a statically typed functional language with an effect system (abilities) and a toolchain built around one idea: **each definition is identified by a hash of its syntax tree**, not by a file path and a name.
+
+Names are metadata.
+The thing that does not change is the hash.
+Rename a function and dependents keep pointing at the same implementation.
+Change the implementation and you get a new hash.
+The official account is link:https://www.unison-lang.org/docs/the-big-idea/[The big idea].
+
+That is a different axis from both D and Bend.
+D asks how close you can stay to the machine.
+Bend asks how much parallelism the runtime can discover.
+Unison asks whether source identity should be a content address so builds, renames, and distributed deployment stop fighting text files.
+
+== How code actually lives
+
+You do not treat a tree of `.unison` files as the source of truth the way a D package treats `.d` files.
+The **Unison Codebase Manager** (`ucm`) stores definitions as their abstract syntax, already typechecked, in a codebase.
+Dependencies inside a definition are hashes, so the hash pins the implementation *and* what it calls.
+
+Practical consequences Unison claims, and that the design actually supports:
+
+* Typecheck a definition once and keep that result in the codebase. Later checkouts do not re-parse the world to learn the same fact.
+* Renames that do not break callers, because callers stored a hash.
+* Merges that ignore whitespace, import order, and formatting.
+* Tests of deterministic code that can be cached until a dependency hash changes.
+
+Dev-Centr already points at this model when talking about Git.
+See xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]: Unison is the existence proof that code identity need not be “path plus line.”
+
+== How programs run
+
+Unison is **not** a native systems compiler in the LDC / C sense.
+There is a compilation pipeline, but the artifact you ship is not a freestanding machine-code binary.
+
+* `ucm run` evaluates a delayed computation (typically a `main` with the `IO` and `Exception` abilities) inside the codebase manager.
+* `compile` writes a portable `.uc` file: the program and its dependencies as **bytecode**.
+* `ucm run.compiled file.uc` runs that bytecode.
+  The runtime itself is the Unison runtime (historically hosted on Haskell).
+  An experimental JIT can compile hot paths to native code on the Haskell heap; it is off unless you ask, and anything it cannot compile stays interpreted.
+  Results are not supposed to depend on whether the JIT ran.
+
+So “compiled” in Unison means *lowered to bytecode (and maybe JIT'd)*, not “linked against libc and shipped like a D executable.”
+You still need `ucm` (or an equivalent host) to run the `.uc` file.
+See link:https://www.unison-lang.org/docs/usage-topics/running-programs/[Running Unison programs].
+
+The distributed story follows from the hashes.
+A sender can ship a computation; the receiver asks for any hashes it does not already have and caches them.
+That is the point of being able to serialize functions, not only data.
+
+== What it is not for
+
+* Operating-system kernels, firmware, and `@nogc` libraries with a stable C ABI
+* Replacing D or Rust as the host language for tools you install on a machine
+* Replacing Bend's bet on interaction-net parallelism
+* The browser (that is still JavaScript / TypeScript)
+
+Unison is a serious design for **services, distributed programs, and codebases that want semantic version control**.
+It is a poor default for the jobs in the xref:explanation/languages/index.adoc[small set].
+
+How that split looks next to D is xref:explanation/languages/unison-and-d.adoc[Unison and D].
+
+== See also
+
+* xref:explanation/languages/index.adoc[Language recommendations]
+* xref:explanation/languages/bend.adoc[Bend]
+* xref:explanation/languages/unison-and-d.adoc[Unison and D]
+* xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model]
+* link:https://www.unison-lang.org/[unison-lang.org]

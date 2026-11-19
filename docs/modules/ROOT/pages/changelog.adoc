@@ -2,6 +2,11 @@
 
 == 2026-11-19
 
+=== Bend and Unison language pages
+
+* Orientation pages for Bend, Unison, and Unison versus D, linked from language recommendations.
+* Detail: xref:changelog-details/2026-11-19 - bend-and-unison-pages.adoc[Bend and Unison language pages].
+
 === Bend versus D blog cross-link
 
 * Language recommendations links to the DevCentr essay on Bend's parallelism bet versus D's systems strengths.

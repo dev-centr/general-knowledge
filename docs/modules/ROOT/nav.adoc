@@ -73,6 +73,9 @@
 *** xref:explanation/languages/cpp-and-d.adoc[C++ and D]
 *** xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java]
 *** xref:explanation/languages/d-and-rust.adoc[D and Rust]
+*** xref:explanation/languages/bend.adoc[Bend]
+*** xref:explanation/languages/unison.adoc[Unison]
+*** xref:explanation/languages/unison-and-d.adoc[Unison and D]
 ** xref:explanation/internet-architecture/index.adoc[Internet Architecture]
 *** Internet Reliability
 **** xref:explanation/internet-architecture/reliability/index.adoc[Internet Reliability]

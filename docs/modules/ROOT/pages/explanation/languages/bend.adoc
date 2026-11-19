@@ -1,0 +1,48 @@
+= Bend
+:description: What Bend is betting on—interaction nets and implicit parallelism—and why it is not a D replacement.
+
+Bend is a young functional language from Higher Order Company.
+Its headline is not a nicer syntax.
+It is an execution model: programs lower onto **interaction nets** (the same family of ideas as HVM) so the runtime can find large amounts of deterministic parallelism without the author writing a parallel map.
+
+That is a different product from D.
+D is a compiled systems language with a C ABI, modules, and an optional garbage collector.
+Bend is a bet that ordinary-looking code should fan out across many cores—and, in the longer pitch, accelerator-shaped hardware—because the *semantics* expose the parallelism.
+
+== What it is trying to do
+
+* Implicit massive parallelism
+* Functional-style evaluation that parallelizes without shared mutable state as the default
+* A compiler and runtime aimed at thousands of cores rather than one carefully scheduled thread pool
+* Deterministic parallel results when the interaction-net reduction stays in the model
+
+The promise is: write code that looks sequential and functional, and let future hardware show up underneath.
+
+== What it is not
+
+Bend is not the language for a browser engine, an OS service, or a library that must call `extern(C)` tomorrow.
+It does not have D's decades of native libraries, LLVM maturity (LDC), or a package story you can drop into an existing C codebase.
+
+It is also not Unison.
+Unison's big idea is content-addressed definitions and a codebase manager.
+Bend's big idea is *how the program runs*.
+See xref:explanation/languages/unison.adoc[Unison].
+
+== How this relates to D
+
+Some of Bend's *user-visible* hopes are incremental on D: smarter parallel-safety proofs, data-parallel ranges, a real GPU attribute story.
+Bend's *core*—interaction nets as the semantics of the whole language—is not an incremental patch.
+Grafting that onto D would be a parallel functional sublanguage, not a feature flag.
+
+The longer argument, including what a “D 3.0” thought experiment should steal instead, is the DevCentr blog essay link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].
+
+Bend stays **outside** the xref:explanation/languages/index.adoc[small set] of default languages.
+Watch it for simulation kernels and exploratory numeric work.
+Do not retarget owned systems tools onto it.
+
+== See also
+
+* xref:explanation/languages/index.adoc[Language recommendations]
+* xref:explanation/languages/unison.adoc[Unison]
+* xref:explanation/languages/unison-and-d.adoc[Unison and D]
+* link:https://github.com/HigherOrderCO/Bend[Bend on GitHub]

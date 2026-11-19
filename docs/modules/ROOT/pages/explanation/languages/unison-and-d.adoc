@@ -1,0 +1,83 @@
+= Unison and D
+:description: Unison's content-addressed codebase versus D's native compiler—different jobs, and what is worth stealing.
+
+Unison and D are not competing for the same default.
+D is the language we use when the artifact is a native program: tools, services, libraries with a C ABI, optional GC, `@nogc` when latency demands it.
+Unison is a functional language whose source of truth is a **content-addressed codebase**, executed as bytecode (with an optional JIT) by the Unison runtime.
+The orientation pages are xref:explanation/languages/unison.adoc[Unison] and the D side of xref:explanation/languages/index.adoc[language recommendations].
+
+If you only remember one line: Unison changes *what a definition is*.
+D changes *how close that definition sits to the machine*.
+
+== Side by side
+
+[cols="1,2,2"]
+|===
+| | D | Unison
+
+| Identity of code
+| File path, module name, and linker symbols
+| Hash of the syntax tree; names are metadata
+
+| What you ship
+| Native binary (DMD, LDC, and similar)
+| `.uc` bytecode run by `ucm`, not a freestanding systems binary
+
+| Interop
+| `extern(C)` and the existing C world
+| Abilities and a runtime that can serialize functions; not a C ABI story
+
+| Build experience
+| Incremental compilers that still recompile text
+| Typecheck once into the codebase; later loads reuse that cache
+
+| Refactors
+| Textual rename plus a compiler that notices breakage
+| Rename the name; hashes keep pointing at the old implementation until you change it
+
+| Where it wins
+| Owned systems and application code, OS-talking tools
+| Distributed programs, semantic merges, “no build” checkouts of a codebase
+|===
+
+== What Unison is missing for D's job
+
+Predictable layout, allocation, and a stable ABI.
+Systems work needs to know what the stack and heap are doing, and it needs to call libraries that are not Unison.
+Unison deliberately abstracts that away so a definition can move to another machine as a hash plus bytecode.
+
+That is the right trade for its use case.
+It is the wrong trade for a boot-time tool, a GUI host, or a library other languages link against.
+
+== What D is missing that Unison already treats as normal
+
+A few properties are worth naming even if we never adopt Unison as a product language:
+
+* **Identity by content.** A definition's meaning should not change because a file moved or whitespace shifted.
+  That is the same pressure behind xref:explanation/infrastructure/git-semantic-boundaries.adoc[Git's file-shaped change model] and connectome-fs.
+* **A cache that is part of the artifact.** Unison stores the typechecked form in the codebase.
+  D still lives in a world where the trustworthy object is the text plus whatever the compiler rebuilds.
+* **Non-breaking renames.** Hashes make “rename” a metadata edit.
+  D renames are still a project-wide text change, even with a good language server.
+
+None of those require replacing LDC with `ucm`.
+
+== What not to do
+
+Do not try to make D's compilation model into Unison's codebase manager.
+The storage format, the effect system, and the distributed protocol are one design.
+D's modules, CTFE, and C interop are another.
+
+Do not put Unison on the default list next to D, Rust, TypeScript, and Julia.
+Reach for it when the problem is *code identity and distribution*, the way you might reach for Bend when the problem is *implicit parallelism*.
+Those are specialist tools.
+The poles in the small set stay the daily stack.
+
+A parallel thought on Bend—and why D should borrow problem statements rather than runtimes—is link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].
+
+== See also
+
+* xref:explanation/languages/unison.adoc[Unison]
+* xref:explanation/languages/bend.adoc[Bend]
+* xref:explanation/languages/d-and-rust.adoc[D and Rust]
+* xref:explanation/languages/index.adoc[Language recommendations]

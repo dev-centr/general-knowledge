@@ -1,0 +1,13 @@
+= Bend and Unison language pages
+:navtitle: Bend and Unison language pages
+
+== Summary
+
+Added explanation pages for languages we watch but do not put in the default small set:
+
+* xref:explanation/languages/bend.adoc[Bend] — interaction nets and implicit parallelism, with a link to the DevCentr blog comparison.
+* xref:explanation/languages/unison.adoc[Unison] — content-addressed definitions, `ucm`, and bytecode (plus an optional JIT), not a native systems compiler.
+* xref:explanation/languages/unison-and-d.adoc[Unison and D] — different jobs, and which Unison properties are worth naming without adopting the runtime.
+
+xref:explanation/languages/index.adoc[Language recommendations] lists them under specialists.
+Nav entries sit with the other language explanations.

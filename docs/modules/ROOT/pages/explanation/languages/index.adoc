@@ -76,12 +76,18 @@ The arguments that used to live on those links are here, rewritten as docs rathe
 * xref:explanation/languages/cpp-and-d.adoc[C++ and D]
 * xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java]
 * xref:explanation/languages/d-and-rust.adoc[D and Rust] — ownership, GC, and the webview split
+* xref:explanation/languages/unison-and-d.adoc[Unison and D] — content-addressed code versus a native compiler
 
-== Parallel hardware and Bend
+== Specialists we watch, not defaults
 
-Bend is a separate bet: implicit massive parallelism through interaction nets, aimed at future many-core and GPU-shaped machines.
-It is not a replacement for D on browsers, OS services, or C-interop-heavy tools—and D should not try to swallow Bend whole.
-For a longer argument on what D should borrow anyway, see the DevCentr blog essay link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].
+These are not extra poles in the small set.
+They are designs with one sharp idea each.
+
+* xref:explanation/languages/bend.adoc[Bend] — interaction nets and implicit parallelism.
+  The D comparison lives on the DevCentr blog: link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].
+* xref:explanation/languages/unison.adoc[Unison] — definitions identified by a hash, stored in a codebase, run as bytecode by `ucm`.
+  Not a native systems compiler.
+  Comparison: xref:explanation/languages/unison-and-d.adoc[Unison and D].
 
 == See also
 
