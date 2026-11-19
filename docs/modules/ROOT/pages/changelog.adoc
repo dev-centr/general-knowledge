@@ -1,5 +1,12 @@
 = Changelog
 
+== 2026-11-19
+
+=== Bend versus D blog cross-link
+
+* Language recommendations links to the DevCentr essay on Bend's parallelism bet versus D's systems strengths.
+* Detail: xref:changelog-details/2026-11-19 - bend-vs-d-blog-link.adoc[Bend versus D blog cross-link].
+
 == 2026-11-15
 
 === README contents list

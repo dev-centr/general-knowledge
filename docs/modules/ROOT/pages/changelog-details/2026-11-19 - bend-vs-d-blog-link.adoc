@@ -1,0 +1,6 @@
+= Bend versus D blog cross-link
+:navtitle: Bend versus D blog cross-link
+
+== Summary
+
+Added a short «Parallel hardware and Bend» section on xref:explanation/languages/index.adoc[Language recommendations] pointing at the DevCentr blog essay link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].

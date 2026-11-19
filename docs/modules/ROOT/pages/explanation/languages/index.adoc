@@ -77,6 +77,12 @@ The arguments that used to live on those links are here, rewritten as docs rathe
 * xref:explanation/languages/julia-d-and-java.adoc[Julia, D, and Java]
 * xref:explanation/languages/d-and-rust.adoc[D and Rust] — ownership, GC, and the webview split
 
+== Parallel hardware and Bend
+
+Bend is a separate bet: implicit massive parallelism through interaction nets, aimed at future many-core and GPU-shaped machines.
+It is not a replacement for D on browsers, OS services, or C-interop-heavy tools—and D should not try to swallow Bend whole.
+For a longer argument on what D should borrow anyway, see the DevCentr blog essay link:https://devcentr.org/blog/2026-11-19-bends-parallel-bet-and-what-d-should-steal-instead[Bend's Parallel Bet—and What D Should Steal Instead].
+
 == See also
 
 * xref:reference/languages/c.adoc[C reference] — how we write C when we *must* (legacy, firmware, a C ABI)
