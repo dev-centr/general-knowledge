@@ -1,5 +1,7 @@
 = Composio Cloudflare Connection
 :description: Match Composio's two Cloudflare apps to the actual connect forms--Global API Key + email vs key-only--so agents can list zones without 9109 errors.
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 Use this when an agent needs **Cloudflare DNS, zones, or Access** through Composio (custom domains, `team.docs` hostnames, email MX, orange-cloud vs grey-cloud). MCP install is separate: xref:how-to/composio-mcp-setup.adoc[Composio MCP setup].
 
@@ -44,7 +46,7 @@ Access is a **different permission set**. A Pages-scoped token (typical `wrangle
 * `GET /accounts/\{account_id}/access/apps` -> `200` with an empty list
 * `GET .../access/identity_providers`, `.../organizations`, `.../policies` -> **`403`** / `10000 Authentication error`
 
-Use the **Cloudflare** toolkit (Global API Key + email) for Access writes, or mint a token that includes **Access: Apps and Policies** and **Access: Organizations / Identity Providers**. Do not create Access applications until an identity provider exists. The preferred provider is the Antora Private Docs Login issuer (generic OpenID Connect). The fallback stock GitHub provider still needs a per-team OAuth app, and GitHub has no create API for that app, so an operator pastes Client ID and secret. Order and mocks: xref:how-to/cloudflare-access-static-site.adoc#preferred-path[Preferred path] · xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Fallback order] · xref:how-to/cloudflare-access-static-site.adoc#access-api-credentials[Agents and API credentials].
+Use the **Cloudflare** toolkit (Global API Key + email) for Access writes, or mint a token that includes **Access: Apps and Policies** and **Access: Organizations / Identity Providers**. Do not create Access applications until an identity provider exists. The preferred provider is the Private Docs Login issuer (generic OpenID Connect). The fallback stock GitHub provider still needs a per-team OAuth app, and GitHub has no create API for that app, so an operator pastes Client ID and secret. Order and mocks: xref:how-to/cloudflare-access-static-site.adoc#preferred-path[Preferred path] · xref:how-to/cloudflare-access-static-site.adoc#access-setup-order[Fallback order] · xref:how-to/cloudflare-access-static-site.adoc#access-api-credentials[Agents and API credentials].
 
 .Pages-scoped token vs Global API Key (redacted)
 [.themed-svg]

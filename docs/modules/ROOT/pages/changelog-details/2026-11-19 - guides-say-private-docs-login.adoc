@@ -1,0 +1,17 @@
+= 2026-11-19
+:hide-page:
+:navtree-parent: changelog.adoc
+:page-orig-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
+
+== Guides say Private Docs Login
+
+The Cloudflare Access how-to calls the app Private Docs Login.
+Antora stays an example of a static site, along with MkDocs, Docusaurus, and a Pages upload.
+
+The same name is on the static-site explanation, the how-to index, the Composio connection page, and the recommended-tools list.
+Those pages are the ones a reader reaches from the Access how-to, or the catalog lines that name this login.
+
+Issuer steps are https://docs.devcentr.org/tools/private-docs-login/how-to/[How to host the issuer].
+A per-team GitHub OAuth app stays the documented fallback.

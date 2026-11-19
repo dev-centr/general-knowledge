@@ -1,6 +1,14 @@
 = Changelog
+:page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
+:page-last-edited: 2026-11-19
 
 == 2026-11-19
+
+=== Guides say Private Docs Login
+
+* The Cloudflare Access how-to, the static-site explanation, the how-to index, the Composio connection page, and the recommended-tools list call the issuer Private Docs Login. Antora stays an example of a static documentation site.
+* Issuer steps are linked as How to host the issuer on the Dev-Centr docs site.
+* Detail: xref:changelog-details/2026-11-19 - guides-say-private-docs-login.adoc[Guides say Private Docs Login].
 
 === Bend and Unison language pages
 
