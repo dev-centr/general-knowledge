@@ -1,0 +1,12 @@
+= 2026-11-23
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Notable web UI designs catalog
+
+Added xref:reference/notable-web-ui-designs.adoc[Notable web UI designs] under Reference to catalog websites with notable UI design.
+
+* Starts with Customer.io (`https://customer.io/`) added on `2026-11-23` and linked to its verified `2026-11-12` Wayback Machine snapshot (`role=lini-skip` on the archive link).
+* Requires a date added (`YYYY-MM-DD`) and recommends an explicit Wayback Machine archive URL in the AsciiDoc source so local readers and agents have historical copies even without the published hub's Linkinator hover button.
+* Wired into `nav.adoc`, `reference/index.adoc`, `reference/web-design-tools.adoc`, and `reference/ai-site-design-contract.adoc`.

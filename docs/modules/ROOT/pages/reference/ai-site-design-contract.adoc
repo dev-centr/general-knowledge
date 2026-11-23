@@ -122,5 +122,6 @@ Canvas choice stays on xref:reference/web-design-tools.adoc[Web design tools].
 
 * xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site]
 * xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design]
+* xref:reference/notable-web-ui-designs.adoc[Notable web UI designs] — curated live and archived sites to use as concrete visual references
 * xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap] — studio setup, before visual work
 * xref:business-bootstrap::design/index.adoc[Design] in Business Bootstrap — canvas and handoff

@@ -1,0 +1,58 @@
+= Notable web UI designs
+:description: Curated catalog of websites with strong UI design, with dates added and Wayback Machine archive snapshots so each referenced design stays inspectable over time.
+:page-audience: Developers and designers
+:page-usage-context: Reference catalog on the general-knowledge hub — look up live and archived UI examples when setting visual direction or grounding AI-assisted design work
+:page-orig-author: Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-23
+:page-created: 2026-11-23
+:page-published: 2026-11-23
+:page-diataxis: reference
+:page-doc-type: reference
+:page-status: published
+:page-keywords: web design, UI design, visual hierarchy, design references, Wayback Machine
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Developers and designers choosing visual direction—or handing an AI coding agent a concrete visual reference—need real examples that hold up under inspection.
+This catalog tracks websites whose UI design is considered worth studying, paired with the date each site was added and a Wayback Machine snapshot from that period.
+
+Sites redesign frequently.
+A recommendation written today can point to a completely different layout a year later, so every entry records at least the date it earned inclusion and a direct historical archive link in the page source.
+
+== Catalog
+
+[cols="1,1,1,1,2",options="header"]
+|===
+| Site | Category | Added | Archive snapshot | Notes
+
+| **link:https://customer.io/[Customer.io]**
+| SaaS / customer messaging
+| 2026-11-23
+| link:https://web.archive.org/web/20261112124438/https://customer.io/[2026-11-12 snapshot,role=lini-skip]
+| Marketing site for the customer engagement and lifecycle messaging platform. Use the dated archive snapshot to inspect the version referenced when added on 2026-11-23.
+|===
+
+== How entries are recorded
+
+Every entry in the table follows three rules so the catalog stays useful years later:
+
+* **Date added (`YYYY-MM-DD`) is required.** Always record the calendar date the site was added so readers know which version of the site was judged exemplary.
+* **Include a direct Wayback Machine archive link in the source.** Link to the closest HTTP 200 snapshot on or before the date added (`https://web.archive.org/web/<timestamp>/<url>`), and tag that archive link with `role=lini-skip` so it stays clean on the published hub. If no recent snapshot exists yet, save one on the Wayback Machine first or link the capture calendar (`https://web.archive.org/web/*/<url>`) until a dated snapshot is captured.
+* **Keep both live and archived links.** On the published docs site, the link:https://github.com/antora-supplemental/linkinator[Linkinator] extension automatically attaches a Wayback Machine archive lookup button to outbound links on hover. Keeping an explicit dated archive URL in the AsciiDoc source ensures people and AI agents working locally in a repository checkout—without the rendered site or Linkinator—can still jump straight to the exact historical design.
+
+== Related
+
+* xref:reference/ai-site-design-contract.adoc[AI site design contract] — tokens, banned defaults, and reference-based prompt shapes
+* xref:reference/web-design-tools.adoc[Web design tools] — Figma baseline, Penpot, Lunacy, and why to skip closed site hosts
+* xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design] — why visual direction stays human before implementation
+* xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] — polish pass for a site that already runs
