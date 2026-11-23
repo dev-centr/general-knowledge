@@ -10,5 +10,6 @@
 !/.github/
 !/.github/workflows/
 !/.github/workflows/encoding-guard.yml
+!/.github/workflows/notify-docs-hub.yml
 !/.editorconfig
 !/.gitattributes

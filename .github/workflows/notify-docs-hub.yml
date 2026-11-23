@@ -1,0 +1,35 @@
+# Push docs/ -> poke the Dev-Centr aggregated docs hub (full Antora rebuild).
+# Requires org/repo secret DOCS_DISPATCH_TOKEN (or DOCS_HUB_DISPATCH_TOKEN)
+# with repository_dispatch / contents:write permission on dev-centr/docs.
+# Safe no-op on forks or before the secret is configured.
+
+name: Notify docs hub
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch docs-source-updated
+        env:
+          GH_TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN || secrets.DOCS_HUB_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "DOCS_DISPATCH_TOKEN / DOCS_HUB_DISPATCH_TOKEN not set; skip notify (configure org secret or dispatch via gh api)."
+            exit 0
+          fi
+          gh api "repos/dev-centr/docs/dispatches" \
+            -f event_type=docs-source-updated \
+            -f "client_payload[source]=${{ github.repository }}" \
+            -f "client_payload[ref]=${{ github.ref }}" \
+            -f "client_payload[sha]=${{ github.sha }}"
