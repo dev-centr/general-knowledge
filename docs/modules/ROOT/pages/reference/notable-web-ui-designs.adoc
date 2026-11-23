@@ -47,7 +47,7 @@ A recommendation written today can point to a completely different layout a year
 Every entry in the table follows three rules so the catalog stays useful years later:
 
 * **Date added (`YYYY-MM-DD`) is required.** Always record the calendar date the site was added so readers know which version of the site was judged exemplary.
-* **Include a direct Wayback Machine archive link in the source.** Link to the closest HTTP 200 snapshot on or before the date added (`https://web.archive.org/web/<timestamp>/<url>`). If no recent snapshot exists yet, save one on the Wayback Machine first or link the capture calendar (`https://web.archive.org/web/*/<url>`) until a dated snapshot is captured. Linkinator (`v0.1.14+`) skips `archive.org` and configured archive providers automatically; for archival links on other hosts, mark the link semantically with `role=archival`.
+* **Include a direct Wayback Machine archive link in the source.** Link to the closest HTTP 200 snapshot on or before the date added (`https://web.archive.org/web/<timestamp>/<url>`). If no recent snapshot exists yet, save one on the Wayback Machine first or link the capture calendar (`https://web.archive.org/web/*/<url>`) until a dated snapshot is captured.
 * **Keep both live and archived links.** On the published docs site, the link:https://github.com/antora-supplemental/linkinator[Linkinator] extension automatically attaches a Wayback Machine archive lookup button to outbound links on hover. Keeping an explicit dated archive URL in the AsciiDoc source ensures people and AI agents working locally in a repository checkout—without the rendered site or Linkinator—can still jump straight to the exact historical design.
 
 == Related
