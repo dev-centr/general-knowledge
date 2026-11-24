@@ -47,6 +47,7 @@
 ** xref:reference/web-design-tools.adoc[Web design tools]
 ** xref:reference/ai-site-design-contract.adoc[AI site design contract]
 ** xref:reference/notable-web-ui-designs.adoc[Notable web UI designs]
+** xref:reference/modern-web-platform.adoc[Modern web platform & HTML]
 ** xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI]
 ** xref:reference/ai-studio-tooling-catalog.adoc[AI Studio Tooling Catalog]
 ** xref:reference/decentralized-video-platforms.adoc[Decentralized video platforms]
