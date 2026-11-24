@@ -1,6 +1,14 @@
 = Changelog
 :page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
-:page-last-edited: 2026-11-23
+:page-last-edited: 2026-11-24
+
+== 2026-11-24
+
+=== Agent-operable web UI layer (WebMCP and Vercel UI SDK)
+
+* Added xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] and xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app], with themed orientation diagrams (`agent-ui-surface-layers`, `agent-ui-adoption-flow`), explaining why a structured state/action surface complements DOM and ARIA traversal.
+* Added **Agent-operable UI surface** as a Web Band B item in xref:explanation/architecture/classes/web.adoc[Web delivery class], xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist], and `examples/product-essentials/auxiliary-web.cmk`, and noted Vercel UI SDK (beta, Apache-2.0) as a concrete reference implementation in xref:reference/recommended-tools.adoc[Recommended tools].
+* Detail: xref:changelog-details/2026-11-24 - agent-operable-web-ui.adoc[Agent-operable web UI layer].
 
 == 2026-11-23
 

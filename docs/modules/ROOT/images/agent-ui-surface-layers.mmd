@@ -1,0 +1,30 @@
+---
+title: Three surfaces of an agent-operable web UI
+---
+flowchart LR
+  accTitle: Three surfaces of an agent-operable web UI
+  accDescr: Shared UI behavior primitives emit three aligned surfaces in parallel—visual DOM and CSS for humans, ARIA and the accessibility tree for assistive technology, and a typed state and action index bridged to WebMCP document.modelContext for AI agents—avoiding fragile whole-DOM traversal.
+  prim["Shared UI state + behaviors\n(e.g. @ui-sdk/core or app store)"]
+  dom["Visual surface\nDOM + CSS layout"]
+  a11y["Assistive surface\nARIA + accessibility tree"]
+  idx["Agent surface\nsnapshot / query / act index"]
+  gate["Safety boundary\nallow() gate + server authz"]
+  webmcp["Browser tool bridge\nWebMCP document.modelContext"]
+  scrape["Legacy fallback\nDOM / screenshot scraping"]
+
+  prim --> dom
+  prim --> a11y
+  prim --> idx
+  idx --> gate --> webmcp
+  dom -. "brittle, high-token" .-> scrape
+
+  class prim success
+  class dom,a11y primary
+  class idx,webmcp secondary
+  class gate warning
+  class scrape danger
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px

@@ -70,6 +70,7 @@ Deep dive:: xref:explanation/architecture/classes/desktop.adoc[Desktop template]
 * [ ] Feature-flag dump
 * [ ] Client debug dump (redacted)
 * [ ] Accessibility baseline
+* [ ] Agent-operable UI surface (WebMCP `document.modelContext` or structured state/action bridge with safety gates; N/A for static sites)
 * [ ] Performance budgets on critical routes
 
 === Band C

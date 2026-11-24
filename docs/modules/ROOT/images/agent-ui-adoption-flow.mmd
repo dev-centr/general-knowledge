@@ -1,0 +1,34 @@
+---
+title: Choosing and wiring an agent-operable web UI layer
+---
+flowchart TB
+  accTitle: Choosing and wiring an agent-operable web UI layer
+  accDescr: Classify each route as content-first or interactive. Content routes stop at crawlable HTML, sitemap, and Schema.org JSON-LD. Light forms add declarative WebMCP attributes. Interactive apps feature-detect document.modelContext or wire a structured bridge such as UI SDK createAgent, then guard mutations with allow hooks and server authorization.
+  start["Classify the web surface"]
+  static["Content / brochure / docs route\n(web-crawlability only; mark Band B N/A)"]
+  forms["Light form workflows\nDeclarative WebMCP\n(<form toolname tooldescription>)"]
+  app["Interactive SPA / SaaS app"]
+  plain["Plain WebMCP\ndocument.modelContext.registerTool()"]
+  sdk["Behavior + bridge library\ne.g. UI SDK createAgent() + registerTools()"]
+  safety["Safety + provenance\nallow() confirmation on destructive actions\nsource === 'agent' audit + server authz"]
+  verify["Verify\nsnapshot / query / act + no-op fallback\nwhen document.modelContext is absent"]
+
+  start -->|"Static / content-first"| static
+  start -->|"Simple forms"| forms
+  start -->|"Dense interactive state"| app
+  app -->|"Existing UI kit"| plain
+  app -->|"New or cross-framework primitives"| sdk
+  forms --> safety
+  plain --> safety
+  sdk --> safety
+  safety --> verify
+
+  class start success
+  class static primary
+  class forms,app,plain,sdk secondary
+  class safety warning
+  class verify primary
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px

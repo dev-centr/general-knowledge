@@ -40,6 +40,7 @@ Stable ids: trailing `{id="…"}`.
 [ ] Feature-flag dump {id="web.b.feature-flags"}
 [ ] Client debug dump (redacted) {id="web.b.debug-dump"}
 [ ] Accessibility baseline {id="web.b.a11y"}
+[ ] Agent-operable UI surface (WebMCP / structured state & action bridge; N/A for static sites) {id="web.b.agent-ui"}
 [ ] Performance budgets on critical routes {id="web.b.perf-budgets"}
 :::
 

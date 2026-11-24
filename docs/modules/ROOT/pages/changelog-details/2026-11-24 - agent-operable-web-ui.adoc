@@ -1,0 +1,13 @@
+= 2026-11-24
+
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Agent-operable web UI layer
+
+Documented the emerging **agent-operable web UI** abstraction layer—a flat, typed state and action index bridged to browser-native **WebMCP** (`document.modelContext`)—with **Vercel UI SDK** (`vercel-labs/ui` / `ui-sdk.dev`, Apache-2.0, public beta) as a concrete reference implementation alongside plain WebMCP.
+
+* Added xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] with orientation diagram `agent-ui-surface-layers.svg`, comparing DOM/ARIA traversal against `snapshot` / `query` / `act` + `allow` safety gates, and comparing `shadcn/ui`, Radix/Base UI/Zag.js, and Vercel UI SDK.
+* Added xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app] with decision flow `agent-ui-adoption-flow.svg`, covering declarative WebMCP forms, imperative `document.modelContext.registerTool`, and UI SDK `createAgent` + `registerTools`.
+* Promoted **Agent-operable UI surface** into Web Band B (N/A for static/brochure sites) in xref:explanation/architecture/classes/web.adoc[Web delivery class], xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist], and `examples/product-essentials/auxiliary-web.cmk` (`id="web.b.agent-ui"`).
+* Added a watch/reference note for Vercel UI SDK in xref:reference/recommended-tools.adoc[Recommended tools] and wired both pages into `nav.adoc`, `reference/index.adoc`, and `how-to/index.adoc`.

@@ -1,0 +1,168 @@
+= Agent-operable web UI
+:description: Reference for the semantic UI state and action abstraction layer (WebMCP document.modelContext and behavior-first bridges such as Vercel UI SDK) that lets AI agents inspect and operate web apps without whole-DOM traversal or screenshot scraping.
+:page-audience: Web developers, frontend architects, and AI coding agents
+:page-usage-context: Reference on the general-knowledge hub — evaluate when and how to add a structured agent surface to interactive web apps alongside crawlability and accessibility
+:page-orig-author: Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-24
+:page-created: 2026-11-24
+:page-published: 2026-11-24
+:page-diataxis: reference
+:page-doc-type: reference
+:page-status: published
+:page-keywords: WebMCP, document.modelContext, UI SDK, vercel-labs/ui, shadcn, agent bridge, headless UI, web stack
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Modern web applications now serve **three** runtime audiences from one UI codebase:
+
+* **Humans** via the visual DOM and CSS
+* **Assistive technology** via ARIA attributes and the accessibility tree
+* **AI agents and deterministic automation** via a **semantic state and action surface** (a flat, typed index of active controls, their current state, and their legal actions)
+
+This page defines that third abstraction layer, explains why raw DOM or accessibility-tree traversal is not enough for interactive apps, and compares **WebMCP** (`document.modelContext`) and **Vercel UI SDK** (`vercel-labs/ui` / `ui-sdk.dev`, co-developed with shadcn) as concrete implementations.
+
+[.themed-svg]
+image::agent-ui-surface-layers.svg["Three surfaces of an agent-operable web UI: shared UI behaviors emit visual DOM, ARIA accessibility tree, and a gated agent state/action index bridged to WebMCP document.modelContext"]
+
+== Why DOM and accessibility-tree traversal fall short
+
+Agents *can* read the DOM or the accessibility tree, and for simple static pages that is enough.
+For stateful web applications, relying on DOM traversal or screenshot clicking fails in five structural ways:
+
+[cols="1,2,2",options="header"]
+|===
+| Failure mode | What happens with DOM / A11y traversal | What a semantic UI index changes
+
+| **Whole-tree reading & token bloat**
+| Real apps contain thousands of layout wrappers, portals, and chrome nodes; reading or diffing the whole tree every turn wastes context and latency.
+| `snapshot()` emits a compact flat registry of mounted interactive controls (`ref`, `component`, `label`, `value`, `actions`).
+
+| **Invisible closed or virtualized state**
+| Closed dropdowns, unmounted popovers, and virtualized lists do not exist in the DOM until clicked and scrolled — forcing multi-turn open → re-read → scroll recursion.
+| `query()` searches options and state directly inside a control without opening portals or walking unrendered subtrees.
+
+| **Imperative gesture fragility**
+| Synthesizing mouse coordinates, hover states, focus moves, and keystrokes breaks on CSS animations, z-index overlays, and refactors.
+| `act()` invokes the component's typed state machine API directly (`setValue`, `clear`, `toggle`, `reorder`).
+
+| **Missing action contract**
+| The DOM shows what nodes exist *now*, not what legal transitions or argument schemas a widget accepts.
+| Controls advertise explicit callable actions and typed schemas (or WebMCP `inputSchema`).
+
+| **No safety or provenance boundary**
+| A synthetic click looks identical to a human click; the app cannot gate destructive agent mutations or audit them separately.
+| An `allow` hook can approve, confirm, or deny steps, and handlers can inspect provenance (such as `details.source === "agent"`).
+|===
+
+== Position in the essential web stack
+
+Treat the agent-operable UI surface as a **complementary layer**, not a replacement for crawlability or accessibility:
+
+[cols="1,2,2",options="header"]
+|===
+| Layer | Audience & job | Dev-Centr baseline
+
+| **Public web crawlability**
+| Search crawlers and non-JS fetchers reading *content* routes (SSG/SSR HTML, `/sitemap.xml`, `/robots.txt`, Schema.org JSON-LD).
+| Required for public content sites — see `web-crawlability` skill and xref:explanation/what-seo-does-for-a-public-website.adoc[SEO explanation].
+
+| **Accessibility baseline**
+| Keyboard users and screen readers operating UI controls (focus order, ARIA roles/states, contrast).
+| Band B in xref:explanation/architecture/classes/web.adoc[Web delivery class].
+
+| **Agent-operable UI surface**
+| Runtime AI agents, browser assistants, and semantic E2E tests inspecting state and invoking typed UI actions safely.
+| **Band B** for interactive web apps in xref:explanation/architecture/classes/web.adoc[Web delivery class] (mark N/A with reason on static/brochure sites).
+|===
+
+[IMPORTANT]
+====
+**Adopt the abstraction layer, not a single beta dependency.**
+Both the W3C **WebMCP** API and **Vercel UI SDK** are evolving (experimental/beta as of late 2026). Feature-detect `document.modelContext`, keep domain logic decoupled from any one UI kit, and treat UI SDK as a concrete reference implementation rather than a mandatory lock-in.
+====
+
+== Concrete implementations
+
+=== WebMCP (`document.modelContext`)
+
+**WebMCP** (Web Model Context Protocol) is an experimental browser API incubated in the W3C Web Machine Learning Community Group (with Chromium Origin Trials and experimental flags).
+It provides two registration paths directly in the browser:
+
+* **Imperative API:** `document.modelContext.registerTool({ name, description, inputSchema, execute })` for stateful SPA logic and custom workflows.
+* **Declarative API:** Standard HTML `<form>` elements annotated with `toolname` and `tooldescription` attributes so simple form actions surface automatically as agent-callable tools.
+
+Namespace note::
+Early 2026 Chromium previews exposed `navigator.modelContext`. Mid-2026 W3C drafts moved the registry to **`document.modelContext`** because tools are scoped to a document rather than the whole browser. Always target `document.modelContext` behind feature detection.
+
+=== Vercel UI SDK (`vercel-labs/ui`)
+
+link:https://ui-sdk.dev/[**UI SDK**] (link:https://github.com/vercel-labs/ui[`vercel-labs/ui`], **Apache-2.0**, public beta `0.1.0-beta.x`, co-developed by Vercel Labs and shadcn) couples two layers that are usually maintained separately:
+
+. **Authoring / behavior layer (agents as builders):**
++
+`@ui-sdk/core` provides 50+ atomic, framework-agnostic interaction behaviors (`createPopup`, `createRovingFocus`, `createTypeahead`, `createSelection`, `createReorder`, and more).
+A single `definePrimitive` declaration combines reactive state, public action methods, and structural slots, and thin framework adapters (`@ui-sdk/react`, Vue, Svelte, Solid, Web Components) render them via `createParts`.
+Because accessibility, focus recovery, and keyboard navigation live inside tested behaviors—and ship with an agent skill pack (`npx skills@latest add vercel-labs/ui --skill ui-sdk`)—coding agents compose custom controls without reinventing ARIA wiring.
+
+. **Runtime agent bridge (agents as operators):**
++
+Framework agent adapters (such as `@ui-sdk/react/agent`) expose `createAgent()` with three structured primitives:
++
+* **`snapshot()`** — returns mounted components, their `ref` / `label`, typed state, and exposed actions.
+* **`query()`** — searches components or lazy/closed child options (such as items inside a `Select` or `Combobox`) by text or label.
+* **`act()`** — runs structured action steps directly against component APIs, guarded by an `allow` interception hook and `details.source === "agent"` provenance.
+* **`registerTools(agent, ...)`** — bridges the same registry onto **WebMCP** (`document.modelContext`) automatically when the browser supports it.
+
+== Comparison with headless UI libraries
+
+[cols="1,2,2,2",options="header"]
+|===
+| Dimension | `shadcn/ui` | Radix UI / Base UI / Zag.js | Vercel UI SDK (`vercel-labs/ui`)
+
+| **Layer**
+| Styled copy-in component kit and registry
+| Complete headless components (Radix/Base UI) or per-widget state machines (Zag.js)
+| Atomic interaction behaviors (`@ui-sdk/core`) + primitive compiler (`definePrimitive`)
+
+| **Framework scope**
+| Primarily React (community ports for others)
+| React-first (Radix/Base UI); framework-agnostic core (Zag.js)
+| React, Vue, Svelte, Solid, and Web Components from one primitive definition
+
+| **Runtime agent surface**
+| Standard DOM / ARIA only
+| Standard DOM / ARIA only
+| Built-in agent bridge (`snapshot`, `query`, `act`, `allow`) + WebMCP `registerTools`
+
+| **Maturity (late 2026)**
+| Mature, widely deployed
+| Mature
+| Public beta (`0.1.0-beta.x`, Apache-2.0) — evaluate as reference pattern; pin carefully
+|===
+
+== Security and safety boundaries
+
+An agent-operable UI surface makes legitimate automation cleaner, but it does **not** weaken the browser security model:
+
+* **Never rely on client-side agent gates for authorization.** Server endpoints must enforce authentication, RBAC, and tenant boundaries identically whether a request originates from a human click or an agent call.
+* **Gate destructive and external-effect actions.** Require explicit confirmation (via `allow` hooks or UI confirmation flows) before delete, billing, permission-change, or external-send actions execute.
+* **Record provenance.** Distinguish agent-initiated state transitions (`details.source === "agent"` or equivalent audit tags) in client telemetry and diagnostics dumps.
+* **Beware indirect prompt injection.** Tool outputs and component labels returned through `snapshot()` / `query()` can contain untrusted user-generated text; keep sensitive secrets out of rendered labels and tool payloads.
+
+== Related
+
+* xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app] — step-by-step adoption paths (plain WebMCP and UI SDK)
+* xref:explanation/architecture/classes/web.adoc[Web delivery class] — Band A/B/C matrix for browser-delivered apps
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist] — printable checklist including the Web Band B item
+* xref:reference/recommended-tools.adoc[Recommended tools] — watch/reference status for UI SDK
+* xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense SPA architecture and DOM-vs-canvas boundaries

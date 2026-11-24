@@ -22,6 +22,7 @@ Tokens: xref:reference/ai-site-design-contract.adoc[AI site design contract].
 * xref:how-to/context7-mcp-setup.adoc[Context7 MCP and Skills setup] — Library/API docs MCP for version-sensitive agent work.
 * xref:how-to/bootstrap-cursor-skills.adoc[Bootstrap Cursor skills] — Personal Agent Skills without clogging always-on User Rules; YAML `description` is trigger words, not a lay blurb (skill `write-a-skill`). Operator path or drop the recipe into a permissive agent. Framing: xref:explanation/infrastructure/vibe-coding-bootstrap.adoc[Vibe coding bootstrap].
 * xref:how-to/tighten-an-ai-built-site.adoc[Tighten an AI-built site] — lock tokens, drop nested cards, and prompt from one screenshot. The site already runs. Why it drifted: xref:explanation/constrained-ai-web-design.adoc[Constrained AI web design].
+* xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app] — expose structured state and gated actions via plain WebMCP (`document.modelContext`) or Vercel UI SDK (`createAgent` + `registerTools`). Reference: xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI].
 * xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap] — GitHub org identity (profile, site, docs hub) as an agent skill; capability-area IT stays in Business Bootstrap. Not the same as installing Cursor skills.
 * xref:how-to/nushell-setup.adoc[Install and set up Nushell] — Default shell for Dev-Centr on every OS.
 * xref:how-to/wsl-setup.adoc[Set up and manage WSL] — Enable WSL, pick a default distro, open WSL Settings.

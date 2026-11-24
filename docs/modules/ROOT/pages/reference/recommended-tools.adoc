@@ -35,6 +35,7 @@ D and Rust for systems/apps, TypeScript for the browser, Julia for numerical wor
 * link:https://vercel.com/docs/cli[**Vercel CLI**] — Prefer `pnpm add -g vercel` when winget lacks the package; use team `--scope` after org moves.
 * **Standalone agent shells** — Do not treat the IDE as the only control plane. For shopping, hardware fit, and local / network-local / remote-env / three-tier topologies, see xref:explanation/infrastructure/agent-control-planes.adoc[Agent control planes] and DevCentr’s `agent_shell_registry.sdl`. Setup surface: **AI Workflow Arrangement** (icons + diagrams in AI Config — not a wizard). Keep DevCentr’s env-aware repo terminal as the always-on human ops shell; agent-manager PTYs are not a substitute.
 * **AI studio tooling map** — Master list of MCP/connectors/control-plane docs: xref:reference/ai-studio-tooling-catalog.adoc[AI studio tooling catalog].
+* link:https://ui-sdk.dev/[**Vercel UI SDK**] (`vercel-labs/ui`, Apache-2.0, public beta) — **Watch / reference implementation** for the agent-operable web UI layer: atomic framework-agnostic interaction behaviors (`@ui-sdk/core` for React, Vue, Svelte, Solid, Web Components) paired with a runtime agent bridge (`snapshot`, `query`, `act`, `allow`) and **WebMCP** (`document.modelContext`) tool registration. Adopt the abstraction layer progressively rather than locking into a beta kit: xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] · xref:how-to/add-agent-operable-web-ui.adoc[how-to].
 
 == Fonts (monospace)
 

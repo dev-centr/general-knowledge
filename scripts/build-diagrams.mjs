@@ -50,6 +50,8 @@ const sources = [
   'playtime-attic-basement',
   'playtime-argv',
   'seo-discovery-system',
+  'agent-ui-surface-layers',
+  'agent-ui-adoption-flow',
 ];
 
 const diagramOption = process.argv.indexOf('--diagram');

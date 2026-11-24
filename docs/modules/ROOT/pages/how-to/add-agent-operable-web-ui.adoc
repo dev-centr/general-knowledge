@@ -1,0 +1,162 @@
+= Add an agent-operable UI layer to a web app
+:description: Task-oriented guide for exposing a structured, safe state and action surface to AI agents using plain WebMCP (document.modelContext) or a behavior-driven bridge such as Vercel UI SDK.
+:page-audience: Web developers and AI coding agents building interactive browser apps
+:page-usage-context: How-to on the general-knowledge hub — wire WebMCP or a UI SDK-class agent bridge onto an interactive web app with safety gates and graceful fallback
+:page-orig-author: Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-24
+:page-created: 2026-11-24
+:page-published: 2026-11-24
+:page-diataxis: how-to
+:page-doc-type: how-to
+:page-status: published
+:page-keywords: WebMCP, document.modelContext, UI SDK, createAgent, registerTools, web app, agent bridge
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+Use this guide when an interactive web application should be inspectable and operable by runtime AI agents or semantic automation without brittle whole-DOM scraping or screenshot clicking.
+
+Background and comparison: xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI].
+
+[.themed-svg]
+image::agent-ui-adoption-flow.svg["Decision and wiring flow for adding an agent-operable UI layer: static sites stop at crawlability, simple forms use declarative WebMCP, and interactive apps use imperative WebMCP or UI SDK createAgent behind an allow safety gate"]
+
+== Step 1: Classify the route or app
+
+Pick the lightest surface that fits the product:
+
+* **Static marketing, docs, or blog site:** stop here. Ensure crawlable HTML, `/sitemap.xml`, `/robots.txt`, and Schema.org JSON-LD (`web-crawlability`), and mark the Web Band B agent-UI checklist row **N/A** with that reason.
+* **Simple form-driven flows (search, filter, contact, booking):** use **declarative WebMCP** on standard HTML `<form>` elements (Step 2A).
+* **Existing interactive SPA with its own UI library:** register key domain actions imperatively through **plain WebMCP** (`document.modelContext.registerTool`) behind feature detection (Step 2B).
+* **New or cross-framework interactive UI (React, Vue, Svelte, Solid, Web Components) where agents also author custom controls:** evaluate **Vercel UI SDK** (`@ui-sdk/core` + framework adapter + `createAgent` + `registerTools`) (Step 2C).
+
+== Step 2A: Declarative WebMCP for simple forms
+
+Annotate existing semantic HTML forms so WebMCP-capable browsers expose them automatically with zero runtime library weight:
+
+[source,html]
+----
+<form
+  action="/search"
+  method="get"
+  toolname="search_catalog"
+  tooldescription="Search items by keyword and category"
+>
+  <label for="q">Query</label>
+  <input id="q" name="q" type="search" required />
+  <button type="submit">Search</button>
+</form>
+----
+
+Keep normal form labels, validation, and server handling intact so browsers without WebMCP work unchanged.
+
+== Step 2B: Imperative plain WebMCP (`document.modelContext`)
+
+Always feature-detect `document.modelContext` (do not use the deprecated early-2026 `navigator.modelContext` alias) so unsupported browsers stay a clean no-op:
+
+[source,ts]
+----
+export function registerAppTools(deps: {
+  searchCatalog: (query: string, maxPrice?: number) => Promise<unknown>;
+}) {
+  const modelContext = (document as Document & {
+    modelContext?: {
+      registerTool: (tool: {
+        name: string;
+        description: string;
+        inputSchema: Record<string, unknown>;
+        execute: (args: Record<string, unknown>) => Promise<string>;
+      }) => void;
+    };
+  }).modelContext;
+
+  if (!modelContext) return;
+
+  modelContext.registerTool({
+    name: "search_catalog",
+    description: "Search the catalog by keyword and optional maximum price.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string" },
+        maxPrice: { type: "number" },
+      },
+      required: ["query"],
+    },
+    execute: async ({ query, maxPrice }) => {
+      const results = await deps.searchCatalog(
+        String(query),
+        typeof maxPrice === "number" ? maxPrice : undefined,
+      );
+      return JSON.stringify(results);
+    },
+  });
+}
+----
+
+Expose high-level, idempotent queries first; gate any state-mutating tool behind Step 3.
+
+== Step 2C: Structured bridge with Vercel UI SDK (beta reference pattern)
+
+If your UI primitives are built on link:https://ui-sdk.dev/[Vercel UI SDK] (`vercel-labs/ui`, Apache-2.0, public beta), mount the agent bridge once at app startup and forward it to WebMCP when available:
+
+[source,ts]
+----
+import { createAgent, registerTools } from "@ui-sdk/react/agent";
+
+export const agent = createAgent({
+  allow: async (step) => {
+    if (step.action === "delete" || step.action === "remove") {
+      return window.confirm(
+        `Allow agent to run "${step.action}" on ${step.label || step.ref}?`,
+      );
+    }
+    return true;
+  },
+});
+
+// Bridges snapshot / query / act into WebMCP document.modelContext when supported
+export const unregisterTools = registerTools(agent, {
+  allow: (step) => !step.confirm,
+});
+----
+
+[NOTE]
+====
+UI SDK ships adapters for React, Vue, Svelte, Solid, and Web Components, plus a coding-agent skill (`npx skills@latest add vercel-labs/ui --skill ui-sdk`). Because `vercel-labs/ui` is in public beta (`0.1.0-beta.x`), pin versions intentionally and check release notes before upgrading.
+====
+
+== Step 3: Enforce safety and provenance
+
+Before shipping an agent-operable surface to production:
+
+* [ ] **Gate destructive mutations:** intercept delete, billing, account, permission, and external-send actions with explicit human confirmation (`allow` hook or modal) rather than auto-executing.
+* [ ] **Keep server authorization authoritative:** never skip server-side session, RBAC, or CSRF/origin checks for tool-triggered requests.
+* [ ] **Tag agent-originated changes:** check provenance (such as `details.source === "agent"`) in change handlers and audit logs so support dumps can separate agent actions from human input.
+* [ ] **Keep secrets out of snapshots:** never place tokens, API keys, or private credentials into control values or labels surfaced by `snapshot()` or tool descriptions.
+
+== Step 4: Verify the surface
+
+Test both agent-enabled and standard browser paths:
+
+. **Inspect the state index:** call `agent.snapshot()` (or list registered WebMCP tools) and confirm labels are human-readable, unique, and free of secrets.
+. **Verify non-DOM lookup:** run `agent.query({ within: "<control>", text: "<option>" })` on a closed select or virtualized list to confirm options resolve without opening the popup.
+. **Execute a safe action:** call `agent.act({ steps: [...] })` or invoke a registered WebMCP tool and confirm visible UI state and accessibility attributes update in sync.
+. **Verify blocked destructive action:** trigger a gated mutation and confirm the `allow` hook pauses or denies it.
+. **Confirm graceful fallback:** load the app in a browser where `document.modelContext` is `undefined` and verify zero runtime errors and full human + keyboard usability.
+
+== Related
+
+* xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] — why DOM traversal falls short, WebMCP vs UI SDK comparison
+* xref:explanation/architecture/classes/web.adoc[Web delivery class] — full Web Band A/B/C auxiliary matrix
+* xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist] — printable checklist
+* xref:how-to/product-essentials-checklists.adoc[Product essentials checklists] — CentrMark `.cmk` workflow

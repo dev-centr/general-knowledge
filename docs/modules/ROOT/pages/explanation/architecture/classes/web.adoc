@@ -76,6 +76,10 @@ Dense UI architecture notes: xref:home::explanation/architecture/ui-heavy-web-ap
 | B
 | Focus order, labels, contrast on primary flows; keyboard for critical actions
 
+| **Agent-operable UI surface**
+| B
+| Progressive enhancement for interactive apps: expose a typed state/action surface via WebMCP (`document.modelContext`) or a structured UI agent bridge (such as Vercel UI SDK `createAgent` + `registerTools`), with `allow` gates on destructive mutations and server authz intact; mark N/A on static/brochure sites — xref:reference/agent-operable-web-ui.adoc[reference] · xref:how-to/add-agent-operable-web-ui.adoc[how-to]
+
 | **Localization**
 | C
 | Locale routing or picker; RTL if you claim it
@@ -147,3 +151,5 @@ Footer or About
 * xref:explanation/architecture/types/services.adoc[Services] — API health/version pairing
 * xref:explanation/architecture/diagnostics-and-support.adoc[Diagnostics]
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist]
+* xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] — semantic state/action layer (WebMCP and Vercel UI SDK)
+* xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app] — progressive wiring guide
