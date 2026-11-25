@@ -1,0 +1,145 @@
+= UI-heavy web applications
+:page-aliases: home::explanation/architecture/ui-heavy-web-apps.adoc
+:navtitle: UI-heavy web apps
+:description: Explanation of framework choices, client versus server responsibilities, creative tooling, and perceived performance for dense browser applications (maps, mail-scale UIs, integrated suites).
+
+This page collects architecture notes for **browser-heavy** products: dashboards, maps, messaging, marketplace flows, and suite shells where the client stays open for a long time and state fans out across many views.
+It is informed by comparisons among link:https://opensource.janestreet.com/bonsai/[Bonsai] (OCaml, js_of_ocaml), link:https://leptos.dev/[Leptos] (Rust, SSR and WASM), link:https://vibed.org/[vibe.d] (D, server-first), and by how large **integrated** mail products tend to behave in practice.
+
+== Roles: client UI, API, and database
+
+**Bonsai** is a client-side UI library.
+It does not host a database or enforce authentication by itself; it renders in the browser and talks to backends over HTTP or WebSockets, like any SPA stack.
+
+* **Database access** belongs on a **server** (or managed backend).
+  In OCaml that often means link:https://github.com/paurkedal/ocaml-caqti[Caqti] with PostgreSQL or SQLite, behind link:https://github.com/aantron/dream[Dream] (or similar), not inside the compiled browser bundle.
+* **Authentication** splits naturally: **UX and tokens in the client**, **trust and authorization on the server** (sessions, JWT verification, OIDC code exchange, row-level rules).
+  There is no single “Bonsai auth” package; many teams pair an OCaml API with hosted identity (Auth0, Clerk, Supabase, and so on) when OIDC/JWKS churn outpaces hand-maintained OCaml clients.
+
+**vibe.d** fits the **HTTP service** side: async I/O, routing, WebSockets, templates, and native drivers—orthogonal to whether the browser UI is Bonsai, React, or something else.
+
+**Leptos** is different in packaging: it is a **full-stack** framework with **SSR**, hydration, and **server functions**, so database and auth can sit in the *same* Rust project with less hand-written REST glue—still with secrets on the server.
+
+== Bonsai, Leptos, and vibe.d (where each wins)
+
+[cols="1,2,2,2",options="header"]
+|===
+| Dimension | Bonsai | Leptos | vibe.d
+
+| Sweet spot
+| Complex in-browser state and incremental view updates
+| Full-stack reactive sites, SSR/SEO, shared Rust types end-to-end
+| High-throughput native services, classic web apps, APIs
+
+| In the browser
+| JavaScript from OCaml
+| WebAssembly (with optional SSR first paint)
+| Not the default model for rich SPA chrome
+
+| SSR
+| Bring your own; often SPA-first
+| First-class
+| Natural for server-rendered HTML
+
+| Suite integration
+| Client calls your APIs; suite modules are separate bundles or pages you design
+| Same, plus server functions for tighter coupling
+| Strong as the API + HTML tier; pair with a separate SPA if needed
+|===
+
+None of these choices removes the need for a deliberate **load budget**: what ships on the critical path before the inbox (or map, or list) is interactive.
+
+== Creative stack: 3D, scroll, and advanced text layout
+
+Libraries such as **Three.js**, **Lenis** / Locomotive-style smooth scrolling, and link:https://pretextjs.dev/[Pretext] (layout and measurement for kinetic typography) are **npm-first** and assume a JavaScript execution model.
+
+* **Bonsai path:** raw **WebGL** via js_of_ocaml, or **FFI** to the JavaScript library.
+  There is no mainstream equivalent to **React Three Fiber**; AI-assisted “vibe coding” and copy-paste examples are far thinner than in TypeScript.
+* **Motion-heavy marketing** often ships faster as a **small TypeScript island** (or static pages) next to a structured app, rather than reimplementing every trendy package in OCaml bindings.
+
+== Case study shapes (not insider postmortems)
+
+=== Dense webmail (for example Gmail-class clients)
+
+A mail client benefits from **incremental UI** and disciplined state, which is the *class* of problem Bonsai targets.
+Rewriting a product the size of Gmail is dominated by **scope, integrations, protocols, experiments, and initial payload**, not only the renderer.
+A framework swap does not by itself fix **loading time** if the critical path still pulls large bundles, telemetry, feature flags, and many subsystems before first interaction.
+
+=== Why another suite (for example Zoho Mail) can *feel* faster than Gmail
+
+Perceived speed usually mixes **initial load**, **main-thread jank**, and **what is deferred** after the core list is usable.
+Integrated suites can integrate **lightly** (SSO, links, APIs, embeds) without loading every sibling product inside the same tab on the first navigation.
+Consumer Gmail also sits inside a broader Google surface (experiments, ads on consumer tiers, multiple products in one shell), which routinely adds **variability and weight** unrelated to “JavaScript is slow.”
+
+These points are **architectural hypotheses**, not claims about proprietary codebases.
+
+== Practical guidance
+
+* Match the **framework to the tier**: server-first (**vibe.d**) for APIs and HTML; **Leptos** when Rust should own SSR and client with minimal boundary boilerplate; **Bonsai** when you want **OCaml in the browser** and accept a separate server and SSR story.
+* Treat **ecosystem and AI assistance** as a risk line item for OCaml client work: fewer examples and weaker codegen than for React or Rust web stacks.
+* For **food-truck style** products (live location, favorites, geo notifications, event marketplaces), most risk is in **data, auth, maps, and notifications**—keep the **initial route** lean regardless of UI library.
+
+[[spatial-windows-and-lite-palettes]]
+== Spatial windows and lite palettes
+
+Professional desktop software separates the *model* (canvas, timeline) from *controls about the model* (histogram, curves, transport).
+UI-heavy web apps often collapse both into one SPA viewport—or reimplement windowing inside WebGL (Dear ImGui, custom canvas toolkits) because DOM felt too rigid.
+
+*Spatial web windows* invert that:
+
+* **WASM/WebGPU engine** in the primary viewport (or `OffscreenCanvas` in a worker)
+* **Inspector palettes** as lite DOM windows — Document Picture-in-Picture, chromeless `window.open`, or PWA Window Controls Overlay
+* **SharedWorker hub** — palettes subscribe to state deltas; they are projections, not second apps
+* **Intent routing** — layout follows explicit `displayIntent` (`desktop` | `mobile`), not raw `@media (max-width: …)` so a 250px palette never becomes a hamburger menu on a large monitor
+
+=== When to portal DOM vs canvas GUI
+
+[cols="1,2"]
+|===
+| Situation | Prefer
+
+| Sliders, forms, inspectors, accessibility-critical controls
+| DOM in lite windows portaled from the main bundle
+
+| Pixel-perfect GPU compositing, game loop, million-point scatter
+| Canvas/WebGPU in viewport; avoid duplicating GUI in GPU unless necessary
+
+| Cross-window reactive state
+| `SharedWorker` + `BroadcastChannel`; avoid tight `window.opener` coupling
+|===
+
+=== PWA and platform checklist
+
+* Manifest `display_override: ["window-controls-overlay"]` when the app owns the title region
+* COOP/COEP headers if you need `SharedArrayBuffer` between WASM and DOM palettes
+* Popups only inside user-activation handlers (click) — palette tear-off buttons must be direct gestures
+* Guard layout with `@media (pointer: fine)` and `(any-hover: hover)` alongside intent flags
+* Feature-detect Document PiP; degrade to chromeless popup on unsupported browsers
+
+=== Browser gaps (Desktop-Tooling fork)
+
+Stock Chromium lacks parent-relative always-on-top, workspace window grouping, and reduced background throttling among peer palette windows.
+Track patches in `Desktop-Tooling/spatial-browser` (prototype repository not publicly reachable).
+Demos can detect `window.spatialBrowser` when running on the fork.
+
+=== HCI Nerdz public face
+
+* Explanation: link:https://hci-nerdz.github.io/docs/hci-nerdz/spatial-web-windows/[Spatial web windows]
+* Essay: link:https://hci-nerdz.github.io/blog/when-the-browser-flattens-working-memory/[When the browser flattens working memory]
+* Demo: link:https://hci-nerdz.github.io/demos/spatial-web-windows/[Spatial web windows desk]
+
+== Agent-operable UI layer
+
+Dense browser applications (mail clients, dashboards, inspectors, editors) are the worst case for DOM or screenshot scraping: deep layout trees, closed popovers, virtualized lists, and canvas viewports hide state from raw DOM traversal.
+
+Expose a **structured state and action surface** alongside the visual DOM and ARIA tree—either directly through feature-detected **WebMCP** (`document.modelContext`) or through a behavior-driven bridge such as **Vercel UI SDK** (`createAgent` + `registerTools`)—with `allow` gates on destructive actions and server-side authorization unchanged.
+
+* Reference and comparison: xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI]
+* Progressive wiring guide: xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app]
+
+== See also
+
+* xref:home::where-docs-live.adoc[Where documentation lives] — how this site aggregates repos.
+* xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines] — desktop UI stacks, large-document behavior, post-Skia pipelines.
+* xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] — semantic state/action layer (WebMCP and Vercel UI SDK).
+* xref:explanation/index.adoc[Explanation] — broader Diátaxis-style notes.

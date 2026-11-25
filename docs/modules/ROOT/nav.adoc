@@ -59,6 +59,7 @@
 ** Languages
 *** xref:reference/languages/c.adoc[C Language]
 ** xref:reference/git-performance.adoc[Git Performance]
+** xref:reference/git-ai-attribution-in-guest-repositories.adoc[Git AI attribution in guest repositories]
 ** xref:reference/pnpm-run-routing.adoc[pnpm run routing]
 ** xref:reference/package-registries.adoc[Package Registries]
 ** xref:reference/app-essentials-checklist.adoc[App Essentials Checklist]
@@ -129,8 +130,8 @@
 *** xref:explanation/architecture/config-lifecycle-management.adoc[Config Lifecycle Management]
 *** xref:explanation/architecture/graphics-rendering-engines.adoc[Graphics rendering engines]
 *** xref:explanation/architecture/aspect-oriented-programming.adoc[Aspect-Oriented Programming]
-*** xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] (Dev-Centr docs playbook)
-*** xref:home::explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms] (Dev-Centr docs playbook)
+*** xref:explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
+*** xref:explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms]
 ** Infrastructure
 *** xref:explanation/infrastructure/nushell.adoc[Nushell (recommended shell)]
 *** xref:explanation/infrastructure/nushell-vs-powershell.adoc[Nushell vs PowerShell]

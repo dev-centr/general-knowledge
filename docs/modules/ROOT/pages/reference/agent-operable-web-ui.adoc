@@ -165,4 +165,4 @@ An agent-operable UI surface makes legitimate automation cleaner, but it does **
 * xref:explanation/architecture/classes/web.adoc[Web delivery class] — Band A/B/C matrix for browser-delivered apps
 * xref:reference/auxiliary-features-checklist.adoc[Auxiliary features checklist] — printable checklist including the Web Band B item
 * xref:reference/recommended-tools.adoc[Recommended tools] — watch/reference status for UI SDK
-* xref:home::explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense SPA architecture and DOM-vs-canvas boundaries
+* xref:explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications] — dense SPA architecture and DOM-vs-canvas boundaries

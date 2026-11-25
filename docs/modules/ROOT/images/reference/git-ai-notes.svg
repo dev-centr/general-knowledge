@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+<title id="title">Code and attribution use separate refs</title>
+<desc id="desc">Code travels through a branch ref. Git AI metadata travels through refs/notes/ai only after consent and privacy review. Both identify the same commit.</desc>
+<!-- Editable source: hand-authored SVG. External standalone-adaptive delivery; operating-system theme selects its bundled preset. -->
+<style>
+:root { --themed-svg-notes-canvas:#ffffff; --themed-svg-notes-surface:#edf7f5; --themed-svg-notes-text:#172c29; --themed-svg-notes-edge:#127266; }
+@media(prefers-color-scheme:dark) { :root { --themed-svg-notes-canvas:#152622; --themed-svg-notes-surface:#213d36; --themed-svg-notes-text:#eefaf6; --themed-svg-notes-edge:#80dfca; } }
+.bg{fill:var(--themed-svg-notes-canvas,#ffffff)} .box{fill:var(--themed-svg-notes-surface,#edf7f5);stroke:var(--themed-svg-notes-edge,#127266);stroke-width:2} text{fill:var(--themed-svg-notes-text,#172c29);font:18px system-ui,sans-serif;text-anchor:middle} .edge{fill:none;stroke:var(--themed-svg-notes-edge,#127266);stroke-width:2} .small{font-size:15px}
+</style>
+<rect class="bg" width="760" height="220"/>
+<rect class="box" x="20" y="35" width="240" height="60" rx="8"/><text x="140" y="71">Branch ref: code</text>
+<rect class="box" x="20" y="130" width="240" height="60" rx="8"/><text x="140" y="166">refs/notes/ai: attribution</text>
+<rect class="box" x="530" y="75" width="210" height="80" rx="8"/><text x="635" y="109">Same commit SHA</text><text class="small" x="635" y="135">Separate Git metadata</text>
+<path class="edge" d="M260 65 H510 L500 59 M510 65 L500 71 M260 160 H510 L500 154 M510 160 L500 166"/>
+<text class="small" x="392" y="52">Normal branch push</text><text class="small" x="392" y="124">Consent + privacy review</text><text class="small" x="392" y="191">Explicit notes push</text>
+</svg>

@@ -15,6 +15,8 @@ Reference pages are for **retrieval**—checklists, layouts, tool lists, and reg
 
 == Workspace and Git
 
+* xref:reference/git-ai-attribution-in-guest-repositories.adoc[Git AI attribution in guest repositories] — what Git AI notes contain, what they expose, and how maintainers can accept or decline them
+
 See the Reference section in the left navigation for workspace organization, Git management, gitignore sources, and related pages.
 
 == Tools

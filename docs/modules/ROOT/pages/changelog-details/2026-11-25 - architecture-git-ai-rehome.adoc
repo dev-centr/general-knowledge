@@ -1,0 +1,13 @@
+= 2026-11-25
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Architecture and Git AI pages from Home
+
+These pages moved from the docs hub Home component into this component, at the same relative paths:
+
+* xref:explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications]
+* xref:explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms]
+* xref:reference/git-ai-attribution-in-guest-repositories.adoc[Git AI attribution in guest repositories] (with `images/reference/git-ai-notes.svg`)
+
+Each page carries a `:page-aliases:` entry for its former `home::` resource ID. In-component navigation and xrefs no longer point at Home, and the Architecture overview lists the two architecture pages as deep dives rather than as a related-component group.

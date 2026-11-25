@@ -52,7 +52,7 @@ These are cousins, not replacements. Expand when someone implements them.
 | Cloud/CI grants lower burn but do not pay rent. If you publish a floor, say which part is cash.
 
 | Paid access (not a donation)
-| Different problem: entitlements, stores, Stripe. See xref:home::explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms] on the docs hub.
+| Different problem: entitlements, stores, Stripe. See xref:explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms].
 |===
 
 == How this sits next to the funding landscape

@@ -1,0 +1,124 @@
+= Subscription management platforms
+:page-aliases: home::explanation/architecture/subscription-management-platforms.adoc
+:navtitle: Subscription management platforms
+:description: Explanation of in-app subscription infrastructure (Adapty, RevenueCat, and related tools), access levels versus store SKUs, and how they relate to Stripe and static/web SaaS sites.
+
+Thin SaaS products and mobile apps often need the same answer on every surface: **does this customer currently have paid access?**
+That problem is usually called **subscription management**, **in-app subscription infrastructure**, or (in vendor APIs) **entitlements** / **access levels** — not a separate product category branded “entitlement layer.”
+
+This page is architecture advice for web and hybrid teams. It complements xref:explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications].
+
+== The problem Stripe alone does not solve
+
+link:https://stripe.com/docs/customer-management[Stripe Customer Portal] is excellent for **Stripe** invoices, payment methods, and cancellations.
+It does **not** show App Store, Google Play, or Microsoft Store subscriptions.
+Apple and Google require their own in-app purchase rails for digital goods inside mobile apps; you cannot route those through Stripe.
+
+So a product that sells on **web + mobile** needs:
+
+. A **payment rail** per channel (Stripe Checkout, StoreKit, Play Billing, …)
+. A **subscription management platform** (or your own backend) that normalizes those rails into one access check
+
+== Common terminology
+
+[cols="1,2",options="header"]
+|===
+| Phrase you will hear | What it means
+
+| Subscription management platform / in-app subscription infrastructure
+| Hosted service that validates receipts, tracks renewals/refunds/grace periods, and exposes “has access?” APIs (e.g. Adapty, RevenueCat, Qonversion)
+
+| Access level (Adapty) / entitlement (RevenueCat)
+| Logical unlock (`premium`, `instalay`), mapped from one or more store product IDs
+
+| Offerings / paywalls / placements
+| What the user is shown to buy — often A/B tested; orthogonal to the access check itself
+
+| Membership platform (Memberstack, Outseta)
+| Login + gating for **websites**, usually Stripe-backed — not a substitute for App Store IAP
+
+| Customer portal
+| UI for managing billing with **one** merchant (Stripe Portal, store subscription settings)
+|===
+
+Engineers sometimes say “entitlement layer” for the middle box.
+Prefer **subscription management** or **access levels** when writing docs or searching videos (`RevenueCat vs Adapty`, `in-app subscription SDK`).
+
+== Comparison (practical defaults)
+
+[cols="1,2,2,2,2",options="header"]
+|===
+| Dimension | Adapty | RevenueCat | Qonversion | DIY (your keys / DB)
+
+| Positioning
+| Subscription management + strong paywall / A/B / growth tooling
+| Mature subscription infrastructure; large ecosystem and docs
+| Cost-conscious analytics-heavy alternative
+| Full control; you own schema and edge cases
+
+| Access model
+| Access levels
+| Entitlements
+| Entitlements
+| Whatever you invent (`IL-` keys, feature flags, …)
+
+| App Store / Play
+| First-class
+| First-class
+| First-class
+| You validate receipts
+
+| Stripe / web
+| Sync via Stripe integration + `customer_user_id` metadata
+| Web Billing / Stripe Billing / Paddle options
+| Web / Stripe paths exist
+| Checkout + your fulfillment
+
+| Microsoft Store
+| Not first-class — grant via server API
+| Same pattern
+| Same pattern
+| Straightforward if you already mint licenses
+
+| Flutter
+| Official SDK
+| Official SDK
+| Official SDK
+| N/A
+
+| When teams pick it
+| Paywall conversion and experiments matter early
+| Default “safe” choice; docs and integrations
+| Generous free MTR / lower fees narrative
+| Web-first license keys, few IAP SKUs, or special compliance
+|===
+
+**Superwall** (and similar) optimize **paywall presentation**.
+They are usually paired with Adapty or RevenueCat, not used as the sole source of subscription truth.
+
+== Web + mobile with one customer id
+
+Typical pattern:
+
+. Authenticate the user (or collect a stable buyer email).
+. On Stripe Checkout, set metadata `customer_user_id` to that id (and enable invoice creation for one-time payments if the platform requires invoice events).
+. In the mobile app, call the SDK `identify` with the **same** id after login.
+. Gate features on an **access level**, not on raw product IDs.
+
+Without a shared id, web purchase and mobile install become two anonymous profiles.
+
+== Practical guidance
+
+* If the product is **desktop/web license keys first** and mobile IAP is future work, keep a simple license table (or key format) and add Adapty/RevenueCat when store IAPs ship — still design the **customer id** early.
+* If the product is **mobile-subscription-first** and conversion testing is the growth lever, **Adapty** is a strong forward-looking default; **RevenueCat** remains the ecosystem default.
+* Do not expect one merchant portal to list every store’s invoices; unify on **access status** (and optionally a thin “My account” page that lists sources).
+* Keep **tenant membership** (team roles) separate from **paid access** in multi-tenant apps.
+
+Donation-supported products (no paid entitlement) are a different ask: show the fund and the floor on your own site. See xref:explanation/funding/donation-ask-ideas.adoc[Donation and monetization ask ideas].
+
+== Further reading
+
+* link:https://adapty.io/docs/[Adapty docs]
+* link:https://www.revenuecat.com/docs/[RevenueCat docs]
+* link:https://adapty.io/docs/stripe[Adapty + Stripe]
+* link:https://www.revenuecat.com/docs/web/overview[RevenueCat Web]

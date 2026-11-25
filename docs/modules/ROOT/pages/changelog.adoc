@@ -4,8 +4,12 @@
 
 == 2026-11-25
 
-=== Local-first git and CI
+=== Architecture and Git AI pages from Home
 
+* Rehomed xref:explanation/architecture/ui-heavy-web-apps.adoc[UI-heavy web applications], xref:explanation/architecture/subscription-management-platforms.adoc[Subscription management platforms], and xref:reference/git-ai-attribution-in-guest-repositories.adoc[Git AI attribution in guest repositories] from the Home component. Old /home/… URLs stay valid through page aliases.
+* Detail: xref:changelog-details/2026-11-25 - architecture-git-ai-rehome.adoc[Architecture and Git AI pages from Home].
+
+=== Local-first git and CI
 * Added xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]: commit locally and push on request, use a daily unpushed-commits reminder, stack dependent work on one branch, and split fast push/PR checks from heavy `v*` / `workflow_dispatch` package builds, with short artifact retention.
 * Cross-linked from the how-to index and from the git, CI, workspace, and build-pipeline guides.
 * Detail: xref:changelog-details/2026-11-25 - local-first-git-and-ci.adoc[Local-first git and CI].

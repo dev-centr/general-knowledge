@@ -1,0 +1,91 @@
+= Git AI attribution in guest repositories
+:page-aliases: home::reference/git-ai-attribution-in-guest-repositories.adoc
+:description: What Git AI notes contain, what they expose, and how maintainers can accept or decline them.
+:page-audience: Maintainer
+:page-usage-context: Repository contribution policy
+:page-orig-author: Grok Bot on behalf of Ryan Johnson
+:page-last-author: Grok Bot on behalf of Ryan Johnson
+:page-last-edited: 2026-11-08
+
+ifndef::page-context-active[]
+Audience role:: {page-audience}
+Authors:: {page-orig-author}
+Last updated:: {page-last-edited} by {page-last-author}
+endif::[]
+
+Git AI attaches line-attribution records to Git commits. A contributor working as a guest in someone else's repository should ask whether the project wants those records before publishing them. Accepting the code does not imply accepting its attribution notes, and accepting notes does not change the project's policy on AI-assisted contributions.
+
+image::reference/git-ai-notes.svg[alt="Code commits and attribution notes travel through separate Git refs",width=760]
+
+== Storage and transport
+
+Git AI stores an authorship log under `refs/notes/ai`, attached to a commit SHA. The note is not part of that commit's file tree or commit message, and adding it does not rewrite the commit. Line numbers describe the file at that commit, not necessarily its current version.
+
+The log has an attestation section mapping files and line ranges to attribution keys, a line containing `---`, and JSON metadata. Notes are a separate Git ref: an ordinary branch push does not include them. Publishing requires explicitly including a notes ref in the push, through a command, configured refspec, mirror operation, or tool automation. Inspect those settings before assuming notes stay local.
+
+== Recorded fields
+
+[cols="1,3",options="header"]
+|===
+|Field or record |Meaning
+|`agent_id.tool` |The harness or coding tool, such as `cursor` or `codex`; not the model. New tool names remain valid identifiers.
+|`agent_id.id` |The harness's session/conversation ID. Distinct from the hashed `s_` attestation key.
+|`agent_id.model` |The exact model identifier recorded by the harness. An unknown value is not evidence of any particular model.
+|`human_author` |Optional identity of the person directing the AI session; may contain an email and needs public redaction.
+|`sessions` |Current lightweight AI records: required `agent_id`, optional `human_author` and string-map `custom_attributes`. No transcript or line-count fields.
+|`humans` |Known-human records with an `author` identity, normally a Git `Name <email>` string. Public displays must omit the email.
+|Legacy `prompts` |Older AI records: `agent_id`, optional `human_author`, `messages_url`, `custom_attributes`, and counts `total_additions`, `total_deletions`, `accepted_lines`, `overriden_lines` (the spec's spelling). These counts do not belong in current session records. Inline `messages` were removed in Git AI 1.3.4.
+|===
+
+[cols="1,2,3",options="header"]
+|===
+|Line state |Attestation |Interpretation
+|AI |`s_<hash>::t_<hash>` or a legacy bare hash |Recorded AI session; the trace suffix identifies a checkpoint. Legacy keys resolve through `prompts`.
+|Human |`h_<hash>` |Human typing explicitly observed by the integration; resolves through `humans`.
+|Untracked |No attestation |No provenance data. Do not infer human authorship merely because a line has no AI record.
+|===
+
+== What a project gets
+
+Notes can give reviewers context about which session, harness, and model produced particular lines, and help contributors identify the person to contact about a session. A session ID is useful when discussing a change with its contributor; it is not itself a messaging endpoint. Notes are contributor-supplied records, not proof of correctness, completeness, identity, or review quality. A project can accept, ignore, or decline them independently of its code-review requirements.
+
+== Privacy before publication
+
+* Never display emails publicly, including emails inside `human_author` or `humans.author`. Sanitizing a website does not sanitize a raw note: anyone who can fetch that ref can inspect its contents. Review the actual note before pushing it.
+* Session IDs may be public opaque labels. Never treat one as a credential or as a route granting access to a conversation.
+* Publish a legacy `messages_url` only after verifying that the target independently requires authentication. An unguessable or signed capability URL is a secret, not an authenticated transcript link. Omit it when uncertain.
+* Hide `custom_attributes` by default; expose only explicitly allowlisted keys, and inspect their values too.
+* Before public rendering or publishing, require a redaction check over provenance fields and any transcript excerpts for emails, tokens, keys, other secrets, and local filesystem paths. Automated scanning is a guardrail, not a guarantee.
+
+== Accepting notes
+
+Agree on a project policy and record the decision in a discussion or contribution guide. A maintainer can permit pushes to the notes ref and fetch it explicitly:
+
+[source,shell]
+----
+git fetch origin refs/notes/ai:refs/notes/ai
+git notes --ref=ai show HEAD
+----
+
+This fetch updates the local notes ref; inspect any existing local notes first and reconcile divergence rather than forcing an overwrite. Fetching notes does not execute their contents. After consent and privacy review, an authorized contributor can explicitly publish with `git push origin refs/notes/ai:refs/notes/ai`. Do not copy that push into automation before the project's decision. Ordinary clones and branch fetches need not retrieve notes; document the agreed retrieval process.
+
+== Declining notes
+
+A project can put the following line in `CONTRIBUTING.md` or `AGENTS.md`, replacing the discussion placeholder with its decision URL:
+
+[source,markdown]
+----
+Contributors must not push refs/notes/ai to this repository; see [the project's attribution policy discussion](PROJECT_DISCUSSION_URL).
+----
+
+`.gitignore` cannot block notes refs: it controls untracked working-tree files, not refs. The maintainers' request establishes policy; technical enforcement requires a server-side ref restriction or hook. Use hosting rules or branch protection only if that host actually supports covering `refs/notes/ai`; ordinary protection for branches alone does not necessarily cover notes. Declining remote notes does not require a contributor to stop keeping local attribution. Follow the project's separate AI-contribution policy in either case.
+
+=== Proposed repository opt-out
+
+A preferred repo-level opt-out would be a `.gitattributes` key meaning "no Git AI notes". This is a *proposal pending upstream*, not an implemented Git attribute or an agreed key spelling. The related https://github.com/git-ai-project/git-ai/issues/2399[upstream filter bug] reports that `exclude_repositories` does not stop notes from being written or pushed, including the daemon's notes-push side effect during an ordinary branch push. Do not rely on that setting as a publication barrier. Until an opt-out mechanism lands and is verified, the `CONTRIBUTING.md`/`AGENTS.md` decline line above remains the way to state the project's decision; server-side ref restrictions are the enforcement backstop.
+
+== Sources
+
+* https://github.com/git-ai-project/git-ai[Git AI implementation]
+* https://github.com/git-ai-project/git-ai/blob/main/specs/git_ai_standard_v3.0.0.md[Git AI authorship standard v3.0.0] (including current sessions and legacy prompts; checked 2026-11-08).
+* https://git-scm.com/docs/git-notes[Git notes reference]
