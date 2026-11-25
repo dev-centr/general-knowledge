@@ -1,8 +1,13 @@
 = Changelog
-:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-author: name=Ryan Johnson; harness=grok-bot; model=unknown
 :page-last-edited: 2026-11-25
 
 == 2026-11-25
+
+=== Broken outbound links
+
+* The HCI Nerdz link:https://hci-nerdz.github.io/docs/hci-nerdz/view-conformance/[View conformance] links now include the `hci-nerdz` component path. The old address returned 404.
+* xref:reference/windows-path-truncation.adoc[Windows PATH truncation in AI harnesses] names Pathman without linking it. `dev-centr/pathman` is not published on GitHub yet.
 
 === Architecture and Git AI pages from Home
 

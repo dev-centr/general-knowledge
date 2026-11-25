@@ -3,8 +3,8 @@
 :page-audience: Windows developers, AI coding agents, and harness maintainers
 :page-usage-context: Reference on the general-knowledge hub — linked directly from DevCentr Harness UI alerts and agent-rules safety checks when Windows PATH truncation is detected
 :page-orig-author: Ryan Johnson
-:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
-:page-last-edited: 2026-11-24
+:page-last-author: name=Ryan Johnson; harness=grok-bot; model=unknown
+:page-last-edited: 2026-11-25
 :page-created: 2026-11-24
 :page-published: 2026-11-24
 :page-diataxis: reference
@@ -145,12 +145,12 @@ Process-level repair keeps your current session working, but to stop Windows Exp
 . **Remove duplicates and missing directories** from `HKCU\Environment\Path` and `HKLM\...\Environment\Path`.
 . **Consolidate tool shims** into one short directory (for example `C:\bin` or a unified shim folder) instead of adding one long `%LOCALAPPDATA%\Programs\...` directory per tool.
 . **Use short roots or junctions** (such as `Z:\code` or `C:\tools`) instead of deep nested profile paths.
-. **Never use `setx`** to edit `PATH` (it truncates at 1,024 characters). Use link:https://github.com/dev-centr/pathman[**Pathman**], the Registry API (`[Environment]::SetEnvironmentVariable`), or a modern PATH editor that preserves `REG_EXPAND_SZ` and avoids `setx`.
+. **Never use `setx`** to edit `PATH` (it truncates at 1,024 characters). Use **Pathman** (DevCentr's `PATH` CLI, not yet published), the Registry API (`[Environment]::SetEnvironmentVariable`), or a modern PATH editor that preserves `REG_EXPAND_SZ` and avoids `setx`.
 . **Restart Explorer or sign out and back in** after trimming Registry `PATH` so newly launched desktop apps inherit the clean environment block.
 
 == Related
 
 * xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] — why running terminals and IDEs keep stale `PATH` values even when not truncated
 * link:https://docs.devcentr.org/tools/agent-rules/agent-harness/[DevCentr agent harness] — runtime architecture and desk UI
-* link:https://github.com/dev-centr/pathman[DevCentr Pathman] — Windows `PATH` management CLI
+* DevCentr Pathman — Windows `PATH` management CLI (not yet published)
 * link:https://github.com/dev-centr/agent-rules/blob/main/general/windows-path-safety.md[`general/windows-path-safety.md`] — portable mandatory session-start rule for AI harnesses

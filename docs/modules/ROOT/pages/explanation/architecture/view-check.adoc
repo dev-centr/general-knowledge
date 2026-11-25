@@ -3,8 +3,8 @@
 :page-audience: Product authors wiring visual checks into CI
 :page-usage-context: Choosing a profile id and an exception file for a view snapshot
 :page-orig-author: Grok 4.7 on behalf of Ryan Johnson
-:page-last-author: Grok 4.7 on behalf of Ryan Johnson
-:page-last-edited: 2026-11-10
+:page-last-author: name=Ryan Johnson; harness=grok-bot; model=unknown
+:page-last-edited: 2026-11-25
 
 View-check reads a snapshot and a profile id. The host passes those two, plus an exception file when a view breaks a rule on purpose. The host does not copy the thresholds into the pipeline.
 
@@ -36,4 +36,4 @@ It is not a line in the profile ledger. Ledger `excludes` means the rule does no
 
 The snapshot is the input. A DOM walker, a CSS reader, or a scene exporter builds that snapshot and stays in the product. View-check does not open a browser.
 
-The sentences a person can agree to are on link:https://hci-nerdz.github.io/docs/view-conformance/[View conformance]. This page does not restate them.
+The sentences a person can agree to are on link:https://hci-nerdz.github.io/docs/hci-nerdz/view-conformance/[View conformance]. This page does not restate them.
