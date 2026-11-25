@@ -4,6 +4,12 @@
 
 == 2026-11-24
 
+=== Windows PATH truncation in AI harnesses reference
+
+* Added xref:reference/windows-path-truncation.adoc[Windows PATH truncation in AI harnesses] with themed orientation diagram (`windows-path-truncation-flow`), explaining Windows Explorer's ~2,047-character `PATH` truncation / dropped `User` `PATH` defect, mandatory conversation-start checks for third-party AI harnesses, DevCentr Harness's process-launch auto-repair and UI alert, and permanent remediation steps.
+* Cross-linked from xref:reference/index.adoc[Reference] and xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh].
+* Detail: xref:changelog-details/2026-11-24 - windows-path-truncation.adoc[Windows PATH truncation in AI harnesses].
+
 === Agent-operable web UI layer (WebMCP and Vercel UI SDK)
 
 * Added xref:reference/agent-operable-web-ui.adoc[Agent-operable web UI] and xref:how-to/add-agent-operable-web-ui.adoc[Add an agent-operable UI layer to a web app], with themed orientation diagrams (`agent-ui-surface-layers`, `agent-ui-adoption-flow`), explaining why a structured state/action surface complements DOM and ARIA traversal.

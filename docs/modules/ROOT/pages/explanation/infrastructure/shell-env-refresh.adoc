@@ -104,6 +104,7 @@ See xref:explanation/infrastructure/devcentr-and-openshellorg.adoc[Dev-Centr and
 
 == Related reading
 
+* xref:reference/windows-path-truncation.adoc[Windows PATH truncation in AI harnesses] — why Windows Explorer silently drops `User` `PATH` past ~2,047 characters even on a fresh launch, and how DevCentr Harness detects and repairs it
 * xref:explanation/infrastructure/nushell.adoc[Why We Recommend Nushell]
 * xref:how-to/nushell-setup.adoc[How to: Install and set up Nushell]
 * xref:explanation/infrastructure/toolchain-management.adoc[Toolchain Management Pattern] (bootstrap includes PATH refresh)

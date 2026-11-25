@@ -52,6 +52,7 @@ const sources = [
   'seo-discovery-system',
   'agent-ui-surface-layers',
   'agent-ui-adoption-flow',
+  'windows-path-truncation-flow',
 ];
 
 const diagramOption = process.argv.indexOf('--diagram');

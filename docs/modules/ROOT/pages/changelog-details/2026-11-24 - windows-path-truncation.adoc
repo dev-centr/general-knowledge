@@ -1,0 +1,11 @@
+= Windows PATH truncation in AI harnesses
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-24
+
+Added the canonical reference article xref:reference/windows-path-truncation.adoc[Windows PATH truncation in AI harnesses] so both DevCentr Harness's in-app alert banner and `dev-centr/agent-rules` (`general/windows-path-safety.md` / skill `windows-path-safety`) can link directly to one authoritative explanation.
+
+== Summary of changes
+
+* Created `docs/modules/ROOT/pages/reference/windows-path-truncation.adoc` documenting Windows's ~2,047-character Explorer truncation and `setx` 1,024-character limit versus Win32 `CreateProcess`'s 32,767-character ceiling, detection recipes, conversation-start rules for third-party harnesses, DevCentr Harness's automatic launch repair and UI alert, and permanent cleanup steps.
+* Added themed diagram `windows-path-truncation-flow` (`.mmd`, `.theme.json`, `.svg`, `.host.svg`, `.fixed.svg`) via `scripts/build-diagrams.mjs`.
+* Linked the page from `nav.adoc`, `reference/index.adoc`, and `explanation/infrastructure/shell-env-refresh.adoc`.

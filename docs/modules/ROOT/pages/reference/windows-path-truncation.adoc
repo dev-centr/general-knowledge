@@ -1,0 +1,156 @@
+= Windows PATH truncation in AI harnesses
+:description: Reference explaining why Windows silently truncates or drops User PATH around 2,047 characters, why AI coding harnesses hit this constantly, how DevCentr Harness repairs it on launch, and how to fix it permanently.
+:page-audience: Windows developers, AI coding agents, and harness maintainers
+:page-usage-context: Reference on the general-knowledge hub — linked directly from DevCentr Harness UI alerts and agent-rules safety checks when Windows PATH truncation is detected
+:page-orig-author: Ryan Johnson
+:page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
+:page-last-edited: 2026-11-24
+:page-created: 2026-11-24
+:page-published: 2026-11-24
+:page-diataxis: reference
+:page-doc-type: reference
+:page-status: published
+:page-keywords: Windows PATH truncation, 2047 character limit, User PATH dropped, Explorer environment block, setx 1024, AI harness, DevCentr Harness, pathman
+:page-lang: en
+
+ifndef::page-context-active[]
+[.page-context.page-context-lead]
+****
+Audience role:: {page-audience}
+Original author:: {page-orig-author}
+Latest contributor:: {page-last-author}
+Last updated:: {page-last-edited}
+****
+endif::[]
+
+On Windows 10 and 11, **Windows Explorer and several legacy process launchers silently truncate `PATH`—or drop the entire `User` `PATH`—when the expanded value exceeds ~2,047 characters**.
+No dialog appears, no event log warning is surfaced to the user, and every IDE, terminal, and AI coding harness launched from that shell inherits the damaged environment block.
+
+This is a decades-old Windows shell defect that routinely breaks modern developer machines, where language toolchains (Node/pnpm, Python/uv, Rust/Cargo, Go, D/LDC, Flutter, Android SDK, Git, .NET, Visual Studio) easily push `Machine` + `User` `PATH` past 2,047 characters.
+
+[.themed-svg]
+image::windows-path-truncation-flow.svg["Windows PATH truncation and harness auto-repair flow: Registry Machine and User PATH exceed 2047 characters, Explorer truncates or drops User PATH, third-party harnesses check and refresh per conversation, and DevCentr Harness repairs process PATH on launch and alerts the user"]
+
+== What actually breaks on Windows
+
+Windows stores `PATH` in two Registry locations and combines them when creating a user environment block:
+
+* **Machine (`HKLM`):** `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\Path`
+* **User (`HKCU`):** `HKCU\Environment\Path`
+
+Although the Win32 `CreateProcess` API supports environment variables up to **32,767 characters**, older Windows shell plumbing still imposes much smaller hardcoded buffers:
+
+[cols="2,1,3",options="header"]
+|===
+| Component / API | Effective limit | Failure behavior
+
+| `setx` CLI utility
+| **1,024 characters**
+| Silently truncates the written Registry value itself, permanently destroying trailing entries.
+
+| Windows Explorer (`explorer.exe`) / legacy shell environment rebuild (`WM_SETTINGCHANGE`, desktop/Start/taskbar launch)
+| **~2,047 characters** (2,048 bytes including NUL in legacy buffers)
+| Silently truncates the merged `PATH` or **drops the entire `User` `PATH`**, handing child processes (IDEs, Electron apps, agent harnesses) only `Machine` `PATH` plus a tiny fragment.
+
+| Win32 `CreateProcess` / `SetEnvironmentVariableW`
+| **32,767 characters** (per variable)
+| Works cleanly when a process rebuilds its own environment directly from Registry and expands `REG_EXPAND_SZ` tokens.
+|===
+
+Because the Registry itself still contains the full `Machine` and `User` strings (unless `setx` corrupted them), opening System Properties shows your paths as "present" while every app launched via Explorer sees a truncated `PATH`.
+
+== Why AI coding harnesses hit this harder than humans
+
+Interactive developers sometimes miss this bug because their favorite terminal profile or shell startup script patches `PATH` back together.
+AI coding harnesses hit it immediately and repeatedly:
+
+. **Non-interactive subshells inherit the broken parent.** Harnesses spawn `powershell.exe`, `pwsh`, or `cmd.exe` as child processes of the IDE or desktop app—inheriting Explorer's truncated `PATH` without running interactive login profiles.
+. **False "tool not installed" loops.** An agent checks `Get-Command uv`, `dub`, `rg`, `nu`, `pnpm`, or `git-ai`, gets nothing back, assumes the workstation is missing the CLI, and either tries to re-install an already-installed tool or abandons a working workflow.
+. **Stateless per-command runners do not remember shell edits.** Several agent harnesses execute every terminal command in a **brand-new child process**. Fixing `$env:Path` in one command disappears on the very next command unless the harness process itself repairs its own `PATH` (or every CLI command rebuilds `$env:Path` from Registry first).
+
+== Detection check (PowerShell)
+
+Compare the running process's `PATH` against the combined Registry `Machine` + `User` `PATH`:
+
+[source,powershell]
+----
+$proc = $env:Path
+$machine = [Environment]::GetEnvironmentVariable("Path", "Machine")
+$user = [Environment]::GetEnvironmentVariable("Path", "User")
+
+$splitClean = {
+  param([string]$s)
+  ($s -split ';' | ForEach-Object { $_.Trim().TrimEnd('\') } | Where-Object { $_ })
+}
+
+$procSet = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+foreach ($p in (& $splitClean $proc)) { [void]$procSet.Add($p) }
+
+$regEntries = @(& $splitClean $machine) + @(& $splitClean $user)
+$dropped = $regEntries | Where-Object { -not $procSet.Contains($_) } | Select-Object -Unique
+
+[pscustomobject]@{
+  ProcessLength   = $proc.Length
+  MachineLength   = $machine.Length
+  UserLength      = $user.Length
+  RegistryTotal   = $machine.Length + 1 + $user.Length
+  DroppedCount    = $dropped.Count
+  RegistryOver2k  = ($user.Length -gt 2047) -or (($machine.Length + 1 + $user.Length) -gt 2047)
+}
+----
+
+To repair the current PowerShell process immediately:
+
+[source,powershell]
+----
+$env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+----
+
+== How third-party AI harnesses handle it (session vs. conversation)
+
+Inside third-party harnesses (Cursor, Antigravity, Claude Code, Codex, Windsurf), an agent inside a chat usually **cannot determine whether a conversation shares an already-checked process session or started a fresh one**, and some harnesses spawn a fresh shell per command.
+
+Dev-Centr's `agent-rules` (`general/windows-path-safety.md` and skill `windows-path-safety`) therefore makes the check **mandatory at the start of every new conversation on Windows** (before relying on CLI probes or running tool-dependent commands):
+
+. Run the process-vs-Registry check once on the first shell command of the conversation (or via a native session-start hook if the harness exposes one that runs in the same inherited environment).
+. If truncation is detected:
++
+* Report the truncation once to the user with the dropped-entry count and a link to this page.
+* Record `WINDOWS_PATH_TRUNCATION = detected (...)` in machine-local `$CODE_ROOT/harness.md`.
+* Prepend the Registry `PATH` refresh to CLI-dependent commands in stateless per-command runners so tools are never falsely reported as missing.
+
+== How DevCentr Harness handles it automatically
+
+Unlike third-party hosts, link:https://github.com/dev-centr/harness[**DevCentr Harness**] controls its own process startup:
+
+. **On every process launch** (`harness init`, `spawn`, `serve`, etc.), the runtime reads `HKLM` Machine `PATH` and `HKCU` User `PATH` directly from the Windows Registry, expands `REG_EXPAND_SZ` references, and compares them against the inherited process `PATH`.
+. **Automatic process repair:** When entries from Registry are missing from the process `PATH`, Harness merges and deduplicates `Machine` + `User` + any process-only additions and updates its own process `PATH` via Win32 `SetEnvironmentVariableW`. Every child process and tool spawned by Harness then inherits the complete `PATH`.
+. **Visible UI & CLI reporting:**
++
+* In the **Harness desk UI**, a prominent banner reports either that Windows truncated `PATH` and Harness automatically repaired it for this process (showing the dropped-entry count and sample dropped paths), or an error banner if the check or repair failed—always with a direct link back to this article.
+* Over HTTP, `GET /api/health` and `GET /api/env-health` expose the structured `pathHealth` payload.
+* On CLI subcommands, repair or failure diagnostics are written to `stderr` so `stdout` JSON stays intact.
+
+[IMPORTANT]
+====
+**Why show an alert even after auto-fixing?**
+Process-level repair unblocks the current Harness run, but **Windows Explorer is still truncating `PATH` for every other app you launch**—and silent workarounds let OS vendors ignore a 20-year-old bug forever.
+Making the defect visible whenever it happens helps developers clean up their own Registry `PATH` and builds public pressure on Microsoft to remove Explorer's 2,047-character ceiling.
+====
+
+== Permanent remediation on Windows
+
+Process-level repair keeps your current session working, but to stop Windows Explorer from truncating newly launched apps altogether, bring both `User` `PATH` and combined `Machine` + `User` `PATH` back under **2,047 characters**:
+
+. **Remove duplicates and missing directories** from `HKCU\Environment\Path` and `HKLM\...\Environment\Path`.
+. **Consolidate tool shims** into one short directory (for example `C:\bin` or a unified shim folder) instead of adding one long `%LOCALAPPDATA%\Programs\...` directory per tool.
+. **Use short roots or junctions** (such as `Z:\code` or `C:\tools`) instead of deep nested profile paths.
+. **Never use `setx`** to edit `PATH` (it truncates at 1,024 characters). Use link:https://github.com/dev-centr/pathman[**Pathman**], the Registry API (`[Environment]::SetEnvironmentVariable`), or a modern PATH editor that preserves `REG_EXPAND_SZ` and avoids `setx`.
+. **Restart Explorer or sign out and back in** after trimming Registry `PATH` so newly launched desktop apps inherit the clean environment block.
+
+== Related
+
+* xref:explanation/infrastructure/shell-env-refresh.adoc[Shell environment refresh] — why running terminals and IDEs keep stale `PATH` values even when not truncated
+* link:https://docs.devcentr.org/tools/agent-rules/agent-harness/[DevCentr agent harness] — runtime architecture and desk UI
+* link:https://github.com/dev-centr/pathman[DevCentr Pathman] — Windows `PATH` management CLI
+* link:https://github.com/dev-centr/agent-rules/blob/main/general/windows-path-safety.md[`general/windows-path-safety.md`] — portable mandatory session-start rule for AI harnesses

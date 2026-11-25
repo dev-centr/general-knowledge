@@ -1,0 +1,32 @@
+---
+title: Windows PATH truncation and harness auto-repair flow
+---
+flowchart LR
+  accTitle: Windows PATH truncation and harness auto-repair flow
+  accDescr: Windows Registry holds both Machine and User PATH values, which commonly exceed 2047 characters on developer workstations. Explorer and legacy launchers silently truncate or drop User PATH when starting IDEs and harnesses. Third-party harnesses detect and refresh PATH per session or command, while DevCentr Harness checks on process launch, repairs process PATH from Registry, and surfaces an in-app alert with a link to remediation docs.
+  reg["Windows Registry\nHKLM Machine + HKCU User PATH\n(often > 2,047 chars)"]
+  exp["Explorer / legacy launcher\n2,047-char truncation bug\n(silently drops User PATH)"]
+  third["Third-party AI harnesses\n(Cursor, Antigravity, Claude Code)\nStart-of-conversation check +\nRegistry refresh per shell"]
+  dc["DevCentr Harness\nCheck on process launch\nRead HKLM + HKCU Registry\nAuto-repair process PATH"]
+  ui["In-app UI alert\nReport fix or error +\nlink to reference doc"]
+  perm["Permanent fix\nTrim duplicates & missing dirs\n(pathman / short junctions)"]
+
+  reg --> exp
+  exp -. "truncated env block" .-> third
+  exp -. "truncated env block" .-> dc
+  reg --> dc
+  dc --> ui
+  third --> perm
+  ui --> perm
+
+  class reg primary
+  class exp danger
+  class third warning
+  class dc success
+  class ui secondary
+  class perm secondary
+  classDef primary fill:#ffffff,stroke:#2c2c2c,color:#1a1a1a,stroke-width:2px
+  classDef secondary fill:#e8f0ea,stroke:#1f3a2e,color:#1a1a1a,stroke-width:2px
+  classDef success fill:#1f3a2e,stroke:#1f3a2e,color:#f7f3e8,stroke-width:2px
+  classDef warning fill:#f7f3e8,stroke:#6b5a3e,color:#1a1a1a,stroke-width:2px
+  classDef danger fill:#f6e8e6,stroke:#7a3a32,color:#1a1a1a,stroke-width:2px
