@@ -1,0 +1,11 @@
+= 2026-11-25
+:hide-page:
+:navtree-parent: changelog.adoc
+
+== Local-first git and CI
+
+Added xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]: commit locally and push on request (no blind auto-push timer), use a daily unpushed-commits reminder, stack dependent work on one branch instead of waiting on pull requests, and split fast push/PR checks from heavy `v*` / `workflow_dispatch` package builds.
+
+The page includes a GitHub Actions YAML example (`concurrency` with `cancel-in-progress: true`, `retention-days: 1` for release handoff artifacts, `retention-days: 3` and `if: failure()` for debug artifacts) and explains that the organization and repository retention cap now also expires checks, workflow runs, and commit statuses.
+
+Cross-linked from the how-to index, the how-to nav, xref:how-to/git-release-workflow.adoc[Git release workflow], xref:how-to/polyglot-ci.adoc[Polyglot CI], xref:how-to/automated-releases.adoc[Automated releases], xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces], xref:explanation/architecture/build-pipeline.adoc[Build pipeline], and xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current].

@@ -1,7 +1,7 @@
 = How-to Guides
 :description: Task-oriented guides for common developer setup and workflow problems.
 :page-last-author: name=Ryan Johnson; harness=Cursor; model=grok-4.7
-:page-last-edited: 2026-11-19
+:page-last-edited: 2026-11-25
 
 Task-oriented guides. Pick a guide when you already know what you want to do.
 
@@ -42,6 +42,7 @@ Tied to xref:explanation/architecture/software-product-essentials.adoc[Software 
 * xref:how-to/app-installer-packaging.adoc[App installer packaging]
 * xref:how-to/authoritative-installations.adoc[Authoritative installations] — decision tree; see xref:explanation/architecture/installation/index.adoc[Installation architecture]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI] -- commit locally, push on request, stack dependent work on one branch, and split fast checks from heavy package builds
 * xref:how-to/vercel-staging-to-production.adoc[Vercel staging to production] -- staging branch as a protected Preview environment, release by fast-forwarding main, and why not to Promote to Production
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]

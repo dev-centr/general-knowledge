@@ -16,6 +16,8 @@ A release is not “main is green.” It is an explicit decision:
 
 == Suggested flow
 
+On a solo repository, stack dependent work and push in one pass instead of opening a pull request per step. See xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI].
+
 . Finish work on a branch → review → merge to main
 . On main: bump version files if not automated
 . Write changelog entry (what users care about, not every commit)
@@ -41,6 +43,7 @@ Stamp the channel into build info so About and updaters agree.
 
 == Related
 
+* xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:how-to/app-installer-packaging.adoc[Installer packaging]
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]

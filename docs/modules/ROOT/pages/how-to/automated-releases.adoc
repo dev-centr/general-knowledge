@@ -31,10 +31,13 @@ Pass `GITHUB_SHA`, tag name, and channel into the compiler or a generated file s
 * Separate “build” and “publish” jobs with environment protection for production secrets
 * Never echo signing passwords into logs
 
+Keep these jobs off the push/PR workflow. Fast, artifact-free checks stay on push and pull request; installer and package builds run on `v*` tags and `workflow_dispatch`. See xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI].
+
 Copy the house OS/arch matrix from xref:how-to/polyglot-ci.adoc[Polyglot CI] when the project claims Windows, macOS, Linux, and BSD. Optional pack step: xref:how-to/binary-tailor.adoc[Binary Tailor].
 
 == Related
 
+* xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]
 * xref:how-to/git-release-workflow.adoc[Git release workflow]
 * xref:how-to/winget-registration.adoc[Winget registration]
 * xref:how-to/app-installer-packaging.adoc[Installer packaging]

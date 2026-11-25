@@ -148,6 +148,7 @@ Auto-merge waits for the required reviews and status checks of a branch protecti
 == Related
 
 * xref:how-to/enforce-org-wide-checks-on-github-free.adoc[Enforce org-wide checks on GitHub Free]
+* xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]
 * xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
 * xref:how-to/automated-releases.adoc[Automated releases]
 * xref:business-bootstrap::tutorials/fast-org-bootstrap.adoc[Fast org bootstrap]

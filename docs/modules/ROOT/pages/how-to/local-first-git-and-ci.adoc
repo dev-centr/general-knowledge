@@ -1,0 +1,119 @@
+= Local-first git and CI
+:description: Commit locally by default, push on request, stack dependent work on one branch, and split fast GitHub Actions checks from heavy package builds with short artifact retention.
+:page-last-author: name=Ryan Johnson; harness=grok-bot; model=unknown
+:page-last-edited: 2026-11-25
+
+Goal:: Keep work committed and tested on your machine, push when you mean to, and keep GitHub Actions fast and cheap.
+Why:: A silent daily auto-push can publish a half-finished experiment or collide with someone else editing the same checkout. A pull request per step slows down dependent work on a solo repository. Running installer builds on every push burns minutes and leaves artifacts around for months.
+
+== Commit locally, push on request
+
+Run the tests and the build on your machine, then commit on a branch.
+
+Stop before `git push` unless you were asked to push or deploy, or the project has an explicit push rule for that kind of change.
+
+Do not install a blind 24-hour auto-push timer. Timers do not know whether the work is finished, whether another person or agent is mid-edit, or whether the branch was only a local experiment.
+
+This is the default for agents as well as humans. An agent that can commit can still wait for a push request.
+
+== Use a daily unpushed-commits reminder
+
+The safety net is a reminder, not an automatic push.
+
+Once a day, walk the checkout tree and list repositories that have commits not on their upstream. A lightweight loop is enough: `git for-each-ref` on `refs/heads` to find each branch and its upstream, then `git log @\{upstream}..` for that branch. Include branches that have no upstream. Do not push from this job.
+
+The output should be a short list you can act on: repository, branch, commit count, and the first subject line or two. Forgotten work then surfaces cleanly, without a timer deciding to publish it.
+
+== Stack on branches instead of waiting on pull requests
+
+When change B depends on change A, especially on a repository you maintain alone, do not open a pull request for A and then wait.
+
+Stack the commits on the same local feature branch, or check out an already-open pull request branch and keep working on top of it. Test the stack locally, then push in one pass.
+
+Use a separate pull request when the repository is shared, when you are working in a fork, or when the change genuinely needs isolated review.
+
+xref:how-to/git-release-workflow.adoc[Git release workflow] still applies when you cut a release: the stacked work reaches `main` first, then you tag.
+
+== Split fast CI from heavy packaging
+
+Keep two workflows, not one job that does everything.
+
+. *Fast checks on `push` and `pull_request`.* Lint, typecheck, unit tests, and an encoding guard. These jobs should be artifact-free on success. If you upload debug screenshots or dumps, do it with `if: failure()` and `retention-days: 3`.
+. *Heavy multi-OS installer and package builds on `v*` release tags and manual `workflow_dispatch`.* That is where the xref:how-to/polyglot-ci.adoc[polyglot CI matrix] and xref:how-to/automated-releases.adoc[automated releases] belong, not on every push.
+
+Give the fast CI workflow a `concurrency` group with `cancel-in-progress: true` so a new push cancels the superseded run. Do not enable cancellation on a production publish job that is mid-upload; a deploy workflow can use `cancel-in-progress: false`.
+
+Release handoff artifacts (the files one job passes to a publish job) use `retention-days: 1`. Debug artifacts use `retention-days: 3`.
+
+Lower the organization and repository default retention below GitHub's 90-day default, as a backstop for workflows that forget `retention-days`. Use a cap such as 30 days: far shorter than 90, and not so short that you lose a month of failed-run history. Do not set this cap to 1 or 3 days; those values are only for `retention-days` on artifact uploads.
+
+Since 1 October 2026, that same GitHub setting also expires checks, workflow runs, and commit statuses, not only artifacts and logs. The control is labeled *Check, workflow run, status, artifact and log retention*. Job-level `retention-days` on `actions/upload-artifact` still affects artifacts only, and cannot exceed the repository cap.
+
+Set it under *Settings → Actions → General* for the https://docs.github.com/en/organizations/managing-organization-settings/configuring-the-retention-period-for-github-actions-artifacts-and-logs-in-your-organization[organization] first, then for any https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository[repository] that still uses a longer default. Public repositories can go as low as 1 day and no higher than 90; private repositories can go up to 400. The change applies to new objects only.
+
+Pin action versions per xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current]. The `@v4` pins below are illustrative.
+
+[source,yaml,subs=none]
+----
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint, typecheck, unit tests, encoding guard
+        run: # project-specific commands
+      - name: Upload debug dump
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-debug
+          path: debug/
+          retention-days: 3
+----
+
+[source,yaml,subs=none]
+----
+# .github/workflows/release.yml
+name: Release packages
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  pack:
+    # Copy the OS/arch matrix from the polyglot CI how-to.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build installers and packages
+        run: # project-specific commands
+      - name: Handoff artifacts to the publish job
+        uses: actions/upload-artifact@v4
+        with:
+          name: installers
+          path: dist/
+          retention-days: 1
+----
+
+== Related
+
+* xref:how-to/git-release-workflow.adoc[Git release workflow]
+* xref:how-to/polyglot-ci.adoc[Polyglot CI matrix]
+* xref:how-to/automated-releases.adoc[Automated releases]
+* xref:how-to/concurrent-agent-workspaces.adoc[Concurrent agent workspaces]
+* xref:explanation/architecture/build-pipeline.adoc[Build pipeline]
+* xref:how-to/keep-github-actions-current.adoc[Keep GitHub Actions current]
+* xref:how-to/prevent-text-encoding-corruption.adoc[Prevent text encoding corruption]

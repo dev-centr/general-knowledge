@@ -4,7 +4,7 @@
 A **build pipeline** turns commits into trustworthy artifacts. Laptop builds are for development; **CI builds** are what users install.
 
 Framework: xref:explanation/architecture/software-product-essentials.adoc[Software Product Essentials].
-How-tos: xref:how-to/automated-releases.adoc[Automated releases], xref:how-to/git-release-workflow.adoc[Git release workflow].
+How-tos: xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI], xref:how-to/automated-releases.adoc[Automated releases], xref:how-to/git-release-workflow.adoc[Git release workflow].
 
 == Pipeline stages
 
@@ -67,4 +67,5 @@ Not every green main commit is a user release:
 * xref:explanation/architecture/automatic-updates.adoc[Automatic updates]
 * xref:explanation/architecture/distribution-and-packaging.adoc[Distribution and packaging]
 * xref:reference/github-actions-templates-vs-marketplace.adoc[Actions templates vs marketplace] (when present)
+* xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]
 * xref:how-to/automated-releases.adoc[How-to: Automated releases]

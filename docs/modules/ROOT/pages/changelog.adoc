@@ -1,6 +1,14 @@
 = Changelog
 :page-last-author: name=Ryan Johnson; harness=Antigravity; model=Gemini 4 Neon
-:page-last-edited: 2026-11-24
+:page-last-edited: 2026-11-25
+
+== 2026-11-25
+
+=== Local-first git and CI
+
+* Added xref:how-to/local-first-git-and-ci.adoc[Local-first git and CI]: commit locally and push on request, use a daily unpushed-commits reminder, stack dependent work on one branch, and split fast push/PR checks from heavy `v*` / `workflow_dispatch` package builds, with short artifact retention.
+* Cross-linked from the how-to index and from the git, CI, workspace, and build-pipeline guides.
+* Detail: xref:changelog-details/2026-11-25 - local-first-git-and-ci.adoc[Local-first git and CI].
 
 == 2026-11-24
 
